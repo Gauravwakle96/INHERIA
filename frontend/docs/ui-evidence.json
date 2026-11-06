@@ -1,0 +1,157 @@
+{
+  "contract": "design-contract.md: authenticated evidence-driven continuity workspace; task-oriented navigation, measurable metrics, responsive layout and human review gates. Visible environment labels use Demo workspace and Demo repository.",
+  "targetViewports": [
+    "390x844",
+    "768x1024",
+    "1440x900"
+  ],
+  "accessibility": {
+    "status": "pass",
+    "evidence": "The final 13-test Playwright suite passed. Axe WCAG 2/2.1 A and AA checks reported zero violations on settled day and night overviews at 390x844, 768x1024 and 1440x900. Keyboard focus and theme activation, mobile navigation, native dialog Escape and reduced motion were exercised. This is a representative review, not a full assistive-technology certification."
+  },
+  "responsive": {
+    "status": "pass",
+    "evidence": "Settled day and night overview screenshots were captured at all three target viewports after loading completed. All six theme/viewport combinations passed document overflow and axe checks; the topbar theme switch remains visible on narrow screens. Source tables remain contained."
+  },
+  "contentStates": {
+    "loading": {
+      "status": "pass",
+      "evidence": "state-loading.png captures the actual overview loading indicator and skeleton while the browser delayed a genuine API response by 1.6 seconds. The original response was released and the real overview appeared; no fabricated data was supplied."
+    },
+    "empty": {
+      "status": "pass",
+      "evidence": "state-empty.png shows a genuine source search with no matches and a recovery instruction. real-org-empty-sources.png additionally shows a newly registered organisation and created project with no connected repository or evidence sources, with working connect/upload actions."
+    },
+    "error": {
+      "status": "pass",
+      "evidence": "state-error.png shows a deliberate browser-level network abort on source inventory, a readable error and Try again. Removing the controlled abort and clicking retry restored the real source inventory."
+    },
+    "partial": {
+      "status": "pass",
+      "evidence": "state-partial.png captures a uniquely uploaded procedure candidate with Pending status, an exact source quote, source version and an explicit human-verification requirement. The test asserted Pending before capture."
+    },
+    "success": {
+      "status": "pass",
+      "evidence": "state-success.png captures the same procedure after an authorised review note and approval; the test verified its updated Verified state. The transfer flow separately exercised approval, incoming ownership acceptance, practical submission and supervisor assessment, preserved in validation-submitted.png and validation-supervisor.png."
+    },
+    "permission": {
+      "status": "pass",
+      "evidence": "state-permission.png shows the incoming employee's source view after a completed identity switch: source-administration buttons are absent and the required administrator/manager/lead permission is explained. Tests separately confirmed supervisor validation remains a distinct action from incoming acceptance and submission."
+    }
+  },
+  "renderedEvidence": [
+    {
+      "viewport": "390x844",
+      "artifact": "ui-artifacts/overview-390x844.png",
+      "observation": "Settled mobile overview: collapsed navigation, Demo workspace label, stacked metrics with percentage units, two-column workflow, readable knowledge gaps and active demo transitions; no page overflow."
+    },
+    {
+      "viewport": "768x1024",
+      "artifact": "ui-artifacts/overview-768x1024.png",
+      "observation": "Settled tablet overview: three-column metrics, three-column workflow, full-width knowledge attention/activity, two-column transition/source health sections; no page overflow."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "ui-artifacts/overview-1440x900.png",
+      "observation": "Settled desktop overview: persistent sidebar, six measured metric columns, six-step workflow and operational columns with source health; percentage units and Demo workspace distinction remain visible."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "ui-artifacts/state-loading.png",
+      "observation": "Controlled slow response displays the real loading state and resolves to actual API data."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "ui-artifacts/state-empty.png",
+      "observation": "Search has no matching accessible sources; interface explains the empty result and recovery."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "ui-artifacts/state-error.png",
+      "observation": "Controlled source-request failure displays an actionable error; retry restored inventory."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "ui-artifacts/state-partial.png",
+      "observation": "Provisional procedure has exact cited evidence and Pending status before approval."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "ui-artifacts/state-success.png",
+      "observation": "Authorised claim review persisted Verified status with source evidence retained."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "ui-artifacts/state-permission.png",
+      "observation": "Incoming role can explore evidence while source-administration controls are unavailable."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "ui-artifacts/validation-submitted.png",
+      "observation": "Incoming employee accepted ownership and submitted an evidence-supported practical exercise; supervisor validation remains pending."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "ui-artifacts/validation-supervisor.png",
+      "observation": "Authorised supervisor inspected the participant response, citations and predefined criteria and recorded a separate assessment."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "ui-artifacts/real-org-empty-sources.png",
+      "observation": "Fresh organisation/project created through real registration forms has no seed evidence or fake working repository."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "ui-artifacts/real-org-team.png",
+      "observation": "Admin created an incoming project member through the actual role-validated API; no invitation email integration was implied."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "ui-artifacts/investigation-callout-1440.png",
+      "observation": "Focused design-hook review: decorative side border removed from the real interview-question callout; computed border-left is 0px, no document overflow, background and icon retain the callout distinction. Captured finding inspected."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "ui-artifacts/investigation-callout-390.png",
+      "observation": "Settled mobile finding inspected after loading completed and navigation was offscreen: question wraps within the callout, computed border-left is 0px, no horizontal overflow or sidebar overlap."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "ui-artifacts/overview-light-390x844.png",
+      "observation": "Day overview inspected: pale background, white surfaces, deep teal actions, readable state labels, native controls and persistent theme switch. Axe and horizontal-overflow checks passed."
+    },
+    {
+      "viewport": "768x1024",
+      "artifact": "ui-artifacts/overview-light-768x1024.png",
+      "observation": "Day overview inspected: pale background, white surfaces, deep teal actions, readable state labels, native controls and persistent theme switch. Axe and horizontal-overflow checks passed."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "ui-artifacts/overview-light-1440x900.png",
+      "observation": "Day overview inspected: pale background, white surfaces, deep teal actions, readable state labels, native controls and persistent theme switch. Axe and horizontal-overflow checks passed."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "ui-artifacts/login-light.png",
+      "observation": "Day sign-in inspected with the shared theme switch, readable persona choices, input boundaries and account actions."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "ui-artifacts/graph-light.png",
+      "observation": "Day graph inspected with matching native React Flow color mode, themed nodes, edge labels, grid, controls and minimap; switching back restored night mode."
+    }
+  ],
+  "validation": {
+    "playwright": "13 passed (1.5m)",
+    "typecheck": "pass",
+    "lint": "pass with zero warnings",
+    "productionBuild": "pass",
+    "npmAudit": "0 vulnerabilities",
+    "themePersistence": "pass: login, refresh, keyboard toggle, graph and browser-tab synchronization",
+    "designDetector": "pass: no findings in changed UI targets"
+  },
+  "limitations": [
+    "Axe checks cover representative overview screens, not every possible content variant or assistive technology.",
+    "Browser evaluation uses explicitly labelled demo/QA data and controlled network delays/failures; it does not establish production competence or live enterprise integration contracts."
+  ]
+}

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b1019" />
+    <script>
+      // Apply the saved palette before the first render to avoid a theme flash.
+      (() => {
+        let theme = 'dark';
+        try {
+          if (localStorage.getItem('inheria-theme') === 'light') theme = 'light';
+        } catch { /* Storage is optional; night remains the default. */ }
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        document.querySelector('meta[name="theme-color"]').content = theme === 'light' ? '#f4f7fb' : '#0b1019';
+      })();
+    </script>
+    <meta name="description" content="INHERIA preserves technical knowledge through evidence, human review and verified responsibility transfer." />
+    <meta name="robots" content="noindex,nofollow" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>INHERIA · Knowledge continuity</title>
+  </head>
+  <body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body>
+</html>

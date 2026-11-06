@@ -1,0 +1,798 @@
+{
+  "fixture_version": "labelled-continuity-v1",
+  "fixture_sha256": "20c27738e9495aa80c9586d593332f7d475a47bf1fa8e3324052544ae64d8b50",
+  "reference_time": "2026-11-06T12:00:00",
+  "engine": "deterministic-v1",
+  "scope": "24 hand-labelled synthetic documents plus one source-ACL negative; isolated in-memory SQLite; no live LLM calls.",
+  "counts": {
+    "documents": 24,
+    "gold_candidates": 20,
+    "predicted_candidates": 19,
+    "persisted_visible_claims": 19,
+    "restricted_sources": 1
+  },
+  "metrics": {
+    "candidate_kind_and_title": {
+      "true_positives": 19,
+      "false_positives": 0,
+      "false_negatives": 1,
+      "precision": {
+        "numerator": 19,
+        "denominator": 19,
+        "rate": 1.0
+      },
+      "recall": {
+        "numerator": 19,
+        "denominator": 20,
+        "rate": 0.95
+      }
+    },
+    "owner_mapping": {
+      "numerator": 4,
+      "denominator": 5,
+      "rate": 0.8
+    },
+    "decision_rationale_field": {
+      "numerator": 4,
+      "denominator": 5,
+      "rate": 0.8
+    },
+    "dependency_endpoints": {
+      "numerator": 2,
+      "denominator": 3,
+      "rate": 0.666667
+    },
+    "project_state_kind_coverage": {
+      "numerator": 8,
+      "denominator": 8,
+      "rate": 1.0
+    },
+    "exact_source_citations": {
+      "numerator": 19,
+      "denominator": 19,
+      "rate": 1.0
+    },
+    "claims_with_citations": {
+      "numerator": 19,
+      "denominator": 19,
+      "rate": 1.0
+    },
+    "pending_before_human_review": {
+      "numerator": 19,
+      "denominator": 19,
+      "rate": 1.0
+    },
+    "commit_authorship_ownership_abstention": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    },
+    "unverified_answer_abstention": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    },
+    "supported_retrieval_after_review": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    },
+    "unsupported_answer_abstention": {
+      "numerator": 4,
+      "denominator": 4,
+      "rate": 1.0
+    },
+    "restricted_source_excluded_from_reconstruction": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1.0
+    },
+    "potential_decision_conflict": {
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "precision": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      },
+      "recall": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      }
+    },
+    "stale_source_review": {
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "precision": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      },
+      "recall": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      }
+    },
+    "unfinished_work": {
+      "true_positives": 2,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "precision": {
+        "numerator": 2,
+        "denominator": 2,
+        "rate": 1.0
+      },
+      "recall": {
+        "numerator": 2,
+        "denominator": 2,
+        "rate": 1.0
+      }
+    },
+    "missing_decision_rationale": {
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "precision": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      },
+      "recall": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1.0
+      }
+    },
+    "unknown_responsibility_owner": {
+      "true_positives": 2,
+      "false_positives": 1,
+      "false_negatives": 0,
+      "precision": {
+        "numerator": 2,
+        "denominator": 3,
+        "rate": 0.666667
+      },
+      "recall": {
+        "numerator": 2,
+        "denominator": 2,
+        "rate": 1.0
+      }
+    }
+  },
+  "details": {
+    "cases": [
+      {
+        "case": "responsibility_explicit",
+        "expected": [
+          {
+            "kind": "responsibility",
+            "title": "Deploy billing-api",
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": "Quinn Reed"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "responsibility",
+            "title": "Deploy billing-api",
+            "label_match": true,
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": "Quinn Reed"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "responsibility_no_backup",
+        "expected": [
+          {
+            "kind": "responsibility",
+            "title": "Recover billing database",
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": null
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "responsibility",
+            "title": "Recover billing database",
+            "label_match": true,
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": null
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "responsibility_unknown",
+        "expected": [
+          {
+            "kind": "responsibility",
+            "title": "Rotate signing keys",
+            "fields": {
+              "owner": null,
+              "backup": null
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "responsibility",
+            "title": "Rotate signing keys",
+            "label_match": true,
+            "fields": {
+              "owner": null,
+              "backup": null
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "responsibility_unmapped",
+        "expected": [
+          {
+            "kind": "responsibility",
+            "title": "Archive incident notes",
+            "fields": {
+              "owner": null
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "responsibility",
+            "title": "Archive incident notes",
+            "label_match": true,
+            "fields": {
+              "owner": null
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": "An unknown person must remain unmapped; no fictional employee is created."
+      },
+      {
+        "case": "decision_current",
+        "expected": [
+          {
+            "kind": "decision",
+            "title": "Storage engine",
+            "fields": {
+              "rationale": "Use PostgreSQL transactions for atomic invoice writes."
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "decision",
+            "title": "Storage engine",
+            "label_match": true,
+            "fields": {
+              "rationale": "Use PostgreSQL transactions for atomic invoice writes."
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "decision_conflict",
+        "expected": [
+          {
+            "kind": "decision",
+            "title": "Storage engine",
+            "fields": {
+              "rationale": "Use only MongoDB documents for invoice writes; do not use PostgreSQL."
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "decision",
+            "title": "Storage engine",
+            "label_match": true,
+            "fields": {
+              "rationale": "Use only MongoDB documents for invoice writes; do not use PostgreSQL."
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": "Same exact topic and title, conflicting source rationales; human conflict review is required."
+      },
+      {
+        "case": "decision_missing_rationale",
+        "expected": [
+          {
+            "kind": "decision",
+            "title": "Adopt event queues",
+            "fields": {
+              "rationale": ""
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "decision",
+            "title": "Adopt event queues",
+            "label_match": true,
+            "fields": {
+              "rationale": ""
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "decision_superseded",
+        "expected": [
+          {
+            "kind": "decision",
+            "title": "Adopt sync webhook handlers",
+            "fields": {
+              "rationale": "Simpler request paths."
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "decision",
+            "title": "Adopt sync webhook handlers",
+            "label_match": true,
+            "fields": {
+              "rationale": "Simpler request paths."
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": "A superseded alternative does not constitute an unresolved current conflict."
+      },
+      {
+        "case": "procedure_current",
+        "expected": [
+          {
+            "kind": "procedure",
+            "title": "Deploy billing-api in staging",
+            "fields": {}
+          }
+        ],
+        "observed": [
+          {
+            "kind": "procedure",
+            "title": "Deploy billing-api in staging",
+            "label_match": true,
+            "fields": {},
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "procedure_stale",
+        "expected": [
+          {
+            "kind": "procedure",
+            "title": "Restore ledger-db backup",
+            "fields": {}
+          }
+        ],
+        "observed": [
+          {
+            "kind": "procedure",
+            "title": "Restore ledger-db backup",
+            "label_match": true,
+            "fields": {},
+            "exact_quote": true
+          }
+        ],
+        "note": "Age crosses the 180-day review threshold; this does not establish inaccuracy."
+      },
+      {
+        "case": "dependency_arrow",
+        "expected": [
+          {
+            "kind": "dependency",
+            "title": "billing-api -> ledger-db",
+            "fields": {
+              "from_component": "billing-api",
+              "to_component": "ledger-db"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "dependency",
+            "title": "billing-api -> ledger-db",
+            "label_match": true,
+            "fields": {
+              "from_component": "billing-api",
+              "to_component": "ledger-db"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "dependency_fields",
+        "expected": [
+          {
+            "kind": "dependency",
+            "title": "Customer dashboard storage",
+            "fields": {
+              "from_component": "web-dashboard",
+              "to_component": "billing-api"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "dependency",
+            "title": "Customer dashboard storage",
+            "label_match": true,
+            "fields": {
+              "from_component": "web-dashboard",
+              "to_component": "billing-api"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "incident_open",
+        "expected": [
+          {
+            "kind": "incident",
+            "title": "Invoice retry backlog",
+            "fields": {}
+          }
+        ],
+        "observed": [
+          {
+            "kind": "incident",
+            "title": "Invoice retry backlog",
+            "label_match": true,
+            "fields": {},
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "task_completed",
+        "expected": [
+          {
+            "kind": "task",
+            "title": "Database migration verification",
+            "fields": {}
+          }
+        ],
+        "observed": [
+          {
+            "kind": "task",
+            "title": "Database migration verification",
+            "label_match": true,
+            "fields": {},
+            "exact_quote": true
+          }
+        ],
+        "note": "Completed work must not be counted as an open commitment."
+      },
+      {
+        "case": "task_open",
+        "expected": [
+          {
+            "kind": "task",
+            "title": "Prepare rollback runbook",
+            "fields": {}
+          }
+        ],
+        "observed": [
+          {
+            "kind": "task",
+            "title": "Prepare rollback runbook",
+            "label_match": true,
+            "fields": {},
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "lesson",
+        "expected": [
+          {
+            "kind": "lesson",
+            "title": "Validate migration lock duration",
+            "fields": {}
+          }
+        ],
+        "observed": [
+          {
+            "kind": "lesson",
+            "title": "Validate migration lock duration",
+            "label_match": true,
+            "fields": {},
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "architecture",
+        "expected": [
+          {
+            "kind": "architecture",
+            "title": "Billing service topology",
+            "fields": {}
+          }
+        ],
+        "observed": [
+          {
+            "kind": "architecture",
+            "title": "Billing service topology",
+            "label_match": true,
+            "fields": {},
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "prose_responsibility",
+        "expected": [
+          {
+            "kind": "responsibility",
+            "title": "Ada Vale maintains the billing-api rotation. The role requires weekly database backup checks.",
+            "fields": {
+              "owner": "Ada Vale"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "responsibility",
+            "title": "Ada Vale maintains the billing-api rotation. The role requires weekly database backup checks.",
+            "label_match": true,
+            "fields": {
+              "owner": null
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": "Explicit prose names the maintainer; conservative field-only owner extraction may miss it."
+      },
+      {
+        "case": "prose_decision",
+        "expected": [
+          {
+            "kind": "decision",
+            "title": "The platform team decided to use Redis caching because the traffic pattern includes repeated lookups.",
+            "fields": {
+              "rationale": "the traffic pattern includes repeated lookups"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "decision",
+            "title": "The platform team decided to use Redis caching because the traffic pattern includes repeated lookups.",
+            "label_match": true,
+            "fields": {
+              "rationale": null
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": "A quoted rationale can exist even when it is not populated into a structured field."
+      },
+      {
+        "case": "prose_dependency",
+        "expected": [
+          {
+            "kind": "dependency",
+            "title": "billing-api depends on PostgreSQL to persist invoices safely.",
+            "fields": {
+              "from_component": "billing-api",
+              "to_component": "PostgreSQL"
+            }
+          }
+        ],
+        "observed": [],
+        "note": "Free-prose dependency extraction is a deliberate difficult positive."
+      },
+      {
+        "case": "commit_only",
+        "expected": [],
+        "observed": [],
+        "note": "Authorship alone is not evidence of an assigned responsibility."
+      },
+      {
+        "case": "negated_knowledge",
+        "expected": [],
+        "observed": [],
+        "note": "A statement that knowledge is missing is not an operational procedure."
+      },
+      {
+        "case": "unrelated",
+        "expected": [],
+        "observed": [],
+        "note": ""
+      },
+      {
+        "case": "missing_information",
+        "expected": [],
+        "observed": [],
+        "note": ""
+      }
+    ],
+    "owner_mapping": [
+      {
+        "case": "responsibility_explicit",
+        "expected": "Ada Vale",
+        "observed": "Ada Vale",
+        "correct": true
+      },
+      {
+        "case": "responsibility_no_backup",
+        "expected": "Ada Vale",
+        "observed": "Ada Vale",
+        "correct": true
+      },
+      {
+        "case": "responsibility_unknown",
+        "expected": null,
+        "observed": null,
+        "correct": true
+      },
+      {
+        "case": "responsibility_unmapped",
+        "expected": null,
+        "observed": null,
+        "correct": true
+      },
+      {
+        "case": "prose_responsibility",
+        "expected": "Ada Vale",
+        "observed": null,
+        "correct": false
+      }
+    ],
+    "decision_rationale": [
+      {
+        "case": "decision_current",
+        "expected": "Use PostgreSQL transactions for atomic invoice writes.",
+        "observed": "Use PostgreSQL transactions for atomic invoice writes.",
+        "correct": true
+      },
+      {
+        "case": "decision_conflict",
+        "expected": "Use only MongoDB documents for invoice writes; do not use PostgreSQL.",
+        "observed": "Use only MongoDB documents for invoice writes; do not use PostgreSQL.",
+        "correct": true
+      },
+      {
+        "case": "decision_missing_rationale",
+        "expected": "",
+        "observed": "",
+        "correct": true
+      },
+      {
+        "case": "decision_superseded",
+        "expected": "Simpler request paths.",
+        "observed": "Simpler request paths.",
+        "correct": true
+      },
+      {
+        "case": "prose_decision",
+        "expected": "the traffic pattern includes repeated lookups",
+        "observed": "",
+        "correct": false
+      }
+    ],
+    "dependency_endpoints": [
+      {
+        "case": "dependency_arrow",
+        "expected": {
+          "from_component": "billing-api",
+          "to_component": "ledger-db"
+        },
+        "observed": {
+          "from_component": "billing-api",
+          "to_component": "ledger-db"
+        },
+        "correct": true
+      },
+      {
+        "case": "dependency_fields",
+        "expected": {
+          "from_component": "web-dashboard",
+          "to_component": "billing-api"
+        },
+        "observed": {
+          "from_component": "web-dashboard",
+          "to_component": "billing-api"
+        },
+        "correct": true
+      },
+      {
+        "case": "prose_dependency",
+        "expected": {
+          "from_component": "billing-api",
+          "to_component": "PostgreSQL"
+        },
+        "observed": {
+          "from_component": null,
+          "to_component": null
+        },
+        "correct": false
+      }
+    ],
+    "unsupported_questions": [
+      {
+        "question": "What is the annual company revenue?",
+        "expected_known": false,
+        "observed_known": false,
+        "citation_count": 0,
+        "correct_abstention": true
+      },
+      {
+        "question": "Who owns the Kubernetes firewall?",
+        "expected_known": false,
+        "observed_known": false,
+        "citation_count": 0,
+        "correct_abstention": true
+      },
+      {
+        "question": "What exact financial impact does deployment have?",
+        "expected_known": false,
+        "observed_known": false,
+        "citation_count": 0,
+        "correct_abstention": true
+      },
+      {
+        "question": "What is the confidential-vault recovery procedure?",
+        "expected_known": false,
+        "observed_known": false,
+        "citation_count": 0,
+        "correct_abstention": true
+      }
+    ],
+    "conflict_pairs": [
+      [
+        "decision_conflict",
+        "decision_current"
+      ]
+    ],
+    "reconstruction": {
+      "added_candidates": 19,
+      "searched_sources": 24,
+      "engine": "deterministic-v1"
+    }
+  },
+  "limitations": [
+    "This controlled synthetic corpus is small and intentionally includes the supported structured syntax. It is not a representative organisational dataset.",
+    "Labels were written for these fixtures; this is deterministic rule evaluation, not an independently validated real employee handover benchmark.",
+    "Exact citation checks establish attribution only, not source truth, semantic entailment, completeness, operational competence or business continuity.",
+    "The potential-conflict metric measures requests for human review, not reliable semantic contradiction resolution.",
+    "Only one source-ACL negative is counted here; comprehensive tenant/project/source enforcement is exercised in separate API tests.",
+    "No model accuracy, onboarding-time reduction, production readiness or financial benefit is claimed."
+  ]
+}

@@ -1,0 +1,23 @@
+export interface User { id: string; org_id: string; name: string; email: string; title: string; role: string }
+export interface Session { user: User; csrf_token: string }
+export interface Project { id: string; name: string; description: string; status: string; stack: string[]; is_demo: boolean }
+export interface Source { id: string; name: string; kind: string; status: string; url?: string | null; version: number; source_time?: string | null; updated_at: string; synthetic: boolean; restricted: boolean; metadata: Record<string, unknown>; chunk_count: number }
+export interface Citation { id: string; source_id: string; source_name: string; source_kind: string; source_url?: string | null; source_time?: string | null; source_version: number; chunk_id: string; locator: string; quote: string; synthetic: boolean }
+export interface Claim { id: string; kind: string; title: string; summary: string; status: string; confidence: string; confidence_reason: string; data: Record<string, unknown>; evidence: Citation[]; updated_at: string }
+export interface Connection { id: string; name: string; provider: string; repository?: string | null; status: string; last_sync_at?: string | null; has_token: boolean }
+export interface Job { id: string; kind: string; status: string; error?: string | null; stats: Record<string, unknown>; created_at: string; finished_at?: string | null }
+export interface Gap { id: string; title: string; kind: string; severity: string; status: string; details: string; question: string; source_ids: string[]; claim_id?: string | null }
+export interface Finding { title: string; kind: string; severity: string; details: string; question: string; source_ids: string[]; claim_id?: string | null }
+export interface Investigation { id: string; status: string; created_at: string; report: { summary?: string; findings?: Finding[]; questions?: { question: string; reason: string; source_ids: string[] }[]; searched_sources?: number; unknowns?: string[]; engine?: string; limitations?: string[] } }
+export interface Audit { id: string; action: string; resource_type: string; resource_id: string; actor_name?: string; details: Record<string, unknown>; created_at: string }
+export interface Metric { key: string; label: string; value: number | string | null; numerator?: number | null; denominator?: number | null; description: string }
+export interface Overview { metrics: Metric[]; activity: Audit[]; pipeline: { stage: string; status: string; count: number }[]; ai_mode: string; synthetic: boolean; source_health: { ready: number; failed: number; quarantined: number } }
+export interface Graph { nodes: { id: string; label: string; kind: string; status: string }[]; edges: { id: string; source: string; target: string; label: string; status: string; evidence: Citation[] }[]; limitations: string[] }
+export interface Simulation { id: string; created_at: string; employee_id: string; scenario: string; assumptions: string[]; report: { hypothetical: true; summary: string; affected: { responsibility_id: string; title: string; system: string; critical: boolean; owner: string; backup?: string | null; status: string; risks: string[]; evidence: Citation[] }[]; recommendations: string[]; unknowns: string[] } }
+export interface Transfer { id: string; claim_id: string; title: string; successor_id: string; backup_id?: string | null; status: string; note?: string | null }
+export interface Exercise { id: string; transfer_id?: string | null; title: string; prompt: string; criteria: string[]; expected_source_ids: string[]; status: string; answer?: string; evidence_ids?: string[]; escalation?: string; supervisor_note?: string; assessment?: Record<string, unknown> }
+export interface Transition { id: string; title: string; departing_id: string; successor_id: string; departure_date: string; status: string; version: number; report: Record<string, unknown>; transfers: Transfer[]; exercises: Exercise[] }
+export interface Readiness { accepted: number; total: number; validated: number; exercise_total: number; ready: boolean; blockers: string[]; evidence_coverage: { numerator: number; denominator: number }; limitations: string[] }
+export interface Answer { answer: string; known: boolean; citations: Citation[]; unknowns: string[]; engine: string }
+export interface Privacy { sources: Source[]; quarantined_count: number; retention_days: number; controls: string[]; limitations: string[] }
+export interface EvidenceDocument { source: Source; chunks: { id: string; locator: string; text: string }[] }

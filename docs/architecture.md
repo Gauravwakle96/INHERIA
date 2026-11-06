@@ -1,0 +1,51 @@
+# Architecture and trust boundaries
+
+INHERIA is a modular monolith. The UI communicates only with REST endpoints under `/api`. Frontend request state is managed by React Query; the Vite development server proxies API calls to FastAPI. The production build is served by the same FastAPI process.
+
+```mermaid
+flowchart LR
+  UI[React workspace] --> API[FastAPI / cookie session / CSRF]
+  API --> ACL[Organisation / project role / source ACL]
+  ACL --> SRC[GitHub connector and document parsers]
+  SRC --> P[Privacy filter and quarantine]
+  P --> DB[(SQLAlchemy / PostgreSQL)]
+  DB --> INV[Bounded investigation and evidence reconstruction]
+  INV --> REVIEW[Human claim review]
+  REVIEW --> H[Handover approval]
+  H --> ACCEPT[Incoming owner acceptance]
+  ACCEPT --> V[Practical explanation and supervisor validation]
+  V --> OWNER[Accepted ownership provenance]
+  DB --> GRAPH[Graph / hypothetical risk / verified retrieval]
+```
+
+## Data model
+
+Eighteen persisted tables cover organisations, users, project memberships, sessions, projects, connections, sources, versioned chunks, claims, evidence, investigations, gaps, simulations, transitions, transfers, exercises, jobs and audit records. IDs are UUIDs. Tenant and project foreign keys, uniqueness constraints and indexes constrain duplicates and support permission-scoped queries. JSON fields contain typed service payloads; source text and quotations are explicit records, not arbitrary AI assertions.
+
+One initial immutable Alembic migration creates the schema. Development startup supports automatic creation; production relies on migrations. SQLite is a local convenience. PostgreSQL is required by production configuration. pgvector, Redis, Celery and a separate graph database were omitted because bounded lexical retrieval and local jobs meet the central workflow without extra infrastructure.
+
+## Evidence lifecycle
+
+Sources retain names, locators, timestamps, checksums, versions and ACLs. Chunks include their source version. Every candidate has exact quotation evidence. The active read path verifies tenant/project, source access, ready status, source/chunk identity, version and quotation membership. A mixed-permission claim is hidden entirely. Transaction-scoped evidence batching is cleared after flush, commit or rollback.
+
+Source changes invalidate derived claims. Revocation immediately removes authoritative access. Deletion removes indexed chunks, evidence and source-derived text from claims and stored investigation/simulation/handover/validation snapshots. Historical data is never returned as current evidence after version changes. Corrections return to pending, retain audit metadata and invalidate dependent practical assessments.
+
+## Authentication and authority
+
+Argon2 hashes passwords. Random session tokens are stored only as SHA-256 digests; HttpOnly SameSite=Strict cookies hold the opaque token. Authenticated mutations require a separate session CSRF header, permitted Origin and same-site request context. Organisation privilege and project membership privilege must both permit supervisor writes. Source ACLs apply even to administrators.
+
+Demo persona sign-in is explicitly gated and rejected in production. New organisations can create project team accounts as administrators. Enterprise SSO/MFA, invitation mail, password resets, federated roles and source OAuth are documented unimplemented capabilities.
+
+Claims, handovers, acceptance and practical validation have distinct states. Assignment is limited to the single transition participant whose readiness will be assessed. Closure requires all departing-employee responsibilities, current approved evidence, incoming acceptance and supervisor-reviewed exercises. It creates an auditable human ownership record and updates the current owner; prior source statements remain available as historical evidence.
+
+## Expensive and external work
+
+GitHub synchronisation and investigations use persisted status records with bounded in-process background work and separate sessions. Restarts label incomplete jobs as interrupted. This is observable local processing, not a durable distributed scheduler. API and sign-in limits are bounded in process; multi-worker deployments need a shared rate limiter and durable job worker.
+
+GitHub uses a fixed HTTPS API host, bounded pagination, ETags, retries and incremental cursors, without repository cloning. Tokens are encrypted with a configured key, never sent to the browser or logs. Partial snapshots do not falsely advance a complete-sync cursor. No future connector is represented as connected.
+
+LLM source processing requires explicit configuration and opt-in. A single investigation uses at most 15 chunks / 30,000 input characters and structured candidates. Exact citation validation rejects invented text or restricted chunk IDs. Requests use `store=false` and do not send previous response IDs or conversation references. Provider retention and contractual controls still need operator verification.
+
+## Metrics and simulations
+
+Metrics expose numerator, denominator and formula descriptions; missing denominators return null. Verification coverage measures reviewed current claims, not extraction accuracy. Source age is a review trigger, not proof of decay. Simulations distinguish employee unavailability, dependency failure and unverified/stale procedures; assumptions and hypothetical effects are separate from source evidence. No precise financial impact or competence guarantee is inferred.

@@ -1,0 +1,1 @@
+"""INHERIA modular monolith."""
