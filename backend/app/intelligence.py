@@ -399,7 +399,10 @@ def find_gaps(
         if (
             claim.kind == "decision"
             and not data.get("rationale")
-            and not re.search(r"\b(because|rationale|reason|trade-off)\b", claim.summary, re.I)
+            and (
+                data.get("extraction") == "explicit_source_statement"
+                or not re.search(r"\b(because|rationale|reason|trade-off)\b", claim.summary, re.I)
+            )
         ):
             add(
                 f"Rationale missing: {claim.title}",
