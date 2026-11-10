@@ -109,6 +109,17 @@ def test_chat_message_idempotency_and_secret_rejection(workspace, monkeypatch):
     assert secret_pattern not in client.get(base + "/chat/conversations/" + conv["id"]).text
 
 
+def test_fallback_keyword_matches_are_labelled_as_excerpts_not_a_model_answer(workspace, monkeypatch):
+    client, _, _, _, base, conv, _ = setup(workspace, monkeypatch)
+    verify_all(client, base)
+    claim = client.get(base + "/claims").json()[0]
+    result = send(client, base, conv, claim["title"])
+    assert result.status_code == 200
+    reply = result.json()["turns"][-1]["response"]
+    assert reply["citations"] and reply["parts"][0]["kind"] == "excerpt"
+    assert "keyword matches" in reply["answer"] and not reply["known"]
+
+
 def test_valid_model_answer_uses_verified_citations_and_effort(workspace, monkeypatch):
     client, _, _, _, base, conv, _ = setup(workspace, monkeypatch, True)
     verify_all(client, base)

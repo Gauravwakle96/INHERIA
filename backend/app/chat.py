@@ -490,8 +490,13 @@ def send_message(db, user, record, payload):
         answer = successor_answer(db, user, record.project_id, message)
         parts = [
             {
-                "kind": "project" if answer["known"] else "unknown",
-                "text": answer["answer"],
+                "kind": "excerpt" if answer["known"] else "unknown",
+                "text": (
+                    "Related verified excerpts (keyword matches; they may not answer every part of your question):\n\n"
+                    + answer["answer"]
+                    if answer["known"]
+                    else answer["answer"]
+                ),
                 "references": [r["id"] for r in answer["citations"]],
             }
         ]

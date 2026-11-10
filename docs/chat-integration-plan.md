@@ -31,3 +31,5 @@ Provider request timeout is 110 seconds (10-second connect timeout). Low effort 
 History limits are 50 conversations and 100 turns per conversation; delete old conversations when needed. Prompts are secret-filtered and PII-redacted. Conversations have neutral titles to avoid restricted source text in navigation. Role changes conservatively invalidate earlier history. Lexical fallback uses the existing method, so Low/High affects model calls only. Partial source data, rule-based extraction and citation validation do not establish knowledge completeness or generated semantic truth.
 
 An interrupted confirmed action may remain executing if the process stops after its domain mutation commits. Inspect the linked project workspace before requesting another action; replay is intentionally blocked. Restarts mark unfinished replies failed. Durable workers, streaming/cancel, semantic answer evaluation and automatic retention are future work.
+
+Live QA revealed lexical matching can return related documents for an unrelated question. Fallback matches are explicitly labelled related excerpts and do not set `known=true`; they are not presented as model explanations.

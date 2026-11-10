@@ -136,3 +136,7 @@ Before publication, the staged 108 files were reviewed: 88 text files and 20 ren
 - The reported upstream Azure Responses resource-mismatch error is separate from INHERIA's local preview failure. Codex provider/model settings were preserved; gateway routing and a permanent upstream fix were not verified. See [the diagnosis](azure-responses-error.md).
 
 See [feature status](feature-status.md) for the complete implemented, partial and postponed capability list, and [setup instructions](../README.md) to run the application.
+
+Live deployment f5c0ce9 reached Render live status and PostgreSQL migrated to e4058f85541c. The supplied key was saved encrypted only for the verified Gaurav organisation. Its actual Render-side connection test returned a safe unvalidated-provider-response error; local Responses/Chat Completions probes returned 401. No successful live model call is claimed. Live fallback inspection exposed partial keyword matching, so related excerpts now stay explicitly labelled and known=false. The final follow-up backend suite passed 135 tests.
+
+Live browser QA confirmed saved private history after reload, High effort, action previews, AI settings, HTTPS readiness and updated OpenAPI. Settled desktop/night and mobile/day renders passed axe checks with zero violations and no horizontal overflow or runtime errors. Initial contrast readings during the theme transition were resolved by waiting for the palette to settle with reduced motion. Screenshots were inspected. See chat-public-verification.json.

@@ -1,0 +1,24 @@
+{
+  "ok": true,
+  "public_url": "https://inheria.onrender.com",
+  "private_history_reload": true,
+  "high_effort": true,
+  "action_preview": true,
+  "ai_settings": true,
+  "layouts": [
+    {
+      "theme": "dark",
+      "axe_violations": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "theme": "light",
+      "axe_violations": 0,
+      "horizontal_overflow": false
+    }
+  ],
+  "runtime_errors": [],
+  "ready": true,
+  "openapi_paths": 51,
+  "live_model_verified": false
+}
