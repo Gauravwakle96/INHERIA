@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: inheria
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: main
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/ready
+    envVars:
+      - key: INHERIA_ENVIRONMENT
+        value: production
+      - key: INHERIA_DEMO_MODE
+        value: "false"
+      - key: INHERIA_LLM_ENABLED
+        value: "false"
+      - key: INHERIA_DATABASE_URL
+        sync: false
+      - key: INHERIA_TOKEN_ENCRYPTION_KEY
+        sync: false

@@ -6,6 +6,8 @@ A functional technical knowledge-continuity application built around **Connect â
 
 ## Run locally
 
+Free hosting instructions: [Render Free + Neon Free](docs/deployment.md).
+
 Requirements: Python 3.13, uv, Node 24 and npm. Dependencies are locked.
 
 Clone the repository, then run the commands from its checkout:

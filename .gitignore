@@ -21,3 +21,4 @@ local-data/
 **/.impeccable/hook.cache.json
 *.tsbuildinfo
 .DS_Store
+.local/

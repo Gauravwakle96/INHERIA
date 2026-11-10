@@ -11,7 +11,7 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
-from sqlalchemy import select
+from sqlalchemy import select, text
 
 from app import models as m
 from app.config import settings
@@ -62,7 +62,7 @@ def create_app() -> FastAPI:
                     {"detail": "Request origin is not permitted.", "request_id": request_id}, status_code=403
                 )
         path = request.url.path
-        if path.startswith("/api/") and path != "/api/health":
+        if path.startswith("/api/") and path not in {"/api/health", "/api/ready"}:
             category = (
                 "auth"
                 if path.startswith("/api/auth/") and request.method == "POST"
@@ -113,7 +113,9 @@ def create_app() -> FastAPI:
             response.headers["Cache-Control"] = "no-store"
         if settings.environment == "production":
             response.headers["Content-Security-Policy"] = (
-                "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+                "default-src 'self'; script-src 'self'; style-src 'self'; "
+                "style-src-attr 'unsafe-inline'; img-src 'self' data:; font-src 'self'; "
+                "connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
             )
             response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
         return response
@@ -149,6 +151,15 @@ def create_app() -> FastAPI:
             "demo_mode": settings.demo_mode,
             "ai_mode": "llm-optional" if settings.llm_enabled else "deterministic-v1",
         }
+
+    @app.get("/api/ready", tags=["Health"])
+    def ready():
+        try:
+            with engine.connect() as connection:
+                connection.execute(text("SELECT 1"))
+        except Exception:
+            return JSONResponse({"status": "unavailable"}, status_code=503)
+        return {"status": "ready"}
 
     frontend = Path(__file__).resolve().parents[2] / "frontend" / "dist"
     if frontend.exists():

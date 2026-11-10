@@ -11,6 +11,9 @@ def make_engine(url: str):
     options = {"pool_pre_ping": True}
     if url.startswith("sqlite"):
         options["connect_args"] = {"check_same_thread": False, "timeout": 30}
+    elif url.startswith("postgresql"):
+        options.update(pool_size=2, max_overflow=3, pool_recycle=300)
+        options["connect_args"] = {"connect_timeout": 10}
     result = create_engine(url, **options)
     if url.startswith("sqlite"):
 

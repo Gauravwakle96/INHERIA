@@ -1,6 +1,8 @@
 """Environment-backed application settings. Credential fields never appear in repr."""
 
-from pydantic import Field, model_validator
+from urllib.parse import urlsplit
+
+from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -9,6 +11,7 @@ class Settings(BaseSettings):
 
     environment: str = "development"
     database_url: str = Field(default="sqlite:///./inheria.db", repr=False)
+    render_external_url: str = Field(default="", validation_alias="RENDER_EXTERNAL_URL")
     demo_mode: bool = True
     allowed_origins: list[str] = [
         "http://localhost:5173",
@@ -33,15 +36,38 @@ class Settings(BaseSettings):
     def secure_cookies(self) -> bool:
         return self.environment == "production"
 
+    @field_validator("database_url", mode="before")
+    @classmethod
+    def postgres_driver(cls, value: str) -> str:
+        # Provider connection strings omit SQLAlchemy's installed psycopg v3 driver.
+        for prefix in ("postgres://", "postgresql://"):
+            if value.startswith(prefix):
+                return "postgresql+psycopg://" + value[len(prefix) :]
+        return value
+
     @model_validator(mode="after")
     def production_configuration(self):
         if self.environment == "production":
+            if self.render_external_url and "allowed_origins" not in self.model_fields_set:
+                self.allowed_origins = [self.render_external_url]
             if self.demo_mode:
                 raise ValueError("Production requires INHERIA_DEMO_MODE=false")
             if not self.database_url.startswith("postgresql"):
                 raise ValueError("Production requires a PostgreSQL database URL")
-            if any(not origin.startswith("https://") for origin in self.allowed_origins):
-                raise ValueError("Production allowed origins must use HTTPS")
+            if not self.allowed_origins:
+                raise ValueError("Production requires at least one allowed HTTPS origin")
+            for origin in self.allowed_origins:
+                parsed = urlsplit(origin)
+                if (
+                    parsed.scheme != "https"
+                    or not parsed.hostname
+                    or parsed.username
+                    or parsed.password
+                    or parsed.path
+                    or parsed.query
+                    or parsed.fragment
+                ):
+                    raise ValueError("Production allowed origins must be exact HTTPS origins")
         return self
 
 
