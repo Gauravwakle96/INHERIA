@@ -28,7 +28,7 @@ This file reports implementation, not the complete long-term product vision. The
 | Industry profiles / custom roles / departments | Partial architecture | Industry field and role enums exist; full configuration UI/policy engine absent |
 | Cross-project memory reuse | Postponed | No cross-company learning or confidential data sharing |
 | Predictive decay / multi-person continuity / advanced restoration | Postponed | Requires historical data and additional validation |
-| PostgreSQL deployment / Docker / CI | Prepared | Environment-specific deployment verification recorded separately |
+| PostgreSQL deployment / Docker / CI | Deployed; CI configured | Render Free Docker build/runtime and Neon PostgreSQL verified; see deployment evidence |
 | Automated retention / legal hold / data residency / enterprise governance | Not implemented | Must be designed and validated for an actual deployment |
 
 The eleven engines remain logical product domains: discovery, capture, decisions, relationships, trust, organisation configuration, handover, continuity, readiness, workflow and memory. They share persisted models and services. INHERIA does not claim that every long-term engine feature is implemented.

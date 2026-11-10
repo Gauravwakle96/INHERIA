@@ -2,6 +2,24 @@
 
 Final local verification: 6 November 2026. Results apply to the implemented MVP in this workspace; they do not certify an enterprise deployment.
 
+## Public deployment verification — 11 November 2026 IST
+
+**https://inheria.onrender.com** is deployed as a Render **Free** Docker web service, with a dedicated Neon PostgreSQL project in a verified **Free** organisation. Docker build and runtime were verified on Render, which resolves the earlier local Docker-daemon verification gap. Alembic upgrade and schema consistency checks passed against the actual PostgreSQL database.
+
+The deployment configuration commit was `877ed26ca596e18570f6818c1439310fb08ece8e`. After deployment changes, **116 backend tests passed**, Python lint/formatting passed, frontend lint/typecheck/build passed, and Python/npm dependency audits reported no known vulnerabilities. The previous 13 local Playwright tests remain recorded below; they were not rerun as a deployment suite. A separate Playwright run exercised the actual public service.
+
+HTTPS health/readiness, frontend files and SPA routes returned successful responses. Registration/login, Secure HttpOnly SameSite cookies, rejected invalid CSRF/cross-origin writes and denied cross-tenant project/source reads passed against the public service. Demo persona access was disabled and optional paid LLM processing remained disabled.
+
+An isolated fictional QA organisation completed document upload → reconstruction/investigation → evidence review → hypothetical unavailability analysis → approved handover → incoming owner acceptance → four exercise submissions → separate supervisor review → transition closure. Five evidence-backed claims produced nine graph entities and seven relationships before closure. These are fixture observations, not product benchmarks; the assessment records a safe walkthrough and does not prove operational competence or execute infrastructure.
+
+The public browser run checked 11 application routes, day/night persistence, graph drag/selection and both themes at 390×844, 768×1024 and 1440×900. All six settled overview combinations had zero axe WCAG A/AA violations, no horizontal overflow and no CSP violations. No uncaught browser runtime error was observed. Representative mobile/day and desktop/night screenshots were visually inspected. This is bounded automated and visual coverage, not a complete accessibility or security audit.
+
+Live anonymous GitHub synchronisation failed with GitHub's explicit rate-limit response from Render's shared outbound IP. The integration exposed the failure without fabricated source data. Connector unit/integration coverage passed, but successful authenticated public-host synchronisation remains unverified. Use a least-privilege source token or retry after the provider reset. No credential from Render/Neon authentication was repurposed.
+
+The local DNS resolver briefly retained a failed lookup for the new domain. Public DNS-over-HTTPS resolved it correctly, and the controlled browser subsequently loaded the normal HTTPS URL. Automated QA used that authoritative address for this host while retaining hostname and certificate verification; no system DNS configuration was changed.
+
+See [deployment evidence](deployment-verification.json), [public browser screenshots](deployment-artifacts/) and [free hosting setup/limits](deployment.md). Render Free can sleep after 15 idle minutes; monthly hours are shared with the workspace's other services. Enterprise controls and paid AI remain outside this deployment's verified scope.
+
 ## Local application and workflow
 
 The React preview is running at http://127.0.0.1:5173 and the FastAPI service at http://127.0.0.1:8010. Final HTTP checks returned 200 for the frontend and API schema. The API exposes 42 documented paths at `/openapi.json`; interactive documentation is available at `/docs`.

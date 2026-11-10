@@ -4,6 +4,8 @@
 
 A functional technical knowledge-continuity application built around **Connect → Reconstruct → Verify → Review → Handover → Validate**. React/TypeScript frontend, FastAPI modular backend, SQLAlchemy models and Alembic migrations. PostgreSQL is the deployment database; SQLite supports local development.
 
+**Live application:** https://inheria.onrender.com — create an account to start your own workspace. Render Free may take about a minute to wake after inactivity.
+
 ## Run locally
 
 Free hosting instructions: [Render Free + Neon Free](docs/deployment.md).

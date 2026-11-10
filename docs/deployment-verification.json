@@ -1,0 +1,62 @@
+{
+  "url": "https://inheria.onrender.com",
+  "verified_at": "2026-11-10T19:05:14.865Z",
+  "deployment_commit": "877ed26ca596e18570f6818c1439310fb08ece8e",
+  "hosting": { "provider": "Render", "plan": "free", "runtime": "docker", "region": "singapore" },
+  "database": { "provider": "Neon", "organisation_plan": "free", "engine": "PostgreSQL 17", "region": "aws-ap-southeast-1", "migrations": "pass", "schema_consistency": "pass" },
+  "checks": {
+    "backend_tests": { "passed": 116, "failed": 0 },
+    "python_lint_format": "pass",
+    "python_dependency_audit": "no known vulnerabilities reported",
+    "frontend_lint_typecheck_build": "pass",
+    "npm_dependency_audit": "zero vulnerabilities reported",
+    "render_docker_build_runtime": "pass",
+    "https_health_readiness": "pass",
+    "registration_login": "pass",
+    "secure_httponly_samesite_cookies": "pass",
+    "invalid_csrf_and_cross_origin_denied": "pass",
+    "cross_tenant_project_sources_denied": "pass",
+    "demo_persona_login_disabled": "pass",
+    "paid_llm_disabled": "pass",
+    "connect_to_validate_workflow": "pass",
+    "graph_drag_selection": "pass",
+    "theme_persistence": "pass"
+  },
+  "isolated_fixture": {
+    "description": "Fictional Deployment QA organisation using an explicitly labelled document; no production operation executed",
+    "claims": 5,
+    "graph_nodes": 9,
+    "graph_edges": 7,
+    "investigation_status": "completed",
+    "simulation": "hypothetical",
+    "handover_status": "closed",
+    "supervisor_reviewed_exercises": 4,
+    "readiness": "ready after separate supervisor assessment; not proof of real-world competence"
+  },
+  "browser": {
+    "routes": ["/sources", "/memory", "/decisions", "/investigation", "/graph", "/risk", "/team", "/handover", "/validation", "/successor", "/governance"],
+    "layouts": [
+      { "theme": "light", "width": 390, "height": 844, "axe_violations": 0, "horizontal_overflow": false, "csp_violations": 0 },
+      { "theme": "light", "width": 768, "height": 1024, "axe_violations": 0, "horizontal_overflow": false, "csp_violations": 0 },
+      { "theme": "light", "width": 1440, "height": 900, "axe_violations": 0, "horizontal_overflow": false, "csp_violations": 0 },
+      { "theme": "dark", "width": 390, "height": 844, "axe_violations": 0, "horizontal_overflow": false, "csp_violations": 0 },
+      { "theme": "dark", "width": 768, "height": 1024, "axe_violations": 0, "horizontal_overflow": false, "csp_violations": 0 },
+      { "theme": "dark", "width": 1440, "height": 900, "axe_violations": 0, "horizontal_overflow": false, "csp_violations": 0 }
+    ],
+    "runtime_errors": [],
+    "csp_violations": []
+  },
+  "github_live_sync": {
+    "status": "failed",
+    "reason": "GitHub anonymous API rate limit exhausted on Render shared outbound IP",
+    "failure_reported_honestly": true,
+    "successful_authenticated_sync": "not verified",
+    "recovery": "Retry after provider reset or configure own least-privilege GitHub source token"
+  },
+  "limits": [
+    "Render Free sleeps after inactivity and shares monthly instance hours with other workspace services",
+    "Provider quotas can change; no paid resources or LLM configured",
+    "In-process jobs are interrupted on restart and require retry",
+    "Representative browser checks do not establish complete accessibility or enterprise security"
+  ]
+}

@@ -2,6 +2,8 @@
 
 Use one Render **Free** Docker web service and one Neon **Free** PostgreSQL project. The frontend and API share one HTTPS origin; no separate frontend deployment is needed. Paid LLM APIs are disabled by default.
 
+Verified deployment: **https://inheria.onrender.com**. Service plan and database organisation plan were both confirmed free. See [public verification](deployment-verification.json).
+
 ## Deployment configuration
 
 `render.yaml` describes the free service. Import this repository into Render or use its official CLI with an explicit `--plan free`. Choose Singapore for both services where available. Create the database in a verified Neon Free organisation; do not add Render PostgreSQL, whose free tier expires after 30 days.
@@ -29,6 +31,8 @@ The Docker image builds the frontend and copies its assets into `/app/frontend/d
 Production requires PostgreSQL, HTTPS origins and disabled demo login. Session cookies are Secure, HttpOnly and SameSite=Strict; write requests retain origin and CSRF checks. The theme bootstrap is an external same-origin script. Script and style element policies remain restricted to `'self'`; `style-src-attr 'unsafe-inline'` permits React Flow's dynamic layout and React style attributes. This exception permits CSS attributes, not inline scripts or style elements. Source text is rendered through React escaping rather than injected HTML.
 
 Register an account and create a project after deployment. No shared demonstration account is enabled on the public service. Public GitHub sources can be connected without a private token; private-source authentication requires the configured server encryption key.
+
+During live QA, GitHub rejected anonymous synchronisation from Render's shared outbound IP because its rate limit was exhausted. INHERIA reported the failure and did not mark the integration connected successfully. Retry after GitHub's reset or configure your own least-privilege GitHub token in the repository connection form. Render/Neon login credentials are not reused as GitHub source credentials. Authenticated live source synchronisation was not verified in this deployment.
 
 ## Free-tier limitations
 
