@@ -42,6 +42,14 @@ System32 is the current authorised workspace and can cause Windows sandbox proce
 
 ## Try the complete scenario
 
+## Digital Successor chat
+
+Open **Digital successor** for private saved conversations, Low/High effort, evidence citations and confirmed project actions. An administrator can use **AI settings** to save an encrypted AgentRouter key, select `gpt-6.1-sol`, `gpt-6-astra` or `gpt-5.6-sol`, enable external processing and test the connection. Configure `INHERIA_TOKEN_ENCRYPTION_KEY` on the server first. No credential is returned to the browser or stored in frontend code.
+
+The supplied key returned HTTP 401 on both official endpoints during verification. Live model replies remain unverified; failed requests show a warning and fall back to current verified excerpts. Low/High changes model context/output budgets; lexical fallback uses the existing retrieval method. See [chat setup and limits](docs/chat-integration-plan.md).
+
+## Demonstration workflow
+
 The local default enables the clearly labelled **NEXORA TECHNOLOGIES Demo workspace**. It contains five fictional employees, three repository fixtures, 75 commits, 12 pull requests, 25 issues and ten documents. These are fictional demonstration data, not real GitHub contributors or activity.
 
 1. Sign in as **Maya Chen**. Inspect sources or upload a permitted PDF/DOCX/Markdown/TXT/JSON document. Public GitHub repository connections are also functional.

@@ -30,6 +30,16 @@ The complete tested workflow covers source upload, evidence reconstruction, inve
 
 ## Automated results
 
+## Private chat increment — 11 November 2026
+
+Backend: 134 tests passed (including 18 chat tests), Ruff lint/format passed, Alembic metadata check passed, locked-environment pip-audit reported no known vulnerabilities. Frontend typecheck, lint and production build passed; npm audit reported zero vulnerabilities. Chat browser tests passed for private history reload, incoming-account isolation, abstention, confirmed investigation, model configuration and clearing unsaved credentials. Both themes at widths 390/768/1440 passed horizontal overflow and axe WCAG A/AA checks; representative desktop and mobile screenshots were inspected.
+
+Initial combined browser runs exposed test sign-in timing and exhausted shared-IP rate limits. Tests now wait for successful sign-in, reuse their own chat test session and pace requests; production access controls remain unchanged. Final full browser suite: 21 passed in 2.7 minutes; final backend rerun: 134 passed. Staged credential scan found zero supplied-key or credential-pattern findings across 29 files. Updated OpenAPI contains 51 paths; Compose syntax passed. Docker daemon runtime was not rechecked locally. Backend tests mock model outputs to cover citations, source ACL/version/role changes, deletion, malformed output, secret detection, idempotency, action gates and safe provider errors; they do not establish live AI quality.
+
+Actual stateless Responses requests to `https://agentrouter.org/v1/responses` and `https://ps.air-outer.com/v1/responses` returned HTTP 401 using the supplied credential. Live model replies remain blocked. No credentials, raw provider errors or prompts were printed. See [chat scope and limits](chat-integration-plan.md).
+
+## Earlier baseline results
+
 | Check | Recorded result |
 | --- | --- |
 | Backend pytest suite | 104 passed |

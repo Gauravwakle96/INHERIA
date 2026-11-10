@@ -36,6 +36,12 @@ During live QA, GitHub rejected anonymous synchronisation from Render's shared o
 
 ## Free-tier limitations
 
+## Organisation chat configuration
+
+The chat migration runs on normal Docker startup. `INHERIA_TOKEN_ENCRYPTION_KEY` encrypts organisation AgentRouter keys as well as GitHub tokens; keep it stable. No shared global chat key is installed. Administrators configure their own organisation through Digital successor → AI settings, explicitly enable processing and test a real request. Provider fees and usage conditions remain separate from free hosting. The supplied key returned HTTP 401 during verification, so model operation is not established. Private conversations and verified-retrieval fallback remain available.
+
+## Hosting limits
+
 Render Free currently sleeps after 15 idle minutes and may take about a minute to wake. Its 750 monthly instance hours are shared across services in the workspace. This workspace also contains other services, so total usage determines availability. Neon Free currently includes 100 CU-hours per project and 1 GB storage; check current provider limits before relying on them. No paid upgrade or paid LLM is configured.
 
 Render's filesystem is ephemeral. The application stores parsed sources and workflow data in PostgreSQL; do not depend on local container files for persistence. Jobs are bounded in-process tasks: a restart interrupts them and marks them failed for retry. Distributed workers, automatic backups/retention policies, SSO/MFA and enterprise source permission mirroring remain future work. Provider limits and billing rules can change.

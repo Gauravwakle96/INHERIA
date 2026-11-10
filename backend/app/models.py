@@ -248,3 +248,46 @@ class Audit(Identity, TenantScope, Base):
     resource_type: Mapped[str] = mapped_column(String(50))
     resource_id: Mapped[str] = mapped_column(String(36), default="")
     details: Mapped[dict] = mapped_column(JSON, default=dict)
+
+
+class AIConfiguration(Identity, TenantScope, Base):
+    __tablename__ = "ai_configurations"
+    __table_args__ = (UniqueConstraint("org_id", name="uq_ai_configuration_org"),)
+    provider: Mapped[str] = mapped_column(String(30), default="agentrouter")
+    base_url: Mapped[str] = mapped_column(String(240), default="https://agentrouter.org/v1")
+    model: Mapped[str] = mapped_column(String(120), default="")
+    protocol: Mapped[str] = mapped_column(String(20), default="responses")
+    encrypted_key: Mapped[str | None] = mapped_column(Text, nullable=True)
+    enabled: Mapped[bool] = mapped_column(Boolean, default=False)
+
+
+class Conversation(Identity, ProjectScope, Base):
+    __tablename__ = "conversations"
+    owner_id: Mapped[str] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    title: Mapped[str] = mapped_column(String(100), default="New conversation")
+
+
+class ChatTurn(Identity, ProjectScope, Base):
+    __tablename__ = "chat_turns"
+    conversation_id: Mapped[str] = mapped_column(
+        ForeignKey("conversations.id", ondelete="CASCADE"), index=True
+    )
+    request_id: Mapped[str] = mapped_column(String(36))
+    __table_args__ = (UniqueConstraint("conversation_id", "request_id", name="uq_chat_request"),)
+    question: Mapped[str] = mapped_column(Text)
+    effort: Mapped[str] = mapped_column(String(10))
+    status: Mapped[str] = mapped_column(String(20), default="running")
+    response: Mapped[dict] = mapped_column(JSON, default=dict)
+    provenance: Mapped[dict] = mapped_column(JSON, default=dict)
+
+
+class ChatAction(Identity, ProjectScope, Base):
+    __tablename__ = "chat_actions"
+    turn_id: Mapped[str] = mapped_column(ForeignKey("chat_turns.id", ondelete="CASCADE"), index=True)
+    owner_id: Mapped[str] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    kind: Mapped[str] = mapped_column(String(30))
+    target_id: Mapped[str] = mapped_column(String(36), default="")
+    title: Mapped[str] = mapped_column(String(200))
+    status: Mapped[str] = mapped_column(String(20), default="pending")
+    result: Mapped[dict] = mapped_column(JSON, default=dict)
+    expires_at: Mapped[datetime] = mapped_column(DateTime)

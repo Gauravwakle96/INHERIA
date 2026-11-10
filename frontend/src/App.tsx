@@ -10,7 +10,8 @@ import { Workspace } from './workspace';
 import { ThemeToggle } from './ThemeToggle';
 import { OverviewPage, TeamPage } from './pages/Overview';
 import { SourcesPage } from './pages/Sources';
-import { MemoryPage, InvestigationPage, SuccessorPage } from './pages/Intelligence';
+import { MemoryPage, InvestigationPage } from './pages/Intelligence';
+import { SuccessorPage } from './pages/Chat';
 import { RiskPage, HandoverPage, ValidationPage } from './pages/Continuity';
 import { GovernancePage } from './pages/Governance';
 

@@ -20,11 +20,15 @@ flowchart LR
 
 ## Data model
 
-Eighteen persisted tables cover organisations, users, project memberships, sessions, projects, connections, sources, versioned chunks, claims, evidence, investigations, gaps, simulations, transitions, transfers, exercises, jobs and audit records. IDs are UUIDs. Tenant and project foreign keys, uniqueness constraints and indexes constrain duplicates and support permission-scoped queries. JSON fields contain typed service payloads; source text and quotations are explicit records, not arbitrary AI assertions.
+Twenty-two persisted tables cover organisations, users, project memberships, sessions, projects, connections, sources, versioned chunks, claims, evidence, investigations, gaps, simulations, transitions, transfers, exercises, jobs, audit records, AI configurations, conversations, chat turns and action previews. IDs are UUIDs. Tenant and project foreign keys, uniqueness constraints and indexes constrain duplicates and support permission-scoped queries. JSON fields contain typed service payloads; source text and quotations are explicit records, not arbitrary AI assertions.
 
-One initial immutable Alembic migration creates the schema. Development startup supports automatic creation; production relies on migrations. SQLite is a local convenience. PostgreSQL is required by production configuration. pgvector, Redis, Celery and a separate graph database were omitted because bounded lexical retrieval and local jobs meet the central workflow without extra infrastructure.
+Immutable Alembic migrations create and evolve the schema. Development startup supports automatic creation; production relies on migrations. SQLite is a local convenience. PostgreSQL is required by production configuration. pgvector, Redis, Celery and a separate graph database were omitted because bounded lexical retrieval and local jobs meet the central workflow without extra infrastructure.
 
 ## Evidence lifecycle
+
+The chat migration adds four tables: encrypted organisation AI configurations, owner-scoped conversations, idempotent turns and expiring action previews. Provider requests snapshot configuration, release their database connection and recheck current authority/evidence afterward. History retains cumulative claim/source version signatures and role signatures; invalidated history is withheld and deleted-source text is purged. Generated output is never published as verified knowledge. See [chat design](chat-integration-plan.md).
+
+## Source evidence lifecycle
 
 Sources retain names, locators, timestamps, checksums, versions and ACLs. Chunks include their source version. Every candidate has exact quotation evidence. The active read path verifies tenant/project, source access, ready status, source/chunk identity, version and quotation membership. A mixed-permission claim is hidden entirely. Transaction-scoped evidence batching is cleared after flush, commit or rollback.
 

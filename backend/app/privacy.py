@@ -19,6 +19,21 @@ def purge_source_derivatives(db, source):
                 changed = True
     claim_ids = set(db.scalars(select(m.Evidence.claim_id).where(m.Evidence.source_id.in_(related_ids))))
     affected_resources = set(claim_ids) | related_ids
+    # Conversation follow-ups inherit cumulative provenance so source deletion
+    # erases both the original answer and text derived through later turns.
+    for turn in db.scalars(select(m.ChatTurn).where(m.ChatTurn.project_id == source.project_id)):
+        if related_ids.intersection(turn.provenance.get("sources", {})):
+            turn.question = "Source evidence deleted"
+            turn.response = {
+                "answer": "Source evidence was deleted. Ask again using current sources.",
+                "parts": [],
+                "citation_ids": [],
+                "known": False,
+                "engine": "evidence_deleted",
+                "unknowns": [],
+            }
+            turn.provenance = {}
+            db.execute(delete(m.ChatAction).where(m.ChatAction.turn_id == turn.id))
     for child in descendants:
         if child.id in related_ids and child.id != source.id:
             db.execute(delete(m.Evidence).where(m.Evidence.source_id == child.id))

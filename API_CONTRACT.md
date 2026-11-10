@@ -45,6 +45,28 @@ Project feature endpoints prefix `/api/projects/{project_id}`:
 
 ## Backend module contract
 
+## Private project chat
+
+Prefix `/api/projects/{project_id}`. All routes enforce membership, cookies and CSRF. AI settings are organisation-wide; changes/test/disconnect require administrator and project write permission.
+
+- `GET /ai-settings` → `{provider,base_url,model,protocol,enabled,has_key}`; never the key.
+- `PUT /ai-settings {base_url?,model,protocol?,api_key?,enabled?}` → settings metadata. Bases: `https://agentrouter.org/v1` or `https://ps.air-outer.com/v1`; protocols: `responses`, `chat_completions`. Omit key to retain it.
+- `DELETE /ai-settings` → `{ok:true}`; removes saved encrypted key.
+- `POST /ai-settings/test` → `{ok:true,model,usage}` after a real bounded request, or safe 502.
+- `GET /chat/conversations` → `{id,title,updated_at}[]` owned by the current user.
+- `POST /chat/conversations` → Conversation (201); maximum 50 per user/project.
+- `GET /chat/conversations/{id}` → Conversation. `DELETE` removes its messages/previews; confirmed project changes persist.
+- `POST /chat/conversations/{id}/messages {message,effort:'low'|'high',model?,request_id:UUID}` → Conversation. 3–4000 characters, 100 turns per conversation. Duplicate IDs reuse results; running turns return 409. Models: `gpt-6.1-sol`, `gpt-6-astra`, `gpt-5.6-sol`.
+- `GET /chat/actions` → `{id,kind,target_id,title}[]` filtered by current role/state.
+- `POST /chat/conversations/{id}/actions {kind,target_id?}` → Conversation (201) with an unexecuted preview.
+- `POST /chat/actions/{id}/confirm {confirm:true}` → Action; rechecks actor, role, expiry and evidence, idempotent after completion.
+
+Conversation `{id,title,updated_at,turns:[{id,question,effort,status,response,created_at}]}`. Response `{answer,parts:[{kind,text,references}],citations,actions,unknowns,known,engine,warning?,model?,elapsed_ms?,usage?}`. Part kinds: project/status/guidance/unknown. Action `{id,kind,title,status,expires_at,result:{resource_id?,status?,path?}}`. Supported kinds: investigate, sync, start_capture, generate_handover, generate_exercises, simulate. Previews expire in 20 minutes. No approval, ownership acceptance or infrastructure execution is exposed.
+
+Source, verification and role changes withhold dependent history; source deletion purges saved derived text including follow-ups. Provider failure uses visible verified-retrieval fallback. Structural citation validation does not prove semantic correctness.
+
+## Backend services
+
 SQLAlchemy 2 sync Session in sync FastAPI routes; BackgroundTasks invoke bounded job services with their own sessions. `database.get_db`, `database.SessionLocal`, `models.Base`. `security.current_user`, `security.project_access(db,user,project_id,write=False)`, `security.require_role(user,roles)`, `security.visible_sources(db,user,project_id)` (source IDs), `security.can_read_source(db,user,source)`, `security.audit(db,user,project_id,action,resource_type,resource_id,details)`.
 
 All domain services must call source permission filters. Current claims are visible only if all evidence sources are authorised, ready and at the cited version; mixed ACL claims are hidden in full. Rejected/invalidated knowledge cannot enter authoritative handovers/answers/graphs.

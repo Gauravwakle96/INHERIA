@@ -2,6 +2,9 @@ import { expect, test, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import type { Claim, Investigation, Project, Session, Transition, User } from '../src/types';
 
+// Exercise real routes without exhausting the shared development IP's limits.
+test.beforeEach(async () => { await new Promise(resolve => setTimeout(resolve, 5000)); });
+
 async function signInDemo(page: Page) {
   const response = await page.request.get('/api/auth/demo-users');
   expect(response.ok()).toBeTruthy();
@@ -157,7 +160,7 @@ test('unknown successor answers and incoming role controls remain explicit', asy
   await page.goto('/successor');
   await page.getByLabel('Ask a project question').fill('What is the verified production teleportation protocol?');
   await page.getByRole('button', { name: 'Send question' }).click();
-  await expect(page.locator('.answer-heading .badge')).toContainText('Insufficient Evidence');
+  await expect(page.locator('.chat-answer-part .mini-label').last()).toContainText('Insufficient evidence');
   const incoming = users.find(user => user.role === 'incoming') || users.find(user => user.role === 'employee');
   expect(incoming).toBeTruthy();
   await page.getByLabel('Switch demo role').selectOption(incoming!.id);

@@ -33,6 +33,16 @@ async def lifespan(app: FastAPI):
                 "failed",
                 {"summary": "Interrupted by server restart. Retry investigation."},
             )
+        for turn in db.scalars(select(m.ChatTurn).where(m.ChatTurn.status == "running")):
+            turn.status = "failed"
+            turn.response = {
+                "answer": "Reply interrupted by server restart. Send the message again.",
+                "engine": "failed",
+                "known": False,
+                "parts": [],
+                "unknowns": [],
+                "actions": [],
+            }
         if settings.demo_mode:
             from app.seed import seed_demo
 
@@ -68,7 +78,10 @@ def create_app() -> FastAPI:
                 if path.startswith("/api/auth/") and request.method == "POST"
                 else "expensive"
                 if request.method == "POST"
-                and any(x in path for x in ["/sync", "/investigations", "/successor/ask"])
+                and any(
+                    x in path
+                    for x in ["/sync", "/investigations", "/successor/ask", "/messages", "/ai-settings/test"]
+                )
                 else "api"
             )
             limit = {"auth": 20, "expensive": 15, "api": 400}[category]
@@ -136,12 +149,14 @@ def create_app() -> FastAPI:
         )
 
     from app.routers.auth import router as auth_router
+    from app.routers.chat import router as chat_router
     from app.routers.sources import router as sources_router
     from app.routers.workspace import router as workspace_router
 
     app.include_router(auth_router)
     app.include_router(sources_router)
     app.include_router(workspace_router)
+    app.include_router(chat_router)
 
     @app.get("/api/health", tags=["Health"])
     def health():
