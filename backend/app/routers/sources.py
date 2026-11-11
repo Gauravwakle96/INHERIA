@@ -113,6 +113,64 @@ def upload_source(
     return {"source": serialize_source(db, user, source), "duplicate": duplicate}
 
 
+@router.get("/sources/{source_id}/impact")
+def impact(project_id: str, source_id: str, db: Db, user: Actor):
+    from app.impact import source_impact
+
+    return source_impact(db, user, project_id, source_id)
+
+
+@router.post("/sources/{source_id}/replace")
+def replace_source(project_id: str, source_id: str, db: Db, user: Actor, file: Annotated[UploadFile, File()]):
+    import hashlib
+
+    from app.ingestion import parse_document
+
+    project_access(db, user, project_id, write=True)
+    source = _source(db, user, project_id, source_id)
+    if (
+        source.connection_id
+        or source.kind in {"interview", "ownership_transfer"}
+        or source.status == "revoked"
+    ):
+        raise HTTPException(
+            409, "Replace an active uploaded document. Connected sources must be synchronised."
+        )
+    content = file.file.read(settings.max_upload_bytes + 1)
+    try:
+        parsed = parse_document(file.filename or source.name, content, max_bytes=settings.max_upload_bytes)
+    except DocumentError as exc:
+        raise HTTPException(422, str(exc)) from None
+    checksum = hashlib.sha256(content).hexdigest()
+    if checksum == source.checksum:
+        return {"source": serialize_source(db, user, source), "duplicate": True}
+    # A transaction invalidates downstream evidence before publishing the new version.
+    invalidate_source(db, source)
+    source.version += 1
+    source.name = file.filename or source.name
+    source.checksum, source.status = checksum, "quarantined" if parsed.quarantined else "ready"
+    source.source_time = utcnow()
+    source.source_metadata = parsed.metadata
+    from app.ingestion import safe_metadata, safe_name
+
+    source.name, source.source_metadata = safe_name(source.name), safe_metadata(parsed.metadata)
+    for ordinal, segment in enumerate(parsed.segments):
+        db.add(
+            Chunk(
+                org_id=user.org_id,
+                project_id=project_id,
+                source_id=source.id,
+                source_version=source.version,
+                ordinal=ordinal,
+                locator=segment.locator,
+                text=segment.text,
+            )
+        )
+    audit(db, user, project_id, "source.replaced", "source", source.id, {"version": source.version})
+    db.commit()
+    return {"source": serialize_source(db, user, source), "duplicate": False}
+
+
 @router.post("/sources/{source_id}/revoke")
 def revoke_source(project_id: str, source_id: str, db: Db, user: Actor) -> dict[str, Any]:
     project_access(db, user, project_id, write=True)

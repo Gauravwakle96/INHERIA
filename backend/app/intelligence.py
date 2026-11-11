@@ -109,10 +109,27 @@ def current_claims(
             continue
         if verified and claim.status != "verified":
             continue
+        if verified and decision_conflicted(db, claim):
+            continue
         if not include_rejected and claim.status in {"rejected", "invalidated", "superseded"}:
             continue
         result.append(claim)
     return result
+
+
+def decision_conflicted(db, claim):
+    """Conflicting current interpretations cannot enter verified retrieval/handover."""
+    if claim.kind != "decision" or not claim.data.get("topic"):
+        return False
+    return any(
+        other.id != claim.id
+        and other.status not in {"rejected", "invalidated", "superseded"}
+        and other.data.get("source_status", "").lower() != "superseded"
+        and other.data.get("topic") == claim.data.get("topic")
+        and (other.title != claim.title or other.data.get("rationale") != claim.data.get("rationale"))
+        for other in _rows(db, m.Claim, claim.project_id)
+        if other.kind == "decision"
+    )
 
 
 def citations(db: Session, user: m.User, claim: m.Claim) -> list[dict]:
@@ -156,6 +173,9 @@ def serialize_claim(db: Session, user: m.User, claim: m.Claim) -> dict:
         "data": claim.data,
         "evidence": refs,
         "updated_at": claim.updated_at,
+        "authority_conflict": decision_conflicted(db, claim)
+        if claim.status not in {"superseded", "rejected", "invalidated"}
+        else False,
     }
 
 
@@ -203,23 +223,35 @@ def parse_candidates(text: str, users: list[m.User]) -> list[dict]:
             if len(paragraph) < 25:
                 continue
             lower = paragraph.lower()
+            if paragraph.count("?") or re.search(r"(?im)^#.*(?:questions|example|outline)", paragraph):
+                continue  # Interview prompts and templates are not procedure evidence.
             if re.search(
                 r"\b(no (?:source|evidence|documentation)|insufficient evidence|not documented|ownership is unknown)\b",
                 lower,
             ):
                 continue
             kind = None
-            if re.search(r"\b(rollback|deploy(?:ment)?|recovery)\b", lower) and re.search(
-                r"\b(step|run|pipeline|procedure|command)\b", lower
+            if re.search(r"\b(?:is responsible for|owns|maintains)\b", lower) and not re.search(
+                r"\b(?:might|may|could|not|unknown|no longer)\b", lower
+            ):
+                kind = "responsibility"
+            elif re.search(
+                r"\b[A-Za-z0-9_-]+\s+(?:depends on|requires)\s+[A-Za-z0-9_-]+", paragraph
+            ) and not re.search(r"\b(?:might|may|could|not|unknown)\b", lower):
+                kind = "dependency"
+            elif (
+                re.search(r"\b(rollback|deploy(?:ment)?|recovery)\b", lower)
+                and re.search(r"\b(step|run|pipeline|procedure|command)\b", lower)
+                and not re.search(r"\b(?:no longer|not confirmed|might|may|could)\b", lower)
             ):
                 kind = "procedure"
-            elif re.search(r"\b(decided|decision|chose|rejected alternative)\b", lower):
+            elif re.search(r"\b(decided|decision|chose|selected|rejected alternative)\b", lower):
                 kind = "decision"
             elif re.search(r"\b(unresolved|open incident|known issue|todo|unfinished)\b", lower):
                 kind = "incident" if "incident" in lower else "task"
-            elif re.search(r"\b(responsible for|owns|maintains)\b", lower):
-                kind = "responsibility"
             if kind:
+                from app.prose import prose_fields
+
                 quote = paragraph[:3000]
                 candidates.append(
                     {
@@ -227,21 +259,19 @@ def parse_candidates(text: str, users: list[m.User]) -> list[dict]:
                         "title": quote.splitlines()[0][:180],
                         "summary": quote,
                         "quote": quote,
-                        "data": {
-                            "extraction": "keyword_candidate",
-                            "owner_id": None,
-                            "backup_id": None,
-                            "component": "",
-                            "critical": False,
-                        },
+                        "data": prose_fields(quote, kind, users),
                     }
                 )
     return candidates[:25]
 
 
-def reconstruct_project(db: Session, user: m.User, project_id: str) -> dict:
+def reconstruct_project(
+    db: Session, user: m.User, project_id: str, *, source_ids: set[str] | None = None
+) -> dict:
     project = project_access(db, user, project_id)
     source_list = [s for s in visible_sources(db, user, project_id) if s.status == "ready"]
+    if source_ids is not None:
+        source_list = [source for source in source_list if source.id in source_ids]
     user_ids = list(db.scalars(select(m.Membership.user_id).where(m.Membership.project_id == project_id)))
     users = list(db.scalars(select(m.User).where(m.User.id.in_(user_ids)))) if user_ids else []
     existing = _rows(db, m.Claim, project_id)
@@ -482,8 +512,29 @@ def run_investigation(investigation_id: str, focus: str = "", employee_id: str |
         try:
             project_access(db, user, investigation.project_id, write=True)
             investigation.status = "running"
+            progress = dict((investigation.report or {}).get("checkpoint", {}))
+            completed = dict(progress.get("sources", {}))
+            focus = (investigation.report or {}).get("focus", focus)
+            employee_id = (investigation.report or {}).get("employee_id", employee_id)
             db.commit()
-            stats = reconstruct_project(db, user, investigation.project_id)
+            added = progress.get("added_candidates", 0)
+            for source in visible_sources(db, user, investigation.project_id):
+                db.refresh(source)
+                if source.status != "ready" or completed.get(source.id) == source.version:
+                    continue
+                project_access(db, user, investigation.project_id, write=True)
+                stats = reconstruct_project(db, user, investigation.project_id, source_ids={source.id})
+                completed[source.id] = source.version
+                added += stats["added_candidates"]
+                investigation.report = {
+                    **investigation.report,
+                    "checkpoint": {"sources": completed, "added_candidates": added},
+                    "focus": focus,
+                    "employee_id": employee_id,
+                }
+                # Candidates and checkpoint are committed together; retries are idempotent.
+                db.commit()
+            stats = {"added_candidates": added, "engine": "deterministic-v1"}
             from app.config import settings
 
             llm_status = "disabled"
@@ -627,6 +678,9 @@ def run_investigation(investigation_id: str, focus: str = "", employee_id: str |
                 ],
                 **stats,
                 "llm_status": llm_status,
+                "checkpoint": {"sources": completed, "added_candidates": added},
+                "focus": focus,
+                "employee_id": employee_id,
             }
             investigation.status = "completed"
             audit(
@@ -645,6 +699,7 @@ def run_investigation(investigation_id: str, focus: str = "", employee_id: str |
             if investigation:
                 investigation.status = "failed"
                 investigation.report = {
+                    **(investigation.report or {}),
                     "summary": "Investigation failed. Check source access and retry.",
                     "findings": [],
                     "questions": [],

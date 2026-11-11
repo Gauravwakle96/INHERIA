@@ -13,6 +13,9 @@ class Settings(BaseSettings):
     database_url: str = Field(default="sqlite:///./inheria.db", repr=False)
     render_external_url: str = Field(default="", validation_alias="RENDER_EXTERNAL_URL")
     demo_mode: bool = True
+    judge_demo_enabled: bool = True
+    judge_demo_hours: int = Field(default=4, ge=1, le=12)
+    judge_demo_max_visits: int = Field(default=40, ge=1, le=200)
     allowed_origins: list[str] = [
         "http://localhost:5173",
         "http://127.0.0.1:5173",

@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session
 
 from app import models as m
 from app.continuity import project_person
-from app.intelligence import citations, current_claims, serialize_claim
+from app.intelligence import citations, current_claims, find_gaps, serialize_claim
 from app.security import audit, project_access, require_role, visible_sources
 
 
@@ -26,12 +26,87 @@ def claim_signature(claim):
     ).hexdigest()
 
 
+def require_current_handover(db, user, transition):
+    claims = {c.id: c for c in current_claims(db, user, transition.project_id, verified=True)}
+    successor = project_person(db, user, transition.project_id, transition.successor_id)
+    allowed = {c.id for c in current_claims(db, successor, transition.project_id, verified=True)}
+    signatures = (transition.report or {}).get("claim_signatures", {})
+    if not signatures or any(
+        cid not in claims or cid not in allowed or claim_signature(claims[cid]) != signature
+        for cid, signature in signatures.items()
+    ):
+        raise HTTPException(
+            409,
+            "Handover evidence changed or is inaccessible to the incoming owner. Regenerate and review before approval.",
+        )
+
+
+def scenario_criteria(claim):
+    text = (claim.title + " " + str(claim.data.get("component", ""))).lower()
+    if "rollback" in text:
+        return [
+            "Identify the approved previous release and exact rollback source.",
+            "Check schema compatibility and conditions requiring database-owner approval.",
+            "Explain post-rollback health checks and stop conditions.",
+            "Describe an isolated staging walkthrough and escalation; distinguish explanation from execution.",
+        ]
+    if any(word in text for word in ("recover", "backup", "restore")):
+        return [
+            "Locate backup evidence and identify missing restore-test records.",
+            "Identify approved isolated environment, required access and recovery targets.",
+            "Explain integrity checks and how actual test evidence would be reviewed.",
+            "Escalate missing evidence; never equate backup-job success with successful recovery.",
+        ]
+    if any(word in text for word in ("deploy", "release", "pipeline")):
+        return [
+            "Identify the approved release commit, pipeline and target environment.",
+            "Explain build/test/security checks and required release approval.",
+            "Describe application health checks and rollback restrictions after schema changes.",
+            "Describe safe staging validation and evidence-based escalation; execute no production changes.",
+        ]
+    return [
+        "Locate current evidence for this responsibility or technical component.",
+        "Explain the documented procedure and explicitly identify missing steps.",
+        "Identify dependencies, prerequisites and unresolved risks.",
+        "Describe safe test-environment validation and authorised escalation.",
+    ]
+
+
 def get_transition(db: Session, user: m.User, project_id: str, transition_id: str) -> m.Transition:
     project_access(db, user, project_id)
     transition = db.get(m.Transition, transition_id)
     if not transition or transition.project_id != project_id or transition.org_id != user.org_id:
         raise HTTPException(404, "Transition not found.")
     return transition
+
+
+def readable_prerequisites(db, user, transition):
+    sources = {s.id: s for s in visible_sources(db, user, transition.project_id) if s.status == "ready"}
+    refs = {
+        e["id"]
+        for c in current_claims(db, user, transition.project_id, verified=True)
+        for e in citations(db, user, c)
+    }
+    result = []
+    for original in (transition.report or {}).get("prerequisites", []):
+        item = dict(original)
+        versions = item.get("source_versions", {})
+        if not set(item.get("evidence_ids", [])).issubset(refs) or any(
+            sid not in sources or sources[sid].version != version for sid, version in versions.items()
+        ):
+            item = {
+                "id": item["id"],
+                "title": "Readiness check requires authorised revalidation",
+                "required": item.get("required", False),
+                "status": "pending",
+                "evidence_ids": [],
+                "note": "Supporting information changed or is unavailable to your account.",
+            }
+        else:
+            item.pop("source_versions", None)
+            item.pop("history", None)
+        result.append(item)
+    return result
 
 
 def readable_report(db: Session, user: m.User, transition: m.Transition) -> dict:
@@ -41,7 +116,7 @@ def readable_report(db: Session, user: m.User, transition: m.Transition) -> dict
     # Historical stored quotes can become invalid after source updates; never replay them.
     fresh = {c.id: c for c in current_claims(db, user, transition.project_id, verified=True)}
     knowledge = [serialize_claim(db, user, fresh[item["id"]]) for item in items if item["id"] in fresh]
-    unknowns = list(report.get("unknowns", []))
+    unknowns = ["Information without current accessible evidence must remain unverified."]
     if len(knowledge) < len(report.get("knowledge", [])):
         unknowns.append(
             "Some handover evidence changed or is inaccessible; this version requires revalidation."
@@ -52,7 +127,13 @@ def readable_report(db: Session, user: m.User, transition: m.Transition) -> dict
         else "Generate a handover after verifying evidence.",
         "knowledge": knowledge,
         "unknowns": unknowns,
+        "risks": find_gaps(db, user, transition.project_id),
         "generated_at": report.get("generated_at"),
+        "prerequisites": readable_prerequisites(db, user, transition),
+        "recovery_history": [
+            {k: h[k] for k in ("version", "reopened_at") if k in h}
+            for h in report.get("recovery_history", [])
+        ],
         "version_history": [
             {k: h[k] for k in ["version", "generated_at"] if k in h} for h in report.get("history", [])
         ],
@@ -154,9 +235,20 @@ def generate_handover(db: Session, user: m.User, transition: m.Transition) -> m.
             "claim_ids": [c.id for c in verified],
         }
     )
+    selected_ids = {c.id for c in verified}
+    # Changed-source candidates get new IDs. Preserve old records as historical,
+    # while excluding them from the new version's completion requirements.
+    for transfer in db.scalars(select(m.Transfer).where(m.Transfer.transition_id == transition.id)):
+        if transfer.claim_id not in selected_ids:
+            transfer.status = "superseded"
+    for exercise in db.scalars(select(m.Exercise).where(m.Exercise.transition_id == transition.id)):
+        if exercise.assessment.get("claim_id") not in selected_ids:
+            exercise.status = "superseded"
     transition.report = jsonable_encoder(
         {
             "summary": f"Handover for {transition.title}: {len(knowledge)} verified, accessible knowledge items.",
+            "prerequisites": (transition.report or {}).get("prerequisites", []),
+            "recovery_history": (transition.report or {}).get("recovery_history", []),
             "knowledge": knowledge,
             "source_ids": sorted({e["source_id"] for c in knowledge for e in c["evidence"]}),
             "unknowns": [
@@ -180,6 +272,49 @@ def generate_handover(db: Session, user: m.User, transition: m.Transition) -> m.
         "transition",
         transition.id,
         {"version": version, "verified_claims": len(knowledge)},
+    )
+    return transition
+
+
+def reopen_handover(db, user, transition, note):
+    project_access(db, user, transition.project_id, write=True)
+    if transition.status not in {"approved", "in_progress"}:
+        raise HTTPException(
+            409,
+            "Reopen an approved active handover. Closed ownership requires a separate follow-up transition.",
+        )
+    recovery = list((transition.report or {}).get("recovery_history", []))
+    recovery.append(
+        {"version": transition.version, "reopened_at": m.utcnow().isoformat(), "actor_id": user.id}
+    )
+    for transfer in db.scalars(select(m.Transfer).where(m.Transfer.transition_id == transition.id)):
+        audit(
+            db,
+            user,
+            transition.project_id,
+            "transfer.reopened",
+            "transfer",
+            transfer.id,
+            {"previous_status": transfer.status, "version": transition.version},
+        )
+        transfer.status, transfer.accepted_at = "assigned", None
+    for exercise in db.scalars(select(m.Exercise).where(m.Exercise.transition_id == transition.id)):
+        prior = list(exercise.assessment.get("review_history", []))
+        prior.append(
+            {"status": exercise.status, "reviewed_by": exercise.reviewed_by, "version": transition.version}
+        )
+        exercise.assessment = {**exercise.assessment, "review_history": prior}
+        exercise.status, exercise.reviewed_by = "needs_revision", None
+    transition.report = {**transition.report, "recovery_history": recovery}
+    transition.status = "reopened"
+    audit(
+        db,
+        user,
+        transition.project_id,
+        "handover.reopened",
+        "transition",
+        transition.id,
+        {"version": transition.version, "note": note},
     )
     return transition
 
@@ -264,6 +399,7 @@ def generate_exercises(db: Session, user: m.User, transition: m.Transition) -> m
     if transition.status not in {"approved", "in_progress"}:
         raise HTTPException(409, "Approve the handover before generating practical validation tasks.")
     existing = list(db.scalars(select(m.Exercise).where(m.Exercise.transition_id == transition.id)))
+    existing = [e for e in existing if e.status != "superseded"]
     existing_transfers = {exercise.transfer_id for exercise in existing if exercise.transfer_id}
     existing_claims = {
         exercise.assessment.get("claim_id") for exercise in existing if not exercise.transfer_id
@@ -274,7 +410,13 @@ def generate_exercises(db: Session, user: m.User, transition: m.Transition) -> m
         for c in current_claims(db, user, transition.project_id, verified=True)
         if c.id in report_ids and c.kind in {"procedure", "dependency", "incident"}
     ]
-    transfers = list(db.scalars(select(m.Transfer).where(m.Transfer.transition_id == transition.id)))
+    transfers = list(
+        db.scalars(
+            select(m.Transfer).where(
+                m.Transfer.transition_id == transition.id, m.Transfer.status != "superseded"
+            )
+        )
+    )
     if not selected and not transfers:
         raise HTTPException(
             409, "Verify a procedure, dependency or unresolved incident before creating practical exercises."
@@ -304,12 +446,7 @@ def generate_exercises(db: Session, user: m.User, transition: m.Transition) -> m
                 transfer_id=transfer.id,
                 title="Validate responsibility: " + claim.title,
                 prompt=f"Explain how you would safely continue “{claim.title}”. Locate its responsibility and operational evidence, identify missing procedures and prerequisites, describe a test-environment walkthrough, and explain when you must request human help. Do not execute production operations.",
-                criteria=[
-                    "Locate evidence for this assigned responsibility.",
-                    "Explain its documented procedure; explicitly identify missing or unverified steps.",
-                    "Identify dependencies, prerequisites and unresolved risks.",
-                    "Describe safe test-environment validation and authorised escalation.",
-                ],
+                criteria=scenario_criteria(claim),
                 expected_source_ids=sorted({ref["source_id"] for ref in refs + related_refs}),
                 status="pending",
                 answer="",
@@ -320,6 +457,7 @@ def generate_exercises(db: Session, user: m.User, transition: m.Transition) -> m
                     "claim_id": claim.id,
                     "transfer_id": transfer.id,
                     "type": "human_review_required",
+                    "rubric_version": "scenario-v2",
                 },
             )
         )
@@ -336,19 +474,18 @@ def generate_exercises(db: Session, user: m.User, transition: m.Transition) -> m
                 transition_id=transition.id,
                 title=f"Validate: {claim.title}",
                 prompt=prompt,
-                criteria=[
-                    "Locate current supporting evidence.",
-                    "Explain the documented procedure or dependency accurately.",
-                    "Identify unresolved risks and prerequisites.",
-                    "Describe safe sandbox validation and human escalation.",
-                ],
+                criteria=scenario_criteria(claim),
                 expected_source_ids=sorted({e["source_id"] for e in refs}),
                 status="pending",
                 answer="",
                 evidence_ids=[],
                 escalation="",
                 supervisor_note="",
-                assessment={"claim_id": claim.id, "type": "human_review_required"},
+                assessment={
+                    "claim_id": claim.id,
+                    "type": "human_review_required",
+                    "rubric_version": "scenario-v2",
+                },
             )
         )
     audit(
@@ -373,10 +510,26 @@ def readiness(db: Session, user: m.User, transition: m.Transition) -> dict:
     }
     transfers = list(db.scalars(select(m.Transfer).where(m.Transfer.transition_id == transition.id)))
     exercises = list(db.scalars(select(m.Exercise).where(m.Exercise.transition_id == transition.id)))
+    transfers = [t for t in transfers if t.status != "superseded"]
+    exercises = [e for e in exercises if e.status != "superseded"]
     visible_transfer_ids = {t.id for t in transfers if t.claim_id in claims}
     accepted = [t for t in transfers if t.status == "accepted" and t.id in visible_transfer_ids]
     validated = [e for e in exercises if e.status == "passed" and e.assessment.get("claim_id") in claims]
     blockers = []
+    try:
+        successor = project_person(db, user, transition.project_id, transition.successor_id)
+        successor_ids = {c.id for c in current_claims(db, successor, transition.project_id, verified=True)}
+    except HTTPException:
+        successor_ids = set()
+    if any(item["id"] not in successor_ids for item in snapshot):
+        blockers.append(
+            "The incoming owner cannot access all current handover evidence; restore authorised access and revalidate."
+        )
+    prerequisites = (transition.report or {}).get("prerequisites", [])
+    public_checks = {i["id"]: i for i in readable_prerequisites(db, user, transition)}
+    for item in prerequisites:
+        if item.get("required") and item.get("status") != "confirmed":
+            blockers.append("Required prerequisite incomplete: " + public_checks[item["id"]]["title"])
     if not snapshot:
         blockers.append("A verified handover has not been generated.")
     if transition.status not in {"approved", "in_progress", "closed"}:
@@ -404,6 +557,23 @@ def readiness(db: Session, user: m.User, transition: m.Transition) -> dict:
         blockers.append(
             "Handover sources changed, were revoked or are inaccessible; revalidation is required."
         )
+    valid_refs = {e["id"] for e in evidence}
+    for item in prerequisites:
+        if (
+            item.get("required")
+            and item.get("status") == "confirmed"
+            and (
+                not item.get("evidence_ids")
+                or not set(item["evidence_ids"]).issubset(valid_refs)
+                or any(
+                    current_versions.get(sid) != version
+                    for sid, version in item.get("source_versions", {}).items()
+                )
+            )
+        ):
+            blockers.append(
+                "Prerequisite evidence requires revalidation: " + public_checks[item["id"]]["title"]
+            )
     if any(item["id"] not in claims for item in snapshot):
         blockers.append("Some handover claims are no longer verified or accessible.")
     if transition.status != "closed" and any(
@@ -418,6 +588,7 @@ def readiness(db: Session, user: m.User, transition: m.Transition) -> dict:
         "exercise_total": len(exercises),
         "ready": not blockers,
         "blockers": blockers,
+        "prerequisites": list(public_checks.values()),
         "evidence_coverage": {
             "numerator": sum(item["id"] in claims for item in snapshot),
             "denominator": len(snapshot),

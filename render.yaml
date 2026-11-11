@@ -12,6 +12,12 @@ services:
         value: production
       - key: INHERIA_DEMO_MODE
         value: "false"
+      - key: INHERIA_JUDGE_DEMO_ENABLED
+        value: "true"
+      - key: INHERIA_JUDGE_DEMO_HOURS
+        value: "4"
+      - key: INHERIA_JUDGE_DEMO_MAX_VISITS
+        value: "40"
       - key: INHERIA_LLM_ENABLED
         value: "false"
       - key: INHERIA_DATABASE_URL

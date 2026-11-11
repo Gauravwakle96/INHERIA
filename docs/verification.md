@@ -1,8 +1,50 @@
 # INHERIA verification
 
-Final local verification: 6 November 2026. Results apply to the implemented MVP in this workspace; they do not certify an enterprise deployment.
+Historical and current verification results are separated below. Results apply to the implemented MVP in this workspace; they do not certify an enterprise deployment.
 
-## Public deployment verification — 11 November 2026 IST
+## Round 3 local verification — 11 November 2026 IST
+
+These results supersede earlier implementation counts below. The isolated QA
+backend uses a separate SQLite database and local frontend; no private production
+account is mutated by the new browser rehearsal.
+
+- Full backend suite: **164 passed**. Coverage includes existing auth/connector/
+  ingestion/chat/workflow tests plus isolated judge tenants, expiry, legacy persona
+  bypass prevention, single-use/revoked/expired invitations, existing-account role
+  preservation, independent source grants, decision authority gates, prerequisite
+  privacy, rejected tasks, ten source-change recovery scenarios and five interruption
+  positions. One non-failing FastAPI/Starlette TestClient deprecation warning remains.
+- Ruff lint and formatting; frontend lint/typecheck/production build passed.
+- Python locked-environment pip-audit and npm audit: no known vulnerabilities.
+- Fresh Alembic upgrade to `a73c9d21b004`, schema comparison and current revision
+  checks passed on isolated SQLite. Migration has explicit stable schema definitions.
+- Full local Playwright suite: **30 passed** (5.4 minutes), covering private chat,
+  invitation/join, source replacement/impact, full judge handover/validation,
+  registration, evidence upload/review, role restrictions, six day/night demo and
+  six workspace sizes, keyboard/axe and recoverable network failure. The complete
+  judge workflow passed after shared-IP pacing. No rate-limit control was weakened.
+  Production smoke results are recorded separately below.
+- Existing-schema upgrade with a sentinel organisation preserved its record and
+  passed Alembic comparison. This used an isolated database; no live downgrade.
+- Representative judge mobile/light and desktop/dark screenshots were visually
+  inspected. Axe checks are bounded automated coverage, not accessibility certification.
+  No prior judge-page baseline exists, so visual regression comparison is inconclusive.
+- Evaluation expanded to **60 labelled documents**, including 23 prose cases:
+  candidate precision **46/47**, recall **46/46**, exact citations **47/47**,
+  unsupported-answer abstention **4/4**. One false positive remains. This corpus
+  was used during rule development; no held-out split or independent annotation
+  audit was performed. These are controlled rule measurements, not general AI
+  accuracy or operational competence.
+
+The browser caught a stale form default for incoming ownership; dialogs now mount
+forms only when opened and assignments restrict the incoming choice to the actual
+transition successor. A test encoding issue and a no-wait list iteration were also
+corrected. A fast combined run hit the real shared-IP rate window; subsequent runs
+pace the expensive journey without disabling limits. Existing validation tests
+now explicitly assess new scenario criteria. See the evaluation report for misses,
+feature-status for limits and round3-delivery for commitment reconciliation.
+
+## Historical public deployment verification — 11 November 2026 IST
 
 **https://inheria.onrender.com** is deployed as a Render **Free** Docker web service, with a dedicated Neon PostgreSQL project in a verified **Free** organisation. Docker build and runtime were verified on Render, which resolves the earlier local Docker-daemon verification gap. Alembic upgrade and schema consistency checks passed against the actual PostgreSQL database.
 

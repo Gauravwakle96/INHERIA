@@ -39,6 +39,8 @@ def send(client, base, conv, text="How is billing-api deployed?", effort="low", 
 def verify_all(client, base):
     claims = client.get(base + "/claims").json()
     for c in claims:
+        if c.get("authority_conflict"):
+            continue
         assert (
             client.post(
                 base + "/claims/" + c["id"] + "/review",

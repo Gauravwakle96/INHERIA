@@ -175,7 +175,7 @@ def metrics(db: Session, user: m.User, project_id: str) -> list[dict]:
         for t in db.scalars(select(m.Transfer).where(m.Transfer.project_id == project_id))
         if t.claim_id in {c.id for c in claims}
     ]
-    verified = [c for c in claims if c.status == "verified"]
+    verified = current_claims(db, user, project_id, verified=True)
     stale = [s for s in sources if s.source_time and s.source_time < m.utcnow() - timedelta(days=180)]
 
     def count(key, label, value, description):

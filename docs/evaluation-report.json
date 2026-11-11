@@ -1,46 +1,46 @@
 {
-  "fixture_version": "labelled-continuity-v1",
-  "fixture_sha256": "20c27738e9495aa80c9586d593332f7d475a47bf1fa8e3324052544ae64d8b50",
+  "fixture_version": "labelled-continuity-v2",
+  "fixture_sha256": "012bd2963ea604134e90e3b87d2beed60969d637cb21bae616d6192331fe523c",
   "reference_time": "2026-11-06T12:00:00",
   "engine": "deterministic-v1",
-  "scope": "24 hand-labelled synthetic documents plus one source-ACL negative; isolated in-memory SQLite; no live LLM calls.",
+  "scope": "60 hand-labelled case-study documents (including 23 prose cases) plus one source-ACL negative; isolated in-memory SQLite; no live LLM calls.",
   "counts": {
-    "documents": 24,
-    "gold_candidates": 20,
-    "predicted_candidates": 19,
-    "persisted_visible_claims": 19,
+    "documents": 60,
+    "gold_candidates": 46,
+    "predicted_candidates": 47,
+    "persisted_visible_claims": 47,
     "restricted_sources": 1
   },
   "metrics": {
     "candidate_kind_and_title": {
-      "true_positives": 19,
-      "false_positives": 0,
-      "false_negatives": 1,
+      "true_positives": 46,
+      "false_positives": 1,
+      "false_negatives": 0,
       "precision": {
-        "numerator": 19,
-        "denominator": 19,
-        "rate": 1.0
+        "numerator": 46,
+        "denominator": 47,
+        "rate": 0.978723
       },
       "recall": {
-        "numerator": 19,
-        "denominator": 20,
-        "rate": 0.95
+        "numerator": 46,
+        "denominator": 46,
+        "rate": 1.0
       }
     },
     "owner_mapping": {
-      "numerator": 4,
-      "denominator": 5,
-      "rate": 0.8
+      "numerator": 19,
+      "denominator": 19,
+      "rate": 1.0
     },
     "decision_rationale_field": {
-      "numerator": 4,
-      "denominator": 5,
-      "rate": 0.8
+      "numerator": 11,
+      "denominator": 11,
+      "rate": 1.0
     },
     "dependency_endpoints": {
-      "numerator": 2,
-      "denominator": 3,
-      "rate": 0.666667
+      "numerator": 9,
+      "denominator": 9,
+      "rate": 1.0
     },
     "project_state_kind_coverage": {
       "numerator": 8,
@@ -48,18 +48,18 @@
       "rate": 1.0
     },
     "exact_source_citations": {
-      "numerator": 19,
-      "denominator": 19,
+      "numerator": 47,
+      "denominator": 47,
       "rate": 1.0
     },
     "claims_with_citations": {
-      "numerator": 19,
-      "denominator": 19,
+      "numerator": 47,
+      "denominator": 47,
       "rate": 1.0
     },
     "pending_before_human_review": {
-      "numerator": 19,
-      "denominator": 19,
+      "numerator": 47,
+      "denominator": 47,
       "rate": 1.0
     },
     "commit_authorship_ownership_abstention": {
@@ -149,12 +149,12 @@
     },
     "unknown_responsibility_owner": {
       "true_positives": 2,
-      "false_positives": 1,
+      "false_positives": 0,
       "false_negatives": 0,
       "precision": {
         "numerator": 2,
-        "denominator": 3,
-        "rate": 0.666667
+        "denominator": 2,
+        "rate": 1.0
       },
       "recall": {
         "numerator": 2,
@@ -572,7 +572,7 @@
             "title": "Ada Vale maintains the billing-api rotation. The role requires weekly database backup checks.",
             "label_match": true,
             "fields": {
-              "owner": null
+              "owner": "Ada Vale"
             },
             "exact_quote": true
           }
@@ -596,7 +596,7 @@
             "title": "The platform team decided to use Redis caching because the traffic pattern includes repeated lookups.",
             "label_match": true,
             "fields": {
-              "rationale": null
+              "rationale": "the traffic pattern includes repeated lookups"
             },
             "exact_quote": true
           }
@@ -615,7 +615,18 @@
             }
           }
         ],
-        "observed": [],
+        "observed": [
+          {
+            "kind": "dependency",
+            "title": "billing-api depends on PostgreSQL to persist invoices safely.",
+            "label_match": true,
+            "fields": {
+              "from_component": "billing-api",
+              "to_component": "PostgreSQL"
+            },
+            "exact_quote": true
+          }
+        ],
         "note": "Free-prose dependency extraction is a deliberate difficult positive."
       },
       {
@@ -641,6 +652,726 @@
         "expected": [],
         "observed": [],
         "note": ""
+      },
+      {
+        "case": "prose_duty_0",
+        "expected": [
+          {
+            "kind": "responsibility",
+            "title": "Ada Vale maintains the service-0 release process. The team reviews approved changes.",
+            "fields": {
+              "owner": "Ada Vale"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "responsibility",
+            "title": "Ada Vale maintains the service-0 release process. The team reviews approved changes.",
+            "label_match": true,
+            "fields": {
+              "owner": "Ada Vale"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "prose_duty_1",
+        "expected": [
+          {
+            "kind": "responsibility",
+            "title": "Ada Vale owns the service-1 release process. The team reviews approved changes.",
+            "fields": {
+              "owner": "Ada Vale"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "responsibility",
+            "title": "Ada Vale owns the service-1 release process. The team reviews approved changes.",
+            "label_match": true,
+            "fields": {
+              "owner": "Ada Vale"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "prose_duty_2",
+        "expected": [
+          {
+            "kind": "responsibility",
+            "title": "Ada Vale is responsible for the service-2 release process. The team reviews approved changes.",
+            "fields": {
+              "owner": "Ada Vale"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "responsibility",
+            "title": "Ada Vale is responsible for the service-2 release process. The team reviews approved changes.",
+            "label_match": true,
+            "fields": {
+              "owner": "Ada Vale"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "prose_duty_3",
+        "expected": [
+          {
+            "kind": "responsibility",
+            "title": "Ada Vale maintains the service-3 release process. The team reviews approved changes.",
+            "fields": {
+              "owner": "Ada Vale"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "responsibility",
+            "title": "Ada Vale maintains the service-3 release process. The team reviews approved changes.",
+            "label_match": true,
+            "fields": {
+              "owner": "Ada Vale"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "prose_duty_4",
+        "expected": [
+          {
+            "kind": "responsibility",
+            "title": "Ada Vale owns the service-4 release process. The team reviews approved changes.",
+            "fields": {
+              "owner": "Ada Vale"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "responsibility",
+            "title": "Ada Vale owns the service-4 release process. The team reviews approved changes.",
+            "label_match": true,
+            "fields": {
+              "owner": "Ada Vale"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "prose_duty_5",
+        "expected": [
+          {
+            "kind": "responsibility",
+            "title": "Ada Vale is responsible for the service-5 release process. The team reviews approved changes.",
+            "fields": {
+              "owner": "Ada Vale"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "responsibility",
+            "title": "Ada Vale is responsible for the service-5 release process. The team reviews approved changes.",
+            "label_match": true,
+            "fields": {
+              "owner": "Ada Vale"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "prose_reason_0",
+        "expected": [
+          {
+            "kind": "decision",
+            "title": "The team decided to use storage-0 because invoice writes need transaction guarantees.",
+            "fields": {
+              "rationale": "invoice writes need transaction guarantees"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "decision",
+            "title": "The team decided to use storage-0 because invoice writes need transaction guarantees.",
+            "label_match": true,
+            "fields": {
+              "rationale": "invoice writes need transaction guarantees"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "prose_reason_1",
+        "expected": [
+          {
+            "kind": "decision",
+            "title": "The team chose use storage-1 because invoice writes need transaction guarantees.",
+            "fields": {
+              "rationale": "invoice writes need transaction guarantees"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "decision",
+            "title": "The team chose use storage-1 because invoice writes need transaction guarantees.",
+            "label_match": true,
+            "fields": {
+              "rationale": "invoice writes need transaction guarantees"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "prose_reason_2",
+        "expected": [
+          {
+            "kind": "decision",
+            "title": "The team selected use storage-2 because invoice writes need transaction guarantees.",
+            "fields": {
+              "rationale": "invoice writes need transaction guarantees"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "decision",
+            "title": "The team selected use storage-2 because invoice writes need transaction guarantees.",
+            "label_match": true,
+            "fields": {
+              "rationale": "invoice writes need transaction guarantees"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "prose_reason_3",
+        "expected": [
+          {
+            "kind": "decision",
+            "title": "The team decided to use storage-3 because invoice writes need transaction guarantees.",
+            "fields": {
+              "rationale": "invoice writes need transaction guarantees"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "decision",
+            "title": "The team decided to use storage-3 because invoice writes need transaction guarantees.",
+            "label_match": true,
+            "fields": {
+              "rationale": "invoice writes need transaction guarantees"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "prose_reason_4",
+        "expected": [
+          {
+            "kind": "decision",
+            "title": "The team chose use storage-4 because invoice writes need transaction guarantees.",
+            "fields": {
+              "rationale": "invoice writes need transaction guarantees"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "decision",
+            "title": "The team chose use storage-4 because invoice writes need transaction guarantees.",
+            "label_match": true,
+            "fields": {
+              "rationale": "invoice writes need transaction guarantees"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "prose_reason_5",
+        "expected": [
+          {
+            "kind": "decision",
+            "title": "The team selected use storage-5 because invoice writes need transaction guarantees.",
+            "fields": {
+              "rationale": "invoice writes need transaction guarantees"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "decision",
+            "title": "The team selected use storage-5 because invoice writes need transaction guarantees.",
+            "label_match": true,
+            "fields": {
+              "rationale": "invoice writes need transaction guarantees"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "prose_relation_0",
+        "expected": [
+          {
+            "kind": "dependency",
+            "title": "service-0 depends on store-0. This relationship is documented by the platform team.",
+            "fields": {
+              "from_component": "service-0",
+              "to_component": "store-0"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "dependency",
+            "title": "service-0 depends on store-0. This relationship is documented by the platform team.",
+            "label_match": true,
+            "fields": {
+              "from_component": "service-0",
+              "to_component": "store-0"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "prose_relation_1",
+        "expected": [
+          {
+            "kind": "dependency",
+            "title": "service-1 depends on store-1. This relationship is documented by the platform team.",
+            "fields": {
+              "from_component": "service-1",
+              "to_component": "store-1"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "dependency",
+            "title": "service-1 depends on store-1. This relationship is documented by the platform team.",
+            "label_match": true,
+            "fields": {
+              "from_component": "service-1",
+              "to_component": "store-1"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "prose_relation_2",
+        "expected": [
+          {
+            "kind": "dependency",
+            "title": "service-2 depends on store-2. This relationship is documented by the platform team.",
+            "fields": {
+              "from_component": "service-2",
+              "to_component": "store-2"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "dependency",
+            "title": "service-2 depends on store-2. This relationship is documented by the platform team.",
+            "label_match": true,
+            "fields": {
+              "from_component": "service-2",
+              "to_component": "store-2"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "prose_relation_3",
+        "expected": [
+          {
+            "kind": "dependency",
+            "title": "service-3 depends on store-3. This relationship is documented by the platform team.",
+            "fields": {
+              "from_component": "service-3",
+              "to_component": "store-3"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "dependency",
+            "title": "service-3 depends on store-3. This relationship is documented by the platform team.",
+            "label_match": true,
+            "fields": {
+              "from_component": "service-3",
+              "to_component": "store-3"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "prose_relation_4",
+        "expected": [
+          {
+            "kind": "dependency",
+            "title": "service-4 depends on store-4. This relationship is documented by the platform team.",
+            "fields": {
+              "from_component": "service-4",
+              "to_component": "store-4"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "dependency",
+            "title": "service-4 depends on store-4. This relationship is documented by the platform team.",
+            "label_match": true,
+            "fields": {
+              "from_component": "service-4",
+              "to_component": "store-4"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "prose_relation_5",
+        "expected": [
+          {
+            "kind": "dependency",
+            "title": "service-5 depends on store-5. This relationship is documented by the platform team.",
+            "fields": {
+              "from_component": "service-5",
+              "to_component": "store-5"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "dependency",
+            "title": "service-5 depends on store-5. This relationship is documented by the platform team.",
+            "label_match": true,
+            "fields": {
+              "from_component": "service-5",
+              "to_component": "store-5"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "prose_uncertain_0",
+        "expected": [],
+        "observed": [],
+        "note": "Must abstain from assigning a negated or hypothetical duty."
+      },
+      {
+        "case": "prose_uncertain_1",
+        "expected": [],
+        "observed": [
+          {
+            "kind": "dependency",
+            "title": "Ada Vale no longer maintains the release pipeline; ownership requires review.",
+            "label_match": false,
+            "fields": {},
+            "exact_quote": true
+          }
+        ],
+        "note": "Must abstain from assigning a negated or hypothetical duty."
+      },
+      {
+        "case": "structured_duty_0",
+        "expected": [
+          {
+            "kind": "responsibility",
+            "title": "Maintain service-0 alerts",
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": "Quinn Reed"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "responsibility",
+            "title": "Maintain service-0 alerts",
+            "label_match": true,
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": "Quinn Reed"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "structured_duty_1",
+        "expected": [
+          {
+            "kind": "responsibility",
+            "title": "Maintain service-1 alerts",
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": "Quinn Reed"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "responsibility",
+            "title": "Maintain service-1 alerts",
+            "label_match": true,
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": "Quinn Reed"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "structured_duty_2",
+        "expected": [
+          {
+            "kind": "responsibility",
+            "title": "Maintain service-2 alerts",
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": "Quinn Reed"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "responsibility",
+            "title": "Maintain service-2 alerts",
+            "label_match": true,
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": "Quinn Reed"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "structured_duty_3",
+        "expected": [
+          {
+            "kind": "responsibility",
+            "title": "Maintain service-3 alerts",
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": "Quinn Reed"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "responsibility",
+            "title": "Maintain service-3 alerts",
+            "label_match": true,
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": "Quinn Reed"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "structured_duty_4",
+        "expected": [
+          {
+            "kind": "responsibility",
+            "title": "Maintain service-4 alerts",
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": "Quinn Reed"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "responsibility",
+            "title": "Maintain service-4 alerts",
+            "label_match": true,
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": "Quinn Reed"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "structured_duty_5",
+        "expected": [
+          {
+            "kind": "responsibility",
+            "title": "Maintain service-5 alerts",
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": "Quinn Reed"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "responsibility",
+            "title": "Maintain service-5 alerts",
+            "label_match": true,
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": "Quinn Reed"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "structured_duty_6",
+        "expected": [
+          {
+            "kind": "responsibility",
+            "title": "Maintain service-6 alerts",
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": "Quinn Reed"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "responsibility",
+            "title": "Maintain service-6 alerts",
+            "label_match": true,
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": "Quinn Reed"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "structured_duty_7",
+        "expected": [
+          {
+            "kind": "responsibility",
+            "title": "Maintain service-7 alerts",
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": "Quinn Reed"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "kind": "responsibility",
+            "title": "Maintain service-7 alerts",
+            "label_match": true,
+            "fields": {
+              "owner": "Ada Vale",
+              "backup": "Quinn Reed"
+            },
+            "exact_quote": true
+          }
+        ],
+        "note": ""
+      },
+      {
+        "case": "negative_0",
+        "expected": [],
+        "observed": [],
+        "note": "Negative: not evidence of an operational duty, procedure or decision."
+      },
+      {
+        "case": "negative_1",
+        "expected": [],
+        "observed": [],
+        "note": "Negative: not evidence of an operational duty, procedure or decision."
+      },
+      {
+        "case": "negative_2",
+        "expected": [],
+        "observed": [],
+        "note": "Negative: not evidence of an operational duty, procedure or decision."
+      },
+      {
+        "case": "negative_3",
+        "expected": [],
+        "observed": [],
+        "note": "Negative: not evidence of an operational duty, procedure or decision."
+      },
+      {
+        "case": "negative_4",
+        "expected": [],
+        "observed": [],
+        "note": "Negative: not evidence of an operational duty, procedure or decision."
+      },
+      {
+        "case": "negative_5",
+        "expected": [],
+        "observed": [],
+        "note": "Negative: not evidence of an operational duty, procedure or decision."
+      },
+      {
+        "case": "negative_6",
+        "expected": [],
+        "observed": [],
+        "note": "Negative: not evidence of an operational duty, procedure or decision."
+      },
+      {
+        "case": "negative_7",
+        "expected": [],
+        "observed": [],
+        "note": "Negative: not evidence of an operational duty, procedure or decision."
       }
     ],
     "owner_mapping": [
@@ -671,8 +1402,92 @@
       {
         "case": "prose_responsibility",
         "expected": "Ada Vale",
-        "observed": null,
-        "correct": false
+        "observed": "Ada Vale",
+        "correct": true
+      },
+      {
+        "case": "prose_duty_0",
+        "expected": "Ada Vale",
+        "observed": "Ada Vale",
+        "correct": true
+      },
+      {
+        "case": "prose_duty_1",
+        "expected": "Ada Vale",
+        "observed": "Ada Vale",
+        "correct": true
+      },
+      {
+        "case": "prose_duty_2",
+        "expected": "Ada Vale",
+        "observed": "Ada Vale",
+        "correct": true
+      },
+      {
+        "case": "prose_duty_3",
+        "expected": "Ada Vale",
+        "observed": "Ada Vale",
+        "correct": true
+      },
+      {
+        "case": "prose_duty_4",
+        "expected": "Ada Vale",
+        "observed": "Ada Vale",
+        "correct": true
+      },
+      {
+        "case": "prose_duty_5",
+        "expected": "Ada Vale",
+        "observed": "Ada Vale",
+        "correct": true
+      },
+      {
+        "case": "structured_duty_0",
+        "expected": "Ada Vale",
+        "observed": "Ada Vale",
+        "correct": true
+      },
+      {
+        "case": "structured_duty_1",
+        "expected": "Ada Vale",
+        "observed": "Ada Vale",
+        "correct": true
+      },
+      {
+        "case": "structured_duty_2",
+        "expected": "Ada Vale",
+        "observed": "Ada Vale",
+        "correct": true
+      },
+      {
+        "case": "structured_duty_3",
+        "expected": "Ada Vale",
+        "observed": "Ada Vale",
+        "correct": true
+      },
+      {
+        "case": "structured_duty_4",
+        "expected": "Ada Vale",
+        "observed": "Ada Vale",
+        "correct": true
+      },
+      {
+        "case": "structured_duty_5",
+        "expected": "Ada Vale",
+        "observed": "Ada Vale",
+        "correct": true
+      },
+      {
+        "case": "structured_duty_6",
+        "expected": "Ada Vale",
+        "observed": "Ada Vale",
+        "correct": true
+      },
+      {
+        "case": "structured_duty_7",
+        "expected": "Ada Vale",
+        "observed": "Ada Vale",
+        "correct": true
       }
     ],
     "decision_rationale": [
@@ -703,8 +1518,44 @@
       {
         "case": "prose_decision",
         "expected": "the traffic pattern includes repeated lookups",
-        "observed": "",
-        "correct": false
+        "observed": "the traffic pattern includes repeated lookups",
+        "correct": true
+      },
+      {
+        "case": "prose_reason_0",
+        "expected": "invoice writes need transaction guarantees",
+        "observed": "invoice writes need transaction guarantees",
+        "correct": true
+      },
+      {
+        "case": "prose_reason_1",
+        "expected": "invoice writes need transaction guarantees",
+        "observed": "invoice writes need transaction guarantees",
+        "correct": true
+      },
+      {
+        "case": "prose_reason_2",
+        "expected": "invoice writes need transaction guarantees",
+        "observed": "invoice writes need transaction guarantees",
+        "correct": true
+      },
+      {
+        "case": "prose_reason_3",
+        "expected": "invoice writes need transaction guarantees",
+        "observed": "invoice writes need transaction guarantees",
+        "correct": true
+      },
+      {
+        "case": "prose_reason_4",
+        "expected": "invoice writes need transaction guarantees",
+        "observed": "invoice writes need transaction guarantees",
+        "correct": true
+      },
+      {
+        "case": "prose_reason_5",
+        "expected": "invoice writes need transaction guarantees",
+        "observed": "invoice writes need transaction guarantees",
+        "correct": true
       }
     ],
     "dependency_endpoints": [
@@ -739,10 +1590,82 @@
           "to_component": "PostgreSQL"
         },
         "observed": {
-          "from_component": null,
-          "to_component": null
+          "from_component": "billing-api",
+          "to_component": "PostgreSQL"
         },
-        "correct": false
+        "correct": true
+      },
+      {
+        "case": "prose_relation_0",
+        "expected": {
+          "from_component": "service-0",
+          "to_component": "store-0"
+        },
+        "observed": {
+          "from_component": "service-0",
+          "to_component": "store-0"
+        },
+        "correct": true
+      },
+      {
+        "case": "prose_relation_1",
+        "expected": {
+          "from_component": "service-1",
+          "to_component": "store-1"
+        },
+        "observed": {
+          "from_component": "service-1",
+          "to_component": "store-1"
+        },
+        "correct": true
+      },
+      {
+        "case": "prose_relation_2",
+        "expected": {
+          "from_component": "service-2",
+          "to_component": "store-2"
+        },
+        "observed": {
+          "from_component": "service-2",
+          "to_component": "store-2"
+        },
+        "correct": true
+      },
+      {
+        "case": "prose_relation_3",
+        "expected": {
+          "from_component": "service-3",
+          "to_component": "store-3"
+        },
+        "observed": {
+          "from_component": "service-3",
+          "to_component": "store-3"
+        },
+        "correct": true
+      },
+      {
+        "case": "prose_relation_4",
+        "expected": {
+          "from_component": "service-4",
+          "to_component": "store-4"
+        },
+        "observed": {
+          "from_component": "service-4",
+          "to_component": "store-4"
+        },
+        "correct": true
+      },
+      {
+        "case": "prose_relation_5",
+        "expected": {
+          "from_component": "service-5",
+          "to_component": "store-5"
+        },
+        "observed": {
+          "from_component": "service-5",
+          "to_component": "store-5"
+        },
+        "correct": true
       }
     ],
     "unsupported_questions": [
@@ -782,14 +1705,14 @@
       ]
     ],
     "reconstruction": {
-      "added_candidates": 19,
-      "searched_sources": 24,
+      "added_candidates": 47,
+      "searched_sources": 60,
       "engine": "deterministic-v1"
     }
   },
   "limitations": [
     "This controlled synthetic corpus is small and intentionally includes the supported structured syntax. It is not a representative organisational dataset.",
-    "Labels were written for these fixtures; this is deterministic rule evaluation, not an independently validated real employee handover benchmark.",
+    "No held-out split or independent labelling audit was used. Labels were written for these fixtures; this is deterministic rule evaluation, not an independently validated real employee handover benchmark.",
     "Exact citation checks establish attribution only, not source truth, semantic entailment, completeness, operational competence or business continuity.",
     "The potential-conflict metric measures requests for human review, not reliable semantic contradiction resolution.",
     "Only one source-ACL negative is counted here; comprehensive tenant/project/source enforcement is exercised in separate API tests.",

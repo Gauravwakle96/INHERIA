@@ -285,8 +285,12 @@ test('handover approval, ownership acceptance and supervisor validation are sepa
   await page.getByRole('button', { name: 'Close dialog' }).click();
   await supervisorCard.getByRole('button', { name: 'Validate', exact: true }).click();
   await page.getByLabel('Evidence-backed assessment note').fill('Inspected the participant explanation and cited source versions against each predefined criterion. They identified the safe test procedure, dependency checks and human escalation boundary. This validates the exercise only, not production competence.');
+  for (const checkbox of await page.getByRole('dialog', { name: 'Supervisor validation' }).getByRole('checkbox').all()) await checkbox.check();
   await page.getByRole('button', { name: 'Validate practical completion' }).click();
   await expect(supervisorCard.locator('.badge')).toContainText('Passed');
+  await supervisorCard.getByRole('button', { name: 'Inspect completed task' }).click();
+  await expect(page.getByRole('heading', { name: 'Incoming employee submission' })).toBeVisible();
+  await page.getByRole('button', { name: 'Close dialog' }).click();
   await page.screenshot({ path: 'docs/ui-artifacts/validation-supervisor.png', fullPage: true });
 });
 

@@ -73,6 +73,7 @@ class Submission(StrictModel):
 class Assessment(StrictModel):
     action: Literal["pass", "needs_revision"]
     note: str = Field(min_length=10, max_length=2000)
+    criteria_passed: list[bool] = Field(default_factory=list, max_length=20)
 
 
 class Question(StrictModel):

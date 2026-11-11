@@ -53,3 +53,22 @@ After a successful build, verify HTTPS `/api/ready`, `/api/health`, `/`, `/theme
 If deployment fails, inspect Render build/runtime logs without exposing secrets. Fix and push a commit, then redeploy. Redeploy a previous successful commit for an application rollback; do not downgrade a live database without reviewing migration and data impact. Disconnect/revoke private source tokens before removing their integration.
 
 See [verification](verification.md) for recorded results and [feature status](feature-status.md) for material limitations.
+
+
+## Isolated judge demo configuration
+
+Keep `INHERIA_DEMO_MODE=false` in production. This disables the shared development
+persona login. `INHERIA_JUDGE_DEMO_ENABLED=true` separately enables `/demo` and
+per-visitor isolated workspaces. Defaults: `INHERIA_JUDGE_DEMO_HOURS=4` and
+`INHERIA_JUDGE_DEMO_MAX_VISITS=40`. Visitors must retain both session and visitor
+cookies to switch their three demo roles. Expired sessions are denied immediately;
+expired demo tenants are removed on the next demo start, not by a scheduled job.
+Capacity/rate failures are explicit. Do not upload confidential production sources
+into a public demonstration environment. Invitations are manually shared one-time
+links; email delivery, SSO and password recovery are not provided.
+
+Migration `a73c9d21b004` adds demo visits, invitations and access requests without
+replacing user/source/workflow tables. The Docker startup runs Alembic before
+serving. Existing tokens/provider choices and project data must be preserved.
+Document replacement and active-transition reopening are reversible versioned
+workflow actions; closed ownership is revised through a follow-up transition.

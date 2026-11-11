@@ -15,7 +15,7 @@ from sqlalchemy.orm import Session
 
 from app.config import settings
 from app.database import get_db
-from app.models import Audit, Membership, Project, SessionRecord, Source, User, utcnow
+from app.models import Audit, DemoVisit, Membership, Project, SessionRecord, Source, User, utcnow
 
 password_hasher = PasswordHasher()
 COOKIE_NAME = "inheria_session"
@@ -91,6 +91,9 @@ def create_session(db: Session, user: User, response: Response, request: Request
         csrf_token=secrets.token_urlsafe(32),
         expires_at=utcnow() + timedelta(hours=settings.session_hours),
     )
+    visit = db.scalar(select(DemoVisit).where(DemoVisit.org_id == user.org_id))
+    if visit:
+        record.expires_at = min(record.expires_at, visit.expires_at)
     db.add(record)
     audit(db, user, None, "session.created", "user", user.id, {})
     db.commit()
@@ -121,6 +124,9 @@ def current_user(request: Request, db: Annotated[Session, Depends(get_db)]) -> U
     user = db.get(User, record.user_id)
     if not user or not user.active:
         raise HTTPException(401, "This account is unavailable")
+    visit = db.scalar(select(DemoVisit).where(DemoVisit.org_id == user.org_id))
+    if visit and (visit.expires_at <= utcnow() or not settings.judge_demo_enabled):
+        raise HTTPException(401, "Demo expired. Start another from the sign-in page.")
     verify_csrf(request, record)
     request.state.session_record = record
     return user
@@ -132,6 +138,11 @@ def require_role(user: User, roles: set | list | tuple):
 
 
 def project_access(db: Session, user: User, project_id: str, write: bool = False) -> Project:
+    if not user or not user.active:
+        raise HTTPException(403, "Active project membership is required")
+    visit = db.scalar(select(DemoVisit).where(DemoVisit.org_id == user.org_id))
+    if visit and (visit.expires_at <= utcnow() or not settings.judge_demo_enabled):
+        raise HTTPException(403, "Demo expired. Start a new isolated workspace.")
     project = db.get(Project, project_id)
     if not project or project.org_id != user.org_id:
         raise HTTPException(404, "Project not found or access is unavailable")
@@ -148,7 +159,12 @@ def project_access(db: Session, user: User, project_id: str, write: bool = False
 
 
 def can_read_source(db: Session, user: User, source: Source, include_inactive: bool = False) -> bool:
-    if not user.active or source.org_id != user.org_id or (not include_inactive and source.status != "ready"):
+    if (
+        not source
+        or not user.active
+        or source.org_id != user.org_id
+        or (not include_inactive and source.status != "ready")
+    ):
         return False
     member = db.scalar(
         select(Membership.id).where(Membership.project_id == source.project_id, Membership.user_id == user.id)
@@ -159,9 +175,9 @@ def can_read_source(db: Session, user: User, source: Source, include_inactive: b
 
 
 def visible_sources(db: Session, user: User, project_id: str) -> list[Source]:
-    project_access(db, user, project_id)
     if not user.active:
         return []
+    project_access(db, user, project_id)
     sources = db.scalars(
         select(Source)
         .where(Source.org_id == user.org_id, Source.project_id == project_id)

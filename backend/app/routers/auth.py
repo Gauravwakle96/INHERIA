@@ -65,6 +65,72 @@ class DemoBody(BaseModel):
     user_id: str = Field(min_length=1, max_length=36)
 
 
+@router.get("/judge-demo")
+def judge_demo_info():
+    return {"enabled": settings.judge_demo_enabled, "expires_hours": settings.judge_demo_hours}
+
+
+@router.post("/judge-demo/start", response_model=SessionResponse, status_code=201)
+def judge_demo_start(request: Request, response: Response, db: Db):
+    from app.judge_demo import VISIT_COOKIE, create_demo
+
+    login_rate_limit(request)
+    if not settings.judge_demo_enabled:
+        raise HTTPException(404, "Judge demo is unavailable")
+    person, token = create_demo(db)
+    response.set_cookie(
+        VISIT_COOKIE,
+        token,
+        httponly=True,
+        secure=settings.secure_cookies,
+        samesite="strict",
+        max_age=settings.judge_demo_hours * 3600,
+        path="/",
+    )
+    return create_session(db, person, response, request)
+
+
+@router.get("/judge-demo/people", response_model=list[PublicUser])
+def judge_demo_people(request: Request, db: Db, user: Current):
+    from app.judge_demo import PEOPLE, visitor
+
+    visit = visitor(db, request)
+    if not settings.judge_demo_enabled or user.org_id != visit.org_id:
+        raise HTTPException(404, "No active judge demo")
+    return list(
+        db.scalars(
+            select(User)
+            .where(
+                User.org_id == visit.org_id,
+                User.active.is_(True),
+                User.title.in_([p[1] for p in PEOPLE]),
+                User.email.like("%@judge.inheria.example"),
+            )
+            .order_by(User.name)
+        )
+    )
+
+
+@router.post("/judge-demo/switch", response_model=SessionResponse)
+def judge_demo_switch(body: DemoBody, request: Request, response: Response, db: Db, user: Current):
+    from app.judge_demo import PEOPLE, visitor
+
+    login_rate_limit(request)
+    visit = visitor(db, request)
+    person = db.get(User, body.user_id)
+    if (
+        not settings.judge_demo_enabled
+        or user.org_id != visit.org_id
+        or not person
+        or not person.active
+        or person.org_id != visit.org_id
+        or person.title not in {p[1] for p in PEOPLE}
+        or not person.email.endswith("@judge.inheria.example")
+    ):
+        raise HTTPException(404, "This persona is unavailable in your demo")
+    return create_session(db, person, response, request)
+
+
 @router.get("/demo-users", response_model=list[PublicUser])
 def demo_users(db: Db):
     if not settings.demo_mode:
@@ -72,7 +138,7 @@ def demo_users(db: Db):
     return db.scalars(
         select(User)
         .join(Organisation, Organisation.id == User.org_id)
-        .where(Organisation.is_demo.is_(True), User.active.is_(True))
+        .where(Organisation.is_demo.is_(True), User.active.is_(True), User.email.like("%@nexora.example"))
         .order_by(User.name)
     ).all()
 
@@ -84,7 +150,13 @@ def demo_login(body: DemoBody, request: Request, response: Response, db: Db):
         raise HTTPException(404, "Demonstration accounts are disabled")
     user = db.get(User, body.user_id)
     org = db.get(Organisation, user.org_id) if user else None
-    if not user or not user.active or not org or not org.is_demo:
+    if (
+        not user
+        or not user.active
+        or not org
+        or not org.is_demo
+        or not user.email.endswith("@nexora.example")
+    ):
         raise HTTPException(403, "This account is not an authorised demonstration identity")
     return create_session(db, user, response, request)
 

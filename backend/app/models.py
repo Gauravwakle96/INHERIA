@@ -75,6 +75,36 @@ class SessionRecord(Identity, Base):
     expires_at: Mapped[datetime] = mapped_column(DateTime, index=True)
 
 
+class DemoVisit(Identity, TenantScope, Base):
+    __tablename__ = "demo_visits"
+    token_hash: Mapped[str] = mapped_column(String(64), unique=True, index=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime, index=True)
+
+
+class Invitation(Identity, ProjectScope, Base):
+    __tablename__ = "invitations"
+    email: Mapped[str] = mapped_column(String(254))
+    name: Mapped[str] = mapped_column(String(100))
+    title: Mapped[str] = mapped_column(String(100))
+    role: Mapped[str] = mapped_column(String(30))
+    token_hash: Mapped[str] = mapped_column(String(64), unique=True, index=True)
+    created_by: Mapped[str] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
+    expires_at: Mapped[datetime] = mapped_column(DateTime, index=True)
+    status: Mapped[str] = mapped_column(String(20), default="pending")
+
+
+class AccessRequest(Identity, ProjectScope, Base):
+    __tablename__ = "access_requests"
+    requested_by: Mapped[str] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
+    source_id: Mapped[str | None] = mapped_column(ForeignKey("sources.id", ondelete="CASCADE"), nullable=True)
+    purpose: Mapped[str] = mapped_column(Text)
+    status: Mapped[str] = mapped_column(String(20), default="pending")
+    note: Mapped[str] = mapped_column(Text, default="")
+    reviewed_by: Mapped[str | None] = mapped_column(
+        ForeignKey("users.id", ondelete="SET NULL"), nullable=True
+    )
+
+
 class Connection(Identity, ProjectScope, Base):
     __tablename__ = "connections"
     __table_args__ = (UniqueConstraint("project_id", "provider", "repository", name="uq_connection_repo"),)

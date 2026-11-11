@@ -1,0 +1,50 @@
+import { useState, type FormEvent } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ArrowRight, Copy, Plus, ShieldCheck } from 'lucide-react';
+import { post, projectPath } from '../api';
+import type { Session, Source, User } from '../types';
+import { Badge, Button, Dialog, Empty, ErrorState, Notice, Panel } from '../ui';
+import { canReview, useAction, useProjectQuery, useWorkspace } from '../workspace';
+
+interface Invite { id: string; name: string; email: string; role: string; status: string; expires_at: string; join_path?: string }
+interface Access { id: string; requested_by: string; purpose: string; status: string; note: string }
+
+export function JoinPage({ onLogin }: { onLogin: (session: Session) => void }) {
+  const navigate = useNavigate();
+  const [token] = useState(() => new URLSearchParams(window.location.hash.slice(1)).get('token') || '');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  async function submit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault(); setBusy(true); setError(null);
+    const password = String(new FormData(e.currentTarget).get('password') || '');
+    try { const session = await post<Session>('/auth/invitation/accept', { token, password: password || undefined }); onLogin(session); navigate('/team'); }
+    catch (err) { setError(err as Error); } finally { setBusy(false); }
+  }
+  return <main className="demo-page"><Link to="/" className="brand">INHERIA.</Link><section className="project-setup"><h1>Join your project</h1><p>Your administrator invited you into a scoped workspace. The link expires and can be used once.</p><Notice>New account: choose your own password. Existing account: sign in with the invited email first, then reopen this link and leave password blank.</Notice>{error && <ErrorState error={error} />}<form className="form-stack" onSubmit={submit}><label>Your new password<input type="password" name="password" minLength={12} maxLength={128} autoComplete="new-password" /><small>At least 12 characters. Existing accounts keep their current password.</small></label><Button busy={busy} disabled={!token}>Accept invitation <ArrowRight size={16} /></Button></form><p><Link to="/">Sign in with an existing account</Link></p></section></main>;
+}
+
+export function OnboardingPanel({ team }: { team: User[] }) {
+  const { project, user } = useWorkspace();
+  const [inviting, setInviting] = useState(false);
+  const [joinLink, setJoinLink] = useState('');
+  const [reviewing, setReviewing] = useState<Access | null>(null);
+  const [requesting, setRequesting] = useState(false);
+  const [copyError, setCopyError] = useState('');
+  const invitations = useProjectQuery<Invite[]>(user.role === 'admin' ? '/invitations' : '/access-requests');
+  const requests = useProjectQuery<Access[]>('/access-requests');
+  const sources = useProjectQuery<Source[]>('/sources');
+  const invite = useAction<Record<string, string>>(body => post<Invite>(projectPath(project.id, '/invitations'), body), 'Invitation created. Share the one-time link through an authorised channel.');
+  const revoke = useAction<string>(id => post(projectPath(project.id, `/invitations/${id}/revoke`)), 'Invitation revoked. The old link can no longer be used.');
+  const request = useAction<{ purpose: string }>(body => post(projectPath(project.id, '/access-requests'), body), 'Access request sent to a reviewer. It does not grant cloud/IAM permissions.');
+  const review = useAction<{ id: string; action: string; source_id?: string; note: string }>(body => post(projectPath(project.id, `/access-requests/${body.id}/review`), body), 'Access decision saved.');
+  function submitInvite(e: FormEvent<HTMLFormElement>) { e.preventDefault(); invite.mutate(Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>, { onSuccess: result => { setJoinLink(window.location.origin + (result as Invite).join_path); setInviting(false); } }); }
+  function submitRequest(e: FormEvent<HTMLFormElement>) { e.preventDefault(); request.mutate({ purpose: String(new FormData(e.currentTarget).get('purpose')) }, { onSuccess: () => setRequesting(false) }); }
+  function submitReview(e: FormEvent<HTMLFormElement>) { e.preventDefault(); if (!reviewing) return; const f = new FormData(e.currentTarget); review.mutate({ id: reviewing.id, action: String(f.get('action')), source_id: String(f.get('source_id') || '') || undefined, note: String(f.get('note')) }, { onSuccess: () => setReviewing(null) }); }
+  return <><Panel title="Team onboarding & access readiness" description="Invite people securely and resolve missing knowledge access separately from ownership acceptance." action={<div className="page-actions">{user.role === 'admin' && <Button variant="secondary" onClick={() => setInviting(true)}><Plus size={16} />Invite member</Button>}<Button variant="secondary" onClick={() => setRequesting(true)}>Request knowledge access</Button></div>}>
+    <div className="padded"><Notice>INHERIA access controls project knowledge. AWS, GitHub and other operational permissions must be approved in their own systems.</Notice>{user.role === 'admin' && <><h3>Invitations</h3>{invitations.error ? <ErrorState error={invitations.error} /> : !invitations.data?.length ? <p className="muted">No invitations yet. New members set their own password.</p> : invitations.data.map(item => <div className="transfer-row" key={item.id}><div><strong>{item.name}</strong><small>{item.email} · {item.role} · expires {new Date(item.expires_at + 'Z').toLocaleString()}</small></div><Badge value={item.status} />{item.status === 'pending' && <Button variant="ghost" busy={revoke.isPending} onClick={() => revoke.mutate(item.id)}>Revoke</Button>}</div>)}</>}
+    <h3>Knowledge access requests</h3>{requests.error ? <ErrorState error={requests.error} /> : !requests.data?.length ? <Empty title="No pending access requests" description="Describe the knowledge you need without guessing hidden document names or including credentials." /> : requests.data.map(item => <div className="transfer-row" key={item.id}><div><strong>{team.find(p => p.id === item.requested_by)?.name || 'Project member'}</strong><p>{item.purpose}</p>{item.note && <p>{item.note}</p>}</div><Badge value={item.status} />{canReview(user.role) && item.requested_by !== user.id && item.status === 'pending' && <Button variant="secondary" onClick={() => setReviewing(item)}>Review</Button>}</div>)}</div>
+  </Panel><Dialog open={inviting} title="Invite a project member" onClose={() => setInviting(false)}><form className="form-stack" onSubmit={submitInvite}><Notice>Only a hash of the single-use link is stored. Share it privately; INHERIA does not send email.</Notice><label>Name<input name="name" required minLength={2} maxLength={100} /></label><label>Email<input name="email" type="email" required /></label><label>Role title<input name="title" required minLength={2} maxLength={100} /></label><label>Project role<select name="role"><option value="incoming">Incoming employee</option><option value="employee">Employee</option><option value="lead">Technical lead</option><option value="manager">Project manager</option></select></label><Button busy={invite.isPending}>Create invitation <ArrowRight size={16} /></Button></form></Dialog>
+  <Dialog open={!!joinLink} title="Share the invitation privately" onClose={() => setJoinLink('')}><Notice>This link is a temporary access credential. It is shown only now and cannot be retrieved again. Revoke and recreate if needed.</Notice><label className="form-stack">One-time invitation link<input readOnly value={joinLink} onFocus={e => e.currentTarget.select()} /></label><Button variant="secondary" onClick={() => { void navigator.clipboard.writeText(joinLink).catch(() => setCopyError('Select and copy the link manually.')); }}><Copy size={16} />Copy link</Button>{copyError && <p>{copyError}</p>}</Dialog>
+  <Dialog open={requesting} title="Request knowledge access" onClose={() => setRequesting(false)}><form className="form-stack" onSubmit={submitRequest}><label>What knowledge do you need and why?<textarea name="purpose" required minLength={10} maxLength={2000} rows={5} placeholder="I need the approved recovery procedure to complete my assigned walkthrough." /></label><Button busy={request.isPending}>Submit request</Button></form></Dialog>
+  <Dialog open={!!reviewing} title="Review knowledge access" onClose={() => setReviewing(null)}><form className="form-stack" onSubmit={submitReview}><p>{reviewing?.purpose}</p><label>Decision<select name="action"><option value="approve">Approve source access</option><option value="reject">Reject request</option></select></label><label>Source to share<select name="source_id"><option value="">Select for approval; leave blank for rejection</option>{sources.data?.filter(s => s.status === 'ready').map(s => <option key={s.id} value={s.id}>{s.name}</option>)}</select></label><label>Decision note<textarea name="note" required minLength={10} maxLength={2000} rows={4} placeholder="Explain the scope approved. Avoid hidden source details in a rejection." /></label><Button busy={review.isPending}><ShieldCheck size={16} />Record decision</Button></form></Dialog></>;
+}

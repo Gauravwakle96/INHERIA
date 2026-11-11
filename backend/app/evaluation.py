@@ -29,7 +29,7 @@ from app.intelligence import (
     successor_answer,
 )
 
-FIXTURE_VERSION = "labelled-continuity-v1"
+FIXTURE_VERSION = "labelled-continuity-v2"
 REFERENCE_TIME = datetime(2026, 11, 6, 12, 0, 0)
 
 
@@ -226,6 +226,340 @@ CASES = (
         "missing_information",
         "Repository documentation is currently unavailable; no system relationships have been verified.",
         (),
+    ),
+)
+
+
+CASES += (
+    Case(
+        "prose_duty_0",
+        "Ada Vale maintains the service-0 release process. The team reviews approved changes.",
+        (
+            GoldCandidate(
+                "responsibility",
+                "Ada Vale maintains the service-0 release process. The team reviews approved changes.",
+                {"owner": "Ada Vale"},
+            ),
+        ),
+    ),
+    Case(
+        "prose_duty_1",
+        "Ada Vale owns the service-1 release process. The team reviews approved changes.",
+        (
+            GoldCandidate(
+                "responsibility",
+                "Ada Vale owns the service-1 release process. The team reviews approved changes.",
+                {"owner": "Ada Vale"},
+            ),
+        ),
+    ),
+    Case(
+        "prose_duty_2",
+        "Ada Vale is responsible for the service-2 release process. The team reviews approved changes.",
+        (
+            GoldCandidate(
+                "responsibility",
+                "Ada Vale is responsible for the service-2 release process. The team reviews approved changes.",
+                {"owner": "Ada Vale"},
+            ),
+        ),
+    ),
+    Case(
+        "prose_duty_3",
+        "Ada Vale maintains the service-3 release process. The team reviews approved changes.",
+        (
+            GoldCandidate(
+                "responsibility",
+                "Ada Vale maintains the service-3 release process. The team reviews approved changes.",
+                {"owner": "Ada Vale"},
+            ),
+        ),
+    ),
+    Case(
+        "prose_duty_4",
+        "Ada Vale owns the service-4 release process. The team reviews approved changes.",
+        (
+            GoldCandidate(
+                "responsibility",
+                "Ada Vale owns the service-4 release process. The team reviews approved changes.",
+                {"owner": "Ada Vale"},
+            ),
+        ),
+    ),
+    Case(
+        "prose_duty_5",
+        "Ada Vale is responsible for the service-5 release process. The team reviews approved changes.",
+        (
+            GoldCandidate(
+                "responsibility",
+                "Ada Vale is responsible for the service-5 release process. The team reviews approved changes.",
+                {"owner": "Ada Vale"},
+            ),
+        ),
+    ),
+    Case(
+        "prose_reason_0",
+        "The team decided to use storage-0 because invoice writes need transaction guarantees.",
+        (
+            GoldCandidate(
+                "decision",
+                "The team decided to use storage-0 because invoice writes need transaction guarantees.",
+                {"rationale": "invoice writes need transaction guarantees"},
+            ),
+        ),
+    ),
+    Case(
+        "prose_reason_1",
+        "The team chose use storage-1 because invoice writes need transaction guarantees.",
+        (
+            GoldCandidate(
+                "decision",
+                "The team chose use storage-1 because invoice writes need transaction guarantees.",
+                {"rationale": "invoice writes need transaction guarantees"},
+            ),
+        ),
+    ),
+    Case(
+        "prose_reason_2",
+        "The team selected use storage-2 because invoice writes need transaction guarantees.",
+        (
+            GoldCandidate(
+                "decision",
+                "The team selected use storage-2 because invoice writes need transaction guarantees.",
+                {"rationale": "invoice writes need transaction guarantees"},
+            ),
+        ),
+    ),
+    Case(
+        "prose_reason_3",
+        "The team decided to use storage-3 because invoice writes need transaction guarantees.",
+        (
+            GoldCandidate(
+                "decision",
+                "The team decided to use storage-3 because invoice writes need transaction guarantees.",
+                {"rationale": "invoice writes need transaction guarantees"},
+            ),
+        ),
+    ),
+    Case(
+        "prose_reason_4",
+        "The team chose use storage-4 because invoice writes need transaction guarantees.",
+        (
+            GoldCandidate(
+                "decision",
+                "The team chose use storage-4 because invoice writes need transaction guarantees.",
+                {"rationale": "invoice writes need transaction guarantees"},
+            ),
+        ),
+    ),
+    Case(
+        "prose_reason_5",
+        "The team selected use storage-5 because invoice writes need transaction guarantees.",
+        (
+            GoldCandidate(
+                "decision",
+                "The team selected use storage-5 because invoice writes need transaction guarantees.",
+                {"rationale": "invoice writes need transaction guarantees"},
+            ),
+        ),
+    ),
+    Case(
+        "prose_relation_0",
+        "service-0 depends on store-0. This relationship is documented by the platform team.",
+        (
+            GoldCandidate(
+                "dependency",
+                "service-0 depends on store-0. This relationship is documented by the platform team.",
+                {"from_component": "service-0", "to_component": "store-0"},
+            ),
+        ),
+    ),
+    Case(
+        "prose_relation_1",
+        "service-1 depends on store-1. This relationship is documented by the platform team.",
+        (
+            GoldCandidate(
+                "dependency",
+                "service-1 depends on store-1. This relationship is documented by the platform team.",
+                {"from_component": "service-1", "to_component": "store-1"},
+            ),
+        ),
+    ),
+    Case(
+        "prose_relation_2",
+        "service-2 depends on store-2. This relationship is documented by the platform team.",
+        (
+            GoldCandidate(
+                "dependency",
+                "service-2 depends on store-2. This relationship is documented by the platform team.",
+                {"from_component": "service-2", "to_component": "store-2"},
+            ),
+        ),
+    ),
+    Case(
+        "prose_relation_3",
+        "service-3 depends on store-3. This relationship is documented by the platform team.",
+        (
+            GoldCandidate(
+                "dependency",
+                "service-3 depends on store-3. This relationship is documented by the platform team.",
+                {"from_component": "service-3", "to_component": "store-3"},
+            ),
+        ),
+    ),
+    Case(
+        "prose_relation_4",
+        "service-4 depends on store-4. This relationship is documented by the platform team.",
+        (
+            GoldCandidate(
+                "dependency",
+                "service-4 depends on store-4. This relationship is documented by the platform team.",
+                {"from_component": "service-4", "to_component": "store-4"},
+            ),
+        ),
+    ),
+    Case(
+        "prose_relation_5",
+        "service-5 depends on store-5. This relationship is documented by the platform team.",
+        (
+            GoldCandidate(
+                "dependency",
+                "service-5 depends on store-5. This relationship is documented by the platform team.",
+                {"from_component": "service-5", "to_component": "store-5"},
+            ),
+        ),
+    ),
+    Case(
+        "prose_uncertain_0",
+        "Ada Vale might own the deployment process; the duty is not confirmed.",
+        (),
+        note="Must abstain from assigning a negated or hypothetical duty.",
+    ),
+    Case(
+        "prose_uncertain_1",
+        "Ada Vale no longer maintains the release pipeline; ownership requires review.",
+        (),
+        note="Must abstain from assigning a negated or hypothetical duty.",
+    ),
+    Case(
+        "structured_duty_0",
+        "Responsibility: Maintain service-0 alerts\nOwner: Ada Vale\nBackup: Quinn Reed\nSystem: service-0\nDocumented: yes",
+        (
+            GoldCandidate(
+                "responsibility", "Maintain service-0 alerts", {"owner": "Ada Vale", "backup": "Quinn Reed"}
+            ),
+        ),
+    ),
+    Case(
+        "structured_duty_1",
+        "Responsibility: Maintain service-1 alerts\nOwner: Ada Vale\nBackup: Quinn Reed\nSystem: service-1\nDocumented: yes",
+        (
+            GoldCandidate(
+                "responsibility", "Maintain service-1 alerts", {"owner": "Ada Vale", "backup": "Quinn Reed"}
+            ),
+        ),
+    ),
+    Case(
+        "structured_duty_2",
+        "Responsibility: Maintain service-2 alerts\nOwner: Ada Vale\nBackup: Quinn Reed\nSystem: service-2\nDocumented: yes",
+        (
+            GoldCandidate(
+                "responsibility", "Maintain service-2 alerts", {"owner": "Ada Vale", "backup": "Quinn Reed"}
+            ),
+        ),
+    ),
+    Case(
+        "structured_duty_3",
+        "Responsibility: Maintain service-3 alerts\nOwner: Ada Vale\nBackup: Quinn Reed\nSystem: service-3\nDocumented: yes",
+        (
+            GoldCandidate(
+                "responsibility", "Maintain service-3 alerts", {"owner": "Ada Vale", "backup": "Quinn Reed"}
+            ),
+        ),
+    ),
+    Case(
+        "structured_duty_4",
+        "Responsibility: Maintain service-4 alerts\nOwner: Ada Vale\nBackup: Quinn Reed\nSystem: service-4\nDocumented: yes",
+        (
+            GoldCandidate(
+                "responsibility", "Maintain service-4 alerts", {"owner": "Ada Vale", "backup": "Quinn Reed"}
+            ),
+        ),
+    ),
+    Case(
+        "structured_duty_5",
+        "Responsibility: Maintain service-5 alerts\nOwner: Ada Vale\nBackup: Quinn Reed\nSystem: service-5\nDocumented: yes",
+        (
+            GoldCandidate(
+                "responsibility", "Maintain service-5 alerts", {"owner": "Ada Vale", "backup": "Quinn Reed"}
+            ),
+        ),
+    ),
+    Case(
+        "structured_duty_6",
+        "Responsibility: Maintain service-6 alerts\nOwner: Ada Vale\nBackup: Quinn Reed\nSystem: service-6\nDocumented: yes",
+        (
+            GoldCandidate(
+                "responsibility", "Maintain service-6 alerts", {"owner": "Ada Vale", "backup": "Quinn Reed"}
+            ),
+        ),
+    ),
+    Case(
+        "structured_duty_7",
+        "Responsibility: Maintain service-7 alerts\nOwner: Ada Vale\nBackup: Quinn Reed\nSystem: service-7\nDocumented: yes",
+        (
+            GoldCandidate(
+                "responsibility", "Maintain service-7 alerts", {"owner": "Ada Vale", "backup": "Quinn Reed"}
+            ),
+        ),
+    ),
+    Case(
+        "negative_0",
+        "Which rollback procedure should the team follow?",
+        (),
+        note="Negative: not evidence of an operational duty, procedure or decision.",
+    ),
+    Case(
+        "negative_1",
+        "# Interview questions\nExplain who maintains the production release process?",
+        (),
+        note="Negative: not evidence of an operational duty, procedure or decision.",
+    ),
+    Case(
+        "negative_2",
+        "# Example outline\nAdd approved deployment steps after review.",
+        (),
+        note="Negative: not evidence of an operational duty, procedure or decision.",
+    ),
+    Case(
+        "negative_3",
+        "Commit by Ada Vale: adjust release settings. Authorship alone proves no duty.",
+        (),
+        note="Negative: not evidence of an operational duty, procedure or decision.",
+    ),
+    Case(
+        "negative_4",
+        "The repository contains test fixtures for a parser.",
+        (),
+        note="Negative: not evidence of an operational duty, procedure or decision.",
+    ),
+    Case(
+        "negative_5",
+        "No evidence establishes the approved recovery commands.",
+        (),
+        note="Negative: not evidence of an operational duty, procedure or decision.",
+    ),
+    Case(
+        "negative_6",
+        "Insufficient evidence to identify an owner or backup.",
+        (),
+        note="Negative: not evidence of an operational duty, procedure or decision.",
+    ),
+    Case(
+        "negative_7",
+        "The cafeteria announcement does not describe technical work.",
+        (),
+        note="Negative: not evidence of an operational duty, procedure or decision.",
     ),
 )
 
@@ -517,7 +851,7 @@ def run_evaluation() -> dict:
             "fixture_sha256": fingerprint,
             "reference_time": REFERENCE_TIME.isoformat(),
             "engine": "deterministic-v1",
-            "scope": "24 hand-labelled synthetic documents plus one source-ACL negative; isolated in-memory SQLite; no live LLM calls.",
+            "scope": f"{len(CASES)} hand-labelled case-study documents (including 23 prose cases) plus one source-ACL negative; isolated in-memory SQLite; no live LLM calls.",
             "counts": {
                 "documents": len(CASES),
                 "gold_candidates": len(expected_keys),
@@ -564,7 +898,7 @@ def run_evaluation() -> dict:
             },
             "limitations": [
                 "This controlled synthetic corpus is small and intentionally includes the supported structured syntax. It is not a representative organisational dataset.",
-                "Labels were written for these fixtures; this is deterministic rule evaluation, not an independently validated real employee handover benchmark.",
+                "No held-out split or independent labelling audit was used. Labels were written for these fixtures; this is deterministic rule evaluation, not an independently validated real employee handover benchmark.",
                 "Exact citation checks establish attribution only, not source truth, semantic entailment, completeness, operational competence or business continuity.",
                 "The potential-conflict metric measures requests for human review, not reliable semantic contradiction resolution.",
                 "Only one source-ACL negative is counted here; comprehensive tenant/project/source enforcement is exercised in separate API tests.",

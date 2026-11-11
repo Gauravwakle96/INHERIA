@@ -29,10 +29,11 @@ async def lifespan(app: FastAPI):
         for run in db.scalars(
             select(m.Investigation).where(m.Investigation.status.in_(["queued", "running"]))
         ):
-            run.status, run.report = (
-                "failed",
-                {"summary": "Interrupted by server restart. Retry investigation."},
-            )
+            run.status = "interrupted"
+            run.report = {
+                **(run.report or {}),
+                "summary": "Interrupted by server restart. Resume the saved source checkpoint.",
+            }
         for turn in db.scalars(select(m.ChatTurn).where(m.ChatTurn.status == "running")):
             turn.status = "failed"
             turn.response = {
@@ -150,6 +151,7 @@ def create_app() -> FastAPI:
 
     from app.routers.auth import router as auth_router
     from app.routers.chat import router as chat_router
+    from app.routers.onboarding import router as onboarding_router
     from app.routers.sources import router as sources_router
     from app.routers.workspace import router as workspace_router
 
@@ -157,6 +159,7 @@ def create_app() -> FastAPI:
     app.include_router(sources_router)
     app.include_router(workspace_router)
     app.include_router(chat_router)
+    app.include_router(onboarding_router)
 
     @app.get("/api/health", tags=["Health"])
     def health():

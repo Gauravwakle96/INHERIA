@@ -4,18 +4,18 @@ This file reports implementation, not the complete long-term product vision. The
 
 | Capability | Status | Practical limit |
 | --- | --- | --- |
-| Organisation registration, login, team account creation, project membership | Implemented | One organisation per account; no invite email/reset/SSO/MFA |
+| Organisation registration, login, team account creation, project membership | Implemented | Expiring single-use invitations; one organisation per account; no email delivery/reset/SSO/MFA |
 | GitHub REST connector | Implemented | Public repositories or encrypted PAT; bounded snapshots, no OAuth/webhooks |
 | PDF/DOCX/Markdown/TXT/JSON parsing | Implemented | Bounded files; scanned PDFs need external OCR |
 | Source ACL, versions, provenance, revoke/delete | Implemented | External source permission changes require resync/revocation; no source-system permission mirror |
-| Source-statement extraction and project reconstruction | Implemented | Deterministic rules; free prose is intentionally incomplete |
+| Source-statement extraction and project reconstruction | Implemented | Deterministic rules and supported English prose with exact field spans; broader semantics remain incomplete |
 | Optional structured LLM extraction | Implemented and tested with mocked provider | Live provider operation/quality depends on configured credentials; no claimed live accuracy |
 | Autonomous knowledge investigation | Implemented | Authorised local sources; bounded gap rules, targeted questions, review tasks; no autonomous source discovery outside connected data |
 | Tacit knowledge capture | Implemented | Targeted text interviews; no voice transcription |
 | Decision intelligence | Implemented | Source-linked rationale/alternatives and same-topic conflict candidates; no semantic proof of every contradiction |
 | Knowledge graph | Implemented | Evidence-backed project/person/responsibility/system relationships; no digital-twin historical restoration |
 | Continuity simulations | Implemented | Single employee, dependency component and stale/unverified procedures; no multi-person or financial prediction |
-| Handover versioning and human approval | Implemented | Approved handover freezes; significant changes require a new reviewed transition |
+| Handover versioning and human approval | Implemented | Active handovers reopen for correction, reapproval and reacceptance; closed ownership requires a follow-up transition |
 | Responsibility assignment / acceptance / rejection | Implemented | One incoming participant per transition; no responsibility splitting |
 | Practical validation and readiness | Implemented | Predefined criteria, evidence selection, explanation and supervisor review; INHERIA executes no sandbox commands |
 | Current ownership after closure | Implemented | Auditable accepted-transfer evidence, previous owner retained in provenance |
@@ -26,6 +26,11 @@ This file reports implementation, not the complete long-term product vision. The
 | Privacy center and filtered audit | Implemented | Disclosure of current controls/limits; retention setting is informational until automated deletion exists |
 | Synthetic Nexora and controlled evaluation | Implemented | Clearly labelled fixtures; not real contributor/employee data |
 | General workflow builder / scheduled orchestration | Not implemented | Outside central workflow |
+| Isolated judge demo beside sign-in | Implemented | 13 authored ShopEase sources; scoped persona switching; four-hour default; real accounts remain inaccessible |
+| Knowledge access requests | Implemented | Independent source-ACL decisions; grants no AWS/IAM access |
+| Document replacement and source-change impact | Implemented | Preserved versions; filtered claim/handover/task lineage; stale evidence blocks current actions |
+| Investigation resume | Implemented | Atomic per-source checkpoints; original authorised investigator can resume; no distributed worker |
+| Recovery prerequisites and scenario criteria | Implemented | Mandatory cited checks and explicit supervisor assessment; cloud evidence must be supplied externally |
 | Industry profiles / custom roles / departments | Partial architecture | Industry field and role enums exist; full configuration UI/policy engine absent |
 | Cross-project memory reuse | Postponed | No cross-company learning or confidential data sharing |
 | Predictive decay / multi-person continuity / advanced restoration | Postponed | Requires historical data and additional validation |

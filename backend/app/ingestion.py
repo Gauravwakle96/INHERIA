@@ -315,7 +315,7 @@ def invalidate_source(db: Session, source: Source) -> int:
     """Invalidate every dependent claim; stale evidence never stays authoritative."""
     from sqlalchemy import select
 
-    from app.models import Claim, Evidence
+    from app.models import Claim, Evidence, Exercise, Transition
 
     claim_ids = set(db.scalars(select(Evidence.claim_id).where(Evidence.source_id == source.id)))
     claims = list(db.scalars(select(Claim).where(Claim.id.in_(claim_ids)))) if claim_ids else []
@@ -323,6 +323,17 @@ def invalidate_source(db: Session, source: Source) -> int:
         claim.status = "invalidated"
         claim.verified_by = None
         claim.verified_at = None
+    for exercise in db.scalars(select(Exercise).where(Exercise.project_id == source.project_id)):
+        if source.id in exercise.expected_source_ids or exercise.assessment.get("claim_id") in claim_ids:
+            exercise.assessment = {
+                **exercise.assessment,
+                "invalidated_status": exercise.status,
+                "revalidation_reason": "source_changed",
+            }
+            exercise.status = "needs_revision"
+    for transition in db.scalars(select(Transition).where(Transition.project_id == source.project_id)):
+        if source.id in (transition.report or {}).get("source_ids", []):
+            transition.report = {**transition.report, "requires_revalidation": True}
     return len(claims)
 
 
@@ -500,6 +511,9 @@ def serialize_source(db: Session, user: User, source: Source) -> dict[str, Any]:
         "updated_at": source.updated_at,
         "synthetic": source.synthetic,
         "restricted": bool(source.acl),
+        "replaceable": not source.connection_id
+        and source.kind not in {"interview", "ownership_transfer"}
+        and source.status != "revoked",
         "metadata": metadata,
         "chunk_count": count,
     }

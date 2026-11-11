@@ -20,7 +20,19 @@ flowchart LR
 
 ## Data model
 
-Twenty-two persisted tables cover organisations, users, project memberships, sessions, projects, connections, sources, versioned chunks, claims, evidence, investigations, gaps, simulations, transitions, transfers, exercises, jobs, audit records, AI configurations, conversations, chat turns and action previews. IDs are UUIDs. Tenant and project foreign keys, uniqueness constraints and indexes constrain duplicates and support permission-scoped queries. JSON fields contain typed service payloads; source text and quotations are explicit records, not arbitrary AI assertions.
+Twenty-five persisted tables cover organisations, users, project memberships, sessions, projects, connections, sources, versioned chunks, claims, evidence, investigations, gaps, simulations, transitions, transfers, exercises, jobs, audit records, AI configurations, conversations, chat turns, action previews, demo visits, invitations and access requests. IDs are UUIDs. Tenant and project foreign keys, uniqueness constraints and indexes constrain duplicates and support permission-scoped queries. JSON fields contain typed service payloads; source text and quotations are explicit records, not arbitrary AI assertions.
+
+## Judge and onboarding boundaries
+
+Public demo start creates a separate tenant, three random-password personas, 13 authored documents and a planned transition. A hashed expiring visitor capability scopes switching to that visitor's identities. Real accounts cannot be impersonated. Shared development persona login remains disabled in production. Expired visits are refused immediately and deleted on the next demo start; this is not a scheduled retention service. The default cap is forty concurrent visits; admission is not a distributed reservation.
+
+Invitations use hashed random tokens, expiry and transactional single-use consumption. New recipients choose passwords; existing identities authenticate and retain their role. Links are shown once for private sharing. No email delivery, email verification, password reset or SSO is claimed. Independent access reviewers use existing source ACLs; they grant no cloud access and do not mirror upstream permissions.
+
+## Investigation and recovery
+
+Reconstruction candidates and each source-version checkpoint commit atomically. Resume rechecks authority, skips unchanged checkpoints and deduplicates fingerprints. Conservative English prose extraction preserves exact supporting field spans. Same-topic conflicting decisions require explicit authority selection and independent review.
+
+Document replacement preserves old chunks and invalidates derived claims and assessments. Filtered impact traces affected handovers and tasks. Active transitions reopen for a new version, reapproval, reacceptance and scenario assessment. Superseded tasks remain historical and are excluded from corrected-version readiness. Mandatory cited prerequisites and current source/claim signatures gate closure. Historical quotes and inaccessible prerequisite notes are withheld from current read paths.
 
 Immutable Alembic migrations create and evolve the schema. Development startup supports automatic creation; production relies on migrations. SQLite is a local convenience. PostgreSQL is required by production configuration. pgvector, Redis, Celery and a separate graph database were omitted because bounded lexical retrieval and local jobs meet the central workflow without extra infrastructure.
 

@@ -4,7 +4,16 @@
 
 A functional technical knowledge-continuity application built around **Connect → Reconstruct → Verify → Review → Handover → Validate**. React/TypeScript frontend, FastAPI modular backend, SQLAlchemy models and Alembic migrations. PostgreSQL is the deployment database; SQLite supports local development.
 
-**Live application:** https://inheria.onrender.com — create an account to start your own workspace. Render Free may take about a minute to wake after inactivity.
+**Live application:** https://inheria.onrender.com — select **Explore demo** beside sign-in, or create an account for your own workspace. Render Free may take about a minute to wake after inactivity.
+
+## Judge demonstration
+
+**[Open the judge demo](https://inheria.onrender.com/demo)**. No account or model key is required.
+Gaurav is the departing DevOps engineer, Savinay receives ownership and Rudransh coordinates review.
+Each visitor gets an isolated expiring workspace with 13 authored source documents. The example is not Wipro/client data or actual cloud execution.
+
+Inspect sources → investigate → inspect exact citations and resolve conflicts → review → generate/approve → assign → switch to Savinay → accept and submit evidence → switch to Rudransh → assess criteria and required recovery checks → close.
+Try rejected work or document replacement to inspect recovery gates. See the [judge guide](docs/judge-guide.md), [Round 3 delivery mapping](docs/round3-delivery.md) and [verification](docs/verification.md).
 
 ## Run locally
 

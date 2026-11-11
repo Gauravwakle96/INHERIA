@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import hashlib
-from typing import Annotated
+from typing import Annotated, Literal
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from fastapi.encoders import jsonable_encoder
+from pydantic import BaseModel, Field
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
@@ -17,6 +18,7 @@ from app.intelligence import (
     build_graph,
     citations,
     current_claims,
+    decision_conflicted,
     run_investigation,
     serialize_claim,
     successor_answer,
@@ -30,6 +32,8 @@ from app.transfer import (
     get_transition,
     readiness,
     record_ownership_transfer,
+    reopen_handover,
+    require_current_handover,
     serialize_exercise,
     serialize_transfer,
     serialize_transition,
@@ -98,6 +102,14 @@ def filtered_audits(db, user, project_id):
             continue
         if item.resource_type == "claim" and item.resource_id not in claim_ids:
             continue
+        if item.resource_type == "invitation" and user.role != "admin":
+            continue
+        if item.resource_type == "access_request":
+            access = db.get(m.AccessRequest, item.resource_id)
+            if not access or (
+                user.role not in {"admin", "manager", "lead"} and access.requested_by != user.id
+            ):
+                continue
         classes = {
             "transfer": m.Transfer,
             "exercise": m.Exercise,
@@ -220,7 +232,7 @@ def overview(project_id: str, db: Db, user: User):
     project = project_access(db, user, project_id)
     sources = visible_sources(db, user, project_id)
     claims = current_claims(db, user, project_id)
-    verified = sum(c.status == "verified" for c in claims)
+    verified = len(current_claims(db, user, project_id, verified=True))
     approved = db.scalar(
         select(m.Transition.id).where(
             m.Transition.project_id == project_id,
@@ -230,9 +242,17 @@ def overview(project_id: str, db: Db, user: User):
     transfers = list(db.scalars(select(m.Transfer).where(m.Transfer.project_id == project_id)))
     visible_ids = {c.id for c in claims}
     transfers = [t for t in transfers if t.claim_id in visible_ids]
-    validated = db.scalar(
-        select(m.Exercise.id).where(m.Exercise.project_id == project_id, m.Exercise.status == "passed")
-    )
+    ready_sources = {s.id for s in sources if s.status == "ready"}
+    visible_exercises = [
+        e
+        for e in db.scalars(select(m.Exercise).where(m.Exercise.project_id == project_id))
+        if e.status != "superseded"
+        and e.assessment.get("claim_id") in visible_ids
+        and set(e.expected_source_ids).issubset(ready_sources)
+    ]
+    validated = sum(e.status == "passed" for e in visible_exercises)
+    transitions = list(db.scalars(select(m.Transition).where(m.Transition.project_id == project_id)))
+    all_ready = bool(transitions) and all(readiness(db, user, t)["ready"] for t in transitions)
     pipeline = [
         {
             "stage": "Connect",
@@ -261,8 +281,8 @@ def overview(project_id: str, db: Db, user: User):
         },
         {
             "stage": "Validate",
-            "status": "in_progress" if validated else "pending",
-            "count": int(bool(validated)),
+            "status": "complete" if all_ready else "in_progress" if validated else "pending",
+            "count": validated,
         },
     ]
     return {
@@ -334,6 +354,10 @@ def review_claim(project_id: str, claim_id: str, payload: s.Review, db: Db, user
     else:
         if claim.status != "pending":
             raise HTTPException(409, "Only pending knowledge can be approved.")
+        if decision_conflicted(db, claim):
+            raise HTTPException(
+                409, "Conflicting decisions require an explicit current-authority resolution before approval."
+            )
         data = dict(claim.data)
         for field in ["owner_id", "backup_id"]:
             value = getattr(payload, field)
@@ -371,6 +395,53 @@ def review_claim(project_id: str, claim_id: str, payload: s.Review, db: Db, user
     return serialize_claim(db, user, claim)
 
 
+@router.post("/projects/{project_id}/claims/{claim_id}/resolve-authority", response_model=s.Record)
+def resolve_authority(project_id: str, claim_id: str, payload: s.Note, db: Db, user: User):
+    project_access(db, user, project_id, write=True)
+    safe_text(payload.note)
+    claim = entity(db, m.Claim, user, project_id, claim_id)
+    accessible = {c.id: c for c in current_claims(db, user, project_id, include_rejected=True)}
+    if claim_id not in accessible or claim.kind != "decision" or not claim.data.get("topic"):
+        raise HTTPException(404, "Decision evidence unavailable.")
+    if claim.created_by == user.id:
+        raise HTTPException(403, "Another reviewer must resolve your own submitted decision.")
+    if claim.status in {"rejected", "superseded", "invalidated"}:
+        raise HTTPException(409, "Select a current candidate; historical decisions remain preserved.")
+    peers = [
+        c
+        for c in db.scalars(
+            select(m.Claim).where(m.Claim.project_id == project_id, m.Claim.kind == "decision")
+        )
+        if c.data.get("topic") == claim.data.get("topic")
+        and c.status not in {"rejected", "superseded", "invalidated"}
+    ]
+    if any(c.id not in accessible for c in peers):
+        raise HTTPException(
+            409, "Some decision evidence is unavailable to this reviewer. Request authorised review."
+        )
+    if any(c.created_by == user.id for c in peers):
+        raise HTTPException(403, "Another reviewer must assess decision evidence you submitted or corrected.")
+    for peer in peers:
+        peer.status = "verified" if peer.id == claim.id else "superseded"
+        peer.verified_by, peer.verified_at = user.id, m.utcnow()
+        peer.data = {
+            **peer.data,
+            "authority_claim_id": claim.id,
+            "authority_reviewed_at": m.utcnow().isoformat(),
+        }
+        audit(
+            db,
+            user,
+            project_id,
+            "decision.authority_resolved",
+            "claim",
+            peer.id,
+            {"authority_claim_id": claim.id, "note": payload.note, "status": peer.status},
+        )
+    db.commit()
+    return serialize_claim(db, user, claim)
+
+
 @router.post("/projects/{project_id}/investigations", response_model=s.Record, status_code=202)
 def investigate(project_id: str, payload: s.InvestigationCreate, tasks: BackgroundTasks, db: Db, user: User):
     project = project_access(db, user, project_id, write=True)
@@ -387,7 +458,11 @@ def investigate(project_id: str, payload: s.InvestigationCreate, tasks: Backgrou
             409, "An investigation is already running. Wait for its result before starting another."
         )
     record = m.Investigation(
-        org_id=project.org_id, project_id=project_id, created_by=user.id, status="queued", report={}
+        org_id=project.org_id,
+        project_id=project_id,
+        created_by=user.id,
+        status="queued",
+        report={"focus": payload.focus, "employee_id": payload.employee_id, "checkpoint": {"sources": {}}},
     )
     db.add(record)
     db.flush()
@@ -429,11 +504,36 @@ def investigations(project_id: str, db: Db, user: User):
             questions=questions,
             searched_sources=source_count,
             engine=original.get("engine", "deterministic-v1"),
+            resumable=record.created_by == user.id and record.status in {"failed", "interrupted"},
+            checkpoint_sources=len((original.get("checkpoint", {}).get("sources", {})))
+            if record.created_by == user.id
+            else None,
         )
         result.append(
             {"id": record.id, "status": record.status, "report": report, "created_at": record.created_at}
         )
     return result
+
+
+@router.post("/projects/{project_id}/investigations/{investigation_id}/resume", status_code=202)
+def resume_investigation(project_id: str, investigation_id: str, tasks: BackgroundTasks, db: Db, user: User):
+    project_access(db, user, project_id, write=True)
+    run = entity(db, m.Investigation, user, project_id, investigation_id)
+    if run.created_by != user.id:
+        raise HTTPException(403, "Only the original authorised investigator can resume this checkpoint.")
+    if run.status not in {"failed", "interrupted"}:
+        raise HTTPException(409, "Only interrupted or failed investigations can be resumed.")
+    if db.scalar(
+        select(m.Investigation).where(
+            m.Investigation.project_id == project_id, m.Investigation.status.in_(["running", "queued"])
+        )
+    ):
+        raise HTTPException(409, "Another investigation is already running.")
+    run.status = "queued"
+    audit(db, user, project_id, "investigation.resumed", "investigation", run.id, {})
+    db.commit()
+    tasks.add_task(run_investigation, run.id)
+    return {"id": run.id, "status": run.status}
 
 
 @router.get("/projects/{project_id}/gaps", response_model=list[s.Record])
@@ -733,6 +833,7 @@ def approve(project_id: str, transition_id: str, payload: s.Note, db: Db, user: 
     transition = get_transition(db, user, project_id, transition_id)
     if transition.status != "generated":
         raise HTTPException(409, "Generate the evidence-backed handover before approval.")
+    require_current_handover(db, user, transition)
     safe_text(payload.note)
     transition.status = "approved"
     audit(
@@ -746,6 +847,117 @@ def approve(project_id: str, transition_id: str, payload: s.Note, db: Db, user: 
     )
     db.commit()
     return serialize_transition(db, user, transition)
+
+
+class PrerequisiteBody(BaseModel):
+    title: str = Field(min_length=3, max_length=200)
+    required: bool = True
+
+
+class PrerequisiteReview(BaseModel):
+    status: Literal["confirmed", "pending"]
+    note: str = Field(min_length=10, max_length=2000)
+    evidence_ids: list[str] = Field(default_factory=list, max_length=20)
+
+
+@router.post("/projects/{project_id}/transitions/{transition_id}/reopen", response_model=s.Record)
+def reopen(project_id: str, transition_id: str, payload: s.Note, db: Db, user: User):
+    safe_text(payload.note)
+    transition = get_transition(db, user, project_id, transition_id)
+    reopen_handover(db, user, transition, payload.note)
+    db.commit()
+    return serialize_transition(db, user, transition)
+
+
+@router.post("/projects/{project_id}/transitions/{transition_id}/prerequisites", status_code=201)
+def add_prerequisite(project_id: str, transition_id: str, payload: PrerequisiteBody, db: Db, user: User):
+    project_access(db, user, project_id, write=True)
+    safe_text(payload.title)
+    transition = get_transition(db, user, project_id, transition_id)
+    if transition.status in {"approved", "in_progress", "closed"}:
+        raise HTTPException(409, "Reopen the active handover before changing required prerequisites.")
+    items = list((transition.report or {}).get("prerequisites", []))
+    if len(items) >= 30:
+        raise HTTPException(422, "A handover supports at most 30 prerequisites.")
+    item = {
+        "id": m.new_id(),
+        "title": payload.title,
+        "required": payload.required,
+        "status": "pending",
+        "created_by": user.id,
+        "note": "",
+        "evidence_ids": [],
+        "source_versions": {},
+    }
+    items.append(item)
+    transition.report = {**(transition.report or {}), "prerequisites": items}
+    audit(
+        db,
+        user,
+        project_id,
+        "prerequisite.created",
+        "transition",
+        transition.id,
+        {"prerequisite_id": item["id"]},
+    )
+    db.commit()
+    return item
+
+
+@router.post("/projects/{project_id}/transitions/{transition_id}/prerequisites/{prerequisite_id}/review")
+def review_prerequisite(
+    project_id: str, transition_id: str, prerequisite_id: str, payload: PrerequisiteReview, db: Db, user: User
+):
+    project_access(db, user, project_id, write=True)
+    safe_text(payload.note)
+    transition = get_transition(db, user, project_id, transition_id)
+    if transition.status == "closed":
+        raise HTTPException(409, "Closed handovers preserve their recorded prerequisites.")
+    items = [dict(item) for item in (transition.report or {}).get("prerequisites", [])]
+    item = next((item for item in items if item["id"] == prerequisite_id), None)
+    if not item:
+        raise HTTPException(404, "Prerequisite unavailable.")
+    refs = {
+        e["id"]: e
+        for c in current_claims(db, user, project_id, verified=True)
+        for e in citations(db, user, c)
+    }
+    successor = project_person(db, user, project_id, transition.successor_id)
+    successor_refs = {
+        e["id"]
+        for c in current_claims(db, successor, project_id, verified=True)
+        for e in citations(db, successor, c)
+    }
+    if payload.status == "confirmed" and (
+        not payload.evidence_ids
+        or not set(payload.evidence_ids).issubset(refs)
+        or not set(payload.evidence_ids).issubset(successor_refs)
+    ):
+        raise HTTPException(422, "Confirm with current verified evidence accessible to the incoming owner.")
+    history = list(item.get("history", []))
+    history.append({"status": item["status"], "reviewed_at": m.utcnow().isoformat()})
+    item.update(
+        status=payload.status,
+        note=payload.note,
+        evidence_ids=payload.evidence_ids,
+        source_versions={
+            refs[e]["source_id"]: refs[e]["source_version"] for e in payload.evidence_ids if e in refs
+        },
+        reviewed_by=user.id,
+        history=history,
+    )
+    transition.report = {**transition.report, "prerequisites": items}
+    audit(
+        db,
+        user,
+        project_id,
+        "prerequisite.reviewed",
+        "transition",
+        transition.id,
+        {"prerequisite_id": item["id"], "status": payload.status},
+    )
+    db.commit()
+    return item
 
 
 @router.post("/projects/{project_id}/transitions/{transition_id}/assign", response_model=s.Record)
@@ -768,6 +980,7 @@ def respond(project_id: str, transfer_id: str, payload: s.TransferResponse, db: 
     transition = get_transition(db, user, project_id, transfer.transition_id)
     if transition.status not in {"approved", "in_progress"}:
         raise HTTPException(409, "This transition cannot accept ownership responses.")
+    require_current_handover(db, user, transition)
     safe_text(payload.note)
     transfer.status = "accepted" if payload.action == "accept" else "rejected"
     transfer.note = payload.note
@@ -801,6 +1014,9 @@ def submit(project_id: str, exercise_id: str, payload: s.Submission, db: Db, use
         raise HTTPException(403, "Only the assigned incoming employee may submit this exercise.")
     if transition.status not in {"approved", "in_progress"}:
         raise HTTPException(409, "This transition is not open for validation.")
+    require_current_handover(db, user, transition)
+    if exercise.status == "superseded":
+        raise HTTPException(409, "This historical exercise was superseded. Open the current version's tasks.")
     safe_text(payload.answer)
     safe_text(payload.escalation)
     claims = current_claims(db, user, project_id, verified=True)
@@ -846,6 +1062,15 @@ def assess(project_id: str, exercise_id: str, payload: s.Assessment, db: Db, use
         raise HTTPException(403, "A different authorised supervisor must validate this exercise.")
     if exercise.status != "submitted":
         raise HTTPException(409, "A submitted practical explanation is required before assessment.")
+    if transition.status not in {"approved", "in_progress"}:
+        raise HTTPException(409, "Approve the current handover version before assessing practical readiness.")
+    require_current_handover(db, user, transition)
+    if (
+        exercise.assessment.get("rubric_version") == "scenario-v2"
+        and payload.action == "pass"
+        and (len(payload.criteria_passed) != len(exercise.criteria) or not all(payload.criteria_passed))
+    ):
+        raise HTTPException(422, "Independently confirm every scenario criterion before recording a pass.")
     valid = {
         e["id"] for c in current_claims(db, user, project_id, verified=True) for e in citations(db, user, c)
     }
@@ -858,6 +1083,7 @@ def assess(project_id: str, exercise_id: str, payload: s.Assessment, db: Db, use
         **exercise.assessment,
         "requires_human_review": False,
         "criteria": exercise.criteria,
+        "criteria_passed": payload.criteria_passed,
         "reviewed_at": m.utcnow().isoformat(),
         "evidence_ids": exercise.evidence_ids,
     }

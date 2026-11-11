@@ -67,6 +67,49 @@ Source, verification and role changes withhold dependent history; source deletio
 
 ## Backend services
 
+## Round 3 API additions
+
+`GET /api/auth/judge-demo` returns enabled/expiry configuration.
+`POST /api/auth/judge-demo/start` (201) creates an isolated visitor tenant and
+session, setting a separate HttpOnly visitor capability cookie. `GET /people`
+and `POST /switch {user_id}` under `/api/auth/judge-demo` require the session and
+matching visitor capability. Switching is restricted to the three demo personas.
+
+Under `/api/projects/{project_id}`:
+
+- `POST /invitations {email,name,title,role,expires_hours?}`: administrator only;
+  returns metadata and a one-time `/join#token=...` link. GET lists metadata
+  without tokens; `POST /invitations/{id}/revoke` revokes pending invitations.
+- `POST /api/auth/invitation/accept {token,password?}` consumes a valid invitation.
+  New users choose a password (12+ characters); existing invited accounts must
+  authenticate and retain their identity role. Cross-tenant joins are refused.
+- `GET/POST /access-requests`, POST body `{purpose}`. Ordinary members see only
+  their requests. `POST /access-requests/{id}/review {action,source_id?,note}`
+  requires another project reviewer; sources must be readable by that reviewer.
+- `POST /claims/{id}/resolve-authority {note}` explicitly selects a current
+  decision and preserves competing accessible candidates as superseded.
+  Conflicting decisions cannot use ordinary approval. No author self-review.
+- `POST /investigations/{id}/resume` resumes an interrupted/failed checkpoint for
+  the original authorised investigator, rechecking source versions and permissions.
+- `GET /sources/{id}/impact` returns filtered historical claim, transition and
+  exercise lineage. `POST /sources/{id}/replace` multipart `file` versions an
+  uploaded source; connected/interview/transfer sources are refused. Source
+  responses expose `replaceable` for the corresponding UI control.
+- `POST /transitions/{id}/reopen {note}` preserves recovery/version history and
+  resets acceptance and practical review. Closed ownership cannot reopen.
+- `POST /transitions/{id}/prerequisites {title,required}` before approval;
+  `POST /transitions/{id}/prerequisites/{id}/review {status,note,evidence_ids}`
+  confirms with current verified references accessible to the incoming person.
+- Exercise review accepts `criteria_passed:boolean[]`; scenario-v2 passes require
+  every predefined criterion explicitly assessed.
+
+Readiness includes sanitized prerequisites. Source changes, permission loss,
+claim corrections, incomplete acceptance, assessments and required checks block
+closure. Handover responses include current accessible risk questions; historical
+inaccessible quotations and prerequisite notes are withheld.
+
+## Backend service conventions
+
 SQLAlchemy 2 sync Session in sync FastAPI routes; BackgroundTasks invoke bounded job services with their own sessions. `database.get_db`, `database.SessionLocal`, `models.Base`. `security.current_user`, `security.project_access(db,user,project_id,write=False)`, `security.require_role(user,roles)`, `security.visible_sources(db,user,project_id)` (source IDs), `security.can_read_source(db,user,source)`, `security.audit(db,user,project_id,action,resource_type,resource_id,details)`.
 
 All domain services must call source permission filters. Current claims are visible only if all evidence sources are authorised, ready and at the cited version; mixed ACL claims are hidden in full. Rejected/invalidated knowledge cannot enter authoritative handovers/answers/graphs.

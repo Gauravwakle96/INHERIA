@@ -41,6 +41,8 @@ def test_complete_connect_to_validate_requires_each_human_gate(workspace):
     assert client.post(path + "/generate").status_code == 409
     # Verify machine candidates with exact evidence; no claims become verified automatically.
     for claim in claims:
+        if claim.get("authority_conflict"):
+            continue
         post_ok(
             client,
             base + "/claims/" + claim["id"] + "/review",
@@ -110,6 +112,7 @@ def test_complete_connect_to_validate_requires_each_human_gate(workspace):
             base + "/exercises/" + exercise["id"] + "/review",
             {
                 "action": "pass",
+                "criteria_passed": [True] * len(exercise["criteria"]),
                 "note": "Validated documented evidence, safe walkthrough, prerequisites and escalation against each predefined criterion.",
             },
         )

@@ -26,7 +26,7 @@ export function CitationList({ citations, openSource }: { citations: Citation[];
 export function Dialog({ open, title, children, onClose, wide = false }: { open: boolean; title: string; children: ReactNode; onClose: () => void; wide?: boolean }) {
   const ref = useRef<HTMLDialogElement>(null);
   useEffect(() => { const dialog = ref.current; if (!dialog) return; if (open && !dialog.open) dialog.showModal(); if (!open && dialog.open) dialog.close(); }, [open]);
-  return <dialog ref={ref} className={`dialog ${wide ? 'dialog-wide' : ''}`} onCancel={onClose} onClick={event => { if (event.target === ref.current) onClose(); }} aria-label={title}><div className="dialog-header"><h2>{title}</h2><button className="icon-button" aria-label="Close dialog" onClick={onClose}><X size={20} /></button></div><div className="dialog-content">{children}</div></dialog>;
+  return <dialog ref={ref} className={`dialog ${wide ? 'dialog-wide' : ''}`} onCancel={onClose} onClick={event => { if (event.target === ref.current) onClose(); }} aria-label={title}><div className="dialog-header"><h2>{title}</h2><button className="icon-button" aria-label="Close dialog" onClick={onClose}><X size={20} /></button></div><div className="dialog-content">{open ? children : null}</div></dialog>;
 }
 export function ReportView({ value }: { value: unknown }) {
   if (value === null || value === undefined) return <span className="muted">Not recorded</span>;
