@@ -1,0 +1,78 @@
+{
+  "deployedCommit": "d328adee7b3f4ce75f900383d09f2e4f301c17f0",
+  "checkedAt": "2026-11-11T00:17:24.032Z",
+  "scope": "Read-only public browser; no demo start, account login, uploads or live data mutations.",
+  "signInDemoLink": "/demo",
+  "runtimeErrors": [],
+  "responsive": [
+    {
+      "theme": "dark",
+      "width": 390,
+      "enabled": true,
+      "overflow": false,
+      "axeViolations": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "enabled": true,
+      "overflow": false,
+      "axeViolations": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "enabled": true,
+      "overflow": false,
+      "axeViolations": []
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "enabled": true,
+      "overflow": false,
+      "axeViolations": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "enabled": true,
+      "overflow": false,
+      "axeViolations": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "enabled": true,
+      "overflow": false,
+      "axeViolations": []
+    }
+  ],
+  "deploymentId": "dep-dbpr6jtg1s2s7395bnl0",
+  "deploymentStatus": "live",
+  "ci": "https://github.com/Gauravwakle96/INHERIA/actions/runs/42929730698",
+  "ciConclusion": "success",
+  "postgresSchema": "a73c9d21b004",
+  "schemaComparison": "passed",
+  "existingDataCountsPreserved": true,
+  "preservationCounts": {
+    "organisations": 4,
+    "users": 8,
+    "projects": 4,
+    "sources": 57,
+    "claims": 87,
+    "transitions": 6
+  },
+  "endpointStatuses": {
+    "/api/health": 200,
+    "/api/ready": 200,
+    "/api/auth/judge-demo": 200,
+    "/demo": 200,
+    "/": 200
+  },
+  "limitations": [
+    "Full mutating workflow tested locally, production smoke read-only.",
+    "Free hosting can sleep; upstream quotas and provider configuration still apply.",
+    "Automated axe is bounded coverage; no full assistive-technology audit."
+  ]
+}

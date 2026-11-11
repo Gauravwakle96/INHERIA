@@ -46,6 +46,34 @@ feature-status for limits and round3-delivery for commitment reconciliation.
 
 ## Historical public deployment verification — 11 November 2026 IST
 
+## Round 3 public deployment — 11 November 2026 IST
+
+Application commit `d328adee7b3f4ce75f900383d09f2e4f301c17f0` deployed successfully
+on the existing Render Free service, deployment `dep-dbpr6jtg1s2s7395bnl0`.
+[GitHub CI](https://github.com/Gauravwakle96/INHERIA/actions/runs/42929730698)
+completed successfully for backend and frontend.
+
+HTTPS `/api/health`, `/api/ready`, `/api/auth/judge-demo`, `/demo` and `/` returned
+200. Production shared persona login remains disabled; the separate judge demo
+configuration reports enabled with a four-hour expiry. CSP, nosniff and same-origin
+referrer headers were present. PostgreSQL migration is `a73c9d21b004`; Alembic
+schema comparison passed. Before/after counts remained organisations 4, users 8,
+projects 4, sources 57, claims 87 and transitions 6. This is a preservation check,
+not a database integrity certification.
+
+A fresh isolated public browser verified the sign-in Explore demo link and
+enabled Start interactive demo control. All six day/night combinations at
+390/768/1440px showed no horizontal overflow, no axe A/AA violations and no
+uncaught runtime errors. Mobile/light and desktop/dark renders were inspected.
+The normal unauthenticated `/auth/me` probe returns 401; this is expected, not a
+failed sign-in. These checks stayed read-only: the full mutating demo journey was
+tested on the separate local QA environment, not on private production data.
+See [public verification JSON](round3-public-verification.json) and screenshots
+under deployment-artifacts/judge-live-*.png. The provider quota/cold-start,
+accessibility and practical-competence limitations remain unchanged.
+
+## Earlier public deployment record
+
 **https://inheria.onrender.com** is deployed as a Render **Free** Docker web service, with a dedicated Neon PostgreSQL project in a verified **Free** organisation. Docker build and runtime were verified on Render, which resolves the earlier local Docker-daemon verification gap. Alembic upgrade and schema consistency checks passed against the actual PostgreSQL database.
 
 The deployment configuration commit was `877ed26ca596e18570f6818c1439310fb08ece8e`. After deployment changes, **116 backend tests passed**, Python lint/formatting passed, frontend lint/typecheck/build passed, and Python/npm dependency audits reported no known vulnerabilities. The previous 13 local Playwright tests remain recorded below; they were not rerun as a deployment suite. A separate Playwright run exercised the actual public service.
