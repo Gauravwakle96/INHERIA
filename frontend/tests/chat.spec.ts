@@ -66,6 +66,12 @@ test('AI settings offer actual model options and clear unsaved credentials on cl
   await expect(dialog.getByLabel('Provider API key')).toHaveAttribute('type', 'password');
   expect(await dialog.getByLabel('Default model').locator('option').allTextContents()).toEqual(['gpt-6.1-sol', 'gpt-6-astra', 'gpt-5.6-sol']);
   await dialog.getByLabel('Default model').selectOption('gpt-5.6-sol');
+  await dialog.getByLabel('API endpoint').selectOption('https://router.bynara.id/v1');
+  await expect(dialog.getByLabel('Default model')).toHaveValue('agnes-2.5-flash');
+  expect(await dialog.getByLabel('Default model').locator('option').allTextContents()).toEqual(['agnes-2.5-flash']);
+  await expect(dialog.getByLabel('API protocol')).toHaveValue('chat_completions');
+  expect(await dialog.getByLabel('API protocol').locator('option').allTextContents()).toEqual(['Chat Completions']);
+  await expect(dialog).toContainText('messages to Bynara');
   await dialog.getByLabel('Provider API key').fill('not-a-real-provider-key');
   await page.keyboard.press('Escape');
   await page.getByRole('button', { name: 'AI settings' }).click();
@@ -73,6 +79,32 @@ test('AI settings offer actual model options and clear unsaved credentials on cl
   await expect(dialog.getByLabel('Default model')).toHaveValue('gpt-6.1-sol');
   const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
   expect(results.violations.map(v => v.id)).toEqual([]);
+});
+
+test('Bynara model selection is used in the chat request', async ({ page }) => {
+  await page.route('**/api/projects/*/ai-settings', route => route.fulfill({ json: {
+    provider: 'bynara', base_url: 'https://router.bynara.id/v1', model: 'agnes-2.5-flash',
+    models: ['agnes-2.5-flash'], protocol: 'chat_completions', enabled: true, has_key: true,
+  } }));
+  // Keep this browser contract test independent of paid provider access.
+  await page.route('**/chat/conversations/*/messages', async route => {
+    const payload = route.request().postDataJSON();
+    expect(payload.model).toBe('agnes-2.5-flash');
+    expect(payload.effort).toBe('high');
+    const conversation = (await (await page.request.get(route.request().url().replace(/\/messages$/, ''))).json());
+    await route.fulfill({ json: { ...conversation, turns: [{
+      id: 'mock-bynara-turn', question: payload.message, effort: payload.effort, status: 'completed',
+      response: { answer: 'Insufficient Evidence', parts: [{ kind: 'unknown', text: 'Insufficient Evidence', references: [] }], unknowns: ['Insufficient Evidence'], engine: 'bynara', model: 'agnes-2.5-flash' },
+    }] } });
+  });
+  await signIn(page);
+  await expect(page.getByLabel('Chat model')).toHaveValue('agnes-2.5-flash');
+  expect(await page.getByLabel('Chat model').locator('option').allTextContents()).toEqual(['agnes-2.5-flash']);
+  await page.getByRole('button', { name: 'High effort', exact: true }).click();
+  await page.getByLabel('Ask a project question').fill('What is the verified deployment procedure?');
+  await page.getByRole('button', { name: 'Send question' }).click();
+  await expect(page.locator('.chat-turns')).toContainText('high effort · agnes-2.5-flash');
+  await expect(page.locator('.chat-turns')).toContainText('Insufficient Evidence');
 });
 
 for (const theme of ['dark', 'light']) {

@@ -3632,7 +3632,8 @@
             "type": "string",
             "enum": [
               "https://agentrouter.org/v1",
-              "https://ps.air-outer.com/v1"
+              "https://ps.air-outer.com/v1",
+              "https://router.bynara.id/v1"
             ],
             "title": "Base Url",
             "default": "https://agentrouter.org/v1"
@@ -3882,11 +3883,9 @@
             "anyOf": [
               {
                 "type": "string",
-                "enum": [
-                  "gpt-6.1-sol",
-                  "gpt-6-astra",
-                  "gpt-5.6-sol"
-                ]
+                "maxLength": 120,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$"
               },
               {
                 "type": "null"

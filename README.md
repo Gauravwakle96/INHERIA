@@ -53,7 +53,7 @@ System32 is the current authorised workspace and can cause Windows sandbox proce
 
 ## Digital Successor chat
 
-Open **Digital successor** for private saved conversations, Low/High effort, evidence citations and confirmed project actions. An administrator can use **AI settings** to save an encrypted AgentRouter key, select `gpt-6.1-sol`, `gpt-6-astra` or `gpt-5.6-sol`, enable external processing and test the connection. Configure `INHERIA_TOKEN_ENCRYPTION_KEY` on the server first. No credential is returned to the browser or stored in frontend code.
+Open **Digital successor** for private saved conversations, Low/High effort, evidence citations and confirmed project actions. An administrator can use **AI settings** to save an encrypted provider key, enable external processing and test the connection. Bynara uses `https://router.bynara.id/v1`, `agnes-2.5-flash` and Chat Completions. AgentRouter retains its Responses/Chat Completions support and three GPT model options. Model choices follow the configured provider; changing providers requires a new key. Configure `INHERIA_TOKEN_ENCRYPTION_KEY` on the server first. No credential is returned to the browser or stored in frontend code. Other organisations and judge-demo visitors must configure their own keys.
 
 The supplied key returned HTTP 401 on both official endpoints during verification. Live model replies remain unverified; failed requests show a warning and fall back to current verified excerpts. Low/High changes model context/output budgets; lexical fallback uses the existing retrieval method. See [chat setup and limits](docs/chat-integration-plan.md).
 

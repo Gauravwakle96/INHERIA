@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 from app import chat, schemas
 from app import chat_schemas as s
 from app import models as m
-from app.chat_provider import ProviderError, call_provider
+from app.chat_provider import ProviderError, call_provider, provider_name
 from app.config import settings
 from app.database import get_db
 from app.security import audit, current_user, project_access, require_role, visible_sources
@@ -31,6 +31,8 @@ def save_settings(project_id: str, payload: s.AISettingsUpdate, db: Db, user: Us
     project_access(db, user, project_id, write=True)
     require_role(user, {"admin"})
     record = chat.configuration(db, user)
+    if record and record.encrypted_key and record.base_url != payload.base_url and not payload.api_key:
+        raise HTTPException(422, "Enter a new provider key when changing the endpoint.")
     if not record:
         record = m.AIConfiguration(org_id=user.org_id)
         db.add(record)
@@ -51,6 +53,7 @@ def save_settings(project_id: str, payload: s.AISettingsUpdate, db: Db, user: Us
         payload.protocol,
         payload.enabled,
     )
+    record.provider = provider_name(record.base_url)
     audit(
         db,
         user,

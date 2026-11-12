@@ -11,7 +11,7 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 
 from app import models as m
-from app.chat_provider import BUDGETS, ProviderError, call_provider
+from app.chat_provider import BUDGETS, ProviderError, call_provider, provider_models, provider_name
 from app.config import settings
 from app.ingestion import privacy_filter
 from app.intelligence import citations, current_claims, successor_answer, visible_findings
@@ -32,12 +32,13 @@ def configuration(db, user):
 
 def config_json(record):
     return {
-        "provider": "agentrouter",
+        "provider": provider_name(record.base_url) if record else "agentrouter",
         "base_url": record.base_url if record else "https://agentrouter.org/v1",
         "model": record.model if record else "",
         "protocol": record.protocol if record else "responses",
         "enabled": bool(record and record.enabled),
         "has_key": bool(record and record.encrypted_key),
+        "models": provider_models(record.base_url, record.model) if record else provider_models(""),
     }
 
 
@@ -55,6 +56,8 @@ def decrypt_key(record):
 def provider_snapshot(record, model=None):
     if not record:
         return None
+    if model and model not in provider_models(record.base_url, record.model):
+        raise HTTPException(422, "This model is not available for the configured provider.")
     return SimpleNamespace(
         base_url=record.base_url,
         protocol=record.protocol,
@@ -406,6 +409,7 @@ def send_message(db, user, record, payload):
         raise HTTPException(409, "Wait for the current reply before sending another message.")
     if len(previous) >= 100:
         raise HTTPException(409, "This conversation reached its limit. Start a new conversation.")
+    config = provider_snapshot(configuration(db, user), payload.model)
     message = safe_input(payload.message)
     context, provenance, refs, options = prepare_context(db, user, record.project_id, message, payload.effort)
     claims, _ = evidence_map(db, user, record.project_id)
@@ -438,7 +442,6 @@ def send_message(db, user, record, payload):
     db.commit()
     started = time.monotonic()
     warning = None
-    config = provider_snapshot(configuration(db, user), payload.model)
     # Snapshot provider configuration and release the database connection while
     # waiting for the external service. Revalidate authority after it returns.
     db.commit()
@@ -447,6 +450,7 @@ def send_message(db, user, record, payload):
     citation_ids = []
     usage = {}
     engine = "verified_retrieval"
+    provider_succeeded = False
     if config and config.enabled:
         try:
             draft, usage = call_provider(
@@ -478,7 +482,8 @@ def send_message(db, user, record, payload):
                 raise ProviderError("Unrequested model action discarded; no action was executed.")
             if any(a not in {o["id"] for o in options} for a in action_ids):
                 raise ProviderError("Unavailable model action discarded.")
-            engine = "agentrouter"
+            engine = provider_name(config.base_url)
+            provider_succeeded = True
         except (ProviderError, HTTPException) as exc:
             warning = str(exc.detail) if isinstance(exc, HTTPException) else str(exc)
             parts = []
@@ -486,7 +491,7 @@ def send_message(db, user, record, payload):
             action_ids = []
     else:
         warning = "AI provider is not enabled. Showing current verified excerpts and available actions."
-    if engine != "agentrouter":
+    if not provider_succeeded:
         answer = successor_answer(db, user, record.project_id, message)
         parts = [
             {
@@ -536,7 +541,7 @@ def send_message(db, user, record, payload):
         "engine": engine,
         "warning": warning,
         "usage": usage,
-        "model": config.model if config and engine == "agentrouter" else None,
+        "model": config.model if provider_succeeded and engine != "evidence_invalidated" else None,
         "elapsed_ms": round((time.monotonic() - started) * 1000),
     }
     turn.status = "completed"

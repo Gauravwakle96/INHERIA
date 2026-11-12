@@ -49,14 +49,14 @@ Project feature endpoints prefix `/api/projects/{project_id}`:
 
 Prefix `/api/projects/{project_id}`. All routes enforce membership, cookies and CSRF. AI settings are organisation-wide; changes/test/disconnect require administrator and project write permission.
 
-- `GET /ai-settings` → `{provider,base_url,model,protocol,enabled,has_key}`; never the key.
-- `PUT /ai-settings {base_url?,model,protocol?,api_key?,enabled?}` → settings metadata. Bases: `https://agentrouter.org/v1` or `https://ps.air-outer.com/v1`; protocols: `responses`, `chat_completions`. Omit key to retain it.
+- `GET /ai-settings` → `{provider,base_url,model,models,protocol,enabled,has_key}`; never the key. `models` contains selectable models for that provider, including its configured default.
+- `PUT /ai-settings {base_url?,model,protocol?,api_key?,enabled?}` → settings metadata. Bases: `https://agentrouter.org/v1`, `https://ps.air-outer.com/v1`, `https://router.bynara.id/v1`; protocols: `responses`, `chat_completions`. Bynara requires `chat_completions`; default UI model `agnes-2.5-flash`. Omit key to retain it at the same endpoint. Changing endpoint with an existing key requires a new key, preventing cross-provider credential disclosure.
 - `DELETE /ai-settings` → `{ok:true}`; removes saved encrypted key.
 - `POST /ai-settings/test` → `{ok:true,model,usage}` after a real bounded request, or safe 502.
 - `GET /chat/conversations` → `{id,title,updated_at}[]` owned by the current user.
 - `POST /chat/conversations` → Conversation (201); maximum 50 per user/project.
 - `GET /chat/conversations/{id}` → Conversation. `DELETE` removes its messages/previews; confirmed project changes persist.
-- `POST /chat/conversations/{id}/messages {message,effort:'low'|'high',model?,request_id:UUID}` → Conversation. 3–4000 characters, 100 turns per conversation. Duplicate IDs reuse results; running turns return 409. Models: `gpt-6.1-sol`, `gpt-6-astra`, `gpt-5.6-sol`.
+- `POST /chat/conversations/{id}/messages {message,effort:'low'|'high',model?,request_id:UUID}` → Conversation. 3–4000 characters, 100 turns per conversation. Duplicate IDs reuse results; running turns return 409. Model must appear in the saved provider's `models`; omit it to use the organisation default. Unsupported overrides return 422 before creating a turn. Bynara replies use `engine:'bynara'`; AgentRouter uses `engine:'agentrouter'`. Invalid output or provider failure uses labelled verified retrieval.
 - `GET /chat/actions` → `{id,kind,target_id,title}[]` filtered by current role/state.
 - `POST /chat/conversations/{id}/actions {kind,target_id?}` → Conversation (201) with an unexecuted preview.
 - `POST /chat/actions/{id}/confirm {confirm:true}` → Action; rechecks actor, role, expiry and evidence, idempotent after completion.

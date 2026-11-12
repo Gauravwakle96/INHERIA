@@ -38,7 +38,7 @@ During live QA, GitHub rejected anonymous synchronisation from Render's shared o
 
 ## Organisation chat configuration
 
-The chat migration runs on normal Docker startup. `INHERIA_TOKEN_ENCRYPTION_KEY` encrypts organisation AgentRouter keys as well as GitHub tokens; keep it stable. No shared global chat key is installed. Administrators configure their own organisation through Digital successor → AI settings, explicitly enable processing and test a real request. Provider fees and usage conditions remain separate from free hosting. The supplied key returned HTTP 401 during verification, so model operation is not established. Private conversations and verified-retrieval fallback remain available.
+The chat migration runs on normal Docker startup. `INHERIA_TOKEN_ENCRYPTION_KEY` encrypts organisation provider keys as well as GitHub tokens; keep it stable. No shared global chat key is installed. Administrators configure their own organisation through Digital successor → AI settings, explicitly enable processing and test a real request. Bynara uses `https://router.bynara.id/v1`, `agnes-2.5-flash` and Chat Completions. AgentRouter remains available for existing configurations. Provider fees and usage conditions remain separate from free hosting. One organisation's key is never shared with judge-demo visitors or other tenants. Slow calls show a waiting state; the server has a 110-second timeout and preserves conversations on provider failure.
 
 ## Hosting limits
 

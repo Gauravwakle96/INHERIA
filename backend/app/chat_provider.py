@@ -1,14 +1,30 @@
-"""Bounded AgentRouter calls; provider output proposes text, never executes tools."""
+"""Bounded provider calls; provider output proposes text, never executes tools."""
 
 import json
-from typing import Literal
+from typing import Literal, get_args
 
 import httpx
 from pydantic import Field
 
 from app.schemas import StrictModel
 
-ALLOWED_BASES = {"https://agentrouter.org/v1", "https://ps.air-outer.com/v1"}
+ProviderBase = Literal[
+    "https://agentrouter.org/v1", "https://ps.air-outer.com/v1", "https://router.bynara.id/v1"
+]
+ALLOWED_BASES = set(get_args(ProviderBase))
+BYNARA_BASE = "https://router.bynara.id/v1"
+GPT_MODELS = ["gpt-6.1-sol", "gpt-6-astra", "gpt-5.6-sol"]
+
+
+def provider_name(base_url: str) -> str:
+    return "bynara" if base_url == BYNARA_BASE else "agentrouter"
+
+
+def provider_models(base_url: str, configured_model: str = "") -> list[str]:
+    models = ["agnes-2.5-flash"] if base_url == BYNARA_BASE else GPT_MODELS
+    return list(dict.fromkeys([*models, *([configured_model] if configured_model else [])]))
+
+
 BUDGETS = {
     "low": {"evidence": 8, "chars": 14000, "history": 4, "output": 1600},
     "high": {"evidence": 20, "chars": 36000, "history": 8, "output": 3200},
@@ -52,6 +68,8 @@ def call_provider(
 ) -> tuple[Draft, dict]:
     if config.base_url not in ALLOWED_BASES:
         raise ProviderError("The provider endpoint is not supported.")
+    if config.base_url == BYNARA_BASE and config.protocol != "chat_completions":
+        raise ProviderError("Bynara requires the Chat Completions protocol.")
     budget = BUDGETS[effort]
     instruction = SYSTEM + (
         "\nBe concise and focus on the immediate answer."

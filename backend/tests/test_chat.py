@@ -364,3 +364,121 @@ def test_provider_wire_protocol_effort_and_safe_errors(monkeypatch):
     with pytest.raises(chat_provider.ProviderError, match="401") as exc:
         chat_provider.call_provider(config, "fixture-value", "Hello", "low", {}, [])
     assert "malicious" not in str(exc.value)
+
+
+def test_bynara_wire_format_and_effort_budgets(monkeypatch):
+    calls = []
+
+    def handle(request):
+        assert str(request.url) == "https://router.bynara.id/v1/chat/completions"
+        body = json.loads(request.content)
+        calls.append(body)
+        assert body["model"] == "agnes-2.5-flash"
+        assert body["response_format"] == {"type": "json_object"}
+        assert "reasoning_effort" not in body and "reasoning" not in body
+        assert not body["store"]
+        assert len(body["messages"]) == 2
+        draft = {
+            "parts": [{"kind": "unknown", "text": "Insufficient Evidence", "references": []}],
+            "action_ids": [],
+        }
+        return httpx.Response(
+            200,
+            json={
+                "choices": [{"message": {"content": json.dumps(draft)}}],
+                "usage": {"total_tokens": 20, "private": "not returned"},
+            },
+        )
+
+    real = httpx.Client
+    monkeypatch.setattr(
+        chat_provider.httpx, "Client", lambda **kw: real(transport=httpx.MockTransport(handle), **kw)
+    )
+    config = SimpleNamespace(
+        base_url=chat_provider.BYNARA_BASE, model="agnes-2.5-flash", protocol="chat_completions"
+    )
+    for effort in ("low", "high"):
+        draft, usage = chat_provider.call_provider(config, "fixture-value", "Hello", effort, {}, [])
+        assert draft.parts[0].kind == "unknown" and usage == {"total_tokens": 20}
+    assert calls[1]["max_tokens"] > calls[0]["max_tokens"]
+    config.protocol = "responses"
+    with pytest.raises(chat_provider.ProviderError, match="Chat Completions"):
+        chat_provider.call_provider(config, "fixture-value", "Hello", "low", {}, [])
+    config.base_url = "https://router.bynara.id.attacker.example/v1"
+    with pytest.raises(chat_provider.ProviderError, match="endpoint"):
+        chat_provider.call_provider(config, "fixture-value", "Hello", "low", {}, [])
+    assert len(calls) == 2
+
+
+def test_provider_switch_requires_new_key_and_bynara_protocol(workspace, monkeypatch):
+    client, factory, _, _, base, _, key = setup(workspace, monkeypatch)
+    payload = {
+        "base_url": chat_provider.BYNARA_BASE,
+        "model": "agnes-2.5-flash",
+        "protocol": "chat_completions",
+        "enabled": True,
+    }
+    assert client.put(base + "/ai-settings", json=payload).status_code == 422
+    assert client.get(base + "/ai-settings").json()["provider"] == "agentrouter"
+    payload["api_key"] = "test-bynara-credential"
+    assert client.put(base + "/ai-settings", json={**payload, "protocol": "responses"}).status_code == 422
+    response = client.put(base + "/ai-settings", json=payload)
+    assert response.status_code == 200
+    assert response.json()["provider"] == "bynara"
+    assert response.json()["models"] == ["agnes-2.5-flash"]
+    assert "credential" not in response.text
+    with factory() as db:
+        record = db.scalar(select(m.AIConfiguration))
+        assert record.provider == "bynara"
+        assert Fernet(key).decrypt(record.encrypted_key.encode()).decode() == "test-bynara-credential"
+    payload.pop("api_key")
+    assert client.put(base + "/ai-settings", json=payload).status_code == 200
+    login(client, "Alex Morgan")
+    assert client.put(base + "/ai-settings", json=payload).status_code == 403
+
+
+@pytest.mark.parametrize("failure", [False, True])
+def test_bynara_chat_uses_saved_model_and_preserves_fallback(workspace, monkeypatch, failure):
+    client, _, _, _, base, conv, _ = setup(workspace, monkeypatch)
+    assert (
+        client.put(
+            base + "/ai-settings",
+            json={
+                "base_url": chat_provider.BYNARA_BASE,
+                "model": "agnes-2.5-flash",
+                "protocol": "chat_completions",
+                "api_key": "test-bynara-credential",
+                "enabled": True,
+            },
+        ).status_code
+        == 200
+    )
+    verify_all(client, base)
+    calls = []
+
+    def provider(config, key, message, effort, context, history):
+        calls.append(config.model)
+        if failure:
+            raise chat_provider.ProviderError("Provider rate limit reached (429).")
+        ref = context["evidence"][0]
+        return chat_provider.Draft(
+            parts=[chat_provider.Part(kind="project", text=ref["quote"], references=[ref["id"]])]
+        ), {}
+
+    monkeypatch.setattr(chat, "call_provider", provider)
+    response = send(client, base, conv, "Explain deployment")
+    assert response.status_code == 200
+    reply = response.json()["turns"][-1]["response"]
+    assert calls == ["agnes-2.5-flash"]
+    assert reply["engine"] == ("verified_retrieval" if failure else "bynara")
+    assert reply["model"] == (None if failure else "agnes-2.5-flash")
+    assert bool(reply["warning"]) == failure
+    if not failure:
+        assert reply["citations"] and reply["known"]
+    denied = client.post(
+        base + "/chat/conversations/" + conv["id"] + "/messages",
+        json={"message": "Explain deployment", "model": "gpt-6.1-sol", "request_id": str(uuid4())},
+    )
+    assert denied.status_code == 422
+    assert len(client.get(base + "/chat/conversations/" + conv["id"]).json()["turns"]) == 1
+    assert len(calls) == 1

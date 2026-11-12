@@ -210,3 +210,34 @@ See [feature status](feature-status.md) for the complete implemented, partial an
 Live deployment f5c0ce9 reached Render live status and PostgreSQL migrated to e4058f85541c. The supplied key was saved encrypted only for the verified Gaurav organisation. Its actual Render-side connection test returned a safe unvalidated-provider-response error; local Responses/Chat Completions probes returned 401. No successful live model call is claimed. Live fallback inspection exposed partial keyword matching, so related excerpts now stay explicitly labelled and known=false. The final follow-up backend suite passed 135 tests.
 
 Live browser QA confirmed saved private history after reload, High effort, action previews, AI settings, HTTPS readiness and updated OpenAPI. Settled desktop/night and mobile/day renders passed axe checks with zero violations and no horizontal overflow or runtime errors. Initial contrast readings during the theme transition were resolved by waiting for the palette to settle with reduced motion. Screenshots were inspected. See chat-public-verification.json.
+
+## Bynara chat integration — 12 November 2026
+
+Bynara Chat Completions support was added for `agnes-2.5-flash`. The existing
+AgentRouter settings remain supported. Keys remain organisation-scoped and
+encrypted; changing provider endpoint requires a new key. Model choices follow
+the provider and unknown overrides fail before storing a turn. Evidence,
+permission revalidation, action confirmation and verified-retrieval fallback
+continue to use the existing services.
+
+Actual checks for this update:
+
+- 168 backend tests passed, including Bynara wire format, Low/High output budgets,
+  encrypted settings, admin permissions, provider-switch credential boundaries,
+  cited replies, failure fallback and unsupported-model rejection.
+- Nine chat browser tests passed: persistence, private history, confirmed actions,
+  provider/model switching, the Bynara request contract, day/night layouts at
+  390/768/1440 pixels and axe accessibility checks. The Bynara browser request
+  contract uses a mock; it does not establish live provider availability.
+- Ruff lint/format, frontend lint/typecheck/production build, npm audit and
+  locked-environment Python dependency audit passed. ESLint now excludes ignored
+  local probe scripts. One existing Starlette TestClient deprecation warning
+  remains in the Python suite.
+- Real provider smoke requests returned usable text (45.58 seconds) and a valid
+  INHERIA structured answer that abstained without evidence (47.5 seconds).
+  These individual requests do not establish general AI accuracy or uptime.
+
+Deployment and account activation are verified separately after publication.
+No supplied key is committed, included in public evidence or installed globally
+for other tenants. Provider data retention and service limits remain external
+conditions; `store=false` is not a provider confidentiality guarantee.

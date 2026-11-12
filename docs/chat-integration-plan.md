@@ -6,7 +6,7 @@ Extend the existing `/successor` experience and keep the existing excerpt API fo
 
 - React uses the existing query client, theme, dialog, citation and error components. No extra UI or agent framework dependency.
 - FastAPI chat routes reuse cookie/CSRF, project membership, source ACL and existing domain endpoints. Provider calls are server-only, timeout/budget bounded, stateless and never execute tools.
-- An administrator explicitly selects an available model and enables external processing. AgentRouter supports a Responses-compatible route; do not impersonate a supported client or bypass provider refusals. A connection test must report actual availability.
+- An administrator explicitly selects a provider/model and enables external processing. Bynara uses Chat Completions with `agnes-2.5-flash`; AgentRouter retains its Responses-compatible route. Do not impersonate a supported client or bypass provider refusals. A connection test must report actual availability. The backend publishes provider-specific model choices; unsupported overrides fail before a turn is created. Changing endpoint requires a new key rather than forwarding the previous provider's credential.
 - Encrypt the organisation-specific key using the existing Fernet key. Return only configuration metadata, never the credential. Disconnect erases the saved provider key.
 - Persist conversations/turns under organisation, project and owning user. Source-dependent turns retain cumulative claim/source version signatures; current access and verification are checked before history is displayed or sent to a model. Source deletion purges affected turn contents, including dependent follow-ups.
 - Context contains only accessible verified evidence and scoped operational status. Pending information stays explicitly uncertain. Generated project statements must cite an allowed evidence ID; general guidance is labelled; missing information leads to abstention. Structured output validation does not establish semantic truth.
@@ -23,6 +23,14 @@ Extend the existing `/successor` experience and keep the existing excerpt API fo
 5. Update API/setup/feature documentation and deploy the authorised update after successful checks.
 
 Provider probes on 11 November 2026: `/v1/models` and actual stateless Responses requests returned HTTP 401; Responses was tested against both official endpoints. No credential was logged. This prevents confirming live model answers. The client reports the failure and continues verified retrieval; no client impersonation or bypass is used.
+
+Bynara probes on 12 November 2026: an actual Chat Completions request to
+`https://router.bynara.id/v1/chat/completions` using `agnes-2.5-flash` returned
+HTTP 200 with usable text in 45.58 seconds. A second request using INHERIA's
+real adapter and structured-answer schema succeeded in 47.5 seconds and
+abstained when no project evidence was supplied. These are individual smoke
+checks, not an accuracy or availability guarantee. Live integration results
+are recorded in [verification](verification.md).
 
 ## Operational limits
 
