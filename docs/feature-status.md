@@ -19,7 +19,7 @@ This file reports implementation, not the complete long-term product vision. The
 | Responsibility assignment / acceptance / rejection | Implemented | One incoming participant per transition; no responsibility splitting |
 | Practical validation and readiness | Implemented | Predefined criteria, evidence selection, explanation and supervisor review; INHERIA executes no sandbox commands |
 | Current ownership after closure | Implemented | Auditable accepted-transfer evidence, previous owner retained in provenance |
-| Digital Successor private chat | Implemented; Bynara adapter smoke-tested | Owner-only persisted history, Low/High effort, provider-specific model choices, citations and fallback; Bynara `agnes-2.5-flash` structured reply verified locally; see verification for live results |
+| Digital Successor private chat | Implemented and live-verified with Bynara | Owner-only persisted history, Low/High effort, provider-specific model choices, citations and fallback; `agnes-2.5-flash` live reply returned two citations in 66.4 seconds; availability depends on provider limits |
 | Chat actions and encrypted organisation AI settings | Implemented | Admin-only opt-in/key/test/disconnect; supported domain actions require preview confirmation; no production execution |
 | Explainable risk / readiness / evidence metrics | Implemented | Measurable ratios and counts; no arbitrary resilience index or predictive AI |
 | Day and night themes | Implemented | Browser-persisted manual selection; current browsers with CSS light-dark() support |

@@ -30,7 +30,11 @@ HTTP 200 with usable text in 45.58 seconds. A second request using INHERIA's
 real adapter and structured-answer schema succeeded in 47.5 seconds and
 abstained when no project evidence was supplied. These are individual smoke
 checks, not an accuracy or availability guarantee. Live integration results
-are recorded in [verification](verification.md).
+are recorded in [verification](verification.md). The deployed application also
+returned a Bynara answer with two supporting citations in 66.4 seconds. Its
+project statements, operational status, unknown information and general guidance
+remained separately labelled. History persisted and the temporary test
+conversation was deleted after inspection.
 
 ## Operational limits
 

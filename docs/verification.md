@@ -237,7 +237,34 @@ Actual checks for this update:
   INHERIA structured answer that abstained without evidence (47.5 seconds).
   These individual requests do not establish general AI accuracy or uptime.
 
-Deployment and account activation are verified separately after publication.
+Live verification on 13 November 2026:
+
+- Render confirmed application commit `8feea4192260e505810b9b33e781b035bd894708`
+  live on the existing Free service. Both GitHub CI jobs succeeded; HTTPS
+  readiness, frontend assets and the deployed API schema returned 200.
+- The authorised administrator's ShopEase organisation was configured through
+  the live HTTPS API. Readback confirmed Bynara, Chat Completions,
+  `agnes-2.5-flash`, enabled processing and a saved key; no credential appeared
+  in the settings response or input.
+- The real application answered a ShopEase handover question using Bynara in
+  66.402 seconds, with two supporting citations and separate `project`,
+  `status`, `unknown` and `guidance` parts. The stored turn was completed,
+  had no provider warning and persisted across a subsequent authenticated GET.
+  The temporary probe conversation was deleted after inspection.
+- Live browser model/settings readback passed. Desktop/night (1440 pixels) and
+  mobile/day (390 pixels) had no horizontal overflow, axe violations or
+  uncaught runtime errors. These representative checks are not a full
+  accessibility audit. See [Bynara live evidence](bynara-live-verification.json).
+
+Initial local DNS failures and request/browser timeouts interrupted verification.
+A process-local public-DNS resolution fallback preserved the original HTTPS host
+and certificate verification without changing system DNS or weakening security.
+Subsequent authenticated inspection established that the original chat request
+had completed and been saved. Do not infer provider failure solely from a client
+timeout; inspect the stored conversation before retrying.
+
 No supplied key is committed, included in public evidence or installed globally
-for other tenants. Provider data retention and service limits remain external
-conditions; `store=false` is not a provider confidentiality guarantee.
+for other tenants or judge-demo visitors. Provider retention and service limits
+remain external conditions; `store=false` is not a provider confidentiality
+guarantee. Live checks establish individual successful calls, not general AI
+accuracy, guaranteed uptime or operational competence.

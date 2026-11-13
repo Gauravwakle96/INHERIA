@@ -1,0 +1,48 @@
+{
+  "verified_on": "2026-11-13",
+  "site": "https://inheria.onrender.com",
+  "application_commit": "8feea4192260e505810b9b33e781b035bd894708",
+  "render_status": "live",
+  "hosting_plan": "free",
+  "github_ci": { "backend": "success", "frontend": "success" },
+  "automated_checks": {
+    "backend_tests_passed": 168,
+    "chat_browser_tests_passed": 9,
+    "python_lint_format": "pass",
+    "frontend_lint_typecheck_build": "pass",
+    "npm_audit": "no vulnerabilities reported",
+    "python_dependency_audit": "no known vulnerabilities reported"
+  },
+  "live_chat": {
+    "provider": "bynara",
+    "base_url": "https://router.bynara.id/v1",
+    "protocol": "chat_completions",
+    "model": "agnes-2.5-flash",
+    "scope": "Authorised administrator's ShopEase organisation; no shared global key",
+    "status": "completed",
+    "engine": "bynara",
+    "elapsed_ms": 66402,
+    "supporting_citations": 2,
+    "part_kinds": ["project", "status", "unknown", "guidance"],
+    "provider_warning": null,
+    "history_persisted": true,
+    "temporary_probe_conversation_deleted": true
+  },
+  "live_browser": {
+    "model_selector": "pass",
+    "saved_settings": "pass",
+    "key_absent_from_input": true,
+    "runtime_errors": [],
+    "responsive": [
+      { "theme": "dark", "width": 1440, "horizontal_overflow": false, "axe_violations": [] },
+      { "theme": "light", "width": 390, "horizontal_overflow": false, "axe_violations": [] }
+    ]
+  },
+  "limits": [
+    "Provider replies can take about a minute; server timeout is 110 seconds",
+    "Low/High alter context and answer budgets; no Bynara reasoning-effort parameter is claimed",
+    "Individual successful calls do not establish general AI accuracy or uptime",
+    "Judge-demo visitors and other organisations must supply their own provider keys",
+    "Provider retention and usage limits remain external conditions"
+  ]
+}
