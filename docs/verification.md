@@ -23,8 +23,16 @@ Historical and current verification results are separated below. Results apply t
   rate limits were preserved. A source-deletion completion edge case was fixed
   and is covered by the full backend suite.
 
-Live acceptance is recorded separately after deployment. See
-[workspace completion](workspace-completion.md) for the data and scope rules.
+Live acceptance: Render deployed `ebdfba9`; GitHub Actions run
+[43411270856](https://github.com/Gauravwakle96/INHERIA/actions/runs/43411270856)
+succeeded. The owner's ShopEase project, incoming Savinay and coordinator Rudransh
+all show one completed version with **8/8** accepted responsibilities and **11/11**
+reviewed walkthroughs. All twelve owner routes, exact handover link, refresh
+persistence and desktop/night 1440px and mobile/day 390px checks passed, with no
+runtime errors, overflow or axe violations. Evidence remains an author-operated
+case study; no actual cloud execution is asserted. The final visual review also
+removed rejected interview drafts from the team page's current ownership count.
+See [workspace completion](workspace-completion.md) for the data and scope rules.
 
 ## Round 3 local verification — 11 November 2026 IST
 
