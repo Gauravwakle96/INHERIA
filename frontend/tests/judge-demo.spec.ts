@@ -17,13 +17,70 @@ async function role(page: Page, name: string) {
   await expect(page.locator('.user-summary strong')).toHaveText(name);
 }
 
+test('judge opens an isolated workspace directly from sign-in and keeps it on refresh', async ({ page, browser }) => {
+  await page.goto('/');
+  const entry = page.getByRole('region', { name: 'Judge demo access' });
+  await expect(entry).toContainText('No email, password or API key needed.');
+  await expect(entry.locator('input')).toHaveCount(0);
+  await entry.getByRole('button', { name: 'Open judge workspace' }).click();
+  await expect(page.getByRole('heading', { name: 'Knowledge investigation', level: 1 })).toBeVisible();
+  await expect(page.locator('.user-summary strong')).toHaveText('Rudransh');
+  const projectId = await page.getByRole('combobox', { name: 'Active project' }).inputValue();
+  await page.reload();
+  await expect(page.getByRole('combobox', { name: 'Active project' })).toHaveValue(projectId);
+  await expect(page.locator('.user-summary strong')).toHaveText('Rudransh');
+  const isolated = await browser.newContext();
+  const other = await isolated.newPage();
+  await other.goto('/');
+  await other.getByRole('button', { name: 'Open judge workspace' }).click();
+  await expect(other.getByRole('combobox', { name: 'Active project' })).toBeVisible();
+  expect(await other.getByRole('combobox', { name: 'Active project' }).inputValue()).not.toBe(projectId);
+  expect((await other.request.get(`/api/projects/${projectId}/sources`)).status()).toBe(404);
+  await isolated.close();
+});
+
+test('judge entry blocks duplicate clicks and offers retry when starting fails', async ({ page }) => {
+  let attempts = 0;
+  await page.route('**/api/auth/judge-demo/start', async route => {
+    attempts++;
+    if (attempts === 1) {
+      await new Promise(resolve => setTimeout(resolve, 400));
+      await route.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ detail: 'Demo preparation is temporarily unavailable. Retry.' }) });
+    } else await route.continue();
+  });
+  await page.goto('/');
+  const entry = page.getByRole('region', { name: 'Judge demo access' });
+  const button = entry.getByRole('button', { name: 'Open judge workspace' });
+  await expect(button).toBeEnabled();
+  await button.evaluate((element: HTMLButtonElement) => { element.click(); element.click(); });
+  await expect(entry.getByRole('alert')).toContainText('Demo preparation is temporarily unavailable.');
+  expect(attempts).toBe(1);
+  await entry.getByRole('button', { name: 'Try again', exact: true }).click();
+  await expect(page.getByRole('combobox', { name: 'Switch demo role' })).toBeVisible();
+  expect(attempts).toBe(2);
+});
+
+test('judge entry explains when the interactive workspace is unavailable', async ({ page }) => {
+  await page.route('**/api/auth/judge-demo', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ enabled: false, expires_hours: 4 }) }));
+  await page.goto('/');
+  const entry = page.getByRole('region', { name: 'Judge demo access' });
+  await expect(entry.getByRole('button', { name: 'Open judge workspace' })).toBeDisabled();
+  await expect(entry).toContainText('Judge workspace is currently unavailable.');
+  await expect(entry.getByRole('link', { name: 'Explore demo' })).toHaveAttribute('href', '/demo');
+});
+
 for (const theme of ['dark', 'light'] as const) {
   for (const width of [390, 768, 1440]) {
     test(`public judge walkthrough ${theme} ${width}: readable, keyboard, accessibility`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.emulateMedia({ reducedMotion: 'reduce' });
-      await page.goto('/demo');
+      await page.goto('/');
       if (theme === 'light') await page.getByRole('button', { name: 'Switch to day mode' }).click();
+      await expect(page.getByRole('button', { name: 'Open judge workspace' })).toBeEnabled();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+      const signIn = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
+      expect(signIn.violations.map(v => ({ id: v.id, nodes: v.nodes.map(n => n.failureSummary) }))).toEqual([]);
+      await page.getByRole('link', { name: 'Explore demo' }).click();
       await expect(page.getByRole('button', { name: 'Start interactive demo' })).toBeEnabled();
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
       await page.keyboard.press('Tab');

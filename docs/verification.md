@@ -2,6 +2,28 @@
 
 Historical and current verification results are separated below. Results apply to the implemented MVP in this workspace; they do not certify an enterprise deployment.
 
+## Direct judge access — 14 November 2026 IST
+
+After receiving the actual Round 3 opening/deadline notice, sign-in gained
+**Open judge workspace** for direct access as Rudransh, while preserving the
+guide link and separate role accounts. Shared demo passwords are unnecessary.
+Start is guarded against duplicate clicks; failure offers retry and disabled
+demo configuration is explained. The existing isolated backend is reused.
+
+- Three targeted Playwright tests passed: anonymous direct entry, persisted
+  refresh, a second visitor isolated from the first, failed startup/retry,
+  duplicate-click guard and disabled-demo explanation.
+- Six day/night 390/768/1440px checks passed on both sign-in and the demo guide;
+  no horizontal overflow or automated WCAG A/AA violations in those states.
+- The full judge UI journey passed again after these frontend changes, including
+  source reconstruction, review, handover, acceptance, assessment and closure.
+- Frontend lint, typecheck, production build and npm audit passed. Backend tests
+  were not rerun for this frontend-only increment; prior counts are below.
+
+These finalisation changes follow the announced opening. Earlier implementation
+and tests keep their original dates. See round3-submission-checklist.md for the
+exact commitments, known acceptance gaps and remaining submission information.
+
 ## Workspace completion verification — 13 November 2026 IST
 
 - Full backend suite: **169 passed**, **90%** overall line coverage; the new

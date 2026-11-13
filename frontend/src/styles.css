@@ -54,6 +54,8 @@
 .judge-demo-entry p { color: var(--muted); font-size: 13px; }
 .judge-demo-entry a, .demo-top a, .demo-guide a { color: var(--cyan); text-decoration: none; }
 .judge-demo-entry a { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+.judge-demo-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin: 14px 0 10px; }
+.judge-demo-entry .judge-demo-access-note { font-size: 11px; line-height: 1.6; margin: 0; }
 .demo-page { max-width: 1180px; margin: 0 auto; padding: 24px 32px; }
 .demo-top, .demo-top > div, .demo-cta { display: flex; align-items: center; gap: 20px; }
 .demo-top { justify-content: space-between; }

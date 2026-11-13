@@ -4,11 +4,11 @@
 
 A functional technical knowledge-continuity application built around **Connect → Reconstruct → Verify → Review → Handover → Validate**. React/TypeScript frontend, FastAPI modular backend, SQLAlchemy models and Alembic migrations. PostgreSQL is the deployment database; SQLite supports local development.
 
-**Live application:** https://inheria.onrender.com — select **Explore demo** beside sign-in, or create an account for your own workspace. Render Free may take about a minute to wake after inactivity.
+**Live application:** https://inheria.onrender.com — select **Open judge workspace** beside sign-in for direct access, **Explore demo** for the scenario guide, or create an account for your own workspace. Render Free may take about a minute to wake after inactivity.
 
 ## Judge demonstration
 
-**[Open the judge demo](https://inheria.onrender.com/demo)**. No account or model key is required.
+**[Open the judge demo](https://inheria.onrender.com/demo)**. No account, password or model key is required. The main sign-in page also offers direct one-click access as Rudransh. New visitors get separate workspaces; role switching never accesses real accounts.
 Gaurav is the departing DevOps engineer, Savinay receives ownership and Rudransh coordinates review.
 Each visitor gets an isolated expiring workspace with 13 authored source documents. The example is not Wipro/client data or actual cloud execution.
 
@@ -55,7 +55,7 @@ System32 is the current authorised workspace and can cause Windows sandbox proce
 
 Open **Digital successor** for private saved conversations, Low/High effort, evidence citations and confirmed project actions. An administrator can use **AI settings** to save an encrypted provider key, enable external processing and test the connection. Bynara uses `https://router.bynara.id/v1`, `agnes-2.5-flash` and Chat Completions. AgentRouter retains its Responses/Chat Completions support and three GPT model options. Model choices follow the configured provider; changing providers requires a new key. Configure `INHERIA_TOKEN_ENCRYPTION_KEY` on the server first. No credential is returned to the browser or stored in frontend code. Other organisations and judge-demo visitors must configure their own keys.
 
-The supplied key returned HTTP 401 on both official endpoints during verification. Live model replies remain unverified; failed requests show a warning and fall back to current verified excerpts. Low/High changes model context/output budgets; lexical fallback uses the existing retrieval method. See [chat setup and limits](docs/chat-integration-plan.md).
+Live Bynara operation was verified with `agnes-2.5-flash`: one completed reply carried two citations and took 66.4 seconds. This is an individual successful request, not a general quality or availability guarantee. AgentRouter access previously failed for this web application; failed requests show a warning and fall back to current verified excerpts. Low/High changes context/output budgets. Demo visitors must configure their own provider keys for generated chat; the core source-to-handover flow works without a key. See [live evidence](docs/bynara-live-verification.json) and [chat setup and limits](docs/chat-integration-plan.md).
 
 ## Demonstration workflow
 

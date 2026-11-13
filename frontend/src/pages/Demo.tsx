@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, GitBranch, ShieldCheck, Users } from 'lucide-react';
@@ -17,16 +17,29 @@ const steps = [
   ['Assess & recover', 'Rudransh', '/validation', 'Review practical criteria. Request revision when evidence is incomplete. Close only after acceptance, review and required prerequisites.'],
 ];
 
-export function DemoPage({ onLogin }: { onLogin: (session: Session) => void }) {
+function useDemoStart(onLogin: (session: Session) => void) {
   const config = useQuery({ queryKey: ['judge-demo-info'], queryFn: () => api<{ enabled: boolean; expires_hours: number }>('/auth/judge-demo') });
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+  const starting = useRef(false);
   async function start() {
+    if (starting.current || !config.data?.enabled) return;
+    starting.current = true;
     setBusy(true); setError(null);
-    try { onLogin(await post<Session>('/auth/judge-demo/start')); } catch (e) { setError(e as Error); } finally { setBusy(false); }
+    try { onLogin(await post<Session>('/auth/judge-demo/start')); } catch (e) { setError(e as Error); } finally { starting.current = false; setBusy(false); }
   }
+  return { config, busy, error, start };
+}
+
+export function JudgeDemoEntry({ onLogin }: { onLogin: (session: Session) => void }) {
+  const { config, busy, error, start } = useDemoStart(onLogin);
+  return <section className="judge-demo-entry" aria-label="Judge demo access"><strong>Try the product as a judge</strong><p>Open ShopEase as Rudransh, the handover coordinator. Switch to Gaurav or Savinay inside the workspace to test their roles.</p><div className="judge-demo-actions"><Button busy={busy} disabled={!config.data?.enabled} onClick={() => void start()}>Open judge workspace <ArrowRight size={16} /></Button><Link to="/demo">Explore demo <ArrowRight size={15} /></Link></div><p className="judge-demo-access-note">No email, password or API key needed. Each visitor gets a separate case-study workspace.</p>{busy && <p role="status">Preparing your sources and role accounts…</p>}{error && <ErrorState error={error} retry={() => void start()} />}{config.error && <ErrorState error={config.error} retry={() => void config.refetch()} />}{config.data && !config.data.enabled && <Notice tone="warning">Judge workspace is currently unavailable. The demo guide remains accessible.</Notice>}</section>;
+}
+
+export function DemoPage({ onLogin }: { onLogin: (session: Session) => void }) {
+  const { config, busy, error, start } = useDemoStart(onLogin);
   return <div className="demo-page"><header className="demo-top"><Link to="/" className="brand">INHERIA.</Link><div><ThemeToggle /><Link to="/">Sign in</Link></div></header><main id="main-content">
-    <section className="demo-hero"><div className="eyebrow">Explore the complete handover</div><h1>Gaurav leaves.<br /><span>Savinay can continue.</span></h1><p>ShopEase is a shopping application. Its DevOps engineer owns releases, alerts and recovery knowledge. Follow the team as they turn scattered sources into a reviewed continuation plan.</p><div className="demo-cta"><Button busy={busy} disabled={!config.data?.enabled} onClick={() => void start()}>Start interactive demo <ArrowRight size={18} /></Button><span>No account or API key needed · Your own isolated workspace</span></div>{error && <ErrorState error={error} />}{config.error && <ErrorState error={config.error} retry={() => void config.refetch()} />}{config.data && !config.data.enabled && <Notice tone="warning">Interactive demo is currently unavailable. The walkthrough below remains accessible.</Notice>}</section>
+    <section className="demo-hero"><div className="eyebrow">Explore the complete handover</div><h1>Gaurav leaves.<br /><span>Savinay can continue.</span></h1><p>ShopEase is a shopping application. Its DevOps engineer owns releases, alerts and recovery knowledge. Follow the team as they turn scattered sources into a reviewed continuation plan.</p><div className="demo-cta"><Button busy={busy} disabled={!config.data?.enabled} onClick={() => void start()}>Start interactive demo <ArrowRight size={18} /></Button><span>No account or API key needed · Your own isolated workspace</span></div>{busy && <p role="status">Preparing your sources and role accounts…</p>}{error && <ErrorState error={error} retry={() => void start()} />}{config.error && <ErrorState error={config.error} retry={() => void config.refetch()} />}{config.data && !config.data.enabled && <Notice tone="warning">Interactive demo is currently unavailable. The walkthrough below remains accessible.</Notice>}</section>
     <div className="demo-people">{[['Gaurav', 'Departing DevOps engineer', 'Knows deployments, alert triage and recovery gaps.'], ['Savinay', 'Incoming DevOps engineer', 'Reviews knowledge, accepts ownership and demonstrates understanding.'], ['Rudransh', 'Administrator & coordinator', 'Controls sources, review, access and transition closure.']].map(([name, role, detail]) => <Panel key={name}><Users size={23} /><h2>{name}</h2><strong>{role}</strong><p>{detail}</p></Panel>)}</div>
     <section className="demo-section"><h2>The central workflow, including what can go wrong</h2><div className="demo-steps">{steps.map(([name, person, , detail], i) => <article key={name}><span className="demo-step-number">{String(i + 1).padStart(2, '0')}</span><div><h3>{name}</h3><small>{person}</small><p>{detail}</p></div></article>)}</div></section>
     <div className="demo-people"><Panel title="Traceable"><GitBranch /><p>Open exact excerpts, document names, locations and versions behind every important claim. Source statements begin pending human verification.</p></Panel><Panel title="Actionable"><CheckCircle2 /><p>Savinay sees ownership, unresolved issues, procedures and next tasks. Missing restore evidence remains a blocker until it is reviewed.</p></Panel><Panel title="Permission-aware"><ShieldCheck /><p>A coordinator-only source stays hidden from Savinay. Persona switching applies only to your own case-study accounts.</p></Panel></div>

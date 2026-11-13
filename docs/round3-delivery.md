@@ -1,11 +1,15 @@
 # Round 3 delivery and submission mapping
 
 This is an implementation map, not an awarded score or guarantee. The exact
-Round 2 form commitments have not yet been confirmed. The historical Round 2 PDF
-is preserved; the proposed replacement of the conversational commitment must not
-be described as organiser-approved without confirmation.
+Round 2 form commitments have not yet been confirmed. The saved Round 2 PDF,
+page 15, names Conversational Digital Successor, Investigation and source-change
+intelligence, and Practical transfer validation and recovery. It is preserved;
+the later proposed replacement of the conversational commitment must not be
+described as organiser-approved without confirmation. See
+[the final submission checklist](round3-submission-checklist.md) for exact acceptance
+targets and the announced event-window baseline.
 
-## Three improvements delivered in this build
+## Implementation workstreams already present
 
 | Improvement | What changes for users | Demonstrable evidence |
 | --- | --- | --- |
@@ -13,11 +17,25 @@ be described as organiser-approved without confirmation.
 | Knowledge Change & Impact Investigation | A changed runbook exposes downstream impact; interrupted investigations resume from committed source-version checkpoints instead of losing progress or duplicating candidates. | Document replacement/Impact UI, exact prose field spans, old evidence invalidation, Resume action, ten change/recovery and five interruption-position cases. |
 | Handover Recovery & Practical Validation | Missing information/rejected tasks lead to a corrected version and reconfirmation. Acceptance, supervisor criteria and mandatory cited checks gate closure. | Reopen/history, required prerequisites, scenario-v2 criteria, incoming-only acceptance, independent assessment and complete browser journey. |
 
-The previous conversational successor remains optional with private history,
-citations and honest retrieval fallback. Live paid-provider operation is not
-claimed as delivered by these changes. If the submitted commitment was a live
-conversational assistant, that commitment remains partial until provider access
-and quality are established or the organiser permits substitution.
+These workstreams are not interchangeable with the exact submitted commitments.
+The conversational successor also has private history, citations, Low/High modes,
+encrypted provider settings and previewed role-checked actions. Bynara's
+`agnes-2.5-flash` returned a live cited reply, recorded separately in
+bynara-live-verification.json. AgentRouter previously failed for the web app.
+The promised 50-question held-out model evaluation is not complete, and the
+existing 60-document extraction evaluation is a development fixture rather than
+a held-out corpus. Those acceptance limits must be disclosed if the saved PDF
+is the final submitted commitment. Secure onboarding is additional progress
+unless the team confirms that it was actually submitted as a replacement.
+
+## Announced event window
+
+The 14 November announcement sets the window at 13 November 23:59 through
+16 November 23:59. Much of the existing implementation above predates that
+opening; dated Git history is preserved. Existing documents named Round 3 do
+not establish that the code was built during the announced window. New
+finalisation work is recorded at its actual date. This document does not certify
+eligibility or relabel earlier work as event-window delivery.
 
 ## Rubric acceptance map
 
