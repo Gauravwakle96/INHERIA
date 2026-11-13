@@ -46,6 +46,29 @@ See [four-workstream acceptance](four-workstream-acceptance.md) for evaluation
 methodology and product limits. Live acceptance for the new commit is recorded
 after deployment; historical live checks below apply to their named commits.
 
+Render deployed application `c2a6a7c8d48f4fbd0d84756d786c4a4e1e9f6f9a`
+as `dep-dbrn3nh7lnhs73dftdd0`; GitHub
+[CI 43501188846](https://github.com/Gauravwakle96/INHERIA/actions/runs/43501188846)
+passed. Public `/api/health` and `/api/ready` returned 200; new access endpoints
+are present. PostgreSQL upgraded to `b19e47a2c805`, backfilled eight historical
+interviews and left zero eligible interviews without parent lineage.
+
+Read-only private-account browser checks passed all twelve workspace routes,
+refresh/exact handover navigation and Gaurav/Savinay/Rudransh views: one closed
+handover, **8/8** accepted responsibilities, **11/11** reviewed walkthroughs.
+Desktop/night and mobile/day had no observed overflow, axe violations or runtime
+errors. Two fresh isolated public browser tests passed invitation/password/member
+revocation, denied sources/chat access and source permission edit/reopen/role
+restrictions. Private account data/provider choices remained unchanged.
+See [live verification](four-workstream-live-verification.json).
+
+The final anonymous live browser passed direct entry, refresh, role switching,
+restricted-source denial and separate visitor isolation. All six day/night
+390/768/1440px sign-in layouts passed overflow/axe checks with no runtime errors.
+An earlier second-visitor navigation timed out waiting 30 seconds for network
+idle. Its partial/failure evidence is recorded; the rerun used DOM-loaded
+navigation and explicit UI readiness and passed. No app control was weakened.
+
 ## Direct judge access — 14 November 2026 IST
 
 After receiving the actual Round 3 opening/deadline notice, sign-in gained

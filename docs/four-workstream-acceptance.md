@@ -91,6 +91,12 @@ ACL selection; permission forms now remount from current server readers.
 Representative mobile/day and desktop/night axe checks accompany these journeys.
 This is not a complete screen-reader audit or independent usability study.
 
+Application commit `c2a6a7c` is deployed on Render; CI passed. Live PostgreSQL
+lineage backfill and two isolated access browser tests passed. The owner's
+existing closed ShopEase handover remained accessible to all three authorised
+accounts with 8/8 accepted responsibilities and 11/11 reviewed walkthroughs.
+See [live acceptance](four-workstream-live-verification.json).
+
 The final browser runs passed 14 judge/onboarding/source tests and nine chat
 tests. Three affected source-change/revocation cases passed again after the last
 backend change. The first chat attempt lacked its local development personas;

@@ -1,0 +1,195 @@
+{
+  "application_commit": "c2a6a7c8d48f4fbd0d84756d786c4a4e1e9f6f9a",
+  "render_deployment": "dep-dbrn3nh7lnhs73dftdd0",
+  "recorded_at": "2026-11-13T20:27:39.180928+00:00",
+  "deployment": {
+    "site": "https://inheria.onrender.com",
+    "scope": "Read-only schema and existing handover preservation check; no account/provider settings changed.",
+    "database": {
+      "migration": "b19e47a2c805",
+      "backfilled_interviews": "8",
+      "missing_historical_lineage": "0",
+      "preserved_transition_status": "closed"
+    },
+    "health": 200,
+    "ready": 200,
+    "access_readiness_endpoint": true,
+    "source_permissions_endpoint": true,
+    "membership_revocation_endpoint": true,
+    "repository_public": true,
+    "ci": [
+      {
+        "id": 43501188846,
+        "commit": "c2a6a7c8d48f4fbd0d84756d786c4a4e1e9f6f9a",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Gauravwakle96/INHERIA/actions/runs/43501188846"
+      },
+      {
+        "id": 43486413312,
+        "commit": "4e8fba88211097e6de41b9cfaaa4a92e776d2d7f",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Gauravwakle96/INHERIA/actions/runs/43486413312"
+      },
+      {
+        "id": 43485832515,
+        "commit": "256b341b877cd716eafb3de9368ee18ed3fac12a",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Gauravwakle96/INHERIA/actions/runs/43485832515"
+      }
+    ]
+  },
+  "existing_account": {
+    "site": "https://inheria.onrender.com",
+    "verified_at": "2026-11-13T20:25:35.211Z",
+    "project": "ShopEase - DevOps Case Study",
+    "pages": [
+      "/",
+      "/sources",
+      "/memory",
+      "/decisions",
+      "/investigation",
+      "/graph",
+      "/risk",
+      "/team",
+      "/handover",
+      "/validation",
+      "/successor",
+      "/governance"
+    ],
+    "roles": [
+      {
+        "name": "Gaurav",
+        "completed_handovers": 1,
+        "accepted": 8,
+        "reviewed": 11
+      },
+      {
+        "name": "Savinay",
+        "completed_handovers": 1,
+        "accepted": 8,
+        "reviewed": 11
+      },
+      {
+        "name": "Rudransh",
+        "completed_handovers": 1,
+        "accepted": 8,
+        "reviewed": 11
+      }
+    ],
+    "layouts": [
+      {
+        "theme": "dark",
+        "width": 1440,
+        "overflow": false,
+        "axe_violations": []
+      },
+      {
+        "theme": "light",
+        "width": 390,
+        "overflow": false,
+        "axe_violations": []
+      }
+    ],
+    "contributors": [
+      {
+        "name": "Gaurav",
+        "interviews": 8,
+        "knowledge_reviewed": 2,
+        "responsibilities_transferred": 8,
+        "responsibilities_accepted": 0,
+        "walkthroughs_submitted": 0,
+        "walkthroughs_reviewed": 0
+      },
+      {
+        "name": "Rudransh",
+        "interviews": 0,
+        "knowledge_reviewed": 70,
+        "responsibilities_transferred": 0,
+        "responsibilities_accepted": 0,
+        "walkthroughs_submitted": 0,
+        "walkthroughs_reviewed": 11
+      },
+      {
+        "name": "Savinay",
+        "interviews": 0,
+        "knowledge_reviewed": 0,
+        "responsibilities_transferred": 0,
+        "responsibilities_accepted": 8,
+        "walkthroughs_submitted": 11,
+        "walkthroughs_reviewed": 0
+      }
+    ],
+    "rejected_drafts_excluded_from_current_ownership": true,
+    "exact_handover_link": true,
+    "refresh_persistence": true,
+    "runtime_errors": [],
+    "success": true,
+    "scope": "Author-operated case study. App handover is closed; no executed cloud recovery or independent human assessment is claimed."
+  },
+  "new_access_browser_tests": {
+    "passed": 2,
+    "cases": [
+      "single-use invitation, recipient password, scoped membership revocation, denied sources/chat access",
+      "source permission edit, reopen preserves readers, incoming role restriction, mobile axe"
+    ],
+    "scope": "Fresh isolated public judge visitors only; no private account documents or membership changed."
+  },
+  "anonymous_judge_browser": {
+    "site": "https://inheria.onrender.com",
+    "verified_at": "2026-11-13T20:28:16.582Z",
+    "layouts": [
+      {
+        "theme": "dark",
+        "width": 390,
+        "overflow": false,
+        "axe_violations": []
+      },
+      {
+        "theme": "dark",
+        "width": 768,
+        "overflow": false,
+        "axe_violations": []
+      },
+      {
+        "theme": "dark",
+        "width": 1440,
+        "overflow": false,
+        "axe_violations": []
+      },
+      {
+        "theme": "light",
+        "width": 390,
+        "overflow": false,
+        "axe_violations": []
+      },
+      {
+        "theme": "light",
+        "width": 768,
+        "overflow": false,
+        "axe_violations": []
+      },
+      {
+        "theme": "light",
+        "width": 1440,
+        "overflow": false,
+        "axe_violations": []
+      }
+    ],
+    "direct_entry": true,
+    "starting_role": "Rudransh",
+    "refresh_persistence": true,
+    "coordinator_sources": 13,
+    "incoming_sources": 12,
+    "restricted_evidence_denied": true,
+    "visitor_isolation": true,
+    "runtime_errors": [],
+    "success": true
+  },
+  "earlier_anonymous_browser_attempt": {
+    "success": false,
+    "reason": "Fresh second visitor navigation exceeded networkidle 30-second wait; initial entry, roles, refresh and six layouts passed. Reran with DOM-loaded navigation and explicit UI checks; visitor isolation passed. No app access/rate controls changed."
+  }
+}
