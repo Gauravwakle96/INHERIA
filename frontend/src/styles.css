@@ -205,7 +205,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { outline-offs
 .synthetic-tag > span { background: light-dark(var(--light-violet-text), #b1a0d0); width: 4px; height: 4px; border-radius: 50%; }
 .topbar-avatar { width: 28px; height: 28px; font-size: 9px; }
 .content { padding: 31px 30px 36px; width: 100%; max-width: 1660px; margin: 0 auto; flex: 1; animation: fade-in .18s ease-out; }
-.continuity-completion { border: 1px solid var(--line); border-left: 4px solid var(--cyan); background: var(--surface); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
+.continuity-completion { border: 1px solid var(--line); background: var(--surface); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
 .completion-heading { display: flex; gap: 10px; align-items: center; flex: 1 1 280px; min-width: 0; }
 .completion-heading > svg { color: var(--cyan); flex-shrink: 0; }
 .completion-heading strong { font-size: 13px; }
