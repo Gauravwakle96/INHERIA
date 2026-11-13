@@ -4,6 +4,16 @@ Historical and current verification results are separated below. Results apply t
 
 ## Four-workstream completion checks — 14 November 2026 IST
 
+Chat model selection follow-up: an unconfigured/disabled workspace now shows
+**AI not connected** instead of a disabled GPT option. Settings loading/failure
+blocks premature chat/settings actions; failure supports retry. Demo setup copy
+explains that owner organisation keys are not inherited. Saving the enabled
+Bynara response synchronously updates the selector to `agnes-2.5-flash`; returning
+focus also refreshes organisation settings. Three dedicated Playwright cases
+passed loading/failure/retry, save/refresh/request-model/disconnect and mobile
+demo isolation/axe. Frontend lint/typecheck/build passed; no backend or stored
+credentials changed. Actual provider availability remains a separate limitation.
+
 - Final full backend suite: **198 passed**, **90%** overall line coverage,
   including the interview lineage migration and transitive parent change tests.
   One existing FastAPI/Starlette TestClient deprecation warning remains.

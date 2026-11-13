@@ -700,6 +700,9 @@ input[type=checkbox] { accent-color: var(--cyan); width: 16px; height: 16px; fle
 .chat-controls fieldset button { background: transparent; color: var(--muted); border: 0; border-radius: 5px; padding: 9px 12px; font-size: 11px; }
 .chat-controls fieldset button.selected { background: var(--surface-hover); color: var(--text); }
 .chat-model select { font-size: 11px; padding: 9px 28px 9px 10px; min-height: 38px; }
+.chat-ai-setup { margin: 14px 0; }
+.chat-ai-setup p { margin: 7px 0 0; }
+.chat-ai-setup > .button { margin-top: 10px; }
 .chat-composer { margin-top: auto; padding-top: 12px; }
 .chat-composer .successor-input { margin-top: 0; }
 .chat-composer .successor-input textarea { font-size: 13px; }

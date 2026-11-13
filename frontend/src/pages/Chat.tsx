@@ -27,7 +27,7 @@ export function SuccessorPage() {
   const base = projectPath(project.id, '');
   const queryBase = ['project', project.id, 'chat', user.id];
   const list = useQuery({ queryKey: [...queryBase, 'list'], queryFn: () => api<Summary[]>(base + '/chat/conversations') });
-  const config = useQuery({ queryKey: [...queryBase, 'settings'], queryFn: () => api<AISettings>(base + '/ai-settings') });
+  const config = useQuery({ queryKey: [...queryBase, 'settings'], queryFn: () => api<AISettings>(base + '/ai-settings'), staleTime: 0, refetchOnWindowFocus: true });
   const options = useQuery({ queryKey: [...queryBase, 'actions'], queryFn: () => api<Option[]>(base + '/chat/actions') });
   const [selected, setSelected] = useState<string | null>(null);
   const active = selected || list.data?.[0]?.id;
@@ -44,9 +44,9 @@ export function SuccessorPage() {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [actionBusy, setActionBusy] = useState<string | null>(null);
   const end = useRef<HTMLDivElement>(null);
-  const availableModels = config.data?.models || models;
-  const currentModel = availableModels.includes(model) ? model : config.data?.model || availableModels[0];
-  const processing = busy || creating || !!actionBusy || !!detail.data?.turns.some(t => t.status === 'running');
+  const availableModels = config.data?.enabled ? config.data.models : [];
+  const currentModel = availableModels.includes(model) ? model : availableModels.includes(config.data?.model || '') ? config.data!.model : availableModels[0];
+  const processing = busy || creating || config.isPending || !!config.error || !!actionBusy || !!detail.data?.turns.some(t => t.status === 'running');
   useEffect(() => { end.current?.scrollIntoView({ block: 'nearest', behavior: 'instant' }); }, [detail.data?.turns.length, pendingQuestion]);
 
   function store(value: Conversation) {
@@ -102,7 +102,7 @@ export function SuccessorPage() {
   const starters = ['Which responsibilities have no backup owner?', 'Which incidents remain unresolved?', 'How is this service deployed?', 'Investigate this project for missing knowledge'];
 
   return <>
-    <PageHeader eyebrow="Continuity · Digital successor" title="Ask the project’s memory" description="Discuss your project, inspect its evidence and move supported work forward." action={user.role === 'admin' && <Button variant="secondary" onClick={() => setSettingsOpen(true)}><Settings2 size={16} />AI settings</Button>} />
+    <PageHeader eyebrow="Continuity · Digital successor" title="Ask the project’s memory" description="Discuss your project, inspect its evidence and move supported work forward." action={user.role === 'admin' && <Button variant="secondary" disabled={config.isPending || !!config.error} onClick={() => setSettingsOpen(true)}><Settings2 size={16} />AI settings</Button>} />
     <div className="chat-layout">
       <Panel className="chat-history" title="Your conversations" action={<Button variant="ghost" aria-label="New conversation" disabled={processing} onClick={() => void create()}><Plus size={17} /></Button>}>
         <p className="chat-history-note">Private to your account in {project.name}.</p>
@@ -129,17 +129,18 @@ export function SuccessorPage() {
         {pendingQuestion && <div className="chat-pending"><div className="user-question"><MessageSquare size={17} /><p>{pendingQuestion}</p></div><Loading label={config.data?.enabled ? 'Reviewing context and waiting for ' + providerLabel(config.data.base_url) + '… This can take up to two minutes.' : 'Retrieving authorised evidence…'} /></div>}
         <div ref={end} />
         {error && <ErrorState error={error} retry={() => void ask(message)} />}
-        <form className="chat-composer" onSubmit={submit}><div className="chat-controls"><fieldset><legend className="sr-only">Reasoning effort</legend><button type="button" aria-pressed={effort === 'low'} className={effort === 'low' ? 'selected' : ''} onClick={() => setEffort('low')} disabled={processing}>Low effort</button><button type="button" aria-pressed={effort === 'high'} className={effort === 'high' ? 'selected' : ''} onClick={() => setEffort('high')} disabled={processing}>High effort</button></fieldset><label className="chat-model"><span className="sr-only">Chat model</span><select value={currentModel} onChange={e => setModel(e.target.value)} disabled={processing || !config.data?.enabled}>{availableModels.map(value => <option key={value}>{value}</option>)}</select></label></div><div className="successor-input"><label className="sr-only" htmlFor="successor-question">Ask a project question</label><textarea id="successor-question" rows={2} value={message} onChange={event => setMessage(event.target.value)} maxLength={4000} placeholder="Ask a question, describe a problem, or request a project action…" required disabled={processing} onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); void ask(message); } }} /><Button type="submit" busy={busy} disabled={processing || message.trim().length < 3} aria-label="Send question"><Send size={18} /></Button></div><div className="chat-composer-hint">{effort === 'low' ? 'Focused reply with a smaller evidence budget.' : 'More evidence, conversation context and a larger answer budget.'} Enter to send · Shift+Enter for a new line.</div></form>
+        {config.isPending ? <Loading label="Checking this workspace’s AI settings…" /> : config.error ? <ErrorState error={config.error} retry={() => void config.refetch()} /> : !config.data.enabled && <div className="chat-ai-setup" role="region" aria-label="AI connection status"><Notice><strong>Conversational AI is not connected in this workspace.</strong><p>{project.is_demo ? 'This judge workspace is separate from your personal account and does not inherit its API key. Verified retrieval and project actions remain available.' : 'Verified retrieval and project actions remain available. Connect and enable a provider to use conversational model answers.'}</p><p>{user.role === 'admin' ? 'To use Agnes, choose Bynara in AI settings, enter a key authorised for this organisation, enable external AI processing and save.' : 'Ask your organisation administrator to connect and enable Bynara to use Agnes.'}</p></Notice>{user.role === 'admin' && <Button type="button" variant="secondary" onClick={() => setSettingsOpen(true)}><Settings2 size={16} />Connect AI provider</Button>}</div>}
+        <form className="chat-composer" onSubmit={submit}><div className="chat-controls"><fieldset><legend className="sr-only">Reasoning effort</legend><button type="button" aria-pressed={effort === 'low'} className={effort === 'low' ? 'selected' : ''} onClick={() => setEffort('low')} disabled={processing}>Low effort</button><button type="button" aria-pressed={effort === 'high'} className={effort === 'high' ? 'selected' : ''} onClick={() => setEffort('high')} disabled={processing}>High effort</button></fieldset><label className="chat-model"><span className="sr-only">Chat model</span><select value={currentModel || ""} onChange={e => setModel(e.target.value)} disabled={processing || !config.data?.enabled} aria-describedby="chat-model-status">{!availableModels.length && <option value="">{config.isPending ? "Loading AI settings…" : config.error ? "AI settings unavailable" : "AI not connected"}</option>}{availableModels.map(value => <option key={value}>{value}</option>)}</select><span id="chat-model-status" className="sr-only">{config.data?.enabled ? providerLabel(config.data.base_url) + " model for this organisation" : "Connect and enable a provider in AI settings to choose a model."}</span></label></div><div className="successor-input"><label className="sr-only" htmlFor="successor-question">Ask a project question</label><textarea id="successor-question" rows={2} value={message} onChange={event => setMessage(event.target.value)} maxLength={4000} placeholder="Ask a question, describe a problem, or request a project action…" required disabled={processing} onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); void ask(message); } }} /><Button type="submit" busy={busy} disabled={processing || message.trim().length < 3} aria-label="Send question"><Send size={18} /></Button></div><div className="chat-composer-hint">{effort === 'low' ? 'Focused reply with a smaller evidence budget.' : 'More evidence, conversation context and a larger answer budget.'} Enter to send · Shift+Enter for a new line.</div></form>
         <div className="successor-footnote"><ShieldCheck size={13} />Project facts need accessible evidence. General guidance is labelled. Confirm actions after review.</div>
       </Panel>
     </div>
-    {settingsOpen && <AISettingsDialog open close={() => setSettingsOpen(false)} value={config.data} base={base} refresh={() => { void config.refetch(); }} />}
+    {settingsOpen && <AISettingsDialog open close={() => setSettingsOpen(false)} value={config.data} base={base} refresh={value => { client.setQueryData([...queryBase, 'settings'], value); setModel(value.model); }} />}
     <Dialog open={actionsOpen} title="Choose a project action" onClose={() => setActionsOpen(false)}><Notice>Select an action to see its preview. The assistant cannot approve claims, accept ownership or run production operations.</Notice>{options.error && <ErrorState error={options.error} />}{options.data?.length ? <div className="chat-action-options">{options.data.map(option => <Button key={option.id} variant="secondary" onClick={() => void preview(option)} busy={actionBusy === option.id} disabled={!!actionBusy}>{option.title}<ArrowRight size={15} /></Button>)}</div> : <Empty title="No actions available" description="Your role or the current project state has no supported actions. You can still ask questions." />}</Dialog>
     <Dialog open={deleteOpen} title="Delete this conversation?" onClose={() => setDeleteOpen(false)}><p>This removes your saved messages and action previews. It does not undo project actions that were already confirmed.</p><Button variant="danger" onClick={() => void remove()} busy={busy}>Delete conversation</Button></Dialog>
   </>;
 }
 
-function AISettingsDialog({ open, close, value, base, refresh }: { open: boolean; close: () => void; value?: AISettings; base: string; refresh: () => void }) {
+function AISettingsDialog({ open, close, value, base, refresh }: { open: boolean; close: () => void; value?: AISettings; base: string; refresh: (value: AISettings) => void }) {
   const [endpoint, setEndpoint] = useState(value?.base_url || 'https://agentrouter.org/v1');
   const [defaultModel, setDefaultModel] = useState(value?.model || 'gpt-6.1-sol');
   const [protocol, setProtocol] = useState(value?.protocol || 'responses');
@@ -150,14 +151,14 @@ function AISettingsDialog({ open, close, value, base, refresh }: { open: boolean
     event.preventDefault(); const form = event.currentTarget; const fields = new FormData(form);
     setBusy(true); setError(null); setResult('');
     try {
-      await api(base + '/ai-settings', { method: 'PUT', body: JSON.stringify({ base_url: fields.get('base_url'), model: fields.get('model'), protocol: fields.get('protocol'), enabled: fields.get('enabled') === 'on', api_key: String(fields.get('api_key') || '') || undefined }) });
+      const saved = await api<AISettings>(base + '/ai-settings', { method: 'PUT', body: JSON.stringify({ base_url: fields.get('base_url'), model: fields.get('model'), protocol: fields.get('protocol'), enabled: fields.get('enabled') === 'on', api_key: String(fields.get('api_key') || '') || undefined }) });
       (form.elements.namedItem('api_key') as HTMLInputElement).value = '';
-      refresh(); setResult('Settings saved. Use Test connection to check the provider.');
+      refresh(saved); setResult(saved.enabled ? 'Settings saved. ' + saved.model + ' is selected for this workspace. Use Test connection to check the provider.' : 'Settings saved with AI disabled. Enable external AI processing and save to activate conversational answers.');
     } catch (e) { setError(e as Error); }
     finally { setBusy(false); }
   }
   async function test() { setBusy(true); setError(null); setResult(''); try { const r = await post<{ model: string }>(base + '/ai-settings/test'); setResult('Connection successful for ' + r.model + '.'); } catch (e) { setError(e as Error); } finally { setBusy(false); } }
-  async function disconnect() { setBusy(true); setError(null); try { await api(base + '/ai-settings', { method: 'DELETE' }); refresh(); setResult('Provider disconnected and saved key removed.'); } catch (e) { setError(e as Error); } finally { setBusy(false); } }
+  async function disconnect() { setBusy(true); setError(null); try { await api(base + '/ai-settings', { method: 'DELETE' }); refresh(await api<AISettings>(base + '/ai-settings')); setResult('Provider disconnected and saved key removed.'); } catch (e) { setError(e as Error); } finally { setBusy(false); } }
   return <Dialog open={open} title="Organisation AI settings" onClose={() => { if (!busy) close(); }}><p>These settings apply to your organisation. Enabling AI sends authorised context and recent conversation messages to {providerLabel(endpoint)}. Review its data policies before using confidential sources.</p><form className="form-stack" onSubmit={save}>
     <label>API endpoint<select name="base_url" value={endpoint} disabled={busy} onChange={event => { const next = event.target.value; setEndpoint(next); if (next !== endpoint) { setDefaultModel(modelOptions(next)[0]); setProtocol(next === bynaraBase ? 'chat_completions' : 'responses'); } }}><option value="https://agentrouter.org/v1">agentrouter.org</option><option value="https://ps.air-outer.com/v1">ps.air-outer.com</option><option value={bynaraBase}>Bynara · router.bynara.id</option></select></label>
     <label>Default model<select name="model" value={defaultModel} disabled={busy} onChange={event => setDefaultModel(event.target.value)}>{modelOptions(endpoint, endpoint === value?.base_url ? value.model : '').map(m => <option key={m}>{m}</option>)}</select></label>
