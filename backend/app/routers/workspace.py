@@ -299,6 +299,13 @@ def overview(project_id: str, db: Db, user: User):
     }
 
 
+@router.get("/projects/{project_id}/continuity-summary", response_model=dict)
+def project_continuity_summary(project_id: str, db: Db, user: User):
+    from app.continuity_summary import continuity_summary
+
+    return continuity_summary(db, user, project_id)
+
+
 @router.get("/projects/{project_id}/claims", response_model=list[s.Record])
 def claims(project_id: str, db: Db, user: User, kind: str = "", status: str = ""):
     return [
@@ -787,7 +794,7 @@ def transitions(project_id: str, db: Db, user: User):
         for t in db.scalars(
             select(m.Transition)
             .where(m.Transition.project_id == project_id)
-            .order_by(m.Transition.created_at.desc())
+            .order_by(m.Transition.updated_at.desc(), m.Transition.created_at.desc())
         )
     ]
 

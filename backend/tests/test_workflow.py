@@ -14,6 +14,9 @@ def test_complete_connect_to_validate_requires_each_human_gate(workspace):
     client, factory, project_id = workspace
     login(client)
     base = f"/api/projects/{project_id}"
+    initial_summary = client.get(base + "/continuity-summary").json()
+    assert initial_summary["completion"] is None
+    assert initial_summary["completed_handovers"] == 0
     source_count = len(client.get(base + "/sources").json())
     assert source_count == 125
     claims = client.get(base + "/claims").json()
@@ -118,6 +121,23 @@ def test_complete_connect_to_validate_requires_each_human_gate(workspace):
         )
     assert client.get(path + "/readiness").json()["ready"]
     assert post_ok(client, path + "/close")["status"] == "closed"
+    summary = client.get(base + "/continuity-summary").json()
+    assert summary["completed_handovers"] == 1
+    assert summary["completion"]["current"]
+    assert summary["completion"]["accepted"] == len(obligations)
+    assert summary["completion"]["validated"] == len(transition["exercises"])
+    contributions = {p["id"]: p for p in summary["contributors"]}
+    assert contributions[departing["id"]]["responsibilities_transferred"] == len(obligations)
+    assert contributions[successor["id"]]["responsibilities_owned"] == len(obligations)
+    assert contributions[successor["id"]]["responsibilities_accepted"] == len(obligations)
+    assert contributions[successor["id"]]["walkthroughs_submitted"] == len(transition["exercises"])
+    assert "password" not in str(summary)
+    assert client.get("/api/projects/nonexistent/continuity-summary").status_code in {403, 404}
+    login(client, "Jordan Lee")
+    incoming_summary = client.get(base + "/continuity-summary").json()
+    assert incoming_summary["completion"]["id"] == transition["id"]
+    assert incoming_summary["completion"]["current"]
+    login(client, "Priya Shah")
     with factory() as db:
         actions = set(db.scalars(select(m.Audit.action).where(m.Audit.project_id == project_id)))
         assert {
@@ -135,6 +155,7 @@ def test_complete_connect_to_validate_requires_each_human_gate(workspace):
         removed_source_id = obligations[0]["evidence"][0]["source_id"]
         ownership_source_id = db.get(m.Claim, obligations[0]["id"]).data["ownership_provenance"]
     assert client.delete(base + "/sources/" + removed_source_id).status_code == 200
+    assert client.get(base + "/continuity-summary").json()["completion"] is None
     with factory() as db:
         assert not list(db.scalars(select(m.Chunk).where(m.Chunk.source_id == ownership_source_id)))
         assert db.get(m.Source, ownership_source_id).status == "revoked"

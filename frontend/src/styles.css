@@ -205,6 +205,25 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { outline-offs
 .synthetic-tag > span { background: light-dark(var(--light-violet-text), #b1a0d0); width: 4px; height: 4px; border-radius: 50%; }
 .topbar-avatar { width: 28px; height: 28px; font-size: 9px; }
 .content { padding: 31px 30px 36px; width: 100%; max-width: 1660px; margin: 0 auto; flex: 1; animation: fade-in .18s ease-out; }
+.continuity-completion { border: 1px solid var(--line); border-left: 4px solid var(--cyan); background: var(--surface); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
+.completion-heading { display: flex; gap: 10px; align-items: center; flex: 1 1 280px; min-width: 0; }
+.completion-heading > svg { color: var(--cyan); flex-shrink: 0; }
+.completion-heading strong { font-size: 13px; }
+.completion-heading p { font-size: 10px; color: var(--muted); margin-top: 5px; }
+.completion-counts { display: flex; flex-wrap: wrap; gap: 12px 20px; color: var(--muted); font-size: 10px; }
+.completion-counts strong { color: var(--text); font-size: 15px; margin-right: 4px; }
+.completion-contributors { flex-basis: 100%; font-size: 11px; }
+.completion-contributors summary { cursor: pointer; color: var(--cyan); }
+.completion-team { list-style: none; padding: 0; margin: 12px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr)); gap: 12px; }
+.completion-team > li { display: grid; align-content: start; gap: 5px; color: var(--muted); }
+.completion-team > li > strong { color: var(--text); }
+.completion-contributors > p { color: var(--muted); line-height: 1.6; }
+.contribution-details { list-style: none; margin: 0; padding: 0; font-size: 11px; color: var(--muted); line-height: 1.6; }
+.contribution-details li + li { margin-top: 3px; }
+.person-contributions { border-top: 1px solid var(--line); margin-top: 14px; padding-top: 14px; }
+.person-contributions > strong { display: block; font-size: 11px; margin-bottom: 7px; }
+.person-contributions { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line-subtle); font-size: 11px; color: var(--muted); }
+.person-contributions p { margin-top: 6px; }
 .workspace-footer { margin-top: auto; padding: 18px 30px; border-top: 1px solid var(--line-subtle); color: light-dark(var(--light-info-text), #77899f); font-size: 9px; display: flex; justify-content: space-between; gap: 15px; }
 .footer-dot { padding: 0 7px; color: light-dark(var(--light-info-text), #8294ad); }
 .page-heading { display: flex; align-items: center; justify-content: space-between; gap: 22px; margin-bottom: 27px; }

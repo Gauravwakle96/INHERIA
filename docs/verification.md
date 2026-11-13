@@ -2,6 +2,30 @@
 
 Historical and current verification results are separated below. Results apply to the implemented MVP in this workspace; they do not certify an enterprise deployment.
 
+## Workspace completion verification — 13 November 2026 IST
+
+- Full backend suite: **169 passed**, **90%** overall line coverage; the new
+  completion module has 100% line coverage. Tests cover an incomplete project,
+  closure, successor visibility, restricted contribution counts, cross-tenant
+  denial and source deletion. One existing TestClient deprecation warning remains.
+- Backend Ruff lint/format, frontend lint/typecheck/production build passed.
+  Locked-environment pip-audit and npm audit found no known vulnerabilities.
+  Changed-file secret scan and diff whitespace checks passed.
+- Expanded real Playwright handover journey: **1 passed**. It completes review,
+  approval, ownership acceptance, evidence walkthroughs and closure, then checks
+  the completion banner across twelve workspace routes, the Savinay contribution
+  card, exact transition navigation, day/night desktop/mobile layout and axe.
+  No runtime errors, horizontal overflow or axe violations were observed in the
+  tested states. Full historical browser counts below were not rerun here.
+- Initial browser rehearsals exposed shared-IP rate limiting during rapid page
+  reloads and a test that accidentally collapsed an already-open details panel.
+  The final journey uses normal SPA navigation and explicit panel state; existing
+  rate limits were preserved. A source-deletion completion edge case was fixed
+  and is covered by the full backend suite.
+
+Live acceptance is recorded separately after deployment. See
+[workspace completion](workspace-completion.md) for the data and scope rules.
+
 ## Round 3 local verification — 11 November 2026 IST
 
 These results supersede earlier implementation counts below. The isolated QA

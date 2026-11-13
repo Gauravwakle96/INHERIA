@@ -36,7 +36,7 @@ for (const theme of ['dark', 'light'] as const) {
 }
 
 test('judge can reconstruct, inspect evidence, approve, transfer and validate through the UI', async ({ page }) => {
-  test.setTimeout(240_000);
+  test.setTimeout(360_000);
   await page.waitForTimeout(60_000); // Respect the real shared-IP request window across the full suite.
   const errors: string[] = [];
   page.on('pageerror', e => errors.push(e.message));
@@ -113,6 +113,33 @@ test('judge can reconstruct, inspect evidence, approve, transfer and validate th
   await expect(check).not.toBeVisible();
   await page.getByRole('button', { name: 'Close transition' }).click();
   await expect(page.locator('.handover-overview').getByText('Closed', { exact: true })).toBeVisible();
+  const summary = await (await page.request.get(`/api/projects/${pid}/continuity-summary`)).json();
+  expect(summary.completed_handovers).toBe(1);
+  expect(summary.completion.current).toBe(true);
+  const completed = page.getByRole('region', { name: 'Completed knowledge handover' });
+  await page.waitForTimeout(30_000); // Keep the expanded journey within the unchanged shared-IP limiter.
+  for (const path of ['/', '/sources', '/memory', '/decisions', '/investigation', '/graph', '/risk', '/team', '/handover', '/validation', '/successor', '/governance']) {
+    await page.locator(`.nav-link[href="${path}"]`).click();
+    await expect(completed).toContainText('Knowledge handover completed');
+    await expect(completed).toContainText('3/3');
+    await expect(completed).toContainText('Gaurav → Savinay');
+  }
+  await page.locator('.nav-link[href="/team"]').click();
+  const savinay = page.locator('.person-panel').filter({ has: page.getByRole('heading', { name: 'Savinay', exact: true }) });
+  await expect(savinay).toContainText('3 responsibilities accepted');
+  await expect(savinay).toContainText(`${transition.exercises.length} walkthroughs submitted`);
+  for (const [theme, width] of [['dark', 1440], ['light', 390]] as const) {
+    await page.setViewportSize({ width, height: 900 });
+    if (theme === 'light') await page.getByRole('button', { name: 'Switch to day mode' }).click();
+    if (!await completed.locator('.completion-team').isVisible()) await completed.getByText('See team contributions and scope', { exact: true }).click();
+    await expect(completed.locator('.completion-team')).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    const result = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
+    expect(result.violations.map(v => ({ id: v.id, nodes: v.nodes.map(n => n.failureSummary) }))).toEqual([]);
+    await completed.getByRole('link', { name: 'Inspect completed handover' }).click();
+    await expect(page).toHaveURL(new RegExp(`/handover\\?transition=${summary.completion.id}`));
+    await expect(page.locator('.handover-overview')).toContainText('Closed');
+  }
   expect(errors).toEqual([]);
 });
 

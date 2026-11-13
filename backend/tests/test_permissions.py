@@ -34,7 +34,15 @@ def test_restricted_source_never_enters_other_users_claims_graph_answers_or_hand
         == 200
     )
     login(client, "Jordan Lee")
-    for endpoint in ["/claims", "/graph", "/investigations", "/gaps", "/overview", "/transitions"]:
+    for endpoint in [
+        "/claims",
+        "/graph",
+        "/investigations",
+        "/gaps",
+        "/overview",
+        "/transitions",
+        "/continuity-summary",
+    ]:
         response = client.get(base + endpoint)
         assert response.status_code == 200
         assert "Restricted payment signing duty" not in response.text
@@ -61,9 +69,40 @@ def test_cross_tenant_project_and_source_access_is_denied(workspace):
     )
     assert response.status_code == 201
     client.headers["X-CSRF-Token"] = response.json()["csrf_token"]
-    for endpoint in ["/claims", "/graph", "/overview", "/sources", "/transitions", "/evidence/" + source_id]:
+    for endpoint in [
+        "/claims",
+        "/graph",
+        "/overview",
+        "/sources",
+        "/transitions",
+        "/evidence/" + source_id,
+        "/continuity-summary",
+    ]:
         assert client.get(f"/api/projects/{project_id}" + endpoint).status_code == 404
     assert client.post(f"/api/projects/{project_id}/investigations", json={}).status_code == 404
+
+
+def test_contribution_counts_do_not_reveal_restricted_review_activity(workspace):
+    client, factory, project_id = workspace
+    manager = login(client)
+    base = f"/api/projects/{project_id}"
+    with factory() as db:
+        actor = db.get(m.User, manager["id"])
+        claim = current_claims(db, actor, project_id)[0]
+        claim.status = "verified"
+        claim.verified_by = actor.id
+        refs = list(db.scalars(select(m.Evidence).where(m.Evidence.claim_id == claim.id)))
+        for ref in refs:
+            db.get(m.Source, ref.source_id).acl = [actor.id]
+        db.commit()
+    admin_summary = client.get(base + "/continuity-summary").json()
+    admin_contribution = next(p for p in admin_summary["contributors"] if p["id"] == manager["id"])
+    assert admin_contribution["knowledge_reviewed"] == 1
+    login(client, "Jordan Lee")
+    incoming_summary = client.get(base + "/continuity-summary").json()
+    hidden_contribution = next(p for p in incoming_summary["contributors"] if p["id"] == manager["id"])
+    assert hidden_contribution["knowledge_reviewed"] == 0
+    assert incoming_summary["completion"] is None
 
 
 def test_revocation_invalidates_verified_answers_and_deleted_text_is_erased(workspace):
