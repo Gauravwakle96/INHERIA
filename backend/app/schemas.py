@@ -68,6 +68,8 @@ class Submission(StrictModel):
     answer: str = Field(min_length=30, max_length=6000)
     evidence_ids: list[str] = Field(min_length=1, max_length=30)
     escalation: str = Field(min_length=10, max_length=2000)
+    validation_kind: Literal["knowledge_walkthrough", "staging_observation"] = "knowledge_walkthrough"
+    staging_evidence_ids: list[str] = Field(default_factory=list, max_length=30)
 
 
 class Assessment(StrictModel):

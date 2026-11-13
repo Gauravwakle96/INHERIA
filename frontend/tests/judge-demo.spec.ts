@@ -146,7 +146,7 @@ test('judge can reconstruct, inspect evidence, approve, transfer and validate th
     await card.getByRole('button', { name: 'Open practical task' }).click();
     const dialog = page.getByRole('dialog', { name: exercise.title, exact: true });
     await dialog.getByLabel('Your practical explanation').fill('I inspected the procedure, identified approval and schema constraints, and explained staging-only validation with health checks. This is an evidence walkthrough, not an actual cloud execution.');
-    for (const checkbox of await dialog.getByRole('checkbox').all()) await checkbox.check();
+    for (const checkbox of await dialog.getByRole('group', { name: 'Supporting evidence references' }).getByRole('checkbox').all()) await checkbox.check();
     await dialog.getByLabel('When and to whom would you escalate?').fill('Escalate missing restore evidence or schema uncertainty to Rudransh and the database specialist before execution.');
     await dialog.getByRole('button', { name: 'Submit for supervisor review' }).click();
     await expect(dialog).not.toBeVisible();

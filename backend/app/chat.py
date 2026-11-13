@@ -14,7 +14,13 @@ from app import models as m
 from app.chat_provider import BUDGETS, ProviderError, call_provider, provider_models, provider_name
 from app.config import settings
 from app.ingestion import privacy_filter
-from app.intelligence import citations, current_claims, successor_answer, visible_findings
+from app.intelligence import (
+    citations,
+    current_claims,
+    decision_conflicted,
+    successor_answer,
+    visible_findings,
+)
 from app.security import audit, project_access, visible_sources
 from app.transfer import claim_signature
 
@@ -318,6 +324,11 @@ def prepare_context(db, user, project_id, message, effort):
                 "source": ref["source_name"],
                 "locator": ref["locator"],
                 "version": ref["source_version"],
+                "source_time": ref["source_time"].isoformat(),
+                "freshness": "review_required"
+                if ref["source_time"] < m.utcnow() - timedelta(days=180)
+                else "within_review_interval",
+                "verification": claim.status,
             }
             size = len(str(entry))
             if len(evidence) >= budget["evidence"] or chars + size > budget["chars"]:
@@ -337,8 +348,21 @@ def prepare_context(db, user, project_id, message, effort):
             source = db.get(m.Source, source_id)
             if source:
                 provenance["sources"][source_id] = source.version
+    uncertainty = [
+        {
+            "claim": safe_input(claim.title),
+            "reason": "Conflicting decision sources require human resolution. No verified answer is available.",
+        }
+        for claim in current_claims(db, user, project_id)
+        if decision_conflicted(db, claim)
+    ][:20]
     return (
-        {"evidence": evidence, "status": status_context(db, user, project_id), "available_actions": options},
+        {
+            "evidence": evidence,
+            "uncertainty": uncertainty,
+            "status": status_context(db, user, project_id),
+            "available_actions": options,
+        },
         provenance,
         refs,
         options,

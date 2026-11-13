@@ -3,20 +3,12 @@
 from sqlalchemy import delete, select
 
 from app import models as m
+from app.security import source_descendant_ids
 
 
 def purge_source_derivatives(db, source):
-    related_ids = {source.id}
+    related_ids = source_descendant_ids(db, source)
     descendants = list(db.scalars(select(m.Source).where(m.Source.project_id == source.project_id)))
-    changed = True
-    while changed:
-        changed = False
-        for child in descendants:
-            if child.id not in related_ids and related_ids.intersection(
-                child.source_metadata.get("lineage_source_ids", [])
-            ):
-                related_ids.add(child.id)
-                changed = True
     claim_ids = set(db.scalars(select(m.Evidence.claim_id).where(m.Evidence.source_id.in_(related_ids))))
     affected_resources = set(claim_ids) | related_ids
     # Conversation follow-ups inherit cumulative provenance so source deletion
@@ -100,6 +92,7 @@ def purge_source_derivatives(db, source):
     for exercise in db.scalars(select(m.Exercise).where(m.Exercise.project_id == source.project_id)):
         if (
             related_ids.intersection(exercise.expected_source_ids)
+            or related_ids.intersection(exercise.assessment.get("staging_source_versions", {}))
             or exercise.assessment.get("claim_id") in claim_ids
         ):
             affected_resources.add(exercise.id)

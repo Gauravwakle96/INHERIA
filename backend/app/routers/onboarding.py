@@ -52,6 +52,112 @@ class AccessDecision(BaseModel):
     note: str = Field(min_length=10, max_length=2000)
 
 
+class RevokeMemberBody(BaseModel):
+    note: str = Field(min_length=10, max_length=2000)
+
+
+@router.post("/projects/{project_id}/members/{member_id}/revoke")
+def revoke_member(project_id: str, member_id: str, body: RevokeMemberBody, db: Db, user: Actor):
+    project_access(db, user, project_id, write=True)
+    require_role(user, {"admin"})
+    clean(body.note)
+    # Serialize membership changes with invitation acceptance on PostgreSQL.
+    db.scalar(select(m.Project).where(m.Project.id == project_id).with_for_update())
+    project_access(db, user, project_id, write=True)
+    if member_id == user.id:
+        raise HTTPException(409, "Ask another administrator to revoke your membership.")
+    person = db.get(m.User, member_id)
+    member = db.scalar(
+        select(m.Membership).where(m.Membership.project_id == project_id, m.Membership.user_id == member_id)
+    )
+    if not person or person.org_id != user.org_id or not member:
+        raise HTTPException(404, "Project member unavailable.")
+    for invitation in db.scalars(
+        select(m.Invitation).where(
+            m.Invitation.project_id == project_id,
+            m.Invitation.email == person.email,
+            m.Invitation.status == "pending",
+        )
+    ):
+        invitation.status = "revoked"
+    for request in db.scalars(
+        select(m.AccessRequest).where(
+            m.AccessRequest.project_id == project_id,
+            m.AccessRequest.requested_by == member_id,
+            m.AccessRequest.status == "pending",
+        )
+    ):
+        request.status, request.reviewed_by = "revoked", user.id
+        request.note = "Project membership revoked. A new invitation and access review are required."
+    for source in db.scalars(select(m.Source).where(m.Source.project_id == project_id)):
+        if member_id in source.acl:
+            source.acl = [reader for reader in source.acl if reader != member_id]
+            if not source.acl:
+                # An empty ACL means all members: never widen a last-reader source.
+                source.acl = [member_id]
+                source.status = "revoked"
+                from app.ingestion import invalidate_source
+
+                invalidate_source(db, source)
+            audit(db, user, project_id, "source.reader_revoked", "source", source.id, {"user_id": member_id})
+    db.delete(member)
+    audit(db, user, project_id, "membership.revoked", "user", member_id, {})
+    db.commit()
+    return {
+        "status": "revoked",
+        "user_id": member_id,
+        "scope": "Project access removed. Historical contributions and other project memberships remain.",
+    }
+
+
+@router.get("/projects/{project_id}/access-readiness")
+def access_readiness(project_id: str, db: Db, user: Actor):
+    project_access(db, user, project_id)
+    from app.intelligence import current_claims
+
+    reviewer = user.role in {"admin", "manager", "lead"}
+    visible = {c.id for c in current_claims(db, user, project_id, verified=True)}
+    results = []
+    for transition in db.scalars(
+        select(m.Transition)
+        .where(m.Transition.project_id == project_id)
+        .order_by(m.Transition.updated_at.desc())
+        .limit(50)
+    ):
+        if not reviewer and transition.successor_id != user.id:
+            continue
+        person = db.get(m.User, transition.successor_id)
+        member = db.scalar(
+            select(m.Membership.id).where(
+                m.Membership.project_id == project_id, m.Membership.user_id == transition.successor_id
+            )
+        )
+        active = bool(person and person.active and member)
+        allowed = {c.id for c in current_claims(db, person, project_id, verified=True)} if active else set()
+        snapshot = (transition.report or {}).get("knowledge", [])
+        # Reveal descriptions only when the requesting actor can read that claim.
+        missing = [item for item in snapshot if item["id"] not in allowed]
+        results.append(
+            {
+                "transition_id": transition.id,
+                "title": transition.title,
+                "successor_name": person.name if person and member else "Incoming participant unavailable",
+                "membership_active": active,
+                "required_items": len(snapshot),
+                "accessible_items": len(snapshot) - len(missing),
+                "missing_items": len(missing),
+                "ready": active and bool(snapshot) and not missing,
+                "missing_titles": [item["title"] for item in missing if item["id"] in visible],
+                "next_step": "Generate a reviewed handover first."
+                if not snapshot
+                else "Request authorised knowledge access and revalidation."
+                if missing or not active
+                else "Knowledge access is ready; acceptance and practical review are separate checks.",
+            }
+        )
+    return results
+
+
 def clean(value):
     from app.routers.workspace import safe_text
 
@@ -161,6 +267,7 @@ def accept(body: JoinBody, request: Request, response: Response, db: Db):
         raise HTTPException(
             404, "Invitation expired, revoked or already used. Ask your administrator for a new link."
         )
+    db.scalar(select(m.Project).where(m.Project.id == item.project_id).with_for_update())
     consumed = db.execute(
         update(m.Invitation)
         .where(
@@ -254,6 +361,8 @@ def access_requests(project_id: str, db: Db, user: Actor):
 
 @router.post("/projects/{project_id}/access-requests/{request_id}/review")
 def access_review(project_id: str, request_id: str, body: AccessDecision, db: Db, user: Actor):
+    project_access(db, user, project_id, write=True)
+    db.scalar(select(m.Project).where(m.Project.id == project_id).with_for_update())
     project_access(db, user, project_id, write=True)
     clean(body.note)
     item = db.get(m.AccessRequest, request_id)

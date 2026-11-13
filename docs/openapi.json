@@ -299,6 +299,112 @@
         }
       }
     },
+    "/api/projects/{project_id}/sources/{source_id}/access": {
+      "get": {
+        "tags": [
+          "sources"
+        ],
+        "summary": "Source Access",
+        "operationId": "source_access_api_projects__project_id__sources__source_id__access_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "source_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Source Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "sources"
+        ],
+        "summary": "Update Source Access",
+        "operationId": "update_source_access_api_projects__project_id__sources__source_id__access_post",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "source_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Source Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SourceAccessBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/projects/{project_id}/sources": {
       "get": {
         "tags": [
@@ -3306,6 +3412,105 @@
         }
       }
     },
+    "/api/projects/{project_id}/members/{member_id}/revoke": {
+      "post": {
+        "tags": [
+          "Team onboarding & access readiness"
+        ],
+        "summary": "Revoke Member",
+        "operationId": "revoke_member_api_projects__project_id__members__member_id__revoke_post",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "member_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Member Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RevokeMemberBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/projects/{project_id}/access-readiness": {
+      "get": {
+        "tags": [
+          "Team onboarding & access readiness"
+        ],
+        "summary": "Access Readiness",
+        "operationId": "access_readiness_api_projects__project_id__access_readiness_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/projects/{project_id}/invitations": {
       "post": {
         "tags": [
@@ -4563,6 +4768,21 @@
         ],
         "title": "Review"
       },
+      "RevokeMemberBody": {
+        "properties": {
+          "note": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "note"
+        ],
+        "title": "RevokeMemberBody"
+      },
       "SessionResponse": {
         "properties": {
           "user": {
@@ -4618,6 +4838,30 @@
         ],
         "title": "SimulationCreate"
       },
+      "SourceAccessBody": {
+        "properties": {
+          "allowed_user_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 500,
+            "title": "Allowed User Ids"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "allowed_user_ids",
+          "note"
+        ],
+        "title": "SourceAccessBody"
+      },
       "Submission": {
         "properties": {
           "answer": {
@@ -4640,6 +4884,23 @@
             "maxLength": 2000,
             "minLength": 10,
             "title": "Escalation"
+          },
+          "validation_kind": {
+            "type": "string",
+            "enum": [
+              "knowledge_walkthrough",
+              "staging_observation"
+            ],
+            "title": "Validation Kind",
+            "default": "knowledge_walkthrough"
+          },
+          "staging_evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 30,
+            "title": "Staging Evidence Ids"
           }
         },
         "additionalProperties": false,

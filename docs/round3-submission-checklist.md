@@ -40,11 +40,12 @@ The user later discussed replacing the first commitment with Secure Team Onboard
 that replacement fulfilled Improvement 1. Existing code and recorded checks are
 evidence of implementation, not evidence that the organiser approved a substitution.
 
-Known acceptance gaps: no held-out 50-question live-model assessment; the existing
-60-document fixture was used during development and is not a held-out benchmark.
-Live Bynara reply has been verified, but individual calls do not establish general
-AI accuracy or provider availability. Real external staging/restore outcomes require
-actual permissioned evidence and are not fabricated for the demonstration.
+Updated acceptance evidence is in [the four-workstream report](four-workstream-acceptance.md).
+The fresh 60-document internal holdout met field/precision targets. The 50-question
+live chat assessment and both-mode measurements were completed, but only 9/50
+primary requests produced valid provider replies; 41 used labelled fallback.
+Model-wide ≥95% semantic citation correctness remains unestablished. Real external
+staging/restore outcomes require permissioned records and are not fabricated.
 
 ## Event timing and attribution
 

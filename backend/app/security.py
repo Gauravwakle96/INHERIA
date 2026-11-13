@@ -171,7 +171,50 @@ def can_read_source(db: Session, user: User, source: Source, include_inactive: b
     )
     if not member:
         return False
-    return not source.acl or user.id in source.acl
+    if source.acl and user.id not in source.acl:
+        return False
+    parents = source.source_metadata.get("lineage_source_ids", [])
+    if not parents:
+        return True
+    sources = {
+        s.id: s
+        for s in db.scalars(
+            select(Source).where(Source.project_id == source.project_id, Source.org_id == user.org_id)
+        )
+    }
+    return source_lineage_allowed(source, sources, user.id, user.org_id, include_inactive)
+
+
+def source_descendant_ids(db, source):
+    """Transitive project-scoped derived copies affected by a source lifecycle change."""
+    related = {source.id}
+    rows = list(
+        db.scalars(
+            select(Source).where(Source.project_id == source.project_id, Source.org_id == source.org_id)
+        )
+    )
+    changed = True
+    while changed:
+        changed = False
+        for child in rows:
+            if child.id not in related and related.intersection(
+                child.source_metadata.get("lineage_source_ids", [])
+            ):
+                related.add(child.id)
+                changed = True
+    return related
+
+
+def source_lineage_allowed(source, sources, user_id, org_id, include_inactive=False, visited=None):
+    visited = visited or set()
+    if not source or source.id in visited or source.org_id != org_id:
+        return False
+    if (not include_inactive and source.status != "ready") or (source.acl and user_id not in source.acl):
+        return False
+    return all(
+        source_lineage_allowed(sources.get(sid), sources, user_id, org_id, False, visited | {source.id})
+        for sid in source.source_metadata.get("lineage_source_ids", [])
+    )
 
 
 def visible_sources(db: Session, user: User, project_id: str) -> list[Source]:
@@ -185,7 +228,8 @@ def visible_sources(db: Session, user: User, project_id: str) -> list[Source]:
     ).all()
     # All rows share the tenant/project just authorised above. Only the source ACL
     # remains to filter; repeating membership queries per source creates an N+1.
-    return [source for source in sources if not source.acl or user.id in source.acl]
+    by_id = {source.id: source for source in sources}
+    return [source for source in sources if source_lineage_allowed(source, by_id, user.id, user.org_id, True)]
 
 
 def audit(

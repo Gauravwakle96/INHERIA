@@ -1,0 +1,776 @@
+{
+  "version": "fresh-extraction-2026-11-14-v1",
+  "methodology": "Separately authored internal holdout; not independently labelled or representative enterprise data. Frozen before first evaluation; future tuning converts it to regression data.",
+  "documents": [
+    {
+      "id": "p-owner-0",
+      "text": "Ada Vale handles release approvals. The duty is recorded in the reviewed team notes.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale handles release approvals. The duty is recorded in the reviewed team notes.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-owner-1",
+      "text": "Quinn Reed looks after backup verification. The duty is recorded in the reviewed team notes.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Quinn Reed looks after backup verification. The duty is recorded in the reviewed team notes.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-owner-2",
+      "text": "Ada Vale owns notification routing. The duty is recorded in the reviewed team notes.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale owns notification routing. The duty is recorded in the reviewed team notes.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-owner-3",
+      "text": "Quinn Reed maintains certificate renewal. The duty is recorded in the reviewed team notes.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Quinn Reed maintains certificate renewal. The duty is recorded in the reviewed team notes.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-owner-4",
+      "text": "Ada Vale is responsible for the inventory-api. The duty is recorded in the reviewed team notes.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale is responsible for the inventory-api. The duty is recorded in the reviewed team notes.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-owner-5",
+      "text": "Quinn Reed handles nightly archive checks. The duty is recorded in the reviewed team notes.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Quinn Reed handles nightly archive checks. The duty is recorded in the reviewed team notes.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-owner-6",
+      "text": "Ada Vale looks after incident escalation. The duty is recorded in the reviewed team notes.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale looks after incident escalation. The duty is recorded in the reviewed team notes.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-owner-7",
+      "text": "Quinn Reed maintains queue retention reviews. The duty is recorded in the reviewed team notes.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Quinn Reed maintains queue retention reviews. The duty is recorded in the reviewed team notes.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-reason-0",
+      "text": "The team selected canary releases because failures need a small blast radius. Other approaches remain recorded separately.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected canary releases because failures need a small blast radius. Other approaches remain recorded separately.",
+          "fields": {
+            "rationale": "failures need a small blast radius"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-reason-1",
+      "text": "The team selected regional replicas since read latency was too high. Other approaches remain recorded separately.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected regional replicas since read latency was too high. Other approaches remain recorded separately.",
+          "fields": {
+            "rationale": "read latency was too high"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-reason-2",
+      "text": "The team selected queued emails in order to avoid blocking checkout responses. Other approaches remain recorded separately.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected queued emails in order to avoid blocking checkout responses. Other approaches remain recorded separately.",
+          "fields": {
+            "rationale": "avoid blocking checkout responses"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-reason-3",
+      "text": "The team selected PostgreSQL transactions because orders need atomic updates. Other approaches remain recorded separately.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected PostgreSQL transactions because orders need atomic updates. Other approaches remain recorded separately.",
+          "fields": {
+            "rationale": "orders need atomic updates"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-reason-4",
+      "text": "The team selected signed images since only approved builds may be deployed. Other approaches remain recorded separately.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected signed images since only approved builds may be deployed. Other approaches remain recorded separately.",
+          "fields": {
+            "rationale": "only approved builds may be deployed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-reason-5",
+      "text": "The team selected isolated restores in order to verify integrity without touching production. Other approaches remain recorded separately.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected isolated restores in order to verify integrity without touching production. Other approaches remain recorded separately.",
+          "fields": {
+            "rationale": "verify integrity without touching production"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-reason-6",
+      "text": "The team selected bounded retries because the upstream service rate limits bursts. Other approaches remain recorded separately.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected bounded retries because the upstream service rate limits bursts. Other approaches remain recorded separately.",
+          "fields": {
+            "rationale": "the upstream service rate limits bursts"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-reason-7",
+      "text": "The team selected versioned runbooks in order to support review of historical instructions. Other approaches remain recorded separately.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected versioned runbooks in order to support review of historical instructions. Other approaches remain recorded separately.",
+          "fields": {
+            "rationale": "support review of historical instructions"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-dependency-0",
+      "text": "inventory-api requires stock-db. Failure of the latter needs an authorised impact review.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "inventory-api requires stock-db. Failure of the latter needs an authorised impact review.",
+          "fields": {
+            "from_component": "inventory-api",
+            "to_component": "stock-db"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-dependency-1",
+      "text": "email-worker requires mail-queue. Failure of the latter needs an authorised impact review.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "email-worker requires mail-queue. Failure of the latter needs an authorised impact review.",
+          "fields": {
+            "from_component": "email-worker",
+            "to_component": "mail-queue"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-dependency-2",
+      "text": "checkout-api requires payment-adapter. Failure of the latter needs an authorised impact review.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "checkout-api requires payment-adapter. Failure of the latter needs an authorised impact review.",
+          "fields": {
+            "from_component": "checkout-api",
+            "to_component": "payment-adapter"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-dependency-3",
+      "text": "release-gate requires image-registry. Failure of the latter needs an authorised impact review.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "release-gate requires image-registry. Failure of the latter needs an authorised impact review.",
+          "fields": {
+            "from_component": "release-gate",
+            "to_component": "image-registry"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-dependency-4",
+      "text": "audit-reader requires event-store. Failure of the latter needs an authorised impact review.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "audit-reader requires event-store. Failure of the latter needs an authorised impact review.",
+          "fields": {
+            "from_component": "audit-reader",
+            "to_component": "event-store"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-dependency-5",
+      "text": "restore-runner requires backup-index. Failure of the latter needs an authorised impact review.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "restore-runner requires backup-index. Failure of the latter needs an authorised impact review.",
+          "fields": {
+            "from_component": "restore-runner",
+            "to_component": "backup-index"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-dependency-6",
+      "text": "edge-proxy requires certificate-store. Failure of the latter needs an authorised impact review.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "edge-proxy requires certificate-store. Failure of the latter needs an authorised impact review.",
+          "fields": {
+            "from_component": "edge-proxy",
+            "to_component": "certificate-store"
+          }
+        }
+      ]
+    },
+    {
+      "id": "p-dependency-7",
+      "text": "report-worker requires report-queue. Failure of the latter needs an authorised impact review.",
+      "prose": true,
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "report-worker requires report-queue. Failure of the latter needs an authorised impact review.",
+          "fields": {
+            "from_component": "report-worker",
+            "to_component": "report-queue"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-owner-0",
+      "text": "Responsibility: Review release approvals\nOwner: Ada Vale\nBackup: Quinn Reed\nSystem: release-gate\nCritical: yes\nDocumented: yes",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Review release approvals",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-owner-1",
+      "text": "Responsibility: Inspect backup results\nOwner: Quinn Reed\nBackup: Ada Vale\nSystem: backup-index\nCritical: yes\nDocumented: yes",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Inspect backup results",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-owner-2",
+      "text": "Responsibility: Maintain inventory alerts\nOwner: Ada Vale\nBackup: none\nSystem: inventory-api\nCritical: yes\nDocumented: yes",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Maintain inventory alerts",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-owner-3",
+      "text": "Responsibility: Rotate test certificates\nOwner: Quinn Reed\nBackup: none\nSystem: certificate-store\nCritical: yes\nDocumented: yes",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Rotate test certificates",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-owner-4",
+      "text": "Responsibility: Coordinate queue incidents\nOwner: Ada Vale\nBackup: Quinn Reed\nSystem: mail-queue\nCritical: yes\nDocumented: yes",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Coordinate queue incidents",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-owner-5",
+      "text": "Responsibility: Maintain audit retention\nOwner: Quinn Reed\nBackup: Ada Vale\nSystem: event-store\nCritical: yes\nDocumented: yes",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Maintain audit retention",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-owner-6",
+      "text": "Responsibility: Approve database recovery\nOwner: Unknown\nBackup: none\nSystem: stock-db\nCritical: yes\nDocumented: yes",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Approve database recovery",
+          "fields": {
+            "owner": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-owner-7",
+      "text": "Responsibility: Review legacy proxy\nOwner: Contractor Lee\nBackup: none\nSystem: edge-proxy\nCritical: yes\nDocumented: yes",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Review legacy proxy",
+          "fields": {
+            "owner": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-owner-8",
+      "text": "Responsibility: Track release blockers\nOwner: Ada Vale\nBackup: none\nSystem: release-gate\nCritical: yes\nDocumented: yes",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Track release blockers",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-owner-9",
+      "text": "Responsibility: Review restore notes\nOwner: Quinn Reed\nBackup: Ada Vale\nSystem: restore-runner\nCritical: yes\nDocumented: yes",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Review restore notes",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-owner-10",
+      "text": "Responsibility: Schedule change windows\nOwner: Ada Vale\nBackup: none\nSystem: checkout-api\nCritical: yes\nDocumented: yes",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Schedule change windows",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-owner-11",
+      "text": "Responsibility: Coordinate escalation\nOwner: Quinn Reed\nBackup: none\nSystem: payment-adapter\nCritical: yes\nDocumented: yes",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Coordinate escalation",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-reason-0",
+      "text": "Decision: Retain audit events\nRationale: Investigations need a reproducible evidence trail.\nStatus: current\nTopic: Retain audit events",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "Retain audit events",
+          "fields": {
+            "rationale": "Investigations need a reproducible evidence trail."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-reason-1",
+      "text": "Decision: Pin image digests\nRationale: Mutable tags can select an unreviewed build.\nStatus: current\nTopic: Pin image digests",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "Pin image digests",
+          "fields": {
+            "rationale": "Mutable tags can select an unreviewed build."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-reason-2",
+      "text": "Decision: Defer schema rollback\nRationale: A destructive migration needs specialist recovery.\nStatus: current\nTopic: Defer schema rollback",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "Defer schema rollback",
+          "fields": {
+            "rationale": "A destructive migration needs specialist recovery."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-reason-3",
+      "text": "Decision: Use read replicas\nRationale: Reports should avoid the primary write workload.\nStatus: current\nTopic: Use read replicas",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "Use read replicas",
+          "fields": {
+            "rationale": "Reports should avoid the primary write workload."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-reason-4",
+      "text": "Decision: Retry with jitter\nRationale: Synchronous retry bursts overload the adapter.\nStatus: current\nTopic: Retry with jitter",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "Retry with jitter",
+          "fields": {
+            "rationale": "Synchronous retry bursts overload the adapter."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-reason-5",
+      "text": "Decision: Keep manual approval\nRationale: The organisation requires an accountable release reviewer.\nStatus: current\nTopic: Keep manual approval",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "Keep manual approval",
+          "fields": {
+            "rationale": "The organisation requires an accountable release reviewer."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-dependency-0",
+      "text": "Dependency: order-api -> order-db\nStatus: current",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "order-api -> order-db",
+          "fields": {
+            "from_component": "order-api",
+            "to_component": "order-db"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-dependency-1",
+      "text": "Dependency: shipping-worker -> shipping-queue\nStatus: current",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "shipping-worker -> shipping-queue",
+          "fields": {
+            "from_component": "shipping-worker",
+            "to_component": "shipping-queue"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-dependency-2",
+      "text": "Dependency: log-agent -> log-collector\nStatus: current",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "log-agent -> log-collector",
+          "fields": {
+            "from_component": "log-agent",
+            "to_component": "log-collector"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-dependency-3",
+      "text": "Dependency: metrics-reader -> metrics-store\nStatus: current",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "metrics-reader -> metrics-store",
+          "fields": {
+            "from_component": "metrics-reader",
+            "to_component": "metrics-store"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-dependency-4",
+      "text": "Dependency: cache-refresh -> product-index\nStatus: current",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "cache-refresh -> product-index",
+          "fields": {
+            "from_component": "cache-refresh",
+            "to_component": "product-index"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s-dependency-5",
+      "text": "Dependency: release-job -> approval-gate\nStatus: current",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "release-job -> approval-gate",
+          "fields": {
+            "from_component": "release-job",
+            "to_component": "approval-gate"
+          }
+        }
+      ]
+    },
+    {
+      "id": "staging-procedure",
+      "text": "Procedure: Review a staging release\nSystem: release-gate\nConfirm approved digest, reviewer and health evidence.",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "procedure",
+          "title": "Review a staging release",
+          "fields": {}
+        }
+      ]
+    },
+    {
+      "id": "recovery-procedure",
+      "text": "Procedure: Inspect restore readiness\nSystem: backup-index\nLocate the isolated test plan and record missing integrity evidence.",
+      "prose": false,
+      "expected": [
+        {
+          "kind": "procedure",
+          "title": "Inspect restore readiness",
+          "fields": {}
+        }
+      ]
+    },
+    {
+      "id": "negative-0",
+      "text": "Could Ada Vale maintain deployment ownership next month?",
+      "prose": true,
+      "expected": []
+    },
+    {
+      "id": "negative-1",
+      "text": "Quinn Reed no longer maintains the release pipeline; ask the coordinator for its current owner.",
+      "prose": true,
+      "expected": []
+    },
+    {
+      "id": "negative-2",
+      "text": "Ada Vale does not own recovery; the database team must review this duty.",
+      "prose": true,
+      "expected": []
+    },
+    {
+      "id": "negative-3",
+      "text": "The proposed decision selected another registry and awaits approval.",
+      "prose": true,
+      "expected": []
+    },
+    {
+      "id": "negative-4",
+      "text": "The repository has many commits by Quinn Reed but this does not establish responsibility.",
+      "prose": true,
+      "expected": []
+    },
+    {
+      "id": "negative-5",
+      "text": "No evidence identifies the approved recovery commands.",
+      "prose": true,
+      "expected": []
+    },
+    {
+      "id": "negative-6",
+      "text": "# Interview questions\nWho is responsible for release approvals?",
+      "prose": true,
+      "expected": []
+    },
+    {
+      "id": "negative-7",
+      "text": "Ownership is unknown. Confirm it before assigning a successor.",
+      "prose": true,
+      "expected": []
+    },
+    {
+      "id": "negative-8",
+      "text": "Insufficient evidence to determine the current database dependency.",
+      "prose": true,
+      "expected": []
+    },
+    {
+      "id": "negative-9",
+      "text": "The office schedule includes lunch at noon and a meeting in the afternoon.",
+      "prose": true,
+      "expected": []
+    }
+  ]
+}

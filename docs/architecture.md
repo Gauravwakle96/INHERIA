@@ -28,11 +28,15 @@ Public demo start creates a separate tenant, three random-password personas, 13 
 
 Invitations use hashed random tokens, expiry and transactional single-use consumption. New recipients choose passwords; existing identities authenticate and retain their role. Links are shown once for private sharing. No email delivery, email verification, password reset or SSO is claimed. Independent access reviewers use existing source ACLs; they grant no cloud access and do not mirror upstream permissions.
 
+Administrators may revoke project membership with a confirmation and reason. Pending invitations/access requests and explicit reader grants are revoked in the same transaction; other projects and historical contributions remain. If the removed member was a source's last reader, that source is revoked rather than converting its empty ACL into access for all. PostgreSQL project locks serialize membership removal with invitation acceptance. Handover knowledge-access readiness checks current membership and verified readable claims; it is separate from responsibility acceptance and operational competence.
+
 ## Investigation and recovery
 
 Reconstruction candidates and each source-version checkpoint commit atomically. Resume rechecks authority, skips unchanged checkpoints and deduplicates fingerprints. Conservative English prose extraction preserves exact supporting field spans. Same-topic conflicting decisions require explicit authority selection and independent review.
 
 Document replacement preserves old chunks and invalidates derived claims and assessments. Filtered impact traces affected handovers and tasks. Active transitions reopen for a new version, reapproval, reacceptance and scenario assessment. Superseded tasks remain historical and are excluded from corrected-version readiness. Mandatory cited prerequisites and current source/claim signatures gate closure. Historical quotes and inaccessible prerequisite notes are withheld from current read paths.
+
+Validation distinguishes a cited knowledge walkthrough from an externally supplied staging observation. Observation references must be verified, current, readable and explicitly describe a staging/test-environment observation or result; a runbook alone is refused. Observation source versions and separate supervisor review history are retained. Change, revocation, deletion or lost access blocks readiness/review and hides unreadable submissions. These checks do not prove an external deployment or restore occurred.
 
 Immutable Alembic migrations create and evolve the schema. Development startup supports automatic creation; production relies on migrations. SQLite is a local convenience. PostgreSQL is required by production configuration. pgvector, Redis, Celery and a separate graph database were omitted because bounded lexical retrieval and local jobs meet the central workflow without extra infrastructure.
 
@@ -43,6 +47,8 @@ The chat migration adds four tables: encrypted organisation AI configurations, o
 ## Source evidence lifecycle
 
 Sources retain names, locators, timestamps, checksums, versions and ACLs. Chunks include their source version. Every candidate has exact quotation evidence. The active read path verifies tenant/project, source access, ready status, source/chunk identity, version and quotation membership. A mixed-permission claim is hidden entirely. Transaction-scoped evidence batching is cleared after flush, commit or rollback.
+
+Derived interview and ownership sources retain parent evidence IDs. Source authorization checks their complete parent chain, including current readiness and reader ACLs; absent parents and cycles deny access. The inventory loads one project-scoped source map to avoid membership queries per source. Source changes invalidate transitive derived claims/tasks; impact and deletion traverse the same parent relationships. Migration `b19e47a2c805` backfills historical interview lineage from same-project gaps without changing ACLs or document content. Its isolated populated upgrade/downgrade test verifies existing metadata and grants are preserved; no production downgrade is performed.
 
 Source changes invalidate derived claims. Revocation immediately removes authoritative access. Deletion removes indexed chunks, evidence and source-derived text from claims and stored investigation/simulation/handover/validation snapshots. Historical data is never returned as current evidence after version changes. Corrections return to pending, retain audit metadata and invalidate dependent practical assessments.
 
@@ -61,6 +67,8 @@ GitHub synchronisation and investigations use persisted status records with boun
 GitHub uses a fixed HTTPS API host, bounded pagination, ETags, retries and incremental cursors, without repository cloning. Tokens are encrypted with a configured key, never sent to the browser or logs. Partial snapshots do not falsely advance a complete-sync cursor. No future connector is represented as connected.
 
 LLM source processing requires explicit configuration and opt-in. A single investigation uses at most 15 chunks / 30,000 input characters and structured candidates. Exact citation validation rejects invented text or restricted chunk IDs. Requests use `store=false` and do not send previous response IDs or conversation references. Provider retention and contractual controls still need operator verification.
+
+Chat evidence carries source timestamps, verification state and review-required age signals; accessible decision conflicts are supplied as uncertainty rather than verified facts. Low/High settings control context/output budgets. HTTP-200 upstream error envelopes are treated as safe provider failures and conversation history persists with labelled evidence retrieval. The 50-question live evaluation measured substantial Bynara outages; semantic citation quality is not established beyond the small successful subset. See [measured acceptance](four-workstream-acceptance.md).
 
 ## Metrics and simulations
 

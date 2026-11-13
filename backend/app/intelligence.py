@@ -230,10 +230,14 @@ def parse_candidates(text: str, users: list[m.User]) -> list[dict]:
                 lower,
             ):
                 continue
-            kind = None
-            if re.search(r"\b(?:is responsible for|owns|maintains)\b", lower) and not re.search(
-                r"\b(?:might|may|could|not|unknown|no longer)\b", lower
+            if re.search(
+                r"\b(?:no longer|does not|did not|not responsible|formerly|proposed|hypothetical)\b", lower
             ):
+                continue  # Historical duties and proposals need explicit human capture.
+            kind = None
+            if re.search(
+                r"\b(?:is responsible for|owns|maintains|handles|looks after)\b", lower
+            ) and not re.search(r"\b(?:might|may|could|not|unknown|no longer)\b", lower):
                 kind = "responsibility"
             elif re.search(
                 r"\b[A-Za-z0-9_-]+\s+(?:depends on|requires)\s+[A-Za-z0-9_-]+", paragraph

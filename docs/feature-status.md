@@ -39,3 +39,11 @@ This file reports implementation, not the complete long-term product vision. The
 | Automated retention / legal hold / data residency / enterprise governance | Not implemented | Must be designed and validated for an actual deployment |
 
 The eleven engines remain logical product domains: discovery, capture, decisions, relationships, trust, organisation configuration, handover, continuity, readiness, workflow and memory. They share persisted models and services. INHERIA does not claim that every long-term engine feature is implemented.
+
+14 November acceptance update: project membership revocation, current-document
+reader management, handover access readiness, cited staging observation records
+and traceable assessment history are implemented. The separate 60-document
+internal extraction holdout met its targets. The 50-question live chat run found
+only 9/50 valid provider replies, so Conversational Digital Successor remains
+provider-limited despite working private history, citations/actions and fallback.
+See [measured delivery and limits](four-workstream-acceptance.md).

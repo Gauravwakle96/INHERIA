@@ -2,6 +2,50 @@
 
 Historical and current verification results are separated below. Results apply to the implemented MVP in this workspace; they do not certify an enterprise deployment.
 
+## Four-workstream completion checks — 14 November 2026 IST
+
+- Final full backend suite: **198 passed**, **90%** overall line coverage,
+  including the interview lineage migration and transitive parent change tests.
+  One existing FastAPI/Starlette TestClient deprecation warning remains.
+- Migration checks upgraded/downgraded an empty owned SQLite database and
+  upgraded a populated prior schema, checked repeated upgrade, preserved
+  restricted ACLs/other metadata and downgraded only migration-owned metadata.
+  An initial wrong table name in the new migration was caught and corrected.
+- **14 Playwright tests passed** for judge entry/refresh/isolation, startup failure,
+  duplicate clicks, six day/night layouts, the complete handover, invitation,
+  source replacement, membership removal and the source reader editor. The three
+  affected source/revocation UI cases passed again after final backend changes.
+- **9 chat Playwright tests passed**: private saved conversations, abstention,
+  confirmed actions, settings/model contract and six day/night 390/768/1440px
+  layouts with keyboard/axe checks. The first attempt used a local QA setup with
+  the suite's required development personas disabled; that attempt failed and was
+  stopped. The isolated setup was corrected and all nine reran successfully.
+  Production shared-persona access was never enabled. Provider contracts in these
+  browser tests are mocked or use labelled retrieval, not paid availability proof.
+- Ruff lint/format passed for application, tests and the new migration; frontend
+  lint/typecheck/production build passed. Python locked-environment pip-audit and
+  npm audit found no known vulnerabilities. A broader exploratory lint of all old
+  migrations found one existing import-order issue in `e4058f85541c`; that immutable
+  historical migration was preserved and the configured CI scope passes.
+- Changed-text credential-pattern/private-secret scan: **44 files, zero hits**
+  before final documentation. Whitespace review passed; private runners, credentials
+  and negative tests use ignored `.local` files and isolated QA databases.
+- Fresh internal extraction holdout: **60 documents / 34 prose**, candidate
+  precision/recall **50/50**, owners **20/20**, rationale **14/14**, dependency
+  endpoints **14/14**, exact quotes **50/50**. It met bounded internal targets,
+  not independent enterprise accuracy. The frozen first-run report is preserved.
+- Live chat holdout: **50 questions + 4 paired calls** against existing Bynara
+  configuration, using only authored test sources. **9/50** primary calls produced
+  usable provider answers; **41/50** fell back. Unsupported abstention **25/25**
+  includes fallback; provider subset **4/4**. Source attribution **19/19** includes
+  14 exact retrieval excerpts and five generated parts. Broad ≥95% semantic citation
+  correctness is unestablished. Both effort benchmarks and four compact-context
+  development probes remain disclosed in the acceptance report.
+
+See [four-workstream acceptance](four-workstream-acceptance.md) for evaluation
+methodology and product limits. Live acceptance for the new commit is recorded
+after deployment; historical live checks below apply to their named commits.
+
 ## Direct judge access — 14 November 2026 IST
 
 After receiving the actual Round 3 opening/deadline notice, sign-in gained

@@ -87,6 +87,17 @@ Under `/api/projects/{project_id}`:
 - `GET/POST /access-requests`, POST body `{purpose}`. Ordinary members see only
   their requests. `POST /access-requests/{id}/review {action,source_id?,note}`
   requires another project reviewer; sources must be readable by that reviewer.
+- `POST /members/{user_id}/revoke {note}`: project-write administrator only;
+  removes this membership and pending invitations/requests, revokes existing
+  source reader grants and audits metadata. Self-removal returns 409; unknown
+  member returns 404. Other projects, account and historical contributions remain.
+- `GET /access-readiness`: recipient knowledge counts per handover, current
+  membership, accessible/required/missing counts and next steps. Non-reviewers
+  see only assigned handovers; missing source titles are omitted when unreadable.
+- `GET /sources/{id}/access` and `POST /sources/{id}/access
+  {allowed_user_ids:string[],note}`: source-readable project reviewers only.
+  Empty list permits all members. Restricted list must contain current members
+  and the reviewer; derived retrieval/readiness always rechecks current ACLs.
 - `POST /claims/{id}/resolve-authority {note}` explicitly selects a current
   decision and preserves competing accessible candidates as superseded.
   Conflicting decisions cannot use ordinary approval. No author self-review.
@@ -103,6 +114,12 @@ Under `/api/projects/{project_id}`:
   confirms with current verified references accessible to the incoming person.
 - Exercise review accepts `criteria_passed:boolean[]`; scenario-v2 passes require
   every predefined criterion explicitly assessed.
+- Exercise submission also accepts `validation_kind:knowledge_walkthrough|
+  staging_observation` (default walkthrough), and `staging_evidence_ids:string[]`.
+  Observations require verified accessible records explicitly describing a staging
+  or test-environment observation/result; a runbook alone is insufficient.
+  Source-version references and supervisor review history remain in assessment.
+  Revocation/deletion/change blocks completion and withholds/purges derived text.
 
 Readiness includes sanitized prerequisites. Source changes, permission loss,
 claim corrections, incomplete acceptance, assessments and required checks block

@@ -119,6 +119,21 @@ npm run test:e2e
 
 See [verification results](docs/verification.md), [controlled evaluation](docs/evaluation-report.md), [architecture](docs/architecture.md), [API contract](API_CONTRACT.md) and [feature status](docs/feature-status.md). Automated evaluation uses an isolated labelled synthetic fixture. Its results are not general model accuracy or employee handover ground truth.
 
+The [four-workstream acceptance report](docs/four-workstream-acceptance.md) includes
+the fresh extraction holdout, 50-question live chat assessment, effort/token
+measurements and failure disclosures. Reproduce extraction with
+`uv run python -m app.acceptance_evaluation` from `backend`; offline chat with
+`uv run python -m app.chat_evaluation`. Paid live evaluation accepts only a private
+`INHERIA_EVALUATION_KEY` and `--live` (54 bounded calls). The measured provider
+returned valid replies for 9/50 primary questions; saved labelled retrieval keeps
+knowledge usable, but broad chatbot reliability is not established.
+
+Administrators can revoke project members from Team; source reviewers can edit
+current readers from Sources → Permissions. Team shows recipient handover access
+separately from ownership acceptance. Validation distinguishes a documentation
+walkthrough from cited staging observations; uploaded observation records require
+qualified supervisor review and are never interpreted as app-executed cloud work.
+
 ## Deployment
 
 The [Dockerfile](Dockerfile) builds the frontend and API. [compose.yaml](compose.yaml) supplies PostgreSQL. Copy the root `.env.example` to `.env`, configure PostgreSQL credentials and the exact HTTPS application origin, then run `docker compose up --build`. Terminate TLS in an authorised reverse proxy and configure backups, disk encryption and monitoring. Production forbids demo persona access.

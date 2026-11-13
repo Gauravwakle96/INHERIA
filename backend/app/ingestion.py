@@ -316,15 +316,21 @@ def invalidate_source(db: Session, source: Source) -> int:
     from sqlalchemy import select
 
     from app.models import Claim, Evidence, Exercise, Transition
+    from app.security import source_descendant_ids
 
-    claim_ids = set(db.scalars(select(Evidence.claim_id).where(Evidence.source_id == source.id)))
+    source_ids = source_descendant_ids(db, source)
+    claim_ids = set(db.scalars(select(Evidence.claim_id).where(Evidence.source_id.in_(source_ids))))
     claims = list(db.scalars(select(Claim).where(Claim.id.in_(claim_ids)))) if claim_ids else []
     for claim in claims:
         claim.status = "invalidated"
         claim.verified_by = None
         claim.verified_at = None
     for exercise in db.scalars(select(Exercise).where(Exercise.project_id == source.project_id)):
-        if source.id in exercise.expected_source_ids or exercise.assessment.get("claim_id") in claim_ids:
+        if (
+            source_ids.intersection(exercise.expected_source_ids)
+            or source_ids.intersection(exercise.assessment.get("staging_source_versions", {}))
+            or exercise.assessment.get("claim_id") in claim_ids
+        ):
             exercise.assessment = {
                 **exercise.assessment,
                 "invalidated_status": exercise.status,
@@ -332,7 +338,7 @@ def invalidate_source(db: Session, source: Source) -> int:
             }
             exercise.status = "needs_revision"
     for transition in db.scalars(select(Transition).where(Transition.project_id == source.project_id)):
-        if source.id in (transition.report or {}).get("source_ids", []):
+        if source_ids.intersection((transition.report or {}).get("source_ids", [])):
             transition.report = {**transition.report, "requires_revalidation": True}
     return len(claims)
 

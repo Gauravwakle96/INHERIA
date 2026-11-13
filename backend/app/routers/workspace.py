@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import re
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
@@ -638,7 +639,12 @@ def capture_answer(project_id: str, gap_id: str, payload: s.InterviewResponse, d
         acl=acl,
         version=1,
         synthetic=project.is_demo,
-        source_metadata={"author_id": user.id, "gap_id": gap.id, "employee_explanation": True},
+        source_metadata={
+            "author_id": user.id,
+            "gap_id": gap.id,
+            "employee_explanation": True,
+            "lineage_source_ids": sorted(source_ids),
+        },
     )
     db.add(source)
     db.flush()
@@ -1033,6 +1039,25 @@ def submit(project_id: str, exercise_id: str, payload: s.Submission, db: Db, use
     linked_sources = {refs[e]["source_id"] for e in payload.evidence_ids}
     if not set(exercise.expected_source_ids).issubset(linked_sources):
         raise HTTPException(422, "Locate the exercise’s relevant source evidence before submitting.")
+    if payload.validation_kind == "staging_observation":
+        staging_refs = [refs[e] for e in payload.staging_evidence_ids if e in refs]
+        if not staging_refs or len(staging_refs) != len(set(payload.staging_evidence_ids)):
+            raise HTTPException(422, "Cite current authorised staging observation evidence.")
+        sources = [db.get(m.Source, ref["source_id"]) for ref in staging_refs]
+        if any(
+            not source
+            or not re.search(r"\b(?:staging|test environment)\b", ref["quote"], re.I)
+            or not re.search(
+                r"\b(?:observation|test result|test evidence|exercise result)\b", ref["quote"], re.I
+            )
+            for ref, source in zip(staging_refs, sources)
+        ):
+            raise HTTPException(
+                422,
+                "Cite an observation or test-result record identifying staging or a test environment. A runbook alone is not execution evidence.",
+            )
+    elif payload.staging_evidence_ids:
+        raise HTTPException(422, "Select staging observation when attaching staging evidence.")
     exercise.answer, exercise.evidence_ids, exercise.escalation = (
         payload.answer,
         payload.evidence_ids,
@@ -1044,6 +1069,11 @@ def submit(project_id: str, exercise_id: str, payload: s.Submission, db: Db, use
         "evidence_located": True,
         "requires_human_review": True,
         "submitted_by": user.id,
+        "validation_kind": payload.validation_kind,
+        "staging_evidence_ids": payload.staging_evidence_ids,
+        "staging_source_versions": {
+            refs[e]["source_id"]: refs[e]["source_version"] for e in payload.staging_evidence_ids
+        },
     }
     exercise.reviewed_by, exercise.supervisor_note = None, ""
     audit(
@@ -1083,9 +1113,24 @@ def assess(project_id: str, exercise_id: str, payload: s.Assessment, db: Db, use
     }
     if not set(exercise.evidence_ids).issubset(valid):
         raise HTTPException(409, "Submitted evidence is no longer current or accessible.")
+    if not set(exercise.assessment.get("staging_evidence_ids", [])).issubset(valid):
+        raise HTTPException(
+            409, "Staging observation evidence changed or is inaccessible. Request a corrected submission."
+        )
     safe_text(payload.note)
     exercise.status = "passed" if payload.action == "pass" else "needs_revision"
     exercise.reviewed_by, exercise.supervisor_note = user.id, payload.note
+    history = list(exercise.assessment.get("review_history", []))
+    history.append(
+        {
+            "status": exercise.status,
+            "reviewed_by": user.id,
+            "action": payload.action,
+            "reviewed_at": m.utcnow().isoformat(),
+            "evidence_ids": exercise.evidence_ids,
+            "criteria_passed": payload.criteria_passed,
+        }
+    )
     exercise.assessment = {
         **exercise.assessment,
         "requires_human_review": False,
@@ -1093,6 +1138,7 @@ def assess(project_id: str, exercise_id: str, payload: s.Assessment, db: Db, use
         "criteria_passed": payload.criteria_passed,
         "reviewed_at": m.utcnow().isoformat(),
         "evidence_ids": exercise.evidence_ids,
+        "review_history": history,
     }
     audit(
         db,

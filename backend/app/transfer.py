@@ -190,6 +190,7 @@ def serialize_transition(db: Session, user: m.User, transition: m.Transition) ->
     )
     report = readable_report(db, user, transition)
     source_ids = set(report.get("source_ids", []))
+    visible_ids = {s.id for s in visible_sources(db, user, transition.project_id) if s.status == "ready"}
     return {
         "id": transition.id,
         "title": transition.title,
@@ -201,7 +202,10 @@ def serialize_transition(db: Session, user: m.User, transition: m.Transition) ->
         "report": report,
         "transfers": [serialize_transfer(db, t) for t in accessible],
         "exercises": [
-            serialize_exercise(e) for e in exercises if set(e.expected_source_ids).issubset(source_ids)
+            serialize_exercise(e)
+            for e in exercises
+            if set(e.expected_source_ids).issubset(source_ids)
+            and set(e.assessment.get("staging_source_versions", {})).issubset(visible_ids)
         ],
     }
 
@@ -558,6 +562,14 @@ def readiness(db: Session, user: m.User, transition: m.Transition) -> dict:
             "Handover sources changed, were revoked or are inaccessible; revalidation is required."
         )
     valid_refs = {e["id"] for e in evidence}
+    for exercise in validated:
+        if not set(exercise.assessment.get("staging_evidence_ids", [])).issubset(valid_refs) or any(
+            current_versions.get(sid) != version
+            for sid, version in exercise.assessment.get("staging_source_versions", {}).items()
+        ):
+            blockers.append(
+                "Staging observation evidence changed or is unavailable; repeat supervisor review."
+            )
     for item in prerequisites:
         if (
             item.get("required")

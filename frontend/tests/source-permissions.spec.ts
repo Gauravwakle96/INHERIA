@@ -1,0 +1,35 @@
+import { expect, test } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+
+test('source permission editor preserves current readers and limits incoming evidence', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Open judge workspace' }).click();
+  await expect(page.getByRole('combobox', { name: 'Active project' })).toBeVisible();
+  const pid = await page.getByRole('combobox', { name: 'Active project' }).inputValue();
+  await page.goto('/sources');
+  const row = page.locator('tbody tr').filter({ hasText: '03-' });
+  await row.getByRole('button', { name: 'Permissions', exact: true }).click();
+  const dialog = page.getByRole('dialog', { name: 'Manage source permissions' });
+  await dialog.getByLabel('Restrict to selected project members').check();
+  await dialog.getByLabel('Decision reason').fill('Coordinator review required before incoming engineer can inspect this procedure.');
+  await dialog.getByRole('button', { name: 'Save source permissions' }).click();
+  await expect(dialog).not.toBeVisible();
+  await row.getByRole('button', { name: 'Permissions', exact: true }).click();
+  await expect(dialog.getByRole('checkbox', { name: 'Rudransh', exact: true })).toBeChecked();
+  await dialog.getByRole('checkbox', { name: 'Savinay', exact: true }).check();
+  await dialog.getByLabel('Decision reason').fill('Scoped knowledge access reviewed and approved for the incoming participant.');
+  await dialog.getByRole('button', { name: 'Save source permissions' }).click();
+  await expect(dialog).not.toBeVisible();
+  await row.getByRole('button', { name: 'Permissions', exact: true }).click();
+  await expect(dialog.getByRole('checkbox', { name: 'Savinay', exact: true })).toBeChecked();
+  await page.setViewportSize({ width: 390, height: 900 });
+  const axe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
+  expect(axe.violations.map(v => v.id)).toEqual([]);
+  await dialog.getByRole('button', { name: 'Close dialog' }).click();
+  const people = await (await page.request.get('/api/auth/judge-demo/people')).json();
+  await page.getByRole('combobox', { name: 'Switch demo role' }).selectOption(people.find((p: { name: string }) => p.name === 'Savinay').id);
+  await expect(page.locator('.user-summary strong')).toHaveText('Savinay');
+  const sources = await (await page.request.get(`/api/projects/${pid}/sources`)).json();
+  expect(sources.some((s: { name: string }) => s.name.startsWith('03-'))).toBe(true);
+  expect(await page.getByRole('button', { name: 'Permissions', exact: true }).count()).toBe(0);
+});

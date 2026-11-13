@@ -21,7 +21,7 @@ from app.connectors import (
 )
 from app.database import get_db
 from app.ingestion import DocumentError, ingest_document, invalidate_source, serialize_source, utcnow
-from app.models import Chunk, Connection, Evidence, Job, Membership, Source, User
+from app.models import Chunk, Connection, Evidence, Job, Membership, Project, Source, User
 from app.security import audit, can_read_source, current_user, project_access, require_role
 
 router = APIRouter(prefix="/api/projects/{project_id}", tags=["sources"])
@@ -33,6 +33,59 @@ SOURCE_ADMIN_ROLES = {"admin", "manager", "lead"}
 class GitHubConnectionRequest(BaseModel):
     repository: str = Field(min_length=3, max_length=240)
     token: str | None = Field(default=None, max_length=300)
+
+
+class SourceAccessBody(BaseModel):
+    allowed_user_ids: list[str] = Field(max_length=500)
+    note: str = Field(min_length=10, max_length=2000)
+
+
+@router.get("/sources/{source_id}/access")
+def source_access(project_id: str, source_id: str, db: Db, user: Actor):
+    project_access(db, user, project_id, write=True)
+    require_role(user, SOURCE_ADMIN_ROLES)
+    source = _source(db, user, project_id, source_id)
+    return {
+        "source_id": source.id,
+        "allowed_user_ids": source.acl,
+        "scope": "selected_members" if source.acl else "all_project_members",
+    }
+
+
+@router.post("/sources/{source_id}/access")
+def update_source_access(project_id: str, source_id: str, body: SourceAccessBody, db: Db, user: Actor):
+    project_access(db, user, project_id, write=True)
+    require_role(user, SOURCE_ADMIN_ROLES)
+    # Membership revocation uses the same project lock; a stale reader edit must
+    # not restore a grant after the member has been removed.
+    db.scalar(select(Project).where(Project.id == project_id).with_for_update())
+    project_access(db, user, project_id, write=True)
+    source = _source(db, user, project_id, source_id)
+    from app.routers.workspace import safe_text
+
+    safe_text(body.note)
+    allowed = sorted(set(body.allowed_user_ids))
+    members = set(db.scalars(select(Membership.user_id).where(Membership.project_id == project_id)))
+    if allowed and (not set(allowed).issubset(members) or user.id not in allowed):
+        raise HTTPException(
+            422, "Select current project members and include yourself for a restricted source."
+        )
+    source.acl = allowed
+    audit(
+        db,
+        user,
+        project_id,
+        "source.access_changed",
+        "source",
+        source.id,
+        {"scope": "selected_members" if allowed else "all_project_members", "reader_count": len(allowed)},
+    )
+    db.commit()
+    return {
+        "source_id": source.id,
+        "allowed_user_ids": allowed,
+        "scope": "selected_members" if allowed else "all_project_members",
+    }
 
 
 def _source(db: Session, user: User, project_id: str, source_id: str) -> Source:

@@ -20,6 +20,7 @@ def continuity_summary(db, user, project_id):
         if exercise.status != "superseded"
         and exercise.assessment.get("claim_id") in claim_ids
         and set(exercise.expected_source_ids).issubset(ready_source_ids)
+        and set(exercise.assessment.get("staging_source_versions", {})).issubset(ready_source_ids)
     ]
     transfers = [
         transfer

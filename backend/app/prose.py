@@ -14,7 +14,10 @@ def prose_fields(paragraph, kind, users):
     }
     # A named person's explicit duty statement is candidate evidence, not confirmation.
     for user in users:
-        pattern = re.escape(user.name) + r"\s+(?:is responsible for|owns|maintains)\s+([^.!?\n]+)"
+        pattern = (
+            re.escape(user.name)
+            + r"\s+(?:is responsible for|owns|maintains|handles|looks after)\s+([^.!?\n]+)"
+        )
         match = re.search(pattern, paragraph, re.I)
         if match and not re.search(r"\b(?:might|may|could|possibly|not|no longer)\b", match.group(0), re.I):
             data["owner_id"] = user.id

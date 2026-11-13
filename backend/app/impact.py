@@ -3,7 +3,7 @@
 from sqlalchemy import select
 
 from app import models as m
-from app.security import can_read_source, project_access
+from app.security import can_read_source, project_access, source_descendant_ids
 
 
 def source_impact(db, user, project_id, source_id):
@@ -17,7 +17,8 @@ def source_impact(db, user, project_id, source_id):
         or not can_read_source(db, user, source, include_inactive=True)
     ):
         raise HTTPException(404, "Source impact unavailable.")
-    refs = list(db.scalars(select(m.Evidence).where(m.Evidence.source_id == source_id)))
+    related_ids = source_descendant_ids(db, source)
+    refs = list(db.scalars(select(m.Evidence).where(m.Evidence.source_id.in_(related_ids))))
     claim_ids = {e.claim_id for e in refs}
     claims = []
     for claim in db.scalars(select(m.Claim).where(m.Claim.id.in_(claim_ids))):
@@ -40,7 +41,7 @@ def source_impact(db, user, project_id, source_id):
     for transition in db.scalars(select(m.Transition).where(m.Transition.project_id == project_id)):
         report = transition.report or {}
         all_sources = report.get("source_ids", [])
-        if source_id not in all_sources or any(
+        if not related_ids.intersection(all_sources) or any(
             not can_read_source(db, user, db.get(m.Source, sid), include_inactive=True) for sid in all_sources
         ):
             continue
@@ -56,11 +57,13 @@ def source_impact(db, user, project_id, source_id):
     for exercise in db.scalars(select(m.Exercise).where(m.Exercise.project_id == project_id)):
         if (
             exercise.assessment.get("claim_id") in visible_claim_ids
-            or source_id in exercise.expected_source_ids
+            or related_ids.intersection(exercise.expected_source_ids)
+            or related_ids.intersection(exercise.assessment.get("staging_source_versions", {}))
         ):
             if all(
                 can_read_source(db, user, db.get(m.Source, sid), include_inactive=True)
-                for sid in exercise.expected_source_ids
+                for sid in set(exercise.expected_source_ids)
+                | set(exercise.assessment.get("staging_source_versions", {}))
             ):
                 exercises.append({"id": exercise.id, "title": exercise.title, "status": exercise.status})
     return {

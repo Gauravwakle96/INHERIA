@@ -1,25 +1,16 @@
 # Round 3 form answers — review draft
-
 Do not submit this draft unchanged. Confirm the exact Round 2 form promises,
 event/team/participant details and final public PDF link. Dates and limitations
 below are intentional. Do not classify pre-window work as event-window delivery.
-
 ## Product and repository
-
 Product: https://inheria.onrender.com
-
 Judge guide: https://inheria.onrender.com/demo
-
 Repository: https://github.com/Gauravwakle96/INHERIA
-
 Judge login instructions: Select Open judge workspace on the sign-in page. No
 email/password or API key is required. The visitor enters as Rudransh and can
 switch to Gaurav/Savinay within a separate expiring case-study workspace.
-
 Final PDF Drive URL: pending.
-
 ## Complete list of working features
-
 Organisation registration and password-based sign-in
 Project membership and backend-enforced project/source permissions
 One-click isolated judge workspace with scoped Gaurav/Savinay/Rudransh switching
@@ -51,19 +42,15 @@ Previewed role-checked project actions requiring confirmation
 Permission-filtered audit and privacy views
 Explainable source, verification, gap and acceptance metrics
 Day/night themes, responsive navigation, keyboard support and reduced motion
-
 This list describes features present in the final product, not their event-window
 eligibility. GitHub snapshots and extraction are bounded. Live generated chat
 requires the organisation's configured provider key; the anonymous judge workflow
 works without one. No external cloud command or recovery execution is provided.
-
 ## Technical architecture and implementation summary
-
 INHERIA uses React 19, TypeScript, Vite, TanStack Query, React Router, React Flow,
 Lucide and Inter. A FastAPI modular monolith uses Pydantic validation, SQLAlchemy
 and Alembic. Render Free hosts the Docker image containing the frontend and API;
 Neon PostgreSQL stores the deployed data. SQLite is the local/test option.
-
 Authorised source selection is followed by bounded parsing, privacy filtering,
 versioned source/chunk storage and structured evidence extraction. Claims retain
 exact quoted spans and source IDs/versions. Only authorised human reviewers can
@@ -73,13 +60,11 @@ checks are separate state-machine gates. Source replacement/revocation removes
 stale authority and requires revalidation. Persisted job checkpoints support
 bounded investigation resume. Background work runs in-process; there is no
 separate durable distributed worker in this version.
-
 Document libraries include PyMuPDF and python-docx; GitHub is accessed through
 REST/httpx rather than whole-repository cloning. Passwords use Argon2. Sessions
 and invite/demo capabilities are opaque random tokens stored as hashes, with
 HttpOnly cookies, origin checks and CSRF protection. Provider/connector secrets
 use server-side Fernet encryption and are never returned to the frontend.
-
 The optional chat provider interface supports Responses/Chat Completions and
 provider-specific models. Live Bynara agnes-2.5-flash operation was recorded;
 AgentRouter previously failed for the application. Low/High alters context and
@@ -87,112 +72,81 @@ output budgets, not a claimed Bynara reasoning parameter. External model output
 is structurally validated against accessible citations. Citation structure does
 not establish semantic correctness. No embeddings/pgvector or separate graph
 database is used in this MVP. PyMuPDF's AGPL/commercial licence is disclosed.
-
 The difficult boundary is maintaining permissions and evidence currency through
 extraction, reports, conversations, ownership transfer and changed/deleted sources.
 The UI cannot bypass those server-side checks or mark unsupported claims verified.
+## Testing details and four-workstream delivery
+See docs/four-workstream-acceptance.md and docs/verification.md for the final
+run records. During this increment the full suite passed 187 tests with 88%
+coverage, followed by focused checks for final source/staging boundaries. Final
+full-run totals are recorded in verification.md. Ruff, frontend lint/typecheck/
+production build and Python/Node dependency audits passed on executed checks.
+Browser acceptance passed the complete judge handover, own-password invitation /
+revocation and source permission editor reopen/readers. Responsive axe checks
+were included; these are not independent usability or screen-reader audits.
+A separate 60-document authored internal holdout (34 prose) passed 50/50 candidate
+precision/recall, owners 20/20, rationale 14/14 and dependency endpoints 14/14.
+Its initial run is frozen; labels are internal and implementation-informed, not
+independent enterprise accuracy evidence. Original development fixtures remain.
+## Improvement 1 — conditional on the submitted commitment
+Conversational Digital Successor includes private saved history, encrypted org
+settings, Low/High budgets, citations, confirmation-gated actions and fallback.
+The promised 50 questions plus four paired calls were run against Bynara
+agnes-2.5-flash. Only 9/50 primary requests returned valid provider responses;
+41 fell back. Unsupported questions abstained 25/25 including fallback and 4/4
+in the successful provider subset. All 19 cited primary responses had correct
+source attribution; five generated project parts were supported in AI-assisted
+review. The >=95% broad semantic citation target is not established from such
+limited successful model coverage. Low/High measurements and upstream HTTP-200
+error diagnostics are published. Provider reliability remains a known limit.
+If the submitted promise is instead Secure Team Onboarding & Access Readiness,
+it includes single-use/expiring invites, recipient passwords, source permission
+editor, missing knowledge access requests, explicit handover access-readiness,
+admin member/invite revocation, old grant removal and audited decisions. Scope
+covers INHERIA knowledge, not AWS grants. Confirm actual submitted text; do not
+claim a substitution was approved without evidence.
+## Improvement 2 — Investigation and source-change intelligence
+Delivered supported prose duty/rationale/dependency extraction, historical and
+negated abstention, evidence-linked source/change impacts, deletion/revocation
+revalidation and resumable source-version checkpoints. Fresh 60-document / 34
+prose internal holdout met the 85% field / 90% precision targets. Existing ten
+source-change/recovery cases and five interruption positions were exercised;
+permission-loss and deletion cases are separately tested. General unrestricted
+or multilingual prose accuracy and independent label audit remain limitations.
+## Improvement 3 — Practical transfer validation and recovery
+Delivered deployment/rollback/recovery rubrics, cited staging observation records,
+separate documentation walkthroughs, current evidence/version checks, rejected
+and reopened transfer recovery, acceptance, supervisor assessment history and
+critical prerequisite closure gates. Twelve distinct positive/negative API role
+journeys passed, including correction, rejection, reapproval, source revocation,
+wrong actor and incomplete rubric. The complete browser handover passed.
+No actual production, rollback or recovery command is executed by INHERIA.
+## Final regression checks
 
-## Testing details
+198 backend tests passed with 90% line coverage; 14 judge/onboarding/source and
+nine chat browser tests passed. Three affected source-change/revocation UI checks
+passed again after the final backend change. Lint/typecheck/build, Python/Node
+dependency audits and credential-pattern review passed in the documented scope.
+See verification.md for bounded accessibility and test/setup limitations.
 
-The last full backend run passed 169 tests with 90% line coverage. Coverage spans
-auth, tenants/projects/source ACLs, files, connectors, chat, provenance, decision
-authority, source removal, invitations, interruptions and transfer recovery.
-The completion module had 100% line coverage in that run. One existing
-FastAPI/Starlette TestClient deprecation warning remains.
-
-During the announced window, three direct judge-entry browser tests passed for
-entry, refresh, separate visitors, duplicate-click protection, retry and disabled
-demo configuration. Six day/night 390/768/1440px sign-in/guide checks passed with
-no overflow or automated WCAG A/AA violations. The complete real UI handover
-journey also passed again. Frontend lint, typecheck, production build and npm
-audit passed. Backend was unchanged in this direct-entry increment; its earlier
-full test run is not misrepresented as a new event-window run.
-
-Earlier live verification covered the private ShopEase project's twelve pages,
-three roles, exact closed handover link, refresh persistence and mobile/day versus
-desktop/night layouts. The recorded case study has eight accepted responsibilities
-and eleven reviewed explanations; it asserts no real Wipro/cloud operation.
-GitHub CI, deployment checks and evidence are linked in docs/verification.md.
-
-Testing found source-removal completion ambiguity, rejected drafts counted as
-current ownership, misleading obsolete chat documentation and rapid-reload test
-rate limits. The first three were corrected; the expanded browser journey uses
-normal navigation/pacing without disabling rate limits. Automated accessibility
-checks are bounded coverage, not screen-reader certification or external user
-feedback.
-
-Extraction evaluation currently has 60 development fixtures, 46/47 candidate
-precision and 46/46 recall with 47/47 exact citations. One prose false positive
-remains. There is no held-out split or independent annotation audit. These figures
-are controlled rule measurements, not general model accuracy or business impact.
-
-## Improvement 1 — conditional on the actually submitted text
-
-The saved PDF commits to Conversational Digital Successor: project-scoped history,
-encrypted organisation provider configuration, Low/High modes, cited answers and
-previewed role-checked actions. Those capabilities are implemented. A live Bynara
-reply with two citations was verified in 66.4 seconds; history persisted. Provider
-failure preserves the conversation and offers labelled evidence retrieval.
-AgentRouter failed for this application and Bynara was added after an authorised
-provider change. The promised 50-question held-out assessment and both-mode live
-quality/latency/usage benchmark are incomplete; do not claim those targets passed.
-
-If the actual submitted form instead commits to Secure Team Onboarding & Access
-Readiness, describe the expiring single-use invitation, own-password join,
-existing-account identity preservation, independent source-access decisions,
-revocation, audit and permission/expiry tests. Confirm that this replacement was
-submitted before using it as the graded Improvement 1.
-
-## Improvement 2 — based on the saved PDF
-
-Committed: Investigation and source-change intelligence, with validated prose,
-evidence-linked impact, changed/deleted-source revalidation and resumable
-checkpoints. Delivered: supported prose field-span extraction, source replacement
-with filtered downstream impact, stale authority invalidation and checkpointed
-resume. Ten source-change/revocation and five interrupted-job scenarios are
-covered by tests. The 60-document/20-prose quantity is met by the development
-fixture; the promised development/held-out separation and held-out field/precision
-targets remain incomplete. Misses and measurement limits are published.
-
-## Improvement 3 — based on the saved PDF
-
-Committed: Practical transfer validation and recovery, with responsibility-specific
-rubrics, cited evidence, rejected/reopened recovery and critical-gap closure gates.
-Delivered: release-review, rollback-readiness and recovery-evidence criteria,
-incoming-only acceptance, selected citations/escalation, independent supervisor
-assessment, required prerequisites and corrected-version reapproval/reassessment.
-Positive/negative role, rejection, correction, revocation and reopening flows are
-tested. The app records evidence walkthroughs; actual authorised external staging
-execution must be performed and evidenced separately. No production command runs.
-
-## Other improvements after Round 2
-
-Workspace-wide completed handover/contribution summaries, accurate current-owner
-counts, exact-version navigation, provider-scoped Bynara configuration and live
-reply verification, source-deletion completion checks, and clearer judge guides.
-Direct sign-in judge access, retry/duplicate-start feedback and the reconciled
-submission checklist were added after the announced Round 3 opening. Earlier
-changes retain their real timestamps and are not described as built inside it.
-
-## Roadmap
-
-1. Establish a separately labelled, permissioned held-out corpus and 50-question
-   conversation benchmark; publish misses, citation entailment, abstention and
-   per-mode latency/usage before claiming broader extraction/model quality.
-2. Add verified identity, reset/invitation email and designed SSO/MFA, with upstream
-   source-permission synchronisation and an enterprise security review.
-3. Introduce durable queued workers/checkpoints, scheduled refresh/retention and
-   operational monitoring/backups once traffic and hosting resources justify it.
-4. Add permissioned staging-test artifact intake and specialist assessment so
-   organisations can verify operational readiness from actual evidence without
-   autonomous production execution.
-
-No cross-company learning, predictive continuity score or unrestricted automation
-is promised. Roadmap requires real user feedback, authorised test environments,
-reliable data, provider agreements and appropriate hosting resources.
-
+## What does not work yet
+Bynara upstream chat reliability is poor in the measured run: 41/50 primary calls
+used fallback. Fallback excerpts are useful evidence, not generated chat answers.
+No claim of model-wide >=95% semantic citation correctness is made. Missing or
+contradictory evidence needs human resolution; English pattern extraction has
+bounded coverage. SSO/MFA, email invitation/password reset, OAuth/webhooks,
+source-system permission mirroring, distributed workers, vector retrieval,
+automated retention and enterprise governance remain unimplemented. Staging
+observation authenticity and operational competence require authorised external
+records and qualified supervisors. In-process work and free hosting are limited.
+## Future roadmap
+1. Reliable provider agreement/routing and independently labelled semantic
+   evaluation; improve retrieval and unrestricted prose on fresh held-out data.
+2. Verified identity, reset/invitation email, designed SSO/MFA and permission sync.
+3. Durable workers, scheduled reviews/retention and operational monitoring/backups.
+4. Real permissioned staging evidence and specialist review without production
+   automation. No fabricated operations, company data or external feedback.
 ## Required confirmations still owned by the team leader
-
 Exact event/team/leader/member details; the actual submitted Round 2 commitments;
 truthful participant attribution; final PDF and publicly accessible Viewer link;
 private-window link tests; accurate feature/improvement declaration; once-only

@@ -22,11 +22,13 @@ The conversational successor also has private history, citations, Low/High modes
 encrypted provider settings and previewed role-checked actions. Bynara's
 `agnes-2.5-flash` returned a live cited reply, recorded separately in
 bynara-live-verification.json. AgentRouter previously failed for the web app.
-The promised 50-question held-out model evaluation is not complete, and the
-existing 60-document extraction evaluation is a development fixture rather than
-a held-out corpus. Those acceptance limits must be disclosed if the saved PDF
-is the final submitted commitment. Secure onboarding is additional progress
-unless the team confirms that it was actually submitted as a replacement.
+The new 50-question live chat assessment is complete with measured provider failures;
+the fresh 60-document internal extraction holdout met targets. See
+[four-workstream acceptance](four-workstream-acceptance.md) for denominators,
+methodology, Low/High benchmarks, 12 transfer scenarios, onboarding revocation and
+remaining quality limits. Secure onboarding is additional unless its replacement
+was actually submitted. Broad semantic citation accuracy and provider reliability
+are not declared achieved.
 
 ## Announced event window
 

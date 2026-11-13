@@ -1,0 +1,44 @@
+{
+  "scope": "Four development probes with compact selected evidence after the initial holdout. Not held-out validation, and no change to deployed selection.",
+  "results": [
+    {
+      "id": "q01",
+      "success": false,
+      "safe_error": "Provider response could not be validated. Verified retrieval remains available.",
+      "elapsed_ms": 47752
+    },
+    {
+      "id": "q11",
+      "success": false,
+      "safe_error": "Provider returned an upstream error without an answer. Your conversation is saved; current evidence retrieval remains available.",
+      "elapsed_ms": 61062
+    },
+    {
+      "id": "q21",
+      "success": false,
+      "safe_error": "Provider response could not be validated. Verified retrieval remains available.",
+      "elapsed_ms": 9433
+    },
+    {
+      "id": "q36",
+      "success": true,
+      "draft": {
+        "parts": [
+          {
+            "kind": "unknown",
+            "text": "Insufficient Evidence \u2014 The supplied evidence does not contain a verified statement confirming whether the audit storage engine is PostgreSQL or MongoDB. The uncertainty records indicate conflicting decision sources on this claim requiring human resolution.",
+            "references": []
+          }
+        ],
+        "action_ids": []
+      },
+      "usage": {
+        "completion_tokens": 221,
+        "prompt_tokens": 1042,
+        "total_tokens": 1263
+      },
+      "elapsed_ms": 40793
+    }
+  ],
+  "conclusion": "Only 1/4 follow-up calls succeeded; no reliable benefit established. Kept existing application context; provider upstream remains a material limitation."
+}
