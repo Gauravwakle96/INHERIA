@@ -2,6 +2,18 @@
 
 Historical and current verification results are separated below. Results apply to the implemented MVP in this workspace; they do not certify an enterprise deployment.
 
+## Confirmed three-improvement acceptance — 14 November 2026 IST
+
+The team leader confirmed that Onboarding & Access Readiness, Investigation &
+Source Changes, and Practical Transfer & Recovery were submitted; chat was not.
+The exact scope is recorded in [the acceptance map](three-improvements-acceptance.md).
+The dedicated existing-test runner passed **34/34**: seven onboarding, ten distinct
+source-change/revocation inputs, five interruption positions and twelve role
+journeys. The earlier ten changed-note variants alone were not counted as ten
+distinct lifecycle scenarios. No application code, provider settings, account
+data or historical reports changed for this scope reconciliation. One existing
+TestClient deprecation warning remains. See [machine-readable results](three-improvements-tests.json).
+
 ## Four-workstream completion checks — 14 November 2026 IST
 
 Chat model selection follow-up: an unconfigured/disabled workspace now shows

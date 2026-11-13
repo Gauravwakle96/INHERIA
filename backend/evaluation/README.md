@@ -17,3 +17,11 @@ the organisation's source is true. Automated rubric checks need human review.
 No private source, login, API credential or live application database is used by
 the evaluators. The optional live chat runner accepts a key from an environment
 variable, sends only the authored corpus, and caps concurrency and output budgets.
+
+The confirmed submitted improvements are onboarding/access readiness,
+investigation/source changes and practical transfer/recovery. Reproduce their
+34 existing isolated acceptance journeys from `backend` using
+`uv run python evaluation/run_submission_acceptance.py`. The report records
+seven onboarding cases, ten distinct source-change/revocation inputs, five
+interruption positions and twelve role flows; it never invokes a paid model or
+uses a production database. Chat evaluation is additional historical work.

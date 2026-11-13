@@ -15,6 +15,12 @@ Each visitor gets an isolated expiring workspace with 13 authored source documen
 Inspect sources → investigate → inspect exact citations and resolve conflicts → review → generate/approve → assign → switch to Savinay → accept and submit evidence → switch to Rudransh → assess criteria and required recovery checks → close.
 Try rejected work or document replacement to inspect recovery gates. See the [judge guide](docs/judge-guide.md), [Round 3 delivery mapping](docs/round3-delivery.md) and [verification](docs/verification.md).
 
+The three confirmed submitted improvements are **Secure Team Onboarding & Access
+Readiness**, **Investigation & Source-Change Intelligence**, and **Practical
+Transfer Validation & Recovery**. Their [acceptance map](docs/three-improvements-acceptance.md)
+records exact promises, implemented flows, measured tests and limits. Chat is
+additional product functionality and is outside those three commitments.
+
 ## Run locally
 
 Free hosting instructions: [Render Free + Neon Free](docs/deployment.md).

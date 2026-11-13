@@ -19,33 +19,34 @@ to Gaurav or Savinay. No shared email/password or model key is needed. The demo
 must not expose the owner's account credentials, production documents or provider
 key. Judges can upload their own permitted documents into their isolated workspace.
 
-## Reconcile the submitted promises
+## Confirmed submitted improvements
 
-The saved Round 2 PDF, page 15, records these three commitments:
+The team leader confirmed the actual submitted form text in this session:
 
-1. **Conversational Digital Successor:** private project conversations, encrypted
-   organisation provider configuration, Low/High effort, cited answers and
-   previewed role-checked actions; a 50-question held-out evaluation and measured
-   provider/model latency/usage across both modes were promised.
-2. **Investigation and source-change intelligence:** validated prose extraction,
-   cited impact paths, revalidation and resumable checkpoints; a separately labelled
-   60-document corpus with 20 prose cases and development/held-out separation,
-   ten source-change cases and five interruption scenarios were promised.
-3. **Practical transfer validation and recovery:** scenario rubrics, cited staging
-   evidence, rejected/reopened recovery and critical-prerequisite closure gates;
-   at least twelve positive/negative role flows were promised.
+1. **Secure Team Onboarding & Access Readiness:** single-use expiring invitations,
+   recipient passwords, project/document access management, missing-access
+   requests/decisions, invitation/member revocation and an audit trail. Scope is
+   INHERIA knowledge, not AWS or other external-system grants.
+2. **Investigation and Source-Change Intelligence:** prose owner/rationale/dependency
+   extraction, cited impact/revalidation and resumable checkpoints; at least 60
+   labelled documents including 20 prose cases, >=85% field accuracy and >=90%
+   candidate precision on an internal held-out set, ten source-change/revocation
+   cases and five interruption scenarios.
+3. **Practical Transfer Validation & Recovery:** responsibility-specific deployment,
+   rollback and recovery rubrics; cited staging records; rejected/reopened recovery;
+   critical-prerequisite closure gates; traceable reapproval; twelve positive/negative
+   role flows; independent supervisor assessment and no production commands.
 
-The user later discussed replacing the first commitment with Secure Team Onboarding
-& Access Readiness. The actual submitted form text must be confirmed before claiming
-that replacement fulfilled Improvement 1. Existing code and recorded checks are
-evidence of implementation, not evidence that the organiser approved a substitution.
+Chat was not one of the three submitted commitments. The saved PDF's different
+list is historical and has not been altered. No further commitment confirmation
+is needed based on the leader's clarification; no organiser approval is inferred.
 
-Updated acceptance evidence is in [the four-workstream report](four-workstream-acceptance.md).
-The fresh 60-document internal holdout met field/precision targets. The 50-question
-live chat assessment and both-mode measurements were completed, but only 9/50
-primary requests produced valid provider replies; 41 used labelled fallback.
-Model-wide ≥95% semantic citation correctness remains unestablished. Real external
-staging/restore outcomes require permissioned records and are not fabricated.
+See [the exact promise-to-delivery map](three-improvements-acceptance.md) and
+[executed acceptance results](three-improvements-tests.json): seven onboarding,
+ten distinct source-change/revocation, five interrupted-source and twelve transfer
+journeys passed. The frozen 60-document / 34-prose internal holdout met its field
+and precision thresholds. Independent labels and external staging/restore evidence
+remain scope limitations, not fabricated completed operations.
 
 ## Event timing and attribution
 

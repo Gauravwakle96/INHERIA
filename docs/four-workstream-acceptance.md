@@ -1,10 +1,11 @@
 # Four workstreams: measured acceptance, 14 November 2026
 
-This records completed implementation and measured limitations. It does not
-replace the three commitments actually submitted in Round 2. The saved PDF lists
-the conversational successor, investigation/change intelligence and practical
-transfer. Secure onboarding is additional unless the team confirms its submitted
-replacement. Preserve the event-window baseline and historical submission.
+This preserves implementation and measured limitations for four workstreams.
+The team leader has now confirmed that the submitted Round 2 improvements were
+onboarding/access readiness, investigation/change intelligence and practical
+transfer. Conversational Digital Successor was additional, not a submitted
+commitment. Use [the three-improvement acceptance map](three-improvements-acceptance.md)
+for submission assessment; preserve this historical chat evaluation separately.
 
 | Workstream | Implemented acceptance | Remaining limit |
 | --- | --- | --- |

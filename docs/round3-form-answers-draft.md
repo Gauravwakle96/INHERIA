@@ -1,7 +1,7 @@
 # Round 3 form answers — review draft
 
-Do not submit this draft unchanged. Confirm the exact Round 2 form promises,
-event/team/participant details and final public PDF link. Dates and limitations
+The three submitted Round 2 improvements are confirmed by the team leader.
+Review event/team/participant details and the final public PDF link before submitting. Dates and limitations
 below are intentional. Do not classify pre-window work as event-window delivery.
 
 ## Product and repository
@@ -85,44 +85,43 @@ The difficult boundary is maintaining permissions and evidence currency through
 extraction, reports, conversations, ownership transfer and changed/deleted sources.
 The UI cannot bypass those server-side checks or mark unsupported claims verified.
 
-## Testing details and four-workstream delivery
-See docs/four-workstream-acceptance.md and docs/verification.md for the final
-run records. During this increment the full suite passed 187 tests with 88%
-coverage, followed by focused checks for final source/staging boundaries. Final
-full-run totals are recorded in verification.md. Ruff, frontend lint/typecheck/
-production build and Python/Node dependency audits passed on executed checks.
-Browser acceptance passed the complete judge handover, own-password invitation /
-revocation and source permission editor reopen/readers. Responsive axe checks
-were included; these are not independent usability or screen-reader audits.
-A separate 60-document authored internal holdout (34 prose) passed 50/50 candidate
-precision/recall, owners 20/20, rationale 14/14 and dependency endpoints 14/14.
-Its initial run is frozen; labels are internal and implementation-informed, not
-independent enterprise accuracy evidence. Original development fixtures remain.
+## Testing details for the three submitted improvements
 
-## Improvement 1 — conditional on the submitted commitment
-Conversational Digital Successor includes private saved history, encrypted org
-settings, Low/High budgets, citations, confirmation-gated actions and fallback.
-The promised 50 questions plus four paired calls were run against Bynara
-agnes-2.5-flash. Only 9/50 primary requests returned valid provider responses;
-41 fell back. Unsupported questions abstained 25/25 including fallback and 4/4
-in the successful provider subset. All 19 cited primary responses had correct
-source attribution; five generated project parts were supported in AI-assisted
-review. The >=95% broad semantic citation target is not established from such
-limited successful model coverage. Low/High measurements and upstream HTTP-200
-error diagnostics are published. Provider reliability remains a known limit.
-If the submitted promise is instead Secure Team Onboarding & Access Readiness,
-it includes single-use/expiring invites, recipient passwords, source permission
-editor, missing knowledge access requests, explicit handover access-readiness,
-admin member/invite revocation, old grant removal and audited decisions. Scope
-covers INHERIA knowledge, not AWS grants. Confirm actual submitted text; do not
-claim a substitution was approved without evidence.
+See docs/three-improvements-acceptance.md, docs/three-improvements-tests.json and
+docs/verification.md. The dedicated acceptance run passed 34 existing isolated
+journeys: seven onboarding/access, ten genuinely distinct source-change/revocation,
+five interruption positions and twelve practical-transfer role flows. Tests use
+owned SQLite fixtures and mocked GitHub; no model call or production mutation.
+The last full backend run passed 198 tests with 90% coverage. Frontend lint,
+typecheck/build, dependency audits and judge/onboarding/source browser checks
+passed in their recorded scope. Automated accessibility is bounded, not an
+independent user study or full screen-reader audit.
+
+A separate 60-document internal holdout (34 prose) passed candidate precision/recall
+50/50, owner 20/20, rationale 14/14 and dependency endpoints 14/14. These exceed
+the submitted thresholds on the bounded set. Its frozen initial run is preserved;
+labels are internal and implementation-informed, not independent enterprise
+accuracy evidence. Original development fixtures remain separate.
+
+## Improvement 1 — Secure Team Onboarding & Access Readiness
+
+Delivered expiring single-use hashed invitation links, recipient-chosen passwords,
+authenticated existing-account joins without role/password overwrite, project and
+document access management, incoming access requests and independent decisions.
+Team displays current membership and accessible/missing handover knowledge.
+Administrators revoke invitations or project membership; old explicit source
+reader grants and pending requests are revoked, with an audit trail. A source's
+last-reader removal never opens access to everyone. Derived knowledge also obeys
+parent-source permissions. Live browser checks passed invitation/password/revoke
+and source-reader editing. This grants INHERIA knowledge access only; no automatic
+AWS access. Links require private sharing; email/SSO/MFA remain outside this scope.
 
 ## Improvement 2 — Investigation and source-change intelligence
 Delivered supported prose duty/rationale/dependency extraction, historical and
 negated abstention, evidence-linked source/change impacts, deletion/revocation
 revalidation and resumable source-version checkpoints. Fresh 60-document / 34
-prose internal holdout met the 85% field / 90% precision targets. Existing ten
-source-change/recovery cases and five interruption positions were exercised;
+prose internal holdout met the 85% field / 90% precision targets. Ten distinct
+source-change/revocation cases and five interruption positions passed;
 permission-loss and deletion cases are separately tested. General unrestricted
 or multilingual prose accuracy and independent label audit remain limitations.
 
@@ -144,26 +143,30 @@ dependency audits and credential-pattern review passed in the documented scope.
 See verification.md for bounded accessibility and test/setup limitations.
 
 ## What does not work yet
-Bynara upstream chat reliability is poor in the measured run: 41/50 primary calls
-used fallback. Fallback excerpts are useful evidence, not generated chat answers.
-No claim of model-wide >=95% semantic citation correctness is made. Missing or
-contradictory evidence needs human resolution; English pattern extraction has
-bounded coverage. SSO/MFA, email invitation/password reset, OAuth/webhooks,
+
+Missing or contradictory evidence needs human resolution; English pattern
+extraction has bounded coverage and internal evaluation labels. SSO/MFA, email
+invitation/password reset, OAuth/webhooks,
 source-system permission mirroring, distributed workers, vector retrieval,
 automated retention and enterprise governance remain unimplemented. Staging
 observation authenticity and operational competence require authorised external
 records and qualified supervisors. In-process work and free hosting are limited.
 
+The optional chatbot is additional functionality, outside the three submitted
+improvements. Its upstream provider was unreliable in the recorded run (41/50
+fallbacks); it must not be presented as reliable full conversational automation.
+
 ## Future roadmap
-1. Reliable provider agreement/routing and independently labelled semantic
-   evaluation; improve retrieval and unrestricted prose on fresh held-out data.
+1. Independently labelled permissioned extraction evaluation; improve prose,
+   dependency impact and conflict analysis on fresh held-out data.
 2. Verified identity, reset/invitation email, designed SSO/MFA and permission sync.
 3. Durable workers, scheduled reviews/retention and operational monitoring/backups.
 4. Real permissioned staging evidence and specialist review without production
    automation. No fabricated operations, company data or external feedback.
 
 ## Required confirmations still owned by the team leader
-Exact event/team/leader/member details; the actual submitted Round 2 commitments;
-truthful participant attribution; final PDF and publicly accessible Viewer link;
+
+Exact event/team/leader/member details; truthful participant attribution;
+final PDF and publicly accessible Viewer link;
 private-window link tests; accurate feature/improvement declaration; once-only
 submission. The form has not been submitted by this work.

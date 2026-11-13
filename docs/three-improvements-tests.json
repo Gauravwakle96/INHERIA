@@ -1,0 +1,244 @@
+{
+  "recorded_at": "2026-11-13T21:25:43.164061+00:00",
+  "commit_under_test": "677291657846823069a325bd5e2a6a65b9b3ceb7",
+  "scope": "Confirmed submitted improvements: onboarding, investigation/change intelligence, practical transfer. Existing fixture/API tests; no chatbot/provider benchmark or live production data.",
+  "groups": {
+    "onboarding": [
+      {
+        "scenario": "single-use invitation and revocation",
+        "test": "tests/test_round3.py::test_invitation_is_hashed_single_use_and_revocable",
+        "status": "passed"
+      },
+      {
+        "scenario": "expired invitation",
+        "test": "tests/test_round3.py::test_expired_invitation_cannot_be_accepted",
+        "status": "passed"
+      },
+      {
+        "scenario": "independent source-access review",
+        "test": "tests/test_round3.py::test_access_grant_requires_independent_authorised_reviewer",
+        "status": "passed"
+      },
+      {
+        "scenario": "missing access and authorised restoration",
+        "test": "tests/test_onboarding_completion.py::test_access_readiness_withholds_hidden_titles_and_recovers_after_authorised_grant",
+        "status": "passed"
+      },
+      {
+        "scenario": "member revocation across knowledge boundaries",
+        "test": "tests/test_onboarding_completion.py::test_membership_revocation_denies_all_project_boundaries_and_is_audited",
+        "status": "passed"
+      },
+      {
+        "scenario": "document reader changes and readiness",
+        "test": "tests/test_source_access_completion.py::test_document_access_changes_update_readiness_without_erasing_knowledge",
+        "status": "passed"
+      },
+      {
+        "scenario": "last-reader removal never widens access",
+        "test": "tests/test_source_access_completion.py::test_member_revocation_never_widens_a_last_reader_acl",
+        "status": "passed"
+      }
+    ],
+    "source_change_revocation": [
+      {
+        "scenario": "uploaded document replacement and reviewed recovery",
+        "test": "tests/test_round3.py::test_source_change_invalidates_tasks_and_can_recover_without_duplicates[Check schema compatibility]",
+        "status": "passed"
+      },
+      {
+        "scenario": "explicit source revocation",
+        "test": "tests/test_ingestion.py::test_revocation_invalidates_all_dependent_claims",
+        "status": "passed"
+      },
+      {
+        "scenario": "source deletion purges persisted derivatives",
+        "test": "tests/test_ingestion.py::test_delete_api_removes_persisted_derived_quotes",
+        "status": "passed"
+      },
+      {
+        "scenario": "successor loses document access before closure",
+        "test": "tests/test_round3_boundaries.py::test_manager_cannot_close_when_successor_loses_source_access",
+        "status": "passed"
+      },
+      {
+        "scenario": "parent change invalidates transitive interview evidence",
+        "test": "tests/test_source_access_completion.py::test_parent_change_traces_and_invalidates_transitive_interview_evidence",
+        "status": "passed"
+      },
+      {
+        "scenario": "GitHub credential revocation and reauthorisation",
+        "test": "tests/test_connector_permissions.py::test_permission_loss_invalidates_cached_knowledge_but_transient_failures_preserve_it[401-failure_headers0-Invalid authorization-True]",
+        "status": "passed"
+      },
+      {
+        "scenario": "GitHub repository permission revoked",
+        "test": "tests/test_connector_permissions.py::test_permission_loss_invalidates_cached_knowledge_but_transient_failures_preserve_it[403-failure_headers1-Repository permission denied-True]",
+        "status": "passed"
+      },
+      {
+        "scenario": "GitHub repository becomes inaccessible",
+        "test": "tests/test_connector_permissions.py::test_permission_loss_invalidates_cached_knowledge_but_transient_failures_preserve_it[404-failure_headers2-Repository not found-True]",
+        "status": "passed"
+      },
+      {
+        "scenario": "complete repository tree proves document removal",
+        "test": "tests/test_connector_permissions.py::test_definitive_file_disappearance_invalidates_cache_but_partial_trees_do_not[complete_tree]",
+        "status": "passed"
+      },
+      {
+        "scenario": "README removal and source revalidation",
+        "test": "tests/test_connector_permissions.py::test_definitive_file_disappearance_invalidates_cache_but_partial_trees_do_not[readme_404]",
+        "status": "passed"
+      }
+    ],
+    "interrupted_jobs": [
+      {
+        "scenario": "interruption at source 2",
+        "test": "tests/test_round3.py::test_interrupted_investigation_has_durable_idempotent_resume[2]",
+        "status": "passed"
+      },
+      {
+        "scenario": "interruption at source 3",
+        "test": "tests/test_round3.py::test_interrupted_investigation_has_durable_idempotent_resume[3]",
+        "status": "passed"
+      },
+      {
+        "scenario": "interruption at source 4",
+        "test": "tests/test_round3.py::test_interrupted_investigation_has_durable_idempotent_resume[4]",
+        "status": "passed"
+      },
+      {
+        "scenario": "interruption at source 7",
+        "test": "tests/test_round3.py::test_interrupted_investigation_has_durable_idempotent_resume[7]",
+        "status": "passed"
+      },
+      {
+        "scenario": "interruption at source 11",
+        "test": "tests/test_round3.py::test_interrupted_investigation_has_durable_idempotent_resume[11]",
+        "status": "passed"
+      }
+    ],
+    "transfer_roles": [
+      {
+        "scenario": "incoming_accepts",
+        "test": "tests/test_transfer_acceptance.py::test_transfer_role_and_recovery_scenarios[incoming_accepts]",
+        "status": "passed"
+      },
+      {
+        "scenario": "wrong_owner_rejected",
+        "test": "tests/test_transfer_acceptance.py::test_transfer_role_and_recovery_scenarios[wrong_owner_rejected]",
+        "status": "passed"
+      },
+      {
+        "scenario": "missing_evidence_rejected",
+        "test": "tests/test_transfer_acceptance.py::test_transfer_role_and_recovery_scenarios[missing_evidence_rejected]",
+        "status": "passed"
+      },
+      {
+        "scenario": "supervisor_cannot_submit",
+        "test": "tests/test_transfer_acceptance.py::test_transfer_role_and_recovery_scenarios[supervisor_cannot_submit]",
+        "status": "passed"
+      },
+      {
+        "scenario": "incoming_cannot_self_assess",
+        "test": "tests/test_transfer_acceptance.py::test_transfer_role_and_recovery_scenarios[incoming_cannot_self_assess]",
+        "status": "passed"
+      },
+      {
+        "scenario": "rejection_blocks_closure",
+        "test": "tests/test_transfer_acceptance.py::test_transfer_role_and_recovery_scenarios[rejection_blocks_closure]",
+        "status": "passed"
+      },
+      {
+        "scenario": "partial_rubric_rejected",
+        "test": "tests/test_transfer_acceptance.py::test_transfer_role_and_recovery_scenarios[partial_rubric_rejected]",
+        "status": "passed"
+      },
+      {
+        "scenario": "revision_then_reassessment",
+        "test": "tests/test_transfer_acceptance.py::test_transfer_role_and_recovery_scenarios[revision_then_reassessment]",
+        "status": "passed"
+      },
+      {
+        "scenario": "critical_prerequisite_blocks",
+        "test": "tests/test_transfer_acceptance.py::test_transfer_role_and_recovery_scenarios[critical_prerequisite_blocks]",
+        "status": "passed"
+      },
+      {
+        "scenario": "reopen_requires_reapproval",
+        "test": "tests/test_transfer_acceptance.py::test_transfer_role_and_recovery_scenarios[reopen_requires_reapproval]",
+        "status": "passed"
+      },
+      {
+        "scenario": "staging_citation_recorded",
+        "test": "tests/test_transfer_acceptance.py::test_transfer_role_and_recovery_scenarios[staging_citation_recorded]",
+        "status": "passed"
+      },
+      {
+        "scenario": "staging_revocation_blocks",
+        "test": "tests/test_transfer_acceptance.py::test_transfer_role_and_recovery_scenarios[staging_revocation_blocks]",
+        "status": "passed"
+      }
+    ]
+  },
+  "total": 34,
+  "passed": 34,
+  "pytest_exit_code": 0,
+  "test_file_sha256": {
+    "tests/test_round3.py": "5cd266d020c705ad65771b25292b25e5c534b76b62c0d2ed843f5a885dc76d0b",
+    "tests/test_onboarding_completion.py": "312d396dbaac1c34841eb6043aad0fd6e5ee3854a5f5238d9a210aba972905fe",
+    "tests/test_source_access_completion.py": "53e9662e20a84a83792df85fa19a76f7a4ec072879d2c154a57325c79fca2dda",
+    "tests/test_ingestion.py": "3e69eac27f4f9ae47a84b18f26ce1719376b818e98471d48b5879eb7dfa0840e",
+    "tests/test_round3_boundaries.py": "88156f1786b1d423eac44d03c342d7b53887e90226699ab58a2253914a26d9e3",
+    "tests/test_connector_permissions.py": "47a4ce3224d8a9e16cf5e1960c7519cc7da67b37849ad32b50063823403f77c3",
+    "tests/test_transfer_acceptance.py": "18d56d2fdca9375d82a556d4bdc872e7f094c74a6cf427a06b21df1df65afa72"
+  },
+  "extraction_first_run": {
+    "corpus_sha256": "288830a9936613d6cfc938d047e0d92857c44ff86a0c5fb7028c7ffc3f42cb34",
+    "methodology": "Separately authored internal holdout; not independently labelled or representative enterprise data. Frozen before first evaluation; future tuning converts it to regression data.",
+    "counts": {
+      "documents": 60,
+      "prose_documents": 34
+    },
+    "candidate": {
+      "true_positives": 50,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "precision": {
+        "numerator": 50,
+        "denominator": 50,
+        "rate": 1.0
+      },
+      "recall": {
+        "numerator": 50,
+        "denominator": 50,
+        "rate": 1.0
+      }
+    },
+    "fields": {
+      "owner": {
+        "numerator": 20,
+        "denominator": 20,
+        "rate": 1.0
+      },
+      "rationale": {
+        "numerator": 14,
+        "denominator": 14,
+        "rate": 1.0
+      },
+      "dependency": {
+        "numerator": 14,
+        "denominator": 14,
+        "rate": 1.0
+      }
+    },
+    "targets_met": true
+  },
+  "limits": [
+    "These are distinct source-change inputs; the earlier ten replacement-text variants alone do not establish ten different failure scenarios.",
+    "Interrupted jobs use five positions in the same checkpoint algorithm, as promised; not a distributed-worker durability test.",
+    "Extraction labels are internal and implementation-informed; targets met on the bounded initial holdout, not independently proven enterprise accuracy.",
+    "Staging records are authored fixtures and supervisor assessments; no external deployment, restore or operational competence is certified."
+  ]
+}

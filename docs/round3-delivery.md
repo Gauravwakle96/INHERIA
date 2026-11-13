@@ -1,13 +1,12 @@
 # Round 3 delivery and submission mapping
 
-This is an implementation map, not an awarded score or guarantee. The exact
-Round 2 form commitments have not yet been confirmed. The saved Round 2 PDF,
-page 15, names Conversational Digital Successor, Investigation and source-change
-intelligence, and Practical transfer validation and recovery. It is preserved;
-the later proposed replacement of the conversational commitment must not be
-described as organiser-approved without confirmation. See
-[the final submission checklist](round3-submission-checklist.md) for exact acceptance
-targets and the announced event-window baseline.
+The team leader confirmed the submitted Round 2 commitments: Secure Team
+Onboarding & Access Readiness, Investigation and Source-Change Intelligence, and
+Practical Transfer Validation & Recovery. Chat was not submitted as one of the
+three. The earlier saved PDF is preserved as historical material; its different
+list no longer creates an open decision. See [the exact promise-to-delivery map](three-improvements-acceptance.md)
+and [submission checklist](round3-submission-checklist.md). This is not an awarded
+score or event eligibility certification.
 
 ## Implementation workstreams already present
 
@@ -17,18 +16,13 @@ targets and the announced event-window baseline.
 | Knowledge Change & Impact Investigation | A changed runbook exposes downstream impact; interrupted investigations resume from committed source-version checkpoints instead of losing progress or duplicating candidates. | Document replacement/Impact UI, exact prose field spans, old evidence invalidation, Resume action, ten change/recovery and five interruption-position cases. |
 | Handover Recovery & Practical Validation | Missing information/rejected tasks lead to a corrected version and reconfirmation. Acceptance, supervisor criteria and mandatory cited checks gate closure. | Reopen/history, required prerequisites, scenario-v2 criteria, incoming-only acceptance, independent assessment and complete browser journey. |
 
-These workstreams are not interchangeable with the exact submitted commitments.
-The conversational successor also has private history, citations, Low/High modes,
-encrypted provider settings and previewed role-checked actions. Bynara's
-`agnes-2.5-flash` returned a live cited reply, recorded separately in
-bynara-live-verification.json. AgentRouter previously failed for the web app.
-The new 50-question live chat assessment is complete with measured provider failures;
-the fresh 60-document internal extraction holdout met targets. See
-[four-workstream acceptance](four-workstream-acceptance.md) for denominators,
-methodology, Low/High benchmarks, 12 transfer scenarios, onboarding revocation and
-remaining quality limits. Secure onboarding is additional unless its replacement
-was actually submitted. Broad semantic citation accuracy and provider reliability
-are not declared achieved.
+These are the three submitted improvements. Their acceptance evidence includes
+the 60-document / 34-prose internal holdout, ten distinct source-change/revocation
+inputs, five interruption positions, twelve transfer-role journeys and live
+onboarding/source-permission checks. See [three-improvement acceptance](three-improvements-acceptance.md)
+for exact denominators and scope limits. Existing conversational features are
+additional product work; historical provider failures remain disclosed but are
+not an unfulfilled target of these three commitments.
 
 ## Announced event window
 
@@ -44,10 +38,10 @@ eligibility or relabel earlier work as event-window delivery.
 | Criterion | Implemented proof | Practical limit |
 | --- | --- | --- |
 | Completeness / 25 | Documents/GitHub sources → reconstruction → citations → correction/approval → scoped handover → acceptance → practical review → closure; isolated judge demo. | GitHub is bounded REST/PAT, not OAuth/webhooks. No production/cloud automation. |
-| Improvements / 20 | Three changes above with UI, storage, trust gates and regression tests. | Exact submitted commitments still require reconciliation. |
+| Improvements / 20 | Confirmed three changes above with UI, storage, trust gates and measured acceptance. | Extraction labels are internal; staging observations require permissioned external records and human review. |
 | Reliability / 20 | Invalid files, missing/conflicting evidence, permission loss, stale versions, duplicate/expired invitations, provider failure, interruptions and source changes handled explicitly. | English rule extraction and in-process workers are bounded; free hosting and upstream quotas can interrupt availability. |
 | Usability / 20 | Sign-in demo, role-specific guide, grouped handover, next risk questions, linked metrics, day/night, responsive layouts and keyboard/axe checks. | Automated axe is not a full screen-reader or usability study; no external feedback claims. |
-| Documentation / 15 | Setup/env/API/schema/architecture, judge script, evaluation, tests, status, privacy/security/accessibility explanation and roadmap. | Participant identities/contributions and exact form commitments need team confirmation. |
+| Documentation / 15 | Setup/env/API/schema/architecture, judge script, evaluation, tests, status, privacy/security/accessibility explanation and roadmap. | Final PDF/link and participant identities/contributions remain team-owned submission items. |
 
 ## Privacy, security, accessibility and responsible design
 
@@ -70,8 +64,8 @@ assistive-technology audit and external user study remain future work.
 
 ## Limitations and realistic next steps
 
-1. Establish approved live provider access and evaluate on independently labelled
-   held-out permissioned documents; broaden semantic extraction and conflict review.
+1. Evaluate on independently labelled permissioned documents; broaden prose
+   extraction and evidence-linked dependency/conflict review on fresh holdouts.
 2. Add production invitation email, verified identity/password recovery and a
    designed SSO/MFA integration; preserve least-privilege source permissions.
 3. Replace in-process jobs with durable worker orchestration when traffic warrants
