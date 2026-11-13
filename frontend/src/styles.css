@@ -1121,3 +1121,9 @@ input[type=checkbox] { accent-color: var(--cyan); width: 16px; height: 16px; fle
   .project-select { flex: 1; }
   .project-select select { width: 100%; }
 }
+
+.journey-status { padding: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.journey-status > div { flex: 1; min-width: 220px; }
+.journey-status strong { margin-left: 12px; }
+.journey-status p { margin: 8px 0; }
+.journey-status details { flex-basis: 100%; }

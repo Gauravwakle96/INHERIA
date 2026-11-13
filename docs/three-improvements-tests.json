@@ -1,6 +1,7 @@
 {
-  "recorded_at": "2026-11-13T21:25:43.164061+00:00",
-  "commit_under_test": "677291657846823069a325bd5e2a6a65b9b3ceb7",
+  "recorded_at": "2026-11-13T22:39:22.198095+00:00",
+  "working_tree_dirty": true,
+  "commit_under_test": "d3dadbd36c92be1455187c06220d4fb7b86e325c",
   "scope": "Confirmed submitted improvements: onboarding, investigation/change intelligence, practical transfer. Existing fixture/API tests; no chatbot/provider benchmark or live production data.",
   "groups": {
     "onboarding": [
@@ -186,7 +187,7 @@
   "passed": 34,
   "pytest_exit_code": 0,
   "test_file_sha256": {
-    "tests/test_round3.py": "5cd266d020c705ad65771b25292b25e5c534b76b62c0d2ed843f5a885dc76d0b",
+    "tests/test_round3.py": "bb3127afc1b49331dfcc27a2535b76bf3e335d7087adbc8c0c06519be8ca7f48",
     "tests/test_onboarding_completion.py": "312d396dbaac1c34841eb6043aad0fd6e5ee3854a5f5238d9a210aba972905fe",
     "tests/test_source_access_completion.py": "53e9662e20a84a83792df85fa19a76f7a4ec072879d2c154a57325c79fca2dda",
     "tests/test_ingestion.py": "3e69eac27f4f9ae47a84b18f26ce1719376b818e98471d48b5879eb7dfa0840e",

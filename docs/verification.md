@@ -2,6 +2,55 @@
 
 Historical and current verification results are separated below. Results apply to the implemented MVP in this workspace; they do not certify an enterprise deployment.
 
+## Completed judge workspace and final reliability checks — 14 November 2026 IST
+
+The sign-in page now offers completed and fresh visitor workspaces. The sanitised
+owner-account case study contains 51 sources and 81 claims, with eight accepted
+responsibilities and eleven reviewed walkthroughs. It copies authored project
+history, not account credentials, AI configuration or private conversations. The
+owner account is unchanged. See [implementation and limits](completion-hardening.md).
+
+- Final-tree backend suite: **210 passed, 90% line coverage**, with one existing
+  TestClient deprecation warning. New coverage includes typed readiness checks,
+  critical-gap follow-up gates, stale-version approval, duplicate acceptance,
+  dependency paths/cycles/permissions, completed-tenant isolation and actual
+  process exit/restart/resume without duplicate claims.
+- The exact-three acceptance runner passed **34/34** again. It records the
+  baseline commit plus dirty-tree status and test-file hashes, so the result
+  does not incorrectly identify an uncommitted tree as the previous commit.
+- The complete fresh browser journey passed through reconstruction, exact source
+  inspection, claim approval, handover approval, successor acceptance, practical
+  submissions, supervisor review, required follow-ups and closure. Completed
+  role/graph/continuation/refresh checks passed at 390/768/1440 pixels with zero
+  automated axe A/AA findings in that bounded run.
+- Initial expanded browser checks exposed test synchronisation/locator errors:
+  a prerequisite loop ran before data loaded, then the accountable-person field
+  needed an explicit accessible name. Both were fixed and the full journey
+  reran successfully. A later fresh-mode run encountered the correctly surfaced
+  local demo-capacity limit after many test copies; it was rerun against a new
+  owned QA database, preserving the production capacity limit.
+- Frontend lint/typecheck/production build, configured Ruff lint/format,
+  full npm audit and locked Python pip-audit passed. Changed/new text credential
+  patterns were reviewed across 50 files with zero sensitive matches. Whitespace
+  review passed; the public snapshot excludes real account email/passwords,
+  sessions, provider keys and connection credentials.
+- A separate 24-document prose challenge first produced 10/11 candidate precision,
+  10/14 recall, 2/5 owner, 1/3 rationale and 1/4 dependency-field accuracy.
+  The original report remains published. Broader passive-owner, multiword-
+  dependency, rationale and uncertain joint-owner handling passes its now-known
+  regression cases; this does not create a fresh independent accuracy claim.
+- A separate local toy HTTP/SQLite exercise actually detected a broken release,
+  rolled back to healthy v1, rejected an empty backup and restored three orders
+  from the correct backup with integrity checks. The executed record is
+  downloadable for source ingestion and human review. It is not cloud execution,
+  an INHERIA PostgreSQL disaster-recovery test or a human competence assessment.
+
+Source lifecycle, knowledge review, membership/source ACL and handover mutations
+use PostgreSQL project-row locks; SQLite tests do not prove PostgreSQL race
+behaviour. UI approval checks the expected version; other edits do not universally
+use optimistic version checks. Independent usability feedback is still unrecorded.
+Target deployment verification is recorded separately after release below.
+
 ## Confirmed three-improvement acceptance — 14 November 2026 IST
 
 The team leader confirmed that Onboarding & Access Readiness, Investigation &

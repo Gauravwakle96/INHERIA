@@ -45,6 +45,13 @@ Db = Annotated[Session, Depends(get_db)]
 User = Annotated[m.User, Depends(current_user)]
 
 
+@router.get("/projects/{project_id}/continuation-plan")
+def continuation(project_id: str, db: Db, user: User, summary: bool = False):
+    from app.continuation_plan import continuation_plan
+
+    return continuation_plan(db, user, project_id, summary)
+
+
 def safe_text(value: str):
     # Even feedback and interview explanations must not become a secret bypass.
     from app.ingestion import privacy_filter
@@ -338,6 +345,9 @@ def evidence(project_id: str, source_id: str, db: Db, user: User):
 
 @router.post("/projects/{project_id}/claims/{claim_id}/review", response_model=s.Record)
 def review_claim(project_id: str, claim_id: str, payload: s.Review, db: Db, user: User):
+    db.scalar(select(m.Project).where(m.Project.id == project_id).with_for_update())
+    db.expire_all()
+    db.info.pop("inheria_evidence_context", None)
     project_access(db, user, project_id, write=True)
     require_role(user, {"admin", "manager", "lead"})
     claim = entity(db, m.Claim, user, project_id, claim_id)
@@ -405,6 +415,9 @@ def review_claim(project_id: str, claim_id: str, payload: s.Review, db: Db, user
 
 @router.post("/projects/{project_id}/claims/{claim_id}/resolve-authority", response_model=s.Record)
 def resolve_authority(project_id: str, claim_id: str, payload: s.Note, db: Db, user: User):
+    db.scalar(select(m.Project).where(m.Project.id == project_id).with_for_update())
+    db.expire_all()
+    db.info.pop("inheria_evidence_context", None)
     project_access(db, user, project_id, write=True)
     safe_text(payload.note)
     claim = entity(db, m.Claim, user, project_id, claim_id)
@@ -833,7 +846,7 @@ def create_transition(project_id: str, payload: s.TransitionCreate, db: Db, user
 
 @router.post("/projects/{project_id}/transitions/{transition_id}/generate", response_model=s.Record)
 def generate(project_id: str, transition_id: str, db: Db, user: User):
-    transition = get_transition(db, user, project_id, transition_id)
+    transition = get_transition(db, user, project_id, transition_id, lock=True)
     generate_handover(db, user, transition)
     db.commit()
     return serialize_transition(db, user, transition)
@@ -843,7 +856,11 @@ def generate(project_id: str, transition_id: str, db: Db, user: User):
 def approve(project_id: str, transition_id: str, payload: s.Note, db: Db, user: User):
     project_access(db, user, project_id, write=True)
     require_role(user, {"admin", "manager", "lead"})
-    transition = get_transition(db, user, project_id, transition_id)
+    transition = get_transition(db, user, project_id, transition_id, lock=True)
+    if payload.expected_version is not None and payload.expected_version != transition.version:
+        raise HTTPException(
+            409, "This handover version changed. Reload and review the current version before approval."
+        )
     if transition.status != "generated":
         raise HTTPException(409, "Generate the evidence-backed handover before approval.")
     require_current_handover(db, user, transition)
@@ -865,18 +882,26 @@ def approve(project_id: str, transition_id: str, payload: s.Note, db: Db, user: 
 class PrerequisiteBody(BaseModel):
     title: str = Field(min_length=3, max_length=200)
     required: bool = True
+    category: Literal[
+        "general", "deployment", "rollback", "recovery", "restore_test", "access", "backup_owner", "follow_up"
+    ] = "general"
+    owner_id: str | None = None
+    due_date: str | None = Field(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$")
+    gap_id: str | None = None
 
 
 class PrerequisiteReview(BaseModel):
     status: Literal["confirmed", "pending"]
     note: str = Field(min_length=10, max_length=2000)
     evidence_ids: list[str] = Field(default_factory=list, max_length=20)
+    owner_id: str | None = None
+    due_date: str | None = Field(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$")
 
 
 @router.post("/projects/{project_id}/transitions/{transition_id}/reopen", response_model=s.Record)
 def reopen(project_id: str, transition_id: str, payload: s.Note, db: Db, user: User):
     safe_text(payload.note)
-    transition = get_transition(db, user, project_id, transition_id)
+    transition = get_transition(db, user, project_id, transition_id, lock=True)
     reopen_handover(db, user, transition, payload.note)
     db.commit()
     return serialize_transition(db, user, transition)
@@ -886,7 +911,7 @@ def reopen(project_id: str, transition_id: str, payload: s.Note, db: Db, user: U
 def add_prerequisite(project_id: str, transition_id: str, payload: PrerequisiteBody, db: Db, user: User):
     project_access(db, user, project_id, write=True)
     safe_text(payload.title)
-    transition = get_transition(db, user, project_id, transition_id)
+    transition = get_transition(db, user, project_id, transition_id, lock=True)
     if transition.status in {"approved", "in_progress", "closed"}:
         raise HTTPException(409, "Reopen the active handover before changing required prerequisites.")
     items = list((transition.report or {}).get("prerequisites", []))
@@ -901,7 +926,26 @@ def add_prerequisite(project_id: str, transition_id: str, payload: PrerequisiteB
         "note": "",
         "evidence_ids": [],
         "source_versions": {},
+        "category": payload.category,
+        "owner_id": payload.owner_id,
+        "due_date": payload.due_date,
+        "gap_id": payload.gap_id,
     }
+    if payload.owner_id:
+        project_person(db, user, project_id, payload.owner_id)
+    if payload.gap_id:
+        gap = entity(db, m.Gap, user, project_id, payload.gap_id)
+        if not set(gap.source_ids).issubset({s.id for s in visible_sources(db, user, project_id)}):
+            raise HTTPException(404, "Gap unavailable.")
+    if payload.category == "follow_up" and (not payload.owner_id or not payload.due_date):
+        raise HTTPException(422, "Choose a follow-up owner and due date.")
+    if payload.due_date:
+        from datetime import date
+
+        try:
+            date.fromisoformat(payload.due_date)
+        except ValueError:
+            raise HTTPException(422, "Choose a valid follow-up date.") from None
     items.append(item)
     transition.report = {**(transition.report or {}), "prerequisites": items}
     audit(
@@ -923,13 +967,28 @@ def review_prerequisite(
 ):
     project_access(db, user, project_id, write=True)
     safe_text(payload.note)
-    transition = get_transition(db, user, project_id, transition_id)
+    transition = get_transition(db, user, project_id, transition_id, lock=True)
     if transition.status == "closed":
         raise HTTPException(409, "Closed handovers preserve their recorded prerequisites.")
     items = [dict(item) for item in (transition.report or {}).get("prerequisites", [])]
     item = next((item for item in items if item["id"] == prerequisite_id), None)
     if not item:
         raise HTTPException(404, "Prerequisite unavailable.")
+    if not set(item.get("gap_source_ids", [])).issubset(
+        {s.id for s in visible_sources(db, user, project_id)}
+    ):
+        raise HTTPException(404, "Required check evidence is unavailable.")
+    if payload.owner_id:
+        project_person(db, user, project_id, payload.owner_id)
+        item["owner_id"] = payload.owner_id
+    if payload.due_date:
+        from datetime import date
+
+        try:
+            date.fromisoformat(payload.due_date)
+        except ValueError:
+            raise HTTPException(422, "Choose a valid follow-up date.") from None
+        item["due_date"] = payload.due_date
     refs = {
         e["id"]: e
         for c in current_claims(db, user, project_id, verified=True)
@@ -947,6 +1006,21 @@ def review_prerequisite(
         or not set(payload.evidence_ids).issubset(successor_refs)
     ):
         raise HTTPException(422, "Confirm with current verified evidence accessible to the incoming owner.")
+    if payload.status == "confirmed":
+        from app.readiness_checks import validate_check
+
+        validate_check(
+            item,
+            [refs[e] for e in payload.evidence_ids],
+            access_ready=all(
+                c["id"] in {claim.id for claim in current_claims(db, successor, project_id, verified=True)}
+                for c in transition.report.get("knowledge", [])
+            ),
+        )
+        if item.get("gap_source_ids") and not set(item["gap_source_ids"]).intersection(
+            refs[e]["source_id"] for e in payload.evidence_ids
+        ):
+            raise HTTPException(422, "Cite the knowledge supporting this specific critical gap.")
     history = list(item.get("history", []))
     history.append({"status": item["status"], "reviewed_at": m.utcnow().isoformat()})
     item.update(
@@ -975,7 +1049,7 @@ def review_prerequisite(
 
 @router.post("/projects/{project_id}/transitions/{transition_id}/assign", response_model=s.Record)
 def assign(project_id: str, transition_id: str, payload: s.Assignment, db: Db, user: User):
-    transition = get_transition(db, user, project_id, transition_id)
+    transition = get_transition(db, user, project_id, transition_id, lock=True)
     transfer = assign_responsibility(
         db, user, transition, payload.claim_id, payload.successor_id, payload.backup_id
     )
@@ -990,12 +1064,15 @@ def respond(project_id: str, transfer_id: str, payload: s.TransferResponse, db: 
         raise HTTPException(403, "Only the assigned incoming owner may accept or reject this responsibility.")
     if transfer.claim_id not in {c.id for c in current_claims(db, user, project_id, verified=True)}:
         raise HTTPException(409, "Responsibility evidence must be current, verified and accessible.")
-    transition = get_transition(db, user, project_id, transfer.transition_id)
+    transition = get_transition(db, user, project_id, transfer.transition_id, lock=True)
     if transition.status not in {"approved", "in_progress"}:
         raise HTTPException(409, "This transition cannot accept ownership responses.")
     require_current_handover(db, user, transition)
     safe_text(payload.note)
-    transfer.status = "accepted" if payload.action == "accept" else "rejected"
+    new_status = "accepted" if payload.action == "accept" else "rejected"
+    if transfer.status == new_status and transfer.note == payload.note:
+        return serialize_transfer(db, transfer)
+    transfer.status = new_status
     transfer.note = payload.note
     transfer.accepted_at = m.utcnow() if payload.action == "accept" else None
     audit(
@@ -1013,7 +1090,7 @@ def respond(project_id: str, transfer_id: str, payload: s.TransferResponse, db: 
 
 @router.post("/projects/{project_id}/transitions/{transition_id}/exercises", response_model=s.Record)
 def exercises(project_id: str, transition_id: str, db: Db, user: User):
-    transition = get_transition(db, user, project_id, transition_id)
+    transition = get_transition(db, user, project_id, transition_id, lock=True)
     generate_exercises(db, user, transition)
     db.commit()
     return serialize_transition(db, user, transition)
@@ -1022,7 +1099,7 @@ def exercises(project_id: str, transition_id: str, db: Db, user: User):
 @router.post("/projects/{project_id}/exercises/{exercise_id}/submit", response_model=s.Record)
 def submit(project_id: str, exercise_id: str, payload: s.Submission, db: Db, user: User):
     exercise = entity(db, m.Exercise, user, project_id, exercise_id)
-    transition = get_transition(db, user, project_id, exercise.transition_id)
+    transition = get_transition(db, user, project_id, exercise.transition_id, lock=True)
     if transition.successor_id != user.id:
         raise HTTPException(403, "Only the assigned incoming employee may submit this exercise.")
     if transition.status not in {"approved", "in_progress"}:
@@ -1058,6 +1135,15 @@ def submit(project_id: str, exercise_id: str, payload: s.Submission, db: Db, use
             )
     elif payload.staging_evidence_ids:
         raise HTTPException(422, "Select staging observation when attaching staging evidence.")
+    if (
+        exercise.status in {"submitted", "passed"}
+        and exercise.answer == payload.answer
+        and exercise.evidence_ids == payload.evidence_ids
+        and exercise.escalation == payload.escalation
+        and exercise.assessment.get("validation_kind", "knowledge_walkthrough") == payload.validation_kind
+        and exercise.assessment.get("staging_evidence_ids", []) == payload.staging_evidence_ids
+    ):
+        return serialize_exercise(exercise)
     exercise.answer, exercise.evidence_ids, exercise.escalation = (
         payload.answer,
         payload.evidence_ids,
@@ -1094,7 +1180,7 @@ def assess(project_id: str, exercise_id: str, payload: s.Assessment, db: Db, use
     project_access(db, user, project_id, write=True)
     require_role(user, {"admin", "manager", "lead"})
     exercise = entity(db, m.Exercise, user, project_id, exercise_id)
-    transition = get_transition(db, user, project_id, exercise.transition_id)
+    transition = get_transition(db, user, project_id, exercise.transition_id, lock=True)
     if transition.successor_id == user.id or exercise.assessment.get("submitted_by") == user.id:
         raise HTTPException(403, "A different authorised supervisor must validate this exercise.")
     if exercise.status != "submitted":
@@ -1162,10 +1248,12 @@ def readiness_report(project_id: str, transition_id: str, db: Db, user: User):
 def close(project_id: str, transition_id: str, db: Db, user: User):
     project_access(db, user, project_id, write=True)
     require_role(user, {"admin", "manager", "lead"})
-    transition = get_transition(db, user, project_id, transition_id)
+    transition = get_transition(db, user, project_id, transition_id, lock=True)
     report = readiness(db, user, transition)
     if not report["ready"]:
         raise HTTPException(409, "Transition remains incomplete: " + " ".join(report["blockers"]))
+    if transition.status == "closed":
+        return serialize_transition(db, user, transition)
     if transition.status != "closed":
         record_ownership_transfer(db, user, transition)
     transition.status = "closed"

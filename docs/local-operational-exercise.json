@@ -1,0 +1,56 @@
+{
+  "run_id": "local-5e6d5b8121e3",
+  "executed_at": "2026-11-13T22:15:36.777244+00:00",
+  "environment": "isolated local test environment",
+  "artifact_sha256": "386bbf6fe96ce8b63979366ea013f9d3c3a0d99150cee1d644abab0727a5a5e0",
+  "events": [
+    {
+      "operation": "release_health",
+      "version": "v1",
+      "status": 200,
+      "observed": {
+        "version": "v1",
+        "orders": 3,
+        "healthy": true
+      }
+    },
+    {
+      "operation": "release_health",
+      "version": "broken-v2",
+      "status": 503,
+      "observed": {
+        "version": "broken-v2",
+        "orders": 3,
+        "healthy": false
+      }
+    },
+    {
+      "operation": "release_health",
+      "version": "v1",
+      "status": 200,
+      "observed": {
+        "version": "v1",
+        "orders": 3,
+        "healthy": true
+      }
+    },
+    {
+      "operation": "restore_integrity",
+      "artifact_sha256": "e04ba97145ab6c175f8da230fe01503d457f56f9c504b2f68111963c30c61d67",
+      "orders": 0,
+      "total": 0,
+      "integrity": "ok",
+      "passed": false
+    },
+    {
+      "operation": "restore_integrity",
+      "artifact_sha256": "386bbf6fe96ce8b63979366ea013f9d3c3a0d99150cee1d644abab0727a5a5e0",
+      "orders": 3,
+      "total": 800,
+      "integrity": "ok",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "scope": "Actual local toy-service process and SQLite exercises executed by the coding agent. No Wipro, AWS, production or independent human competence claim. This does not test PostgreSQL or INHERIA disaster recovery."
+}

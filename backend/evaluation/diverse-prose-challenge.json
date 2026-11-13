@@ -1,0 +1,262 @@
+{
+  "version": "diverse-prose-challenge-2026-11-14-v1",
+  "methodology": "24 internally authored challenge documents frozen before evaluation; labels reviewed by the implementing coding agent, not independent. No tuning on this corpus. These results supplement the narrower 60-document internal evaluation. Multi-owner case expects abstention from selecting a single person.",
+  "documents": [
+    {
+      "id": "owner-clean",
+      "prose": true,
+      "text": "Ada Vale maintains the staging release pipeline. The reviewed register confirms this recurring duty.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale maintains the staging release pipeline. The reviewed register confirms this recurring duty.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "owner-sentence",
+      "prose": true,
+      "text": "During the weekly release, Ada Vale handles approval coordination. Quinn Reed provides incident coverage.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "During the weekly release, Ada Vale handles approval coordination. Quinn Reed provides incident coverage.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "owner-job-title",
+      "prose": true,
+      "text": "The deployment coordinator is Ada Vale. She checks approved releases every Friday.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The deployment coordinator is Ada Vale. She checks approved releases every Friday.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "owner-passive",
+      "prose": true,
+      "text": "Release approvals are owned by Quinn Reed according to the current responsibility register.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Release approvals are owned by Quinn Reed according to the current responsibility register.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "owner-team",
+      "prose": true,
+      "text": "Ada Vale and Quinn Reed jointly own release coordination. The ownership split is not specified.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale and Quinn Reed jointly own release coordination. The ownership split is not specified.",
+          "fields": {
+            "owner": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "owner-history",
+      "prose": true,
+      "text": "Ada Vale formerly maintained release coordination. Current ownership remains unconfirmed.",
+      "expected": []
+    },
+    {
+      "id": "owner-proposal",
+      "prose": true,
+      "text": "It is proposed that Quinn Reed owns release coordination after review.",
+      "expected": []
+    },
+    {
+      "id": "owner-negation",
+      "prose": true,
+      "text": "Ada Vale is not responsible for backup recovery. The database team covers it.",
+      "expected": []
+    },
+    {
+      "id": "owner-question",
+      "prose": true,
+      "text": "Who maintains the release pipeline? Ada Vale attended the previous walkthrough.",
+      "expected": []
+    },
+    {
+      "id": "owner-activity",
+      "prose": true,
+      "text": "Ada Vale authored twelve deployment commits. This log records activity rather than responsibility.",
+      "expected": []
+    },
+    {
+      "id": "decision-clean",
+      "prose": true,
+      "text": "We chose blue-green deployment because it preserves the previous application version.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "We chose blue-green deployment because it preserves the previous application version.",
+          "fields": {
+            "rationale": "it preserves the previous application version"
+          }
+        }
+      ]
+    },
+    {
+      "id": "decision-passive",
+      "prose": true,
+      "text": "Blue-green deployment was selected to reduce release risk. The decision was approved by the team.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "Blue-green deployment was selected to reduce release risk. The decision was approved by the team.",
+          "fields": {
+            "rationale": "reduce release risk"
+          }
+        }
+      ]
+    },
+    {
+      "id": "decision-due",
+      "prose": true,
+      "text": "We selected rolling releases due to the limited environment budget.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "We selected rolling releases due to the limited environment budget.",
+          "fields": {
+            "rationale": "the limited environment budget"
+          }
+        }
+      ]
+    },
+    {
+      "id": "decision-history",
+      "prose": true,
+      "text": "The former team chose rolling releases because of cost. This decision was superseded.",
+      "expected": []
+    },
+    {
+      "id": "dependency-clean",
+      "prose": true,
+      "text": "ShopEase depends on PostgreSQL for order persistence. This relationship is recorded in the current architecture.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "ShopEase depends on PostgreSQL for order persistence. This relationship is recorded in the current architecture.",
+          "fields": {
+            "from_component": "ShopEase",
+            "to_component": "PostgreSQL"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dependency-preface",
+      "prose": true,
+      "text": "For normal releases, release-pipeline depends on image-registry for approved images.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "For normal releases, release-pipeline depends on image-registry for approved images.",
+          "fields": {
+            "from_component": "release-pipeline",
+            "to_component": "image-registry"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dependency-multiword",
+      "prose": true,
+      "text": "Release pipeline depends on image registry for approved container images.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "Release pipeline depends on image registry for approved container images.",
+          "fields": {
+            "from_component": "Release pipeline",
+            "to_component": "image registry"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dependency-passive",
+      "prose": true,
+      "text": "Order processing is dependent on PostgreSQL. The application cannot persist orders without it.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "Order processing is dependent on PostgreSQL. The application cannot persist orders without it.",
+          "fields": {
+            "from_component": "Order processing",
+            "to_component": "PostgreSQL"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dependency-unknown",
+      "prose": true,
+      "text": "ShopEase might depend on Redis. The current configuration has not been inspected.",
+      "expected": []
+    },
+    {
+      "id": "dependency-negation",
+      "prose": true,
+      "text": "ShopEase does not depend on the retired cache service.",
+      "expected": []
+    },
+    {
+      "id": "missing-record",
+      "prose": true,
+      "text": "Insufficient evidence establishes who owns the restore test. Ask the coordinator for the current record.",
+      "expected": []
+    },
+    {
+      "id": "ordinary-context",
+      "prose": true,
+      "text": "Customers browse products and place orders through the shopping application. The overview contains no operational assignment.",
+      "expected": []
+    },
+    {
+      "id": "procedure",
+      "prose": true,
+      "text": "The deployment procedure checks build results, requires approval and verifies application health after the pipeline.",
+      "expected": [
+        {
+          "kind": "procedure",
+          "title": "The deployment procedure checks build results, requires approval and verifies application health after the pipeline.",
+          "fields": {}
+        }
+      ]
+    },
+    {
+      "id": "task",
+      "prose": true,
+      "text": "An unresolved timeout remains in the release queue. Capture logs and ask the platform team to inspect it.",
+      "expected": [
+        {
+          "kind": "task",
+          "title": "An unresolved timeout remains in the release queue. Capture logs and ask the platform team to inspect it.",
+          "fields": {}
+        }
+      ]
+    }
+  ]
+}

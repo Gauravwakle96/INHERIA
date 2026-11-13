@@ -1,0 +1,638 @@
+{
+  "version": "diverse-prose-challenge-2026-11-14-v1",
+  "corpus_sha256": "8734f901b6419e78e7fa42ac67521e516bccd8d11d2948eae35872e9034e2f1a",
+  "methodology": "24 internally authored challenge documents frozen before evaluation; labels reviewed by the implementing coding agent, not independent. No tuning on this corpus. These results supplement the narrower 60-document internal evaluation. Multi-owner case expects abstention from selecting a single person.",
+  "counts": {
+    "documents": 24,
+    "prose_documents": 24
+  },
+  "candidate": {
+    "true_positives": 10,
+    "false_positives": 1,
+    "false_negatives": 4,
+    "precision": {
+      "numerator": 10,
+      "denominator": 11,
+      "rate": 0.909091
+    },
+    "recall": {
+      "numerator": 10,
+      "denominator": 14,
+      "rate": 0.714286
+    }
+  },
+  "fields": {
+    "owner": {
+      "numerator": 2,
+      "denominator": 5,
+      "rate": 0.4
+    },
+    "rationale": {
+      "numerator": 1,
+      "denominator": 3,
+      "rate": 0.333333
+    },
+    "dependency": {
+      "numerator": 1,
+      "denominator": 4,
+      "rate": 0.25
+    }
+  },
+  "exact_quotes": {
+    "numerator": 11,
+    "denominator": 11,
+    "rate": 1.0
+  },
+  "targets_met": false,
+  "false_positives": [
+    [
+      "decision-history",
+      "decision",
+      "The former team chose rolling releases because of cost. This decision was superseded."
+    ]
+  ],
+  "false_negatives": [
+    [
+      "owner-job-title",
+      "responsibility",
+      "The deployment coordinator is Ada Vale. She checks approved releases every Friday."
+    ],
+    [
+      "owner-passive",
+      "responsibility",
+      "Release approvals are owned by Quinn Reed according to the current responsibility register."
+    ],
+    [
+      "owner-team",
+      "responsibility",
+      "Ada Vale and Quinn Reed jointly own release coordination. The ownership split is not specified."
+    ],
+    [
+      "dependency-passive",
+      "dependency",
+      "Order processing is dependent on PostgreSQL. The application cannot persist orders without it."
+    ]
+  ],
+  "details": [
+    {
+      "id": "owner-clean",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale maintains the staging release pipeline. The reviewed register confirms this recurring duty.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale maintains the staging release pipeline. The reviewed register confirms this recurring duty.",
+          "summary": "Ada Vale maintains the staging release pipeline. The reviewed register confirms this recurring duty.",
+          "quote": "Ada Vale maintains the staging release pipeline. The reviewed register confirms this recurring duty.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": "Ada Vale",
+            "backup_id": null,
+            "component": "the staging release pipeline",
+            "critical": false,
+            "field_evidence": {
+              "owner_id": "Ada Vale maintains the staging release pipeline",
+              "component": "the staging release pipeline"
+            }
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Ada Vale",
+          "observed": "Ada Vale",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "owner-sentence",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "During the weekly release, Ada Vale handles approval coordination. Quinn Reed provides incident coverage.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "During the weekly release, Ada Vale handles approval coordination. Quinn Reed provides incident coverage.",
+          "summary": "During the weekly release, Ada Vale handles approval coordination. Quinn Reed provides incident coverage.",
+          "quote": "During the weekly release, Ada Vale handles approval coordination. Quinn Reed provides incident coverage.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": "Ada Vale",
+            "backup_id": null,
+            "component": "approval coordination",
+            "critical": false,
+            "field_evidence": {
+              "owner_id": "Ada Vale handles approval coordination",
+              "component": "approval coordination"
+            }
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Ada Vale",
+          "observed": "Ada Vale",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "owner-job-title",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The deployment coordinator is Ada Vale. She checks approved releases every Friday.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ],
+      "observed": [],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Ada Vale",
+          "observed": null,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "id": "owner-passive",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Release approvals are owned by Quinn Reed according to the current responsibility register.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ],
+      "observed": [],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Quinn Reed",
+          "observed": null,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "id": "owner-team",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale and Quinn Reed jointly own release coordination. The ownership split is not specified.",
+          "fields": {
+            "owner": null
+          }
+        }
+      ],
+      "observed": [],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": null,
+          "observed": null,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "id": "owner-history",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "owner-proposal",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "owner-negation",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "owner-question",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "owner-activity",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "decision-clean",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "We chose blue-green deployment because it preserves the previous application version.",
+          "fields": {
+            "rationale": "it preserves the previous application version"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "We chose blue-green deployment because it preserves the previous application version.",
+          "summary": "We chose blue-green deployment because it preserves the previous application version.",
+          "quote": "We chose blue-green deployment because it preserves the previous application version.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "rationale": "because it preserves the previous application version",
+              "topic": "chose blue-green deployment"
+            },
+            "rationale": "it preserves the previous application version",
+            "topic": "blue-green deployment"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "rationale",
+          "expected": "it preserves the previous application version",
+          "observed": "it preserves the previous application version",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "decision-passive",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "Blue-green deployment was selected to reduce release risk. The decision was approved by the team.",
+          "fields": {
+            "rationale": "reduce release risk"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "Blue-green deployment was selected to reduce release risk. The decision was approved by the team.",
+          "summary": "Blue-green deployment was selected to reduce release risk. The decision was approved by the team.",
+          "quote": "Blue-green deployment was selected to reduce release risk. The decision was approved by the team.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "topic": "selected to reduce release risk"
+            },
+            "topic": "to reduce release risk"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "rationale",
+          "expected": "reduce release risk",
+          "observed": "",
+          "passed": false
+        }
+      ]
+    },
+    {
+      "id": "decision-due",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "We selected rolling releases due to the limited environment budget.",
+          "fields": {
+            "rationale": "the limited environment budget"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "We selected rolling releases due to the limited environment budget.",
+          "summary": "We selected rolling releases due to the limited environment budget.",
+          "quote": "We selected rolling releases due to the limited environment budget.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "topic": "selected rolling releases due to the limited environment budget"
+            },
+            "topic": "rolling releases due to the limited environment budget"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "rationale",
+          "expected": "the limited environment budget",
+          "observed": "",
+          "passed": false
+        }
+      ]
+    },
+    {
+      "id": "decision-history",
+      "expected": [],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "The former team chose rolling releases because of cost. This decision was superseded.",
+          "summary": "The former team chose rolling releases because of cost. This decision was superseded.",
+          "quote": "The former team chose rolling releases because of cost. This decision was superseded.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "rationale": "because of cost",
+              "topic": "chose rolling releases"
+            },
+            "rationale": "of cost",
+            "topic": "rolling releases"
+          }
+        }
+      ],
+      "fields": []
+    },
+    {
+      "id": "dependency-clean",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "ShopEase depends on PostgreSQL for order persistence. This relationship is recorded in the current architecture.",
+          "fields": {
+            "from_component": "ShopEase",
+            "to_component": "PostgreSQL"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "ShopEase depends on PostgreSQL for order persistence. This relationship is recorded in the current architecture.",
+          "summary": "ShopEase depends on PostgreSQL for order persistence. This relationship is recorded in the current architecture.",
+          "quote": "ShopEase depends on PostgreSQL for order persistence. This relationship is recorded in the current architecture.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "dependency": "ShopEase depends on PostgreSQL"
+            },
+            "from_component": "ShopEase",
+            "to_component": "PostgreSQL"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "ShopEase",
+            "to_component": "PostgreSQL"
+          },
+          "observed": {
+            "from_component": "ShopEase",
+            "to_component": "PostgreSQL"
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "dependency-preface",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "For normal releases, release-pipeline depends on image-registry for approved images.",
+          "fields": {
+            "from_component": "release-pipeline",
+            "to_component": "image-registry"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "For normal releases, release-pipeline depends on image-registry for approved images.",
+          "summary": "For normal releases, release-pipeline depends on image-registry for approved images.",
+          "quote": "For normal releases, release-pipeline depends on image-registry for approved images.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {}
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "release-pipeline",
+            "to_component": "image-registry"
+          },
+          "observed": {
+            "from_component": null,
+            "to_component": null
+          },
+          "passed": false
+        }
+      ]
+    },
+    {
+      "id": "dependency-multiword",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "Release pipeline depends on image registry for approved container images.",
+          "fields": {
+            "from_component": "Release pipeline",
+            "to_component": "image registry"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "Release pipeline depends on image registry for approved container images.",
+          "summary": "Release pipeline depends on image registry for approved container images.",
+          "quote": "Release pipeline depends on image registry for approved container images.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {}
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "Release pipeline",
+            "to_component": "image registry"
+          },
+          "observed": {
+            "from_component": null,
+            "to_component": null
+          },
+          "passed": false
+        }
+      ]
+    },
+    {
+      "id": "dependency-passive",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "Order processing is dependent on PostgreSQL. The application cannot persist orders without it.",
+          "fields": {
+            "from_component": "Order processing",
+            "to_component": "PostgreSQL"
+          }
+        }
+      ],
+      "observed": [],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "Order processing",
+            "to_component": "PostgreSQL"
+          },
+          "observed": {
+            "from_component": null,
+            "to_component": null
+          },
+          "passed": false
+        }
+      ]
+    },
+    {
+      "id": "dependency-unknown",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "dependency-negation",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "missing-record",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "ordinary-context",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "procedure",
+      "expected": [
+        {
+          "kind": "procedure",
+          "title": "The deployment procedure checks build results, requires approval and verifies application health after the pipeline.",
+          "fields": {}
+        }
+      ],
+      "observed": [
+        {
+          "kind": "procedure",
+          "title": "The deployment procedure checks build results, requires approval and verifies application health after the pipeline.",
+          "summary": "The deployment procedure checks build results, requires approval and verifies application health after the pipeline.",
+          "quote": "The deployment procedure checks build results, requires approval and verifies application health after the pipeline.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {}
+          }
+        }
+      ],
+      "fields": []
+    },
+    {
+      "id": "task",
+      "expected": [
+        {
+          "kind": "task",
+          "title": "An unresolved timeout remains in the release queue. Capture logs and ask the platform team to inspect it.",
+          "fields": {}
+        }
+      ],
+      "observed": [
+        {
+          "kind": "task",
+          "title": "An unresolved timeout remains in the release queue. Capture logs and ask the platform team to inspect it.",
+          "summary": "An unresolved timeout remains in the release queue. Capture logs and ask the platform team to inspect it.",
+          "quote": "An unresolved timeout remains in the release queue. Capture logs and ask the platform team to inspect it.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {}
+          }
+        }
+      ],
+      "fields": []
+    }
+  ],
+  "limitations": [
+    "Internal authored holdout, no independent label audit.",
+    "Exact citation spans do not establish source truth.",
+    "English explicit patterns only; multilingual and unrestricted prose remain unvalidated."
+  ]
+}

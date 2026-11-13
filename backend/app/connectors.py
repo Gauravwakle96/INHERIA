@@ -534,7 +534,7 @@ def run_sync_job(job_id: str) -> None:
 
     from app.config import settings
     from app.database import SessionLocal
-    from app.models import Connection, Job, Source, User
+    from app.models import Connection, Job, Project, Source, User
     from app.security import audit, project_access
 
     with SessionLocal() as db:
@@ -575,6 +575,11 @@ def run_sync_job(job_id: str) -> None:
                 known_file_ids=known_file_ids,
             ) as connector:
                 snapshot = connector.fetch(since=connection.last_sync_at)
+            db.scalar(select(Project).where(Project.id == job.project_id).with_for_update())
+            db.expire_all()
+            project_access(db, user, job.project_id, write=True)
+            if connection.status == "revoked":
+                raise ConnectorError("The integration was revoked while synchronizing.", status="revoked")
             removed = _mark_sources_unavailable(
                 db,
                 connection,
@@ -598,6 +603,8 @@ def run_sync_job(job_id: str) -> None:
             imported = duplicates = quarantined = 0
             for document in snapshot.documents:
                 # Re-check revocation and actor authorization between each item.
+                db.scalar(select(Project).where(Project.id == job.project_id).with_for_update())
+                db.expire_all()
                 db.refresh(connection)
                 if connection.status == "revoked":
                     raise ConnectorError("The integration was revoked while synchronizing.", status="revoked")

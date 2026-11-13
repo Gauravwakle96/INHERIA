@@ -11,14 +11,15 @@ Judge guide: https://inheria.onrender.com/demo
 Repository: https://github.com/Gauravwakle96/INHERIA
 Judge login instructions: Select Open judge workspace on the sign-in page. No
 email/password or API key is required. The visitor enters as Rudransh and can
-switch to Gaurav/Savinay within a separate expiring case-study workspace.
+switch to Gaurav/Savinay within a separate expiring case-study workspace. The default completed mode includes 51 sources, eight accepted responsibilities and eleven reviewed walkthroughs. Try a fresh handover starts the same users with a new unapproved journey.
 Final PDF Drive URL: pending.
 
 ## Complete list of working features
 
 Organisation registration and password-based sign-in
 Project membership and backend-enforced project/source permissions
-One-click isolated judge workspace with scoped Gaurav/Savinay/Rudransh switching
+One-click completed and fresh judge workspaces with scoped Gaurav/Savinay/Rudransh switching
+Server-calculated next handover step and evidence-linked personal continuation plan
 Expiring single-use team invitations and recipient-chosen passwords
 Project membership revocation and current source-reader management
 Recipient handover knowledge-access readiness with independent access review
@@ -40,7 +41,8 @@ Versioned permission-filtered handover generation and human approval
 Successor responsibility acceptance/rejection and ownership-transfer records
 Practical walkthroughs with selected evidence, escalation and supervisor criteria
 Cited staging observation references with source-version checks and review history
-Required cited readiness prerequisites and blocked incomplete closure
+Typed readiness checks with category-relevant citations and blocked incomplete closure
+Critical-gap follow-ups with evidence, accountable project member and due date
 Handover reopening, correction, reapproval and reassessment
 Workspace-wide closed-handover summary and recorded participant contributions
 Private persisted Digital Successor conversations with Low/High context budgets
@@ -92,7 +94,7 @@ docs/verification.md. The dedicated acceptance run passed 34 existing isolated
 journeys: seven onboarding/access, ten genuinely distinct source-change/revocation,
 five interruption positions and twelve practical-transfer role flows. Tests use
 owned SQLite fixtures and mocked GitHub; no model call or production mutation.
-The last full backend run passed 198 tests with 90% coverage. Frontend lint,
+The last full backend run passed 210 tests with 90% coverage. Frontend lint,
 typecheck/build, dependency audits and judge/onboarding/source browser checks
 passed in their recorded scope. Automated accessibility is bounded, not an
 independent user study or full screen-reader audit.
@@ -122,8 +124,7 @@ negated abstention, evidence-linked source/change impacts, deletion/revocation
 revalidation and resumable source-version checkpoints. Fresh 60-document / 34
 prose internal holdout met the 85% field / 90% precision targets. Ten distinct
 source-change/revocation cases and five interruption positions passed;
-permission-loss and deletion cases are separately tested. General unrestricted
-or multilingual prose accuracy and independent label audit remain limitations.
+permission-loss and deletion cases are separately tested. A subsequent 24-document challenge exposed passive-owner, rationale and dependency misses; the original results remain published. General pattern fixes pass those now-known regression cases, including explicitly uncertain joint ownership. An actual checkpointed worker exit and new API process resume also passed without duplicates. General unrestricted or multilingual prose accuracy and independent label audit remain limitations.
 
 ## Improvement 3 — Practical transfer validation and recovery
 Delivered deployment/rollback/recovery rubrics, cited staging observation records,
@@ -132,11 +133,11 @@ and reopened transfer recovery, acceptance, supervisor assessment history and
 critical prerequisite closure gates. Twelve distinct positive/negative API role
 journeys passed, including correction, rejection, reapproval, source revocation,
 wrong actor and incomplete rubric. The complete browser handover passed.
-No actual production, rollback or recovery command is executed by INHERIA.
+A separate local toy-service exercise was actually run: a failed release was detected, v1 was restored, an empty backup was rejected and a correct SQLite backup restored three orders. Its downloadable record requires review and does not certify cloud operations, INHERIA PostgreSQL recovery or human competence. No production command is executed by INHERIA.
 
 ## Final regression checks
 
-198 backend tests passed with 90% line coverage; 14 judge/onboarding/source and
+210 backend tests passed with 90% line coverage; 14 judge/onboarding/source and
 nine chat browser tests passed. Three affected source-change/revocation UI checks
 passed again after the final backend change. Lint/typecheck/build, Python/Node
 dependency audits and credential-pattern review passed in the documented scope.

@@ -1,11 +1,11 @@
 # Judge demonstration guide
 
 Open https://inheria.onrender.com and choose **Open judge workspace** beside
-sign-in for direct access as Rudransh. No email/password is required. **Explore
+sign-in for the completed account case study as Rudransh: 51 sources, eight accepted responsibilities and eleven reviewed walkthroughs. Choose **Try a fresh handover** to perform the journey below from the beginning. No email/password is required. **Explore
 demo**, or https://inheria.onrender.com/demo, provides the scenario guide first.
 Free hosting may need about a minute to wake. Either start button creates an
 isolated workspace; no account, real company access or API key is needed.
-The ShopEase sources are authored examples, not actual Wipro/client records.
+The ShopEase sources are authored examples, not actual Wipro/client records. Completed mode copies recorded author-operated review history; each visitor edits only their own isolated tenant. Inspect **My continuation plan**, the populated graph and team contributions. Download executed isolated local toy-service evidence from the demo page to test upload and review. See [details](completion-hardening.md).
 
 ## Main journey
 

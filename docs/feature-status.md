@@ -47,3 +47,6 @@ internal extraction holdout met its targets. The 50-question live chat run found
 only 9/50 valid provider replies, so Conversational Digital Successor remains
 provider-limited despite working private history, citations/actions and fallback.
 See [measured delivery and limits](four-workstream-acceptance.md).
+
+
+Final experience update: completed account case-study mode, guided current continuation steps, typed evidence checks, critical-gap follow-up gates, cited dependency paths and actual isolated-process restart testing are documented in [completion hardening](completion-hardening.md). Original challenge extraction results remain preserved separately from corrected regression results. No independent human usability or cloud execution claim is added.

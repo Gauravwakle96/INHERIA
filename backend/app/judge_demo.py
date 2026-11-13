@@ -184,7 +184,7 @@ include it. This illustrates source permissions, not a real confidential record.
 }
 
 
-def create_demo(db):
+def create_demo(db, mode="fresh"):
     expired = list(db.scalars(select(m.DemoVisit).where(m.DemoVisit.expires_at <= m.utcnow())))
     for visit in expired:
         org = db.get(m.Organisation, visit.org_id)
@@ -226,7 +226,11 @@ def create_demo(db):
         db.add(m.Membership(project_id=project.id, user_id=person.id, role=person.role))
     db.flush()
     admin = people["Rudransh"]
-    for filename, body in DOCUMENTS.items():
+    if mode == "completed":
+        from app.completed_demo import load_completed_demo
+
+        load_completed_demo(db, org, people, project)
+    for filename, body in DOCUMENTS.items() if mode == "fresh" else []:
         source, _ = ingest_document(
             db,
             admin,
@@ -238,30 +242,31 @@ def create_demo(db):
         source.synthetic = True
         if filename.startswith("07-"):
             source.source_time = m.utcnow() - timedelta(days=240)
-    db.add(
-        m.Transition(
-            org_id=org.id,
-            project_id=project.id,
-            departing_id=people["Gaurav"].id,
-            successor_id=people["Savinay"].id,
-            title="Gaurav → Savinay DevOps handover",
-            departure_date=(m.utcnow() + timedelta(days=14)).date().isoformat(),
-            status="planned",
-            report={
-                "prerequisites": [
-                    {
-                        "id": m.new_id(),
-                        "title": "Recovery gap reviewed and follow-up owner recorded",
-                        "required": True,
-                        "status": "pending",
-                        "note": "",
-                        "evidence_ids": [],
-                        "source_versions": {},
-                    }
-                ]
-            },
+    if mode == "fresh":
+        db.add(
+            m.Transition(
+                org_id=org.id,
+                project_id=project.id,
+                departing_id=people["Gaurav"].id,
+                successor_id=people["Savinay"].id,
+                title="Gaurav → Savinay DevOps handover",
+                departure_date=(m.utcnow() + timedelta(days=14)).date().isoformat(),
+                status="planned",
+                report={
+                    "prerequisites": [
+                        {
+                            "id": m.new_id(),
+                            "title": "Recovery gap reviewed and follow-up owner recorded",
+                            "required": True,
+                            "status": "pending",
+                            "note": "",
+                            "evidence_ids": [],
+                            "source_versions": {},
+                        }
+                    ]
+                },
+            )
         )
-    )
     token = secrets.token_urlsafe(48)
     db.add(
         m.DemoVisit(

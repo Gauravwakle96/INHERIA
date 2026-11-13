@@ -1,6 +1,6 @@
 """Authentication endpoints with narrow response schemas and opaque cookie sessions."""
 
-from typing import Annotated
+from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
@@ -67,17 +67,37 @@ class DemoBody(BaseModel):
 
 @router.get("/judge-demo")
 def judge_demo_info():
-    return {"enabled": settings.judge_demo_enabled, "expires_hours": settings.judge_demo_hours}
+    return {
+        "enabled": settings.judge_demo_enabled,
+        "expires_hours": settings.judge_demo_hours,
+        "modes": ["completed", "fresh"],
+    }
+
+
+@router.get("/judge-demo/local-exercise")
+def local_exercise_record():
+    from pathlib import Path
+
+    from fastapi.responses import FileResponse
+
+    path = Path(__file__).parents[1] / "data" / "local-operational-exercise.md"
+    if not path.exists():
+        raise HTTPException(404, "Local exercise evidence is not available.")
+    return FileResponse(path, media_type="text/markdown", filename="Executed-local-test-evidence.md")
+
+
+class JudgeDemoStart(BaseModel):
+    mode: Literal["fresh", "completed"] = "fresh"
 
 
 @router.post("/judge-demo/start", response_model=SessionResponse, status_code=201)
-def judge_demo_start(request: Request, response: Response, db: Db):
+def judge_demo_start(request: Request, response: Response, db: Db, payload: JudgeDemoStart | None = None):
     from app.judge_demo import VISIT_COOKIE, create_demo
 
     login_rate_limit(request)
     if not settings.judge_demo_enabled:
         raise HTTPException(404, "Judge demo is unavailable")
-    person, token = create_demo(db)
+    person, token = create_demo(db, payload.mode if payload else "fresh")
     response.set_cookie(
         VISIT_COOKIE,
         token,

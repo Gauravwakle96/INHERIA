@@ -83,3 +83,6 @@ AI-assisted implementation is visible in repository changes and tests. The team
 must review the final commit history and supply an accurate contribution statement
 before submission. No video, final form submission or independent feedback is
 claimed by this document.
+
+
+Final experience update: completed account case-study mode, guided current continuation steps, typed evidence checks, critical-gap follow-up gates, cited dependency paths and actual isolated-process restart testing are documented in [completion hardening](completion-hardening.md). Original challenge extraction results remain preserved separately from corrected regression results. No independent human usability or cloud execution claim is added.

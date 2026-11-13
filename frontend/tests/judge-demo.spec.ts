@@ -23,7 +23,7 @@ test('judge opens an isolated workspace directly from sign-in and keeps it on re
   await expect(entry).toContainText('No email, password or API key needed.');
   await expect(entry.locator('input')).toHaveCount(0);
   await entry.getByRole('button', { name: 'Open judge workspace' }).click();
-  await expect(page.getByRole('heading', { name: 'Knowledge investigation', level: 1 })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Handover workspace', level: 1 })).toBeVisible();
   await expect(page.locator('.user-summary strong')).toHaveText('Rudransh');
   const projectId = await page.getByRole('combobox', { name: 'Active project' }).inputValue();
   await page.reload();
@@ -162,12 +162,24 @@ test('judge can reconstruct, inspect evidence, approve, transfer and validate th
     await expect(dialog).not.toBeVisible();
   }
   await page.goto('/handover');
-  await page.getByRole('button', { name: 'Review check' }).click();
-  const check = page.getByRole('dialog', { name: 'Review a readiness prerequisite' });
-  await check.getByRole('checkbox').first().check();
-  await check.getByLabel('Review note').fill('Reviewed recovery gap and retained follow-up actions. Explanation assessed; no actual restore performed.');
-  await check.getByRole('button', { name: 'Record prerequisite review' }).click();
-  await expect(check).not.toBeVisible();
+  await expect(page.getByRole('button', { name: 'Review check', exact: true }).first()).toBeVisible();
+  const latest: Transition = (await (await page.request.get(`/api/projects/${pid}/transitions`)).json())[0];
+  for (const prerequisite of latest.report.prerequisites as { id: string; title: string; gap_source_ids?: string[] }[]) {
+    const row = page.locator('.transfer-row').filter({ has: page.getByText(prerequisite.title, { exact: true }) });
+    await row.getByRole('button', { name: 'Review check', exact: true }).click();
+    const check = page.getByRole('dialog', { name: 'Review a readiness prerequisite' });
+    const people: User[] = await (await page.request.get('/api/auth/judge-demo/people')).json();
+    await expect(check).toBeVisible();
+    await check.getByRole('combobox', { name: 'Accountable person', exact: true }).selectOption(people.find(p => p.name === 'Savinay')!.id);
+    await check.getByLabel('Follow-up due date').fill('2027-01-01');
+    // All current evidence is inspected; the API checks this specific gap's source.
+    const ref = (latest.report.knowledge as Claim[]).flatMap(c => c.evidence).find(e => prerequisite.gap_source_ids?.length ? prerequisite.gap_source_ids.includes(e.source_id) : true)!;
+    await check.locator(`input[value="${ref.id}"]`).check();
+    await check.getByLabel('Review note').fill('Reviewed recovery gap; Savinay owns the dated follow-up. No actual cloud restore claimed.');
+    await check.getByRole('button', { name: 'Record prerequisite review' }).click();
+    await expect(check).not.toBeVisible();
+    await expect(row).toContainText('Confirmed');
+  }
   await page.getByRole('button', { name: 'Close transition' }).click();
   await expect(page.locator('.handover-overview').getByText('Closed', { exact: true })).toBeVisible();
   const summary = await (await page.request.get(`/api/projects/${pid}/continuity-summary`)).json();

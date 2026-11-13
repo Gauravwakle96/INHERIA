@@ -12,7 +12,17 @@ export async function api<T>(path: string, options: RequestInit = {}): Promise<T
   const headers = new Headers(options.headers);
   if (options.body && !(options.body instanceof FormData)) headers.set('Content-Type', 'application/json');
   if (!['GET', 'HEAD', 'OPTIONS'].includes(method) && csrfToken) headers.set('X-CSRF-Token', csrfToken);
-  const response = await fetch(`/api${path}`, { ...options, headers, credentials: 'same-origin' });
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), path.includes('/messages') ? 130000 : 60000);
+  let response: Response;
+  try {
+    response = await fetch(`/api${path}`, { ...options, signal: options.signal || controller.signal, headers, credentials: 'same-origin' });
+  } catch (error) {
+    if (controller.signal.aborted) throw new ApiError('The request timed out. Your work may already be saved; refresh and inspect the result before retrying.', 408);
+    throw error;
+  } finally {
+    window.clearTimeout(timeout);
+  }
   const body: unknown = await response.json().catch(() => ({}));
   if (!response.ok) {
     const data = body as { detail?: unknown; request_id?: string };

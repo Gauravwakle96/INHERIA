@@ -43,8 +43,10 @@ def simulation_report(
     affected, recommendations, unknowns = [], [], []
     dependencies = [c for c in claims if c.kind == "dependency" and c.status == "verified"]
     affected_systems = {c.data.get("component", "") for c in responsibilities if c.data.get("component")}
+    impact_paths = {name: [] for name in affected_systems}
     if component and scenario == "dependency_failure":
         affected_systems.add(component)
+        impact_paths[component] = []
     changed = True
     while changed:
         changed = False
@@ -52,6 +54,14 @@ def simulation_report(
             origin, target = claim.data.get("from_component"), claim.data.get("to_component")
             if origin and target in affected_systems and origin not in affected_systems:
                 affected_systems.add(origin)
+                impact_paths[origin] = impact_paths.get(target, []) + [
+                    {
+                        "from_component": origin,
+                        "to_component": target,
+                        "claim_id": claim.id,
+                        "evidence": citations(db, user, claim),
+                    }
+                ]
                 changed = True
     for claim in claims:
         if (
@@ -131,6 +141,7 @@ def simulation_report(
                 "status": responsibility.status,
                 "risks": risks,
                 "evidence": refs,
+                "dependency_path": impact_paths.get(component_name, []),
             }
         )
     if not affected:

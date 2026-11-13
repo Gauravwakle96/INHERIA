@@ -170,3 +170,6 @@ judge/onboarding/source browser acceptance passed 14 tests, with subsequent
 focused source reruns and two live access tests. See [verification](verification.md)
 for dates, exact counts and any later increments. This document is an acceptance
 map, not an awarded score, independent audit or event eligibility certification.
+
+
+Final experience update: completed account case-study mode, guided current continuation steps, typed evidence checks, critical-gap follow-up gates, cited dependency paths and actual isolated-process restart testing are documented in [completion hardening](completion-hardening.md). Original challenge extraction results remain preserved separately from corrected regression results. No independent human usability or cloud execution claim is added.

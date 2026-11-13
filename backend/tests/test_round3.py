@@ -115,11 +115,21 @@ def pass_all(client, base, transition):
 def confirm_prerequisites(client, path, transition):
     ref = transition["report"]["knowledge"][0]["evidence"][0]["id"]
     for item in transition["report"].get("prerequisites", []):
+        matching = [
+            e["id"]
+            for c in transition["report"]["knowledge"]
+            for e in c["evidence"]
+            if e["source_id"] in item.get("gap_source_ids", [])
+        ]
+        if matching:
+            ref = matching[0]
         ok(
             client.post(
                 path + "/prerequisites/" + item["id"] + "/review",
                 json={
                     "status": "confirmed",
+                    "owner_id": transition["successor_id"],
+                    "due_date": "2027-01-01",
                     "evidence_ids": [ref],
                     "note": "Controlled evidence walkthrough assessed. Follow-up work retained; no real cloud recovery test claimed.",
                 },

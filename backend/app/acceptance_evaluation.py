@@ -12,8 +12,8 @@ from app.intelligence import parse_candidates
 CORPUS_DIR = Path(__file__).resolve().parents[1] / "evaluation"
 
 
-def evaluate_extraction():
-    raw = (CORPUS_DIR / "extraction-holdout.json").read_bytes()
+def evaluate_extraction(corpus_path=None):
+    raw = (corpus_path or CORPUS_DIR / "extraction-holdout.json").read_bytes()
     corpus = json.loads(raw)
     people = [
         m.User(id=name, name=name, email=name.replace(" ", ".") + "@evaluation.example")

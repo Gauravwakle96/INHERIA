@@ -72,7 +72,13 @@ def scenario_criteria(claim):
     ]
 
 
-def get_transition(db: Session, user: m.User, project_id: str, transition_id: str) -> m.Transition:
+def get_transition(
+    db: Session, user: m.User, project_id: str, transition_id: str, *, lock=False
+) -> m.Transition:
+    if lock:
+        db.scalar(select(m.Project).where(m.Project.id == project_id).with_for_update())
+        db.expire_all()
+        db.info.pop("inheria_evidence_context", None)
     project_access(db, user, project_id)
     transition = db.get(m.Transition, transition_id)
     if not transition or transition.project_id != project_id or transition.org_id != user.org_id:
@@ -91,12 +97,15 @@ def readable_prerequisites(db, user, transition):
     for original in (transition.report or {}).get("prerequisites", []):
         item = dict(original)
         versions = item.get("source_versions", {})
-        if not set(item.get("evidence_ids", [])).issubset(refs) or any(
-            sid not in sources or sources[sid].version != version for sid, version in versions.items()
+        if (
+            not set(item.get("gap_source_ids", [])).issubset(sources)
+            or not set(item.get("evidence_ids", [])).issubset(refs)
+            or any(sid not in sources or sources[sid].version != version for sid, version in versions.items())
         ):
             item = {
                 "id": item["id"],
                 "title": "Readiness check requires authorised revalidation",
+                "category": item.get("category", "general"),
                 "required": item.get("required", False),
                 "status": "pending",
                 "evidence_ids": [],
@@ -239,6 +248,33 @@ def generate_handover(db: Session, user: m.User, transition: m.Transition) -> m.
             "claim_ids": [c.id for c in verified],
         }
     )
+    prerequisites = [dict(item) for item in (transition.report or {}).get("prerequisites", [])]
+    linked_gaps = {item.get("gap_id") for item in prerequisites}
+    allowed_sources = {e["source_id"] for c in knowledge for e in c["evidence"]}
+    for gap in db.scalars(
+        select(m.Gap).where(
+            m.Gap.project_id == transition.project_id,
+            m.Gap.severity == "critical",
+            m.Gap.status != "resolved",
+        )
+    ):
+        if gap.id not in linked_gaps and set(gap.source_ids).issubset(allowed_sources):
+            prerequisites.append(
+                {
+                    "id": m.new_id(),
+                    "title": "Record an owned follow-up: " + gap.title,
+                    "category": "follow_up",
+                    "gap_id": gap.id,
+                    "gap_source_ids": gap.source_ids,
+                    "required": True,
+                    "status": "pending",
+                    "owner_id": None,
+                    "due_date": None,
+                    "evidence_ids": [],
+                    "source_versions": {},
+                    "note": "This gap remains unresolved. Record its evidence, accountable owner, due date and next action before closure.",
+                }
+            )
     selected_ids = {c.id for c in verified}
     # Changed-source candidates get new IDs. Preserve old records as historical,
     # while excluding them from the new version's completion requirements.
@@ -251,7 +287,7 @@ def generate_handover(db: Session, user: m.User, transition: m.Transition) -> m.
     transition.report = jsonable_encoder(
         {
             "summary": f"Handover for {transition.title}: {len(knowledge)} verified, accessible knowledge items.",
-            "prerequisites": (transition.report or {}).get("prerequisites", []),
+            "prerequisites": prerequisites,
             "recovery_history": (transition.report or {}).get("recovery_history", []),
             "knowledge": knowledge,
             "source_ids": sorted({e["source_id"] for c in knowledge for e in c["evidence"]}),
@@ -544,6 +580,15 @@ def readiness(db: Session, user: m.User, transition: m.Transition) -> dict:
         blockers.append(
             "Every departing-employee responsibility requires assignment and successor acceptance."
         )
+    if transition.status != "closed" and any(
+        c.kind == "responsibility"
+        and c.data.get("owner_id") == transition.departing_id
+        and c.id not in expected
+        for c in claims.values()
+    ):
+        blockers.append(
+            "Additional verified departing-owner responsibilities exist; regenerate the handover to include them."
+        )
     if not exercises:
         blockers.append("Practical validation tasks have not been created.")
     if len(validated) < len(exercises):
@@ -586,6 +631,27 @@ def readiness(db: Session, user: m.User, transition: m.Transition) -> dict:
             blockers.append(
                 "Prerequisite evidence requires revalidation: " + public_checks[item["id"]]["title"]
             )
+        elif item.get("required") and item.get("status") == "confirmed":
+            from app.readiness_checks import check_matches
+
+            selected_refs = [e for e in evidence if e["id"] in item.get("evidence_ids", [])]
+            if not check_matches(
+                item, selected_refs, not any(c["id"] not in successor_ids for c in snapshot)
+            ):
+                blockers.append(
+                    "Readiness evidence does not match its required check: "
+                    + public_checks[item["id"]]["title"]
+                )
+            if item.get("category") == "follow_up":
+                owner = db.get(m.User, item.get("owner_id")) if item.get("owner_id") else None
+                member = db.scalar(
+                    select(m.Membership.id).where(
+                        m.Membership.project_id == transition.project_id,
+                        m.Membership.user_id == item.get("owner_id"),
+                    )
+                )
+                if not owner or not owner.active or not member:
+                    blockers.append("Required follow-up owner is no longer an active project member.")
     if any(item["id"] not in claims for item in snapshot):
         blockers.append("Some handover claims are no longer verified or accessible.")
     if transition.status != "closed" and any(

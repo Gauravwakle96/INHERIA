@@ -119,6 +119,10 @@ def test_complete_connect_to_validate_requires_each_human_gate(workspace):
                 "note": "Validated documented evidence, safe walkthrough, prerequisites and escalation against each predefined criterion.",
             },
         )
+    from test_round3 import confirm_prerequisites
+
+    assert not client.get(path + "/readiness").json()["ready"]
+    confirm_prerequisites(client, path, transition)
     assert client.get(path + "/readiness").json()["ready"]
     assert post_ok(client, path + "/close")["status"] == "closed"
     summary = client.get(base + "/continuity-summary").json()

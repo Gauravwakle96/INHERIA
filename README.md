@@ -10,10 +10,10 @@ A functional technical knowledge-continuity application built around **Connect �
 
 **[Open the judge demo](https://inheria.onrender.com/demo)**. No account, password or model key is required. The main sign-in page also offers direct one-click access as Rudransh. New visitors get separate workspaces; role switching never accesses real accounts.
 Gaurav is the departing DevOps engineer, Savinay receives ownership and Rudransh coordinates review.
-Each visitor gets an isolated expiring workspace with 13 authored source documents. The example is not Wipro/client data or actual cloud execution.
+**Open judge workspace** opens the completed account case study: 51 sources, eight accepted responsibilities, eleven reviewed walkthroughs and populated evidence graph. **Try a fresh handover** starts the original 13-source journey without approvals. Each visitor gets an isolated expiring copy. The example is not Wipro/client data or actual cloud execution.
 
 Inspect sources → investigate → inspect exact citations and resolve conflicts → review → generate/approve → assign → switch to Savinay → accept and submit evidence → switch to Rudransh → assess criteria and required recovery checks → close.
-Try rejected work or document replacement to inspect recovery gates. See the [judge guide](docs/judge-guide.md), [Round 3 delivery mapping](docs/round3-delivery.md) and [verification](docs/verification.md).
+Open **My continuation plan** for responsibilities, approved procedures and next work. The current next-step panel links to the exact handover action. Try rejected work or document replacement to inspect recovery gates. See [completed-demo and reliability details](docs/completion-hardening.md). See the [judge guide](docs/judge-guide.md), [Round 3 delivery mapping](docs/round3-delivery.md) and [verification](docs/verification.md).
 
 The three confirmed submitted improvements are **Secure Team Onboarding & Access
 Readiness**, **Investigation & Source-Change Intelligence**, and **Practical
@@ -79,7 +79,7 @@ Practical tasks require human assessment. INHERIA does not run infrastructure co
 
 ## Use your own organisation
 
-Register an organisation, create a project, and use **Team → Add member** as an administrator to create authorised departing/incoming accounts. Account creation returns no passwords and sends no email. Share temporary credentials through your organisation's authorised process. Password reset, email invitations and enterprise SSO are not implemented.
+Register an organisation, create a project, and use **Team → Invite member** as an administrator. Share the single-use expiring link privately; the recipient chooses a password, or signs in to join with an existing account. Administrators can revoke invitations, project membership and source-reader access. The app does not send invitation emails; password reset, SSO and MFA are not implemented.
 
 Connect a public GitHub repository such as `fastapi/fastapi`, `django/django` or `prometheus/prometheus`. A connected repository is not a complete archive: bounded snapshots are honestly marked **partial**. Private GitHub PATs require a server-side Fernet encryption key. See [connector and dataset notes](docs/connectors-and-datasets.md).
 

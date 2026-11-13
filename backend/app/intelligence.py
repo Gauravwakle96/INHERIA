@@ -231,17 +231,22 @@ def parse_candidates(text: str, users: list[m.User]) -> list[dict]:
             ):
                 continue
             if re.search(
-                r"\b(?:no longer|does not|did not|not responsible|formerly|proposed|hypothetical)\b", lower
+                r"\b(?:no longer|does not|did not|not responsible|formerly|former team|superseded|proposed|hypothetical)\b",
+                lower,
             ):
                 continue  # Historical duties and proposals need explicit human capture.
             kind = None
-            if re.search(
-                r"\b(?:is responsible for|owns|maintains|handles|looks after)\b", lower
-            ) and not re.search(r"\b(?:might|may|could|not|unknown|no longer)\b", lower):
+            from app.prose import dependency_span, named_duties
+
+            if (
+                named_duties(paragraph, users)
+                or re.search(r"\b(?:is responsible for|owns|maintains|handles|looks after)\b", lower)
+            ) and not re.search(
+                r"\b(?:might|may|could|unknown|no longer)\b|\bnot (?:responsible|owned|maintained|handled)\b",
+                lower,
+            ):
                 kind = "responsibility"
-            elif re.search(
-                r"\b[A-Za-z0-9_-]+\s+(?:depends on|requires)\s+[A-Za-z0-9_-]+", paragraph
-            ) and not re.search(r"\b(?:might|may|could|not|unknown)\b", lower):
+            elif dependency_span(paragraph) and not re.search(r"\b(?:might|may|could|not|unknown)\b", lower):
                 kind = "dependency"
             elif (
                 re.search(r"\b(rollback|deploy(?:ment)?|recovery)\b", lower)

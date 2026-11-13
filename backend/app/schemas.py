@@ -51,6 +51,7 @@ class TransitionCreate(StrictModel):
 
 class Note(StrictModel):
     note: str = Field(min_length=3, max_length=2000)
+    expected_version: int | None = Field(default=None, ge=0)
 
 
 class Assignment(StrictModel):

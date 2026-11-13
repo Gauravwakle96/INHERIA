@@ -141,9 +141,12 @@ def main():
         ]
         for name, cases in GROUPS.items()
     }
-    extraction = json.loads((ROOT.parent / "docs/extraction-holdout-report.json").read_text())
+    extraction = json.loads((ROOT.parent / "docs/extraction-holdout-report.json").read_text(encoding="utf-8"))
     report = {
         "recorded_at": datetime.now(timezone.utc).isoformat(),
+        "working_tree_dirty": bool(
+            subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True).strip()
+        ),
         "commit_under_test": subprocess.check_output(
             ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
         ).strip(),
