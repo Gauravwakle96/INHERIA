@@ -31,7 +31,7 @@ owner account is unchanged. See [implementation and limits](completion-hardening
   owned QA database, preserving the production capacity limit.
 - Frontend lint/typecheck/production build, configured Ruff lint/format,
   full npm audit and locked Python pip-audit passed. Changed/new text credential
-  patterns were reviewed across 50 files with zero sensitive matches. Whitespace
+  patterns were reviewed across 50 files, followed by a 54-file staged scan, with zero sensitive matches. Whitespace
   review passed; the public snapshot excludes real account email/passwords,
   sessions, provider keys and connection credentials.
 - A separate 24-document prose challenge first produced 10/11 candidate precision,
@@ -50,6 +50,35 @@ use PostgreSQL project-row locks; SQLite tests do not prove PostgreSQL race
 behaviour. UI approval checks the expected version; other edits do not universally
 use optimistic version checks. Independent usability feedback is still unrecorded.
 Target deployment verification is recorded separately after release below.
+
+## Live target acceptance — 14 November 2026 IST
+
+**VERIFIED** on https://inheria.onrender.com at application commit
+`c731e84b1f5b79c9e53527151057ae4effcfc3ca`. Render reports that exact commit
+live; its GitHub CI completed successfully. HTTPS health/readiness returned 200,
+and source-permission, access-readiness and membership-revocation APIs are present.
+The existing PostgreSQL migration is `b19e47a2c805`; the original handover remains
+closed and historical interview evidence lineage remains intact.
+
+The anonymous browser verified completed direct entry, refresh, 51 sources,
+81 claims, 92 graph nodes, Savinay's filtered 50 sources, denied restricted
+citations, continuation plan, visitor isolation and a fresh reconstruction action.
+Both themes at 390/768/1440 pixels had zero axe A/AA findings and no horizontal
+overflow; no runtime error was observed. [Judge evidence](completed-judge-live-verification.json).
+
+Read-only authenticated browser checks verified the original Gaurav, Savinay and
+Rudransh accounts still see the completed 8/8 responsibility and 11/11 reviewed
+handover. Thirteen routes, exact handover links, refresh and representative
+mobile/day and desktop/night layouts passed. Recorded case-study contributions
+remain separate for each person. [Preserved-account evidence](preserved-account-live-verification.json).
+An initial 5-second refresh assertion was too short for the live page; the bounded
+40-second check subsequently passed. An initial readiness probe timed out during
+release; its retry returned 200. [Target and CI evidence](completion-target-verification.json).
+
+These are executed target checks, not guaranteed hosting uptime, independent
+usability research or operational competence. Free hosting cold starts and
+bounded rule extraction remain material limitations. No provider key or original
+account password is included in published evidence or copied to judge tenants.
 
 ## Confirmed three-improvement acceptance — 14 November 2026 IST
 

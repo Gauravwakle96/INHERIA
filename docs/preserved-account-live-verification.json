@@ -1,0 +1,90 @@
+{
+  "site": "https://inheria.onrender.com",
+  "verified_at": "2026-11-13T22:49:06.517Z",
+  "project": "ShopEase - DevOps Case Study",
+  "pages": [
+    "/",
+    "/continue",
+    "/sources",
+    "/memory",
+    "/decisions",
+    "/investigation",
+    "/graph",
+    "/risk",
+    "/team",
+    "/handover",
+    "/validation",
+    "/successor",
+    "/governance"
+  ],
+  "roles": [
+    {
+      "name": "Gaurav",
+      "completed_handovers": 1,
+      "accepted": 8,
+      "reviewed": 11
+    },
+    {
+      "name": "Savinay",
+      "completed_handovers": 1,
+      "accepted": 8,
+      "reviewed": 11
+    },
+    {
+      "name": "Rudransh",
+      "completed_handovers": 1,
+      "accepted": 8,
+      "reviewed": 11
+    }
+  ],
+  "layouts": [
+    {
+      "theme": "dark",
+      "width": 1440,
+      "overflow": false,
+      "axe_violations": []
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "overflow": false,
+      "axe_violations": []
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Gaurav",
+      "interviews": 8,
+      "knowledge_reviewed": 2,
+      "responsibilities_transferred": 8,
+      "responsibilities_accepted": 0,
+      "walkthroughs_submitted": 0,
+      "walkthroughs_reviewed": 0
+    },
+    {
+      "name": "Rudransh",
+      "interviews": 0,
+      "knowledge_reviewed": 70,
+      "responsibilities_transferred": 0,
+      "responsibilities_accepted": 0,
+      "walkthroughs_submitted": 0,
+      "walkthroughs_reviewed": 11
+    },
+    {
+      "name": "Savinay",
+      "interviews": 0,
+      "knowledge_reviewed": 0,
+      "responsibilities_transferred": 0,
+      "responsibilities_accepted": 8,
+      "walkthroughs_submitted": 11,
+      "walkthroughs_reviewed": 0
+    }
+  ],
+  "rejected_drafts_excluded_from_current_ownership": true,
+  "exact_handover_link": true,
+  "refresh_persistence": true,
+  "runtime_errors": [],
+  "success": true,
+  "scope": "Author-operated case study. App handover is closed; no executed cloud recovery or independent human assessment is claimed.",
+  "application_commit": "c731e84b1f5b79c9e53527151057ae4effcfc3ca"
+}

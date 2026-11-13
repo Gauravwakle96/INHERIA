@@ -27,7 +27,7 @@ This file reports implementation, not the complete long-term product vision. The
 | Privacy center and filtered audit | Implemented | Disclosure of current controls/limits; retention setting is informational until automated deletion exists |
 | Synthetic Nexora and controlled evaluation | Implemented | Clearly labelled fixtures; not real contributor/employee data |
 | General workflow builder / scheduled orchestration | Not implemented | Outside central workflow |
-| Isolated judge demo beside sign-in | Implemented | 13 authored ShopEase sources; scoped persona switching; four-hour default; real accounts remain inaccessible |
+| Isolated judge demo beside sign-in | Implemented | Completed 51-source account case study or fresh 13-source workflow; scoped persona switching; four-hour default; real accounts remain inaccessible |
 | Knowledge access requests | Implemented | Independent source-ACL decisions; grants no AWS/IAM access |
 | Document replacement and source-change impact | Implemented | Preserved versions; filtered claim/handover/task lineage; stale evidence blocks current actions |
 | Investigation resume | Implemented | Atomic per-source checkpoints; original authorised investigator can resume; no distributed worker |

@@ -1,0 +1,58 @@
+{
+  "site": "https://inheria.onrender.com",
+  "verified_at": "2026-11-13T22:47:16.066Z",
+  "layouts": [
+    {
+      "theme": "dark",
+      "width": 390,
+      "overflow": false,
+      "axe_violations": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "overflow": false,
+      "axe_violations": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "overflow": false,
+      "axe_violations": []
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "overflow": false,
+      "axe_violations": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "overflow": false,
+      "axe_violations": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "overflow": false,
+      "axe_violations": []
+    }
+  ],
+  "direct_entry": true,
+  "starting_role": "Rudransh",
+  "refresh_persistence": true,
+  "coordinator_sources": 51,
+  "knowledge_records": 81,
+  "graph_nodes": 92,
+  "incoming_sources": 50,
+  "restricted_evidence_denied": true,
+  "successor_continuation": true,
+  "visitor_isolation": true,
+  "fresh_reconstruction": true,
+  "runtime_errors": [],
+  "success": true,
+  "scope": "Visitor-isolated author-operated ShopEase case study; historic approvals do not represent visitor actions or independent operational assessment.",
+  "application_commit": "c731e84b1f5b79c9e53527151057ae4effcfc3ca",
+  "hosting": "Existing Render Free service with Neon PostgreSQL; no provider settings changed."
+}
