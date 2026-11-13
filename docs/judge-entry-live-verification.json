@@ -1,0 +1,54 @@
+{
+  "site": "https://inheria.onrender.com",
+  "verified_at": "2026-11-13T18:48:50.666Z",
+  "layouts": [
+    {
+      "theme": "dark",
+      "width": 390,
+      "overflow": false,
+      "axe_violations": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "overflow": false,
+      "axe_violations": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "overflow": false,
+      "axe_violations": []
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "overflow": false,
+      "axe_violations": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "overflow": false,
+      "axe_violations": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "overflow": false,
+      "axe_violations": []
+    }
+  ],
+  "direct_entry": true,
+  "starting_role": "Rudransh",
+  "refresh_persistence": true,
+  "coordinator_sources": 13,
+  "incoming_sources": 12,
+  "restricted_evidence_denied": true,
+  "visitor_isolation": true,
+  "runtime_errors": [],
+  "success": true,
+  "deployed_commit": "256b341b877cd716eafb3de9368ee18ed3fac12a",
+  "ci": "https://github.com/Gauravwakle96/INHERIA/actions/runs/43485832515",
+  "repository_public": true
+}

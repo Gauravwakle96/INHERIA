@@ -19,6 +19,13 @@ demo configuration is explained. The existing isolated backend is reused.
   source reconstruction, review, handover, acceptance, assessment and closure.
 - Frontend lint, typecheck, production build and npm audit passed. Backend tests
   were not rerun for this frontend-only increment; prior counts are below.
+- Render deployed `256b341`; GitHub CI
+  [43485832515](https://github.com/Gauravwakle96/INHERIA/actions/runs/43485832515)
+  succeeded and the repository was verified public. Fresh anonymous browser
+  checks passed direct entry, Rudransh role, refresh, thirteen coordinator/twelve
+  incoming sources, restricted direct-access denial and separate visitor isolation.
+  All six day/night layouts had no overflow or axe violations; no runtime errors.
+  See [live evidence](judge-entry-live-verification.json).
 
 These finalisation changes follow the announced opening. Earlier implementation
 and tests keep their original dates. See round3-submission-checklist.md for the
