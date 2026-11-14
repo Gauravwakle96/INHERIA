@@ -53,7 +53,7 @@ export function DemoPage({ onLogin }: { onLogin: (session: Session, mode: DemoMo
 
 export function DemoGuide() {
   const { user } = useWorkspace();
-  const claims = useProjectQuery<Claim[]>('/claims', true);
+  const claims = useProjectQuery<Claim[]>('/claims');
   const transitions = useProjectQuery<Transition[]>('/transitions');
   const [expanded, setExpanded] = useState(true);
   const transition = transitions.data?.[0];

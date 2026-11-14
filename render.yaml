@@ -6,7 +6,7 @@ services:
     region: singapore
     branch: main
     dockerfilePath: ./Dockerfile
-    healthCheckPath: /api/ready
+    healthCheckPath: /api/health
     envVars:
       - key: INHERIA_ENVIRONMENT
         value: production

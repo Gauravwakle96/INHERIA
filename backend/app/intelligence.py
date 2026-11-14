@@ -11,7 +11,7 @@ import re
 from datetime import timedelta
 
 from fastapi import HTTPException
-from sqlalchemy import event, select
+from sqlalchemy import event, func, select
 from sqlalchemy.orm import Session
 
 from app import models as m
@@ -38,11 +38,20 @@ FIELD = re.compile(
 
 
 def _rows(db: Session, cls, project_id: str):
-    return list(db.scalars(select(cls).where(cls.project_id == project_id).order_by(cls.created_at, cls.id)))
+    db.flush()
+    # Conflict checks/metrics reuse the same claims many times in one request.
+    # Never cache across requests or transaction boundaries.
+    cache = db.info.setdefault("inheria_claim_rows", {}) if cls is m.Claim else {}
+    if project_id not in cache:
+        cache[project_id] = list(
+            db.scalars(select(cls).where(cls.project_id == project_id).order_by(cls.created_at, cls.id))
+        )
+    return cache[project_id]
 
 
 def _clear_evidence_cache(db, *args):
     db.info.pop("inheria_evidence_context", None)
+    db.info.pop("inheria_claim_rows", None)
 
 
 event.listen(Session, "after_flush", _clear_evidence_cache)
@@ -61,39 +70,44 @@ def _evidence_context(db, user, project_id):
     sources = {
         source.id: source for source in visible_sources(db, user, project_id) if source.status == "ready"
     }
-    refs = _rows(db, m.Evidence, project_id)
-    chunks = {
-        chunk.id: chunk
-        for chunk in db.scalars(
-            select(m.Chunk).where(
-                m.Chunk.project_id == project_id,
-                m.Chunk.org_id == user.org_id,
-                m.Chunk.source_id.in_(sources),
-            )
+    # Check exact quotes inside the database. Returning whole source chunks on
+    # every status/claim request wastes transfer, including unrelated documents.
+    position = func.strpos if db.get_bind().dialect.name == "postgresql" else func.instr
+    valid_quote = (
+        (m.Evidence.org_id == user.org_id)
+        & (m.Chunk.org_id == user.org_id)
+        & (m.Chunk.project_id == project_id)
+        & (m.Chunk.source_id == m.Evidence.source_id)
+        & (m.Chunk.source_version == m.Evidence.source_version)
+        & (m.Evidence.quote != "")
+        & (position(m.Chunk.text, m.Evidence.quote) > 0)
+    )
+    evidence_rows = list(
+        db.execute(
+            select(m.Evidence, m.Chunk.locator, valid_quote)
+            .outerjoin(m.Chunk, m.Chunk.id == m.Evidence.chunk_id)
+            .where(m.Evidence.project_id == project_id)
+            .order_by(m.Evidence.created_at, m.Evidence.id)
         )
-    }
+    )
     by_claim = {}
-    for ref in refs:
+    validated = {}
+    for ref, locator, valid in evidence_rows:
         by_claim.setdefault(ref.claim_id, []).append(ref)
-    result = (sources, chunks, by_claim)
+        validated[ref.id] = {"valid": bool(valid), "locator": locator}
+    result = (sources, validated, by_claim)
     cache[key] = result
     return result
 
 
-def _valid_evidence(ref, sources, chunks, org_id, project_id):
-    source, chunk = sources.get(ref.source_id), chunks.get(ref.chunk_id)
+def _valid_evidence(ref, sources, validated, org_id, project_id):
+    source = sources.get(ref.source_id)
     return bool(
         source
-        and chunk
         and ref.org_id == org_id
         and ref.project_id == project_id
         and source.version == ref.source_version
-        and chunk.source_id == ref.source_id
-        and chunk.source_version == ref.source_version
-        and chunk.org_id == org_id
-        and chunk.project_id == project_id
-        and ref.quote
-        and ref.quote in chunk.text
+        and validated.get(ref.id, {}).get("valid")
     )
 
 
@@ -101,11 +115,11 @@ def current_claims(
     db: Session, user: m.User, project_id: str, *, verified: bool = False, include_rejected: bool = False
 ) -> list[m.Claim]:
     """Mixed-permission evidence is hidden in full, including from administrators."""
-    sources, chunks, by_claim = _evidence_context(db, user, project_id)
+    sources, validated, by_claim = _evidence_context(db, user, project_id)
     result = []
     for claim in _rows(db, m.Claim, project_id):
         refs = by_claim.get(claim.id, [])
-        if not refs or any(not _valid_evidence(e, sources, chunks, user.org_id, project_id) for e in refs):
+        if not refs or any(not _valid_evidence(e, sources, validated, user.org_id, project_id) for e in refs):
             continue
         if verified and claim.status != "verified":
             continue
@@ -133,13 +147,13 @@ def decision_conflicted(db, claim):
 
 
 def citations(db: Session, user: m.User, claim: m.Claim) -> list[dict]:
-    sources, chunks, by_claim = _evidence_context(db, user, claim.project_id)
+    sources, validated, by_claim = _evidence_context(db, user, claim.project_id)
     refs = by_claim.get(claim.id, [])
-    if any(not _valid_evidence(e, sources, chunks, user.org_id, claim.project_id) for e in refs):
+    if any(not _valid_evidence(e, sources, validated, user.org_id, claim.project_id) for e in refs):
         return []
     result = []
     for e in refs:
-        source, chunk = sources[e.source_id], chunks[e.chunk_id]
+        source = sources[e.source_id]
         result.append(
             {
                 "id": e.id,
@@ -149,8 +163,8 @@ def citations(db: Session, user: m.User, claim: m.Claim) -> list[dict]:
                 "source_url": source.url,
                 "source_time": source.source_time,
                 "source_version": e.source_version,
-                "chunk_id": chunk.id,
-                "locator": chunk.locator,
+                "chunk_id": e.chunk_id,
+                "locator": validated[e.id]["locator"],
                 "quote": e.quote,
                 "synthetic": source.synthetic,
             }

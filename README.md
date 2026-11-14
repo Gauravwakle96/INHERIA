@@ -27,6 +27,8 @@ Open **[inheria.onrender.com](https://inheria.onrender.com)** and choose an opti
 
 **No email, password or API key is required for the core judge workflow.** Each visitor receives a separate, expiring workspace. The default visit lasts four hours. Role switching is limited to that visitor's three case-study identities and cannot access real accounts. Render Free can take about a minute to wake after inactivity; capacity and request-limit failures show a retryable message.
 
+Free hosting has finite quotas, including Neon's 5 GB monthly database transfer budget. Idle workspaces do not continuously poll; active jobs use a small status signal and refresh results on completion. Exact citation checks run inside the database to reduce repeated document transfer. See [hosting limits and measurements](docs/deployment.md#database-transfer-budget). Optional AI usage requires your organisation's own provider key and may incur provider charges.
+
 The ShopEase example uses authored demonstration material, not Wipro/client records. Completed-mode approvals are recorded case-study history; they are not actions performed by the visitor or evidence of independent operational assessment.
 
 <details>

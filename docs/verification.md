@@ -2,6 +2,14 @@
 
 Historical and current verification results are separated below. Results apply to the implemented MVP in this workspace; they do not certify an enterprise deployment.
 
+## Free-hosting transfer optimisation — 14 November 2026
+
+The Neon project API reported 4.08 GB public network transfer against a 5 GB free allowance, while compute was about 4.2 CU-hours of 100. Existing account data, keys, provider choices and database resources were preserved. The actual Render service health setting was changed from `/api/ready` to `/api/health`; the service remains Free.
+
+On an isolated local PostgreSQL 17.11 copy of the completed ShopEase case study, SQL result-value bytes fell from 5,193,333 to 857,254 for overview (83.5%), 3,258,382 to 691,133 for continuation summary (78.8%), and 1,270,737 to 238,710 for claims (81.2%). These measurements exclude wire/TLS overhead and establish reductions for this fixture, not monthly billed savings or future availability.
+
+Browser checks verified zero project requests during a 12-second idle observation, active-job completion refresh, failure refresh followed by stopped polling, and completed/fresh handover state across refresh and role switching. Active/failure timing was controlled with labelled browser status fixtures; the fresh reconstruction and completed role-view checks used the real local backend. Backend tests cover SQLite/PostgreSQL quote matching, literal `%`/`_` characters, evidence version changes, role/project isolation and a liveness check that never queries the database. See [recorded results](free-hosting-verification.json).
+
 ## Real PostgreSQL and additional prose challenge — 14 November 2026 IST
 
 - **15/15 real PostgreSQL 17.11 transaction cases passed** using separate concurrent

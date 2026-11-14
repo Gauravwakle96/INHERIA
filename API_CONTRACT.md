@@ -27,7 +27,8 @@ Project feature endpoints prefix `/api/projects/{project_id}`:
 - Citation `{id,source_id,source_name,source_kind,source_url,source_time,source_version,chunk_id,locator,quote,synthetic}`.
 - `GET /evidence/{source_id}` → `{source,chunks:[{id,locator,text}]}`.
 - `POST /claims/{id}/review {action:'approve'|'reject'|'correct',note,summary?}` → Claim. Only admin/manager/lead may approve; no author self-approval.
-- `POST /investigations {focus?,employee_id?}` → Investigation; server creates persisted bounded job; UI polls `GET /investigations` and jobs.
+- `POST /investigations {focus?,employee_id?}` → Investigation; server creates a persisted bounded job.
+- `GET /activity-status` → `[{id,kind:"investigation"|"sync",status}]` for active work only. Project membership is required; sync status follows the existing job-list role restrictions. This endpoint returns no reports or source text. The foreground UI polls it every five seconds only while work is active, then invalidates project queries once on completion or failure. Idle queries refresh on user actions, navigation/remount, stale window focus or browser refresh.
 - `GET /investigations` → Investigation[]. Investigation `{id,status,report:{summary,findings:[{title,kind,severity,details,question,source_ids,claim_id?}],questions:[{question,reason,source_ids}],searched_sources,unknowns,engine,limitations},created_at}`.
 - `GET /gaps` → Gap[]. Gap `{id,title,kind,severity,status,details,question,source_ids,claim_id}`. `PATCH /gaps/{id} {status:'open'|'in_progress'|'resolved',note}` → Gap. Resolution requires manager/lead.
 - `GET /graph` → `{nodes:[{id,label,kind,status}],edges:[{id,source,target,label,status,evidence:[Citation]}],limitations}`. Only evidenced authorised relations.

@@ -243,6 +243,7 @@ def revoke(project_id: str, invitation_id: str, db: Db, user: Actor):
     db.scalar(select(m.Project).where(m.Project.id == project_id).with_for_update())
     db.expire_all()
     db.info.pop("inheria_evidence_context", None)
+    db.info.pop("inheria_claim_rows", None)
     project_access(db, user, project_id, write=True)
     require_role(user, {"admin"})
     item = db.get(m.Invitation, invitation_id)

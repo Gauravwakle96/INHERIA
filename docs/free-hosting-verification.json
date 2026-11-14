@@ -1,0 +1,105 @@
+{
+  "recorded_at": "2026-11-14T01:03:20.740528+00:00",
+  "baseline_commit": "92147ff9ffd598a735edfe9e98b238182d942875",
+  "neon_snapshot": {
+    "id": "little-cloud-07665647",
+    "data_transfer_bytes": 4084147107,
+    "compute_time_seconds": 15136,
+    "active_time_seconds": 60372,
+    "consumption_period_start": "2026-11-10T18:43:59Z",
+    "consumption_period_end": "2026-12-01T00:00:00Z",
+    "retrieved_from": "Neon project API through official authenticated CLI",
+    "billing_caveat": "Project totals are indicative; dashboard billing meters remain authoritative."
+  },
+  "render_health_setting": {
+    "ok": true,
+    "before": "/api/ready",
+    "after": "/api/health",
+    "plan": "free",
+    "service_id": "srv-dbpmihm7bikc73ct1qn0",
+    "env_modified": false
+  },
+  "measurement": {
+    "environment": "Owned isolated loopback PostgreSQL 17.11 QA schema",
+    "fixture": "Completed ShopEase case study; fresh per-request sessions",
+    "metric": "Sum of PostgreSQL result value byte lengths via psycopg PGresult",
+    "excludes": "Wire/TLS overhead; not provider billing or a monthly forecast",
+    "endpoints": {
+      "overview": {
+        "before": {
+          "sql_result_value_bytes": 5193333,
+          "queries": 105
+        },
+        "after": {
+          "sql_result_value_bytes": 857254,
+          "queries": 71
+        },
+        "result_byte_reduction_percent": 83.49
+      },
+      "continuation_summary": {
+        "before": {
+          "sql_result_value_bytes": 3258382,
+          "queries": 58
+        },
+        "after": {
+          "sql_result_value_bytes": 691133,
+          "queries": 38
+        },
+        "result_byte_reduction_percent": 78.79
+      },
+      "claims": {
+        "before": {
+          "sql_result_value_bytes": 1270737,
+          "queries": 18
+        },
+        "after": {
+          "sql_result_value_bytes": 238710,
+          "queries": 10
+        },
+        "result_byte_reduction_percent": 81.21
+      }
+    }
+  },
+  "local_checks": {
+    "backend": {
+      "passed": 232,
+      "failed": 0,
+      "skipped": 0,
+      "coverage_percent_rounded": 89,
+      "junit_sha256": "c97897634be92f722ecc49116bfb99810f3b713e08d9626a33ce347d97613298"
+    },
+    "postgres_cases": 16,
+    "browser": {
+      "passed": 6,
+      "idle_observation_seconds": 12,
+      "idle_project_requests": 0,
+      "checks": [
+        "completed case-study role switch/refresh, desktop/mobile accessibility",
+        "fresh real reconstruction",
+        "active-status timing, completion refresh and stopped idle polling",
+        "controlled failure, dependent refresh and stopped polling",
+        "revoked project membership denies incoming access",
+        "source reader editor retains permissions and denies unauthorised controls"
+      ],
+      "caveat": "Active/failure timing uses browser route fixtures; real fresh/completed workflows use the local backend. Initial legacy source-selector test failed, then used the fresh fixture and passed."
+    },
+    "build_typecheck_lint": "pass",
+    "python_audit": "No known vulnerabilities found",
+    "npm_production_audit": "0 vulnerabilities",
+    "documentation_links": {
+      "checked": 70,
+      "images": 11,
+      "issues": 0
+    }
+  },
+  "target_acceptance": {
+    "status": "pending_application_deploy",
+    "health_setting": "verified Free service /api/health"
+  },
+  "limitations": [
+    "Existing usage cannot be erased; the warning can remain until monthly renewal.",
+    "Optimisations reduce transfer for measured workflows, not guaranteed unlimited traffic.",
+    "Cross-account updates refresh on stale focus/navigation/reload rather than an idle continuous feed.",
+    "No paid upgrade, resource duplication, data deletion or secret/provider changes."
+  ]
+}

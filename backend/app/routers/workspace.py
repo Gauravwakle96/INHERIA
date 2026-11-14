@@ -307,6 +307,35 @@ def overview(project_id: str, db: Db, user: User):
     }
 
 
+@router.get("/projects/{project_id}/activity-status")
+def activity_status(project_id: str, db: Db, user: User):
+    """Small active-job signal; no reports, source contents or historical payloads."""
+    project_access(db, user, project_id)
+    active = {"queued", "running", "syncing"}
+    result = [
+        {"id": row.id, "kind": "investigation", "status": row.status}
+        for row in db.execute(
+            select(m.Investigation.id, m.Investigation.status).where(
+                m.Investigation.project_id == project_id,
+                m.Investigation.org_id == user.org_id,
+                m.Investigation.status.in_(active),
+            )
+        )
+    ]
+    if user.role in {"admin", "manager", "lead", "security"}:
+        result.extend(
+            {"id": row.id, "kind": "sync", "status": row.status}
+            for row in db.execute(
+                select(m.Job.id, m.Job.status).where(
+                    m.Job.project_id == project_id,
+                    m.Job.org_id == user.org_id,
+                    m.Job.status.in_(active),
+                )
+            )
+        )
+    return result
+
+
 @router.get("/projects/{project_id}/continuity-summary", response_model=dict)
 def project_continuity_summary(project_id: str, db: Db, user: User):
     from app.continuity_summary import continuity_summary
@@ -348,6 +377,7 @@ def review_claim(project_id: str, claim_id: str, payload: s.Review, db: Db, user
     db.scalar(select(m.Project).where(m.Project.id == project_id).with_for_update())
     db.expire_all()
     db.info.pop("inheria_evidence_context", None)
+    db.info.pop("inheria_claim_rows", None)
     project_access(db, user, project_id, write=True)
     require_role(user, {"admin", "manager", "lead"})
     claim = entity(db, m.Claim, user, project_id, claim_id)
@@ -418,6 +448,7 @@ def resolve_authority(project_id: str, claim_id: str, payload: s.Note, db: Db, u
     db.scalar(select(m.Project).where(m.Project.id == project_id).with_for_update())
     db.expire_all()
     db.info.pop("inheria_evidence_context", None)
+    db.info.pop("inheria_claim_rows", None)
     project_access(db, user, project_id, write=True)
     safe_text(payload.note)
     claim = entity(db, m.Claim, user, project_id, claim_id)

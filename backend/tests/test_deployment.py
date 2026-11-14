@@ -62,6 +62,20 @@ def test_readiness_does_not_leak_database_errors(workspace, monkeypatch):
     assert "credential" not in response.text
 
 
+def test_liveness_probe_does_not_wake_database(workspace, monkeypatch):
+    client, _, _ = workspace
+
+    class Asleep:
+        def connect(self):
+            raise AssertionError("A liveness probe must not query the database")
+
+    monkeypatch.setattr("app.main.engine", Asleep())
+    for _ in range(3):
+        assert client.get("/api/health").status_code == 200
+    # Readiness remains a genuine, uncached database check when explicitly requested.
+    assert client.get("/api/ready").status_code == 503
+
+
 def test_production_csp_and_secure_cookie_boundary(workspace, monkeypatch):
     client, _, _ = workspace
     monkeypatch.setattr(settings, "environment", "production")

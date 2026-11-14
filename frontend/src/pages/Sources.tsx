@@ -10,8 +10,8 @@ import type { Connection, Job, Source, User } from '../types';
 export function SourcesPage() {
   const { project, user, openEvidence } = useWorkspace();
   const sources = useProjectQuery<Source[]>('/sources');
-  const connections = useProjectQuery<Connection[]>('/connections', true);
-  const jobs = useProjectQuery<Job[]>('/jobs', true);
+  const connections = useProjectQuery<Connection[]>('/connections');
+  const jobs = useProjectQuery<Job[]>('/jobs');
   const team = useQuery({ queryKey: ['project', project.id, 'team'], queryFn: () => api<User[]>(`/team?project_id=${project.id}`) });
   const [modal, setModal] = useState<'upload' | 'github' | null>(null);
   const [impactId, setImpactId] = useState<string | null>(null);

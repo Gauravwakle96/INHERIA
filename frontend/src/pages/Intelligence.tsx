@@ -37,8 +37,8 @@ function ResponsibilityReviewFields({ claim }: { claim: Claim }) {
 export function InvestigationPage() {
   const { project, user, openEvidence } = useWorkspace();
   const client = useQueryClient();
-  const query = useProjectQuery<Investigation[]>('/investigations', true);
-  const gaps = useProjectQuery<Gap[]>('/gaps', true);
+  const query = useProjectQuery<Investigation[]>('/investigations');
+  const gaps = useProjectQuery<Gap[]>('/gaps');
   const sources = useProjectQuery<Source[]>('/sources');
   const team = useQuery({ queryKey: ['project', project.id, 'team'], queryFn: () => api<User[]>(`/team?project_id=${project.id}`) });
   const [selectedId, setSelectedId] = useState<string | null>(null);

@@ -79,6 +79,7 @@ def get_transition(
         db.scalar(select(m.Project).where(m.Project.id == project_id).with_for_update())
         db.expire_all()
         db.info.pop("inheria_evidence_context", None)
+        db.info.pop("inheria_claim_rows", None)
     project_access(db, user, project_id)
     transition = db.get(m.Transition, transition_id)
     if not transition or transition.project_id != project_id or transition.org_id != user.org_id:

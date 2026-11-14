@@ -24,7 +24,7 @@ When `INHERIA_ALLOWED_ORIGINS` is omitted, production uses Render's `RENDER_EXTE
 
 Generate the encryption key locally with `uv run python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"` and save it directly in the hosting secret settings. Never rotate the key without a plan for already encrypted tokens.
 
-The Docker image builds the frontend and copies its assets into `/app/frontend/dist`. FastAPI serves that directory and handles SPA deep links. Startup runs `alembic upgrade head`, then starts one Uvicorn worker on the platform port. The process runs as an unprivileged user. `/api/health` reports process state; `/api/ready` checks the database and returns a generic 503 if it cannot connect.
+The Docker image builds the frontend and copies its assets into `/app/frontend/dist`. FastAPI serves that directory and handles SPA deep links. Startup runs `alembic upgrade head`, then starts one Uvicorn worker on the platform port. The process runs as an unprivileged user. Render's health-check path is `/api/health`, which reports process state without querying PostgreSQL. `/api/ready` remains a genuine database check and returns a generic 503 if it cannot connect; use it for explicit readiness verification rather than continuous uptime probes. For services created outside Blueprint, change the actual Render service setting as well as `render.yaml`.
 
 ## Security and browser behaviour
 
@@ -42,7 +42,18 @@ The chat migration runs on normal Docker startup. `INHERIA_TOKEN_ENCRYPTION_KEY`
 
 ## Hosting limits
 
-Render Free currently sleeps after 15 idle minutes and may take about a minute to wake. Its 750 monthly instance hours are shared across services in the workspace. This workspace also contains other services, so total usage determines availability. Neon Free currently includes 100 CU-hours per project and 1 GB storage; check current provider limits before relying on them. No paid upgrade or paid LLM is configured.
+Render Free currently sleeps after 15 idle minutes and may take about a minute to wake. Its 750 monthly instance hours are shared across services in the workspace. This workspace also contains other services, so total usage determines availability. Neon Free currently includes 100 CU-hours, 1 GB PostgreSQL storage and **5 GB public network transfer per project/month**; check [current limits](https://neon.com/docs/introduction/plans) before relying on them. Optional organisation AI keys incur their provider's separate fees; free hosting does not include unlimited AI requests.
+
+### Database transfer budget
+
+The 14 November 2026 control-plane snapshot reported 4,084,147,107 transferred bytes (approximately 4.08 GB of 5 GB) and 15,136 compute seconds (4.20 CU-hours of 100). The period ends at `2026-12-01T00:00:00Z`. These project API totals are indicative; Neon's dashboard billing meters remain authoritative. The warning concerned network transfer rather than compute. Optimisations cannot erase already used quota or guarantee unlimited judge traffic.
+
+- Completed/idle pages do not continuously poll claims, overview, gaps, connections or handover summaries. Running sync/investigation work uses a small active-status endpoint every five foreground seconds. Completion/failure refreshes dependent data once. Stale queries also refresh when the user returns to the window, navigates back or reloads; updates from another account are not continuously pushed to an idle tab.
+- Exact evidence quote membership is checked inside PostgreSQL (`strpos`; SQLite uses `instr`). The application receives citation quotes, locations and validation results rather than every full source chunk on each claim/status request. Opening a source still retrieves its full authorised content.
+- Claim rows used repeatedly by conflict checks and metrics are reused only within one SQLAlchemy session/transaction. Flush, commit, rollback and lock/reload boundaries invalidate this data. Permissions and source-version validation still run; there is no cross-user response cache.
+- The actual Render liveness probe uses `/api/health`. Database readiness remains separately testable.
+
+See [transfer verification](free-hosting-verification.json) for local PostgreSQL measurements and browser checks. Measure data transfer in the Neon console after real traffic; result-value bytes measured locally exclude wire/TLS overhead and are not a billing forecast. Avoid frequent live test loops or readiness-based keep-alive services. If the remaining free quota is insufficient, the supported options are to wait for renewal, reduce traffic or deliberately choose a suitable hosting plan; this deployment does not silently upgrade or create extra projects to bypass limits.
 
 Render's filesystem is ephemeral. The application stores parsed sources and workflow data in PostgreSQL; do not depend on local container files for persistence. Jobs are bounded in-process tasks: a restart interrupts them and marks them failed for retry. Distributed workers, automatic backups/retention policies, SSO/MFA and enterprise source permission mirroring remain future work. Provider limits and billing rules can change.
 

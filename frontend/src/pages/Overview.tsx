@@ -16,7 +16,7 @@ const stageRoutes: Record<string, string> = { connect: '/sources', reconstruct: 
 export function OverviewPage() {
   const { project, user } = useWorkspace();
   const navigate = useNavigate();
-  const overview = useProjectQuery<Overview>('/overview', true);
+  const overview = useProjectQuery<Overview>('/overview');
   const gaps = useProjectQuery<Gap[]>('/gaps');
   const transitions = useProjectQuery<Transition[]>('/transitions');
   const pending = useProjectQuery<Claim[]>('/claims?status=pending');

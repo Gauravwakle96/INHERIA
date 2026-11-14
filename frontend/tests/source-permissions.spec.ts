@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 
 test('source permission editor preserves current readers and limits incoming evidence', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('button', { name: 'Open judge workspace' }).click();
+  await page.getByRole('button', { name: 'Try a fresh handover' }).click();
   await expect(page.getByRole('combobox', { name: 'Active project' })).toBeVisible();
   const pid = await page.getByRole('combobox', { name: 'Active project' }).inputValue();
   await page.goto('/sources');

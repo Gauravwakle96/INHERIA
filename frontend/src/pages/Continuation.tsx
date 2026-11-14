@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Badge, CitationList, ErrorState, Loading, Notice, PageHeader, Panel } from '../ui';
-import { useProjectQuery, useWorkspace } from '../workspace';
+import { useProjectActivityRefresh, useProjectQuery, useWorkspace } from '../workspace';
 import type { Claim } from '../types';
 
 interface Plan { stage: string; detail: string; next_action: { label: string; path: string; actor: string }; transition_id: string | null; ready: boolean; blockers: string[]; source_count: number; candidate_count: number; critical_gaps: number; responsibilities: Claim[]; procedures: Claim[]; open_work: Claim[]; unknowns: string[]; scope: string }
 
 export function JourneyStatus() {
-  const query = useProjectQuery<Plan>('/continuation-plan?summary=true', true);
+  useProjectActivityRefresh();
+  const query = useProjectQuery<Plan>('/continuation-plan?summary=true');
   if (query.isPending) return <Loading label="Checking your next handover step…" />;
   if (query.error) return <ErrorState error={query.error} retry={() => void query.refetch()} />;
   const plan = query.data;

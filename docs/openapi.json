@@ -24,6 +24,25 @@
         }
       }
     },
+    "/api/auth/judge-demo/local-exercise": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Local Exercise Record",
+        "operationId": "local_exercise_record_api_auth_judge_demo_local_exercise_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/auth/judge-demo/start": {
       "post": {
         "tags": [
@@ -31,6 +50,23 @@
         ],
         "summary": "Judge Demo Start",
         "operationId": "judge_demo_start_api_auth_judge_demo_start_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/JudgeDemoStart"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Payload"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": "Successful Response",
@@ -38,6 +74,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SessionResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
@@ -976,6 +1022,56 @@
         }
       }
     },
+    "/api/projects/{project_id}/continuation-plan": {
+      "get": {
+        "tags": [
+          "Knowledge continuity"
+        ],
+        "summary": "Continuation",
+        "operationId": "continuation_api_projects__project_id__continuation_plan_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          },
+          {
+            "name": "summary",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Summary"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/projects": {
       "get": {
         "tags": [
@@ -1164,6 +1260,47 @@
                 "schema": {
                   "$ref": "#/components/schemas/Overview"
                 }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/projects/{project_id}/activity-status": {
+      "get": {
+        "tags": [
+          "Knowledge continuity"
+        ],
+        "summary": "Activity Status",
+        "description": "Small active-job signal; no reports, source contents or historical payloads.",
+        "operationId": "activity_status_api_projects__project_id__activity_status_get",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
               }
             }
           },
@@ -4366,6 +4503,21 @@
         ],
         "title": "JoinBody"
       },
+      "JudgeDemoStart": {
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "fresh",
+              "completed"
+            ],
+            "title": "Mode",
+            "default": "fresh"
+          }
+        },
+        "type": "object",
+        "title": "JudgeDemoStart"
+      },
       "LoginBody": {
         "properties": {
           "email": {
@@ -4444,6 +4596,18 @@
             "maxLength": 2000,
             "minLength": 3,
             "title": "Note"
+          },
+          "expected_version": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Version"
           }
         },
         "additionalProperties": false,
@@ -4518,6 +4682,55 @@
             "type": "boolean",
             "title": "Required",
             "default": true
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "general",
+              "deployment",
+              "rollback",
+              "recovery",
+              "restore_test",
+              "access",
+              "backup_owner",
+              "follow_up"
+            ],
+            "title": "Category",
+            "default": "general"
+          },
+          "owner_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner Id"
+          },
+          "due_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due Date"
+          },
+          "gap_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gap Id"
           }
         },
         "type": "object",
@@ -4549,6 +4762,29 @@
             "type": "array",
             "maxItems": 20,
             "title": "Evidence Ids"
+          },
+          "owner_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner Id"
+          },
+          "due_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due Date"
           }
         },
         "type": "object",
