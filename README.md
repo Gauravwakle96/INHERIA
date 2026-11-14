@@ -203,6 +203,8 @@ The implemented Agnes provider is **Bynara Router**:
 5. Enable **external AI processing for authorised users**, then **Save settings**.
 6. Select **Test saved connection**. After a successful response, ask a question and choose **Low effort** or **High effort**.
 
+
+if u really wish to use the ai u can take this API KEY [ sk-nry-OaQVaMz4vlcNM9urITk232zG7BjEOw4TzngbbwfJvGw ]
 ![Bynara provider setup with an empty key field](docs/screenshots/11-ai-settings.png)
 
 The server must have `INHERIA_TOKEN_ENCRYPTION_KEY` configured before it can store the key. Keys are encrypted on the backend and never returned to the browser. Keep them out of chat messages, uploaded documents and Git. Changing providers requires a new provider key. **AgentRouter** remains available for existing configurations and its configured GPT models; it is a separate service from Bynara.
