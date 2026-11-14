@@ -1,101 +1,203 @@
-# INHERIA future development roadmap
+# INHERIA product roadmap and delivery strategy
 
-The shipped scope is authorised source ingestion, evidence-linked reconstruction,
+## Product direction
+
+The shipped release covers authorised ingestion, evidence-linked reconstruction,
 human review, controlled handover, incoming acceptance, supervisor assessment and
-project continuation. The three submitted improvements are mapped separately in
-[three-improvements-acceptance.md](three-improvements-acceptance.md). The stages
-below are future work, not additional delivered commitments or fixed release dates.
+continuation. The [three submitted improvements](three-improvements-acceptance.md)
+remain the delivered commitments. This roadmap strengthens that journey before
+expanding source coverage or operational scope.
 
-## Stage 1 — Independently evaluated knowledge reconstruction
+Everything below is future work. Effort ranges are small-team planning estimates,
+not promised release dates or evidence of completion. Workstreams describe future
+responsibilities, not confirmed contributions by individual participants.
 
-**User benefit:** reviewers spend less time correcting prose extraction and can
-understand the reliability limits for their document types.
+## Milestones and dependencies
 
-- Obtain permissioned, independently labelled documents and reviewer agreement.
-- Freeze a new evaluation split before development; keep training/regression and
-  held-out results separate.
-- Improve explicit/shared ownership, pronoun resolution, rationale extraction,
-  multiword dependencies and conflicting/current decision review.
-- Measure candidate precision/recall, field accuracy, exact attribution,
-  uncertainty/abstention and permission filtering by case category.
-- Compare rule-based extraction with optional structured providers using bounded
-  cost, latency and failure budgets; retain a useful non-provider path.
+| Milestone | Priority / estimated effort | User outcome | Dependency / release decision |
+| --- | --- | --- | --- |
+| M1: independently evaluated reconstruction | P0; 2–3 development weeks | Reviewers understand quality by document category and correct less knowledge | Obtain consented documents and independent labels; establish quality before broadening extraction |
+| M2: identity, access and onboarding usability | P0; 3–4 development weeks | Successors join, recover access and understand prerequisites with less coordination | Freeze role/ACL contracts; verified email precedes reset and identity integration |
+| M3: durable processing and application recovery | P1; 3–4 development weeks | Operators recover jobs and application data from expected failures | Measure workload first; preserve checkpoints, revocation and deduplication semantics |
+| M4: permissioned integration and domain depth | P2; 4–6 development weeks per selected pilot | A real team uses its relevant source system and qualified operational evidence | Requires M1 quality, M2 identity and M3 operational gates; select one real pilot need |
 
-**Exit criteria:** publish the label process, sample sizes, held-out denominators,
-misses and source-attribution checks. Meet at least the existing 90% candidate
-precision and 85% owner/rationale/dependency targets on the new held-out split;
-report category failures even when aggregate targets pass. No result is called
-independent until labels and review actually meet that definition.
+Product coordination owns prioritisation; data/AI engineering owns extraction;
+backend/security owns access; platform engineering owns processing and recovery;
+QA/UX owns observed journeys and acceptance evidence. Stages overlap only where
+the current permission/evidence invariants remain covered.
 
-Current baseline: the new 72-document first run had real misses; fixes pass
-now-known regression thresholds. [Original and corrected results](postgres-and-extraction-hardening.md)
-remain published.
+## M1 — Independently evaluated reconstruction
 
-## Stage 2 — Verified identity and permission lifecycle
+**Current limitation:** internal corpora target supported explicit English. They
+do not establish independent enterprise accuracy for shared ownership, pronouns
+or unrestricted prose.
 
-**User benefit:** administrators coordinate less account work and successors can
-join, recover access and leave a project through a complete identity process.
+**User benefit:** reviewers see uncertainty and category limits and focus their
+corrections where needed.
 
-- Add verified-email onboarding, transactional invitation email and password reset
-  with single-use expiry and account-enumeration protections.
-- Design SSO/MFA against an authorised identity provider; preserve existing identity
-  and role boundaries.
-- Add GitHub OAuth/webhooks where justified and test upstream permission change,
-  token expiry, replay and removal handling.
-- Surface knowledge-access readiness separately from cloud/IAM access requests.
-- Expand assistive-technology and keyboard testing, then run recorded unfamiliar-user
-  sessions with consent and actual outcomes.
+### Implementation and deliverables
 
-**Exit criteria:** positive/negative invitation, reset, sign-in, revocation and
-provider-permission journeys pass; audit events are complete; forbidden information
-does not appear in retrieval, reports or saved history after access loss. Run at
-least five recorded unfamiliar-user journeys and fix observed blocking confusion.
-Do not infer AWS/IAM access from project membership.
+1. Obtain permissioned/anonymised documents from at least two source categories.
+   Record consent, permitted use, redaction and retention before ingestion.
+2. Label type, owner, historical/current state, rationale, dependency direction and
+   exact evidence span using two independent reviewers; record disagreement and
+   adjudication. Implementation-authored labels are never called independent.
+3. Freeze a new held-out corpus before changes. Proposed collection target: at
+   least 100 documents, 40 prose-heavy and 20 ambiguous/negative cases. Split by
+   project/document lineage to avoid near-duplicate leakage. These are future targets.
+4. Improve scoped pronouns, shared/unnamed owners, decision reasons and multiword
+   dependency endpoints. Missing evidence remains unresolved.
+5. Compare rules and optional structured providers on the same frozen cases,
+   permissions, timeout and bounded cost policy. Keep a useful non-provider path.
+6. Publish category/aggregate results, denominators, misses, review agreement and
+   attribution checks; preserve first-run failures separately from tuned regressions.
 
-Current baseline: manually shared expiring invitations, project/source ACLs,
-independent access decisions and real PostgreSQL invitation races are implemented.
-Email delivery, reset, SSO/MFA and upstream permission mirroring are absent.
+### Release gates
 
-## Stage 3 — Durable processing and operational governance
+| Measure | Proposed acceptance gate | Measurement |
+| --- | --- | --- |
+| Candidate precision | At least 90% | Correct candidates / all extracted candidates on untouched split |
+| Owner/rationale/dependency fields | At least 85% for each | Correct fields / applicable labelled fields, with category results |
+| Recall | Publish overall and category results | Recovered candidates / labelled relevant candidates; disclose abstention misses |
+| Attribution | Every published candidate has a valid current source span | Source/version/quote membership; semantic support reviewed separately |
+| Restricted/revoked evidence | Zero disclosures in acceptance suite | API, graph, report, retrieval, saved history and derived evidence checks |
+| Label independence | Publish authorship and adjudication | Two independent reviewers and recorded disagreements |
 
-**User benefit:** source investigation remains recoverable during restarts and
-normal team growth; operators can monitor, retain and recover project data.
+**Dependencies/risks:** consent and reviewer availability may delay evaluation.
+If unavailable, keep the current bounded scope and disclose internal labels.
+Pronoun ambiguity may stay unresolved; optional model comparison must not block
+source-backed review.
 
-- Introduce a durable queue/worker only when workload measurements justify it,
-  retaining the existing source-version checkpoint and deduplication contract.
-- Use shared rate limiting, controlled concurrency and idempotent job scheduling.
-- Add scheduled source freshness reviews and observable sync/investigation alerts.
-- Implement explicit retention/deletion policies with source-derived purge checks.
-- Establish deployment backups and actually rehearse restoration in an owned
-  non-production environment.
-- Collect realistic load/latency, retry and resource-use measurements.
+**Release evidence:** frozen corpus manifest, permission register, label guide,
+agreement/adjudication, first-run results, regression suite and documented limits.
 
-**Exit criteria:** restart/duplicate-delivery/cancellation tests preserve one
-logical result; revoked sources never regain authority through replay; retention
-removes derived content; a documented backup restores a separately owned test
-database; published load results declare hardware, sample size and limits.
+## M2 — Identity, access lifecycle and onboarding usability
 
-Current baseline: database-backed statuses, bounded workers, real restart/resume,
-15 PostgreSQL concurrency cases and source-derived deletion are tested. Distributed
-workers, enterprise throughput, automatic retention and production recovery are
-not claimed.
+**Current limitation:** invitations are manually shared. Verified email, recovery,
+SSO/MFA and upstream permission mirroring are absent. Browser automation does not
+establish independent usability.
 
-## Later expansion
+**User benefit:** a successor joins safely, recovers credentials, requests missing
+knowledge and understands the next responsible actor.
 
-After those gates pass, prioritise one connector at a time using real authorised
-customer needs. Consider configurable industry schemas, specialist reviewer roles
-and externally supplied staging-test artefacts. Each connector needs functioning
-authentication, sync, permission-loss behaviour and end-to-end tests before it is
-labelled available/connected.
+### Implementation sequence
 
-Cross-company learning, speculative predictive scores, unrestricted autonomous
-remediation and production command execution are outside this roadmap's near-term
-scope. A roadmap item does not grant permission to process or expose a source.
+1. Add verified-email registration and invitation delivery with an approved
+   provider. Hash single-use expiring capabilities; protect account enumeration,
+   resend and acceptance budgets.
+2. Add password recovery, invalidation rules and notification; test expiry,
+   replay, concurrent consumption and membership revocation.
+3. Integrate one approved organisation identity provider. Bind identity to tenant,
+   prevent role escalation/unsafe account merging and implement MFA according to
+   its policy. Preserve existing identity and memberships during migration.
+4. Add GitHub OAuth/signed webhooks only when a pilot needs them. Validate signatures,
+   replay, token expiry, repository removal and permission-loss events.
+5. Expand keyboard, focus, screen-reader and low-vision checks. Observe at least
+   five consented unfamiliar-user sessions across three roles. Record task,
+   completion, help, time and confusion; fix and retest blocking issues.
 
-## Evidence and maintenance
+### Release gates
 
-Maintain [feature status](feature-status.md), [verification](verification.md),
-[API documentation](../API_CONTRACT.md), migrations and setup instructions with each
-increment. Preserve original evaluation failures and actual commit timestamps.
-Publish measurable outcomes and known limits instead of treating a successful
-local test, attractive screenshot or planned capability as proof of readiness.
+- Positive/negative invitation, verification, login, reset, expiry, concurrency
+  and revocation flows pass against PostgreSQL.
+- Forbidden titles/text/citations/history remain hidden after access loss. Admin
+  privilege never overrides source permission.
+- Proposed usability gate: at least four of five participants finish the assigned
+  main task without facilitator intervention; every observed blocking issue is
+  fixed and retested. Publish actual unsuccessful sessions too.
+- Keyboard/focus and representative screen-reader tasks pass with stated scope;
+  no accessibility certification is inferred.
+- Audit events, identity configuration, incident recovery and migration guidance
+  are documented. INHERIA membership still does not grant AWS/IAM access.
+
+**Dependencies/risks:** email delivery, identity policy and upstream ACLs vary.
+Support one tested configuration first; retain existing login during migration.
+
+**Release evidence:** threat model, provider guide, permission/replay/concurrency
+results, audit examples, consented user notes, accessibility scope and recovery plan.
+
+## M3 — Durable jobs, governance and application recovery
+
+**Current limitation:** processing is bounded/in-process; free hosting has quotas
+and cold starts. Distributed workers, scheduled retention and production recovery
+are not implemented.
+
+**User benefit:** expected restarts preserve investigation progress and operators
+can diagnose failure and recover application data.
+
+### Implementation and deliverables
+
+1. Measure source counts, sync duration, database transfer, memory, queue depth
+   and API latency before choosing new infrastructure.
+2. Add durable queue/worker semantics: transaction-safe enqueue, stable job identity,
+   source-version checkpoint, bounded retry/backoff, cancellation and dead-letter
+   recovery. Duplicate delivery yields one logical result.
+3. Add shared limits and worker concurrency controls; distinguish revoked authority
+   from transient provider failure. Retries never restore revoked knowledge.
+4. Schedule source freshness review and retention policies; remove derived text
+   according to policy, with observable completion/failure.
+5. Define operator-approved recovery-point/time objectives (RPO/RTO) and backup scope.
+   Restore to an owned test database; check rows, permissions, source versions and
+   transfer state. Encryption-key recovery accompanies ciphertext restoration.
+6. Document request errors, queue backlog, database readiness, quota pressure,
+   migrations and compatible application rollback.
+
+### Failure and release gates
+
+| Failure | Required result |
+| --- | --- |
+| Restart before/after commit | Committed progress preserved; one candidate set; safe resume |
+| Duplicate delivery/concurrent Sync | One active logical job and auditable result |
+| Revocation while working/retrying | No new authoritative content; current source permission rechecked |
+| Retry budget exhausted | Explicit terminal status and recovery instructions; no infinite loop |
+| Cancellation | Clear terminal status; partial work never called complete |
+| Retention/deletion | Source-derived content purged; audit metadata retained according to policy |
+| Database restore | Meets approved test RPO/RTO; no tenant leakage or stale evidence revival |
+
+Proposed initial capacity profile: 10 concurrent users and three active
+investigations over 30 minutes. Measure target hardware, inputs, p95 latency,
+failure rate, database transfer and memory; revise the support profile before
+promising throughput. These are future targets, not current production results.
+
+**Dependencies/risks:** queue services may exceed a free budget. Keep bounded mode
+available; add services only with operator budget and measured need. A database
+downgrade is not an automatic application rollback.
+
+**Release evidence:** failure-injection matrix, restart/duplicate/revocation tests,
+retention report, backup drill, capacity results, operator guide and migration plan.
+
+## M4 — Permissioned integrations and operational depth
+
+**User benefit:** a pilot team uses the knowledge already in its task/wiki system
+and inspects specialist-reviewed operational-test evidence.
+
+- Choose one connector from a consented pilot need. Deliver real authentication,
+  incremental sync, provenance, permission-loss, delete/revoke and failure/retry
+  handling before marking it available or connected.
+- Preserve source permissions in graph, report and saved history; test upstream
+  authority changes against controlled authorised fixtures.
+- Support explicit domain schemas and specialist reviewers without combining
+  participant acceptance with supervisor assessment.
+- Import staging artefacts with environment, observer, result, timestamp and source
+  identity. Qualified review remains necessary; upload is not authenticated
+  execution telemetry.
+- Observe the complete pilot journey and publish actual corrections and outcomes,
+  without invented operational savings or user results.
+
+**Release gate:** authentication/sync/permission-loss/E2E tests pass and the pilot
+confirms incoming users can identify current owners, procedures and next steps.
+Unsupported connectors remain unimplemented. Production command execution needs
+a separate approval/safety design and stays outside near-term scope.
+
+## Release governance and documentation
+
+Each milestone ships a review packet: user-visible scope; current/partial/not-built
+status; API/schema/environment changes; additive migration and recovery plan;
+positive/negative permission tests; original evaluation failures; appropriate
+usability/accessibility results; service/licence/cost disclosures; clean setup
+verification and known limitations.
+
+Maintain [architecture](architecture.md), [API](../API_CONTRACT.md),
+[verification](verification.md), [feature status](feature-status.md),
+[operating guide](operating-guide.md) and README together. Roadmap targets never
+become dashboard or report results until measured.

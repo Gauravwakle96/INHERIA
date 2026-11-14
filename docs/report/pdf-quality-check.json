@@ -1,7 +1,7 @@
 {
-  "pages": 19,
-  "bytes": 622315,
-  "sha256": "80d5e31ded88a09448d10c8ffdc3e0ad49404231c87513469a3722723879aa7b",
+  "pages": 23,
+  "bytes": 636466,
+  "sha256": "365d8424794c4a887116f381cf9e7284caad7e24d1b1c69a8eccd5b4f63a2cbf",
   "page_checks": [
     {
       "page": 1,
@@ -117,30 +117,59 @@
     },
     {
       "page": 17,
-      "characters": 2620,
-      "links": 3,
+      "characters": 2411,
+      "links": 2,
       "bad_glyphs": 0,
       "outside_safe_page": []
     },
     {
       "page": 18,
-      "characters": 2306,
-      "links": 4,
+      "characters": 2286,
+      "links": 2,
       "bad_glyphs": 0,
       "outside_safe_page": []
     },
     {
       "page": 19,
-      "characters": 2387,
+      "characters": 2132,
+      "links": 2,
+      "bad_glyphs": 0,
+      "outside_safe_page": []
+    },
+    {
+      "page": 20,
+      "characters": 2029,
+      "links": 2,
+      "bad_glyphs": 0,
+      "outside_safe_page": []
+    },
+    {
+      "page": 21,
+      "characters": 2247,
+      "links": 3,
+      "bad_glyphs": 0,
+      "outside_safe_page": []
+    },
+    {
+      "page": 22,
+      "characters": 2225,
+      "links": 4,
+      "bad_glyphs": 0,
+      "outside_safe_page": []
+    },
+    {
+      "page": 23,
+      "characters": 2384,
       "links": 22,
       "bad_glyphs": 0,
       "outside_safe_page": []
     }
   ],
   "secret_pattern_detected": false,
-  "outline_entries": 19,
-  "frozen_evidence_links_checked": 67,
+  "outline_entries": 23,
+  "frozen_evidence_links_checked": 66,
   "missing_frozen_evidence_links": [],
+  "current_guide_links_checked": 9,
   "text_layout_links": "passed",
   "visual_review": "See visual-review.md; generated pages inspected separately.",
   "scope": "PDF artefact checks; not a fresh application test, awarded score or verified individual contribution."

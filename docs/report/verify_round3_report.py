@@ -25,6 +25,7 @@ draw = ImageDraw.Draw(sheet)
 metrics = []
 texts = []
 local_links = []
+guide_links = []
 for i, page in enumerate(doc):
     pix = page.get_pixmap(matrix=fitz.Matrix(1.6, 1.6))
     im = Image.frombytes("RGB", (pix.width, pix.height), pix.samples)
@@ -52,6 +53,18 @@ for i, page in enumerate(doc):
     links = page.get_links()
     for entry in links:
         url = entry.get("uri", "")
+        guide_match = re.match(
+            r"https://github.com/Gauravwakle96/INHERIA/blob/main/(.*)", url
+        )
+        if guide_match:
+            guide_path = unquote(guide_match.group(1).split("#")[0])
+            guide_links.append(
+                {
+                    "page": i + 1,
+                    "path": guide_path,
+                    "exists_locally": (ROOT / guide_path).is_file(),
+                }
+            )
         match = re.match(
             r"https://github.com/Gauravwakle96/INHERIA/blob/([a-f0-9]{40})/(.*)", url
         )
@@ -89,14 +102,17 @@ secret = bool(
         combined,
     )
 )
-assert len(doc) == 19
-assert len(doc.get_toc()) == 19
+assert len(doc) == 23
+assert len(doc.get_toc()) == 23
+assert "Work dates and evidence scope" not in combined
+assert "Repository created" not in combined
 assert not secret
 assert all(
     p["characters"] > 700 and not p["bad_glyphs"] and not p["outside_safe_page"]
     for p in metrics
 ), metrics
 assert all(l["exists_at_evidence_commit"] for l in local_links), local_links
+assert all(l["exists_locally"] for l in guide_links), guide_links
 for value in [
     "Secure Team Onboarding",
     "Practical Transfer Validation",
@@ -109,6 +125,8 @@ for value in [
     "Rudransh Jaiswal",
     "INHERIA_DATABASE_URL",
     "agnes-2.5-flash",
+    "M1 · Independent reconstruction quality",
+    "Operating guide and release maintenance",
 ]:
     assert value in " ".join(combined.split()), value
 report = {
@@ -120,6 +138,7 @@ report = {
     "outline_entries": len(doc.get_toc()),
     "frozen_evidence_links_checked": len(local_links),
     "missing_frozen_evidence_links": [],
+    "current_guide_links_checked": len(guide_links),
     "text_layout_links": "passed",
     "visual_review": "See visual-review.md; generated pages inspected separately.",
     "scope": "PDF artefact checks; not a fresh application test, awarded score or verified individual contribution.",

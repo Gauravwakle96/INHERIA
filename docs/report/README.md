@@ -1,9 +1,11 @@
 # Round 3 visual product report
 
-The [19-page PDF](../INHERIA_Round3_Final_Product_Report.pdf) describes the final
+The [23-page PDF](../INHERIA_Round3_Final_Product_Report.pdf) describes the final
 working source-to-continuation product, the exact three confirmed commitments,
 test/evaluation evidence, privacy/security/accessibility, setup and an ordered
-roadmap. It uses existing authorised product screenshots and original vector
+roadmap with detailed milestones, dependencies, effort estimates, risks and release
+gates. An operating guide covers common failures and safe recovery. It uses
+existing authorised product screenshots and original vector
 diagrams, with clickable frozen evidence links, page bookmarks and a live-product
 QR code.
 
@@ -23,7 +25,8 @@ uv pip install --python .local/pdf-build-env/Scripts/python.exe -r docs/report/r
 ```
 
 On Linux/macOS use `.local/pdf-build-env/bin/python` for the Python executable.
-The optional copy to `C:/documents` occurs only if that directory exists. PDF
+The optional copy to `C:/documents` occurs only if that directory exists. If the
+previous PDF is open and locked, the copy uses a `_Revised.pdf` filename. PDF
 rendered review images are written under ignored `.local/round3-pdf-review`.
 The generator and verification script are the editable source. The output manifest
 records the actual PDF SHA-256 and evidence commits. Regeneration can change the

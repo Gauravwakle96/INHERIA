@@ -405,6 +405,7 @@ Cross-company learning, predictive scores, multi-person departure simulations, a
 | [Architecture](docs/architecture.md) | Data flow, schema, trust boundaries, storage and technical decisions. |
 | [API contract](API_CONTRACT.md) / [OpenAPI snapshot](docs/openapi.json) | Routes, request/response behaviour and API access requirements. |
 | [Deployment](docs/deployment.md) | Render/Neon free setup, secret configuration, migrations, health checks and hosting limits. |
+| [Operating guide](docs/operating-guide.md) | Responsible actors, expected failures, recovery, migrations, rollback and release maintenance. |
 | [Judge guide](docs/judge-guide.md) | Scenario, role actions and the source-to-validation journey. |
 | [Feature status](docs/feature-status.md) | Implemented, partial, postponed and unimplemented capabilities. |
 | [Three-improvement acceptance](docs/three-improvements-acceptance.md) | Submitted promises, delivered behaviour, measurable acceptance and scope limits. |
@@ -417,7 +418,7 @@ Cross-company learning, predictive scores, multi-person departure simulations, a
 | [Final product acceptance](docs/final-product-readiness.md) | Judge journey, exact three improvements, rubric evidence and remaining submission items. |
 | [Judge-input hardening](docs/judge-input-hardening.md) | Preserved first-run misses, separate holdout, real GitHub sync, duplicate-request and mobile fixes. |
 | [Unaided usability tasks](docs/usability-task-pack.md) | Ready-to-use tasks and actual-observation template; no user-study result is assumed. |
-| [Future roadmap](docs/roadmap.md) | Prioritised future stages, user benefit and acceptance criteria. |
+| [Future roadmap](docs/roadmap.md) | Four prioritised milestones, estimated effort, dependencies, risks, delivery artefacts and measurable release gates. |
 
 Future priorities are **independently evaluated extraction**, **verified team identity and permission lifecycle**, then **durable jobs and operational governance**. Each stage has measurable exit criteria in the roadmap; planned work is not counted as a finished feature.
 

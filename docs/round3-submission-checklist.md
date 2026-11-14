@@ -11,7 +11,7 @@ Form: https://forms.gle/FxhT5Z1NupvGTGSw6
 - Product: https://inheria.onrender.com
 - Guide and interactive demo: https://inheria.onrender.com/demo
 - Repository: https://github.com/Gauravwakle96/INHERIA
-- Final report: [19-page visual PDF](INHERIA_Round3_Final_Product_Report.pdf), with [rebuild/artefact checks](report/README.md). Public GitHub PDF after push; if the form requires Drive, upload this file and verify “Anyone with the link” as Viewer.
+- Final report: [23-page visual PDF](INHERIA_Round3_Final_Product_Report.pdf), with detailed roadmap/operations and [rebuild/artefact checks](report/README.md). Public GitHub PDF after push; if the form requires Drive, upload this file and verify “Anyone with the link” as Viewer.
 
 The sign-in page offers **Open judge workspace**, creating a separate expiring
 ShopEase case study and signing the visitor in as Rudransh. The topbar switches

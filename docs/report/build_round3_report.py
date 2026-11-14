@@ -21,6 +21,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Image, Paragraph, Table, TableStyle
+from roadmap_sections import enhance
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "docs" / "report"
@@ -31,6 +32,7 @@ EVIDENCE_SHA = "9ed1d05dae8cd1d67b108fb24311246714f8b4f3"
 LIVE = "https://inheria.onrender.com"
 REPO = "https://github.com/Gauravwakle96/INHERIA"
 BASE = REPO + "/blob/" + EVIDENCE_SHA + "/"
+GUIDES_BASE = REPO + "/blob/main/"
 CI = REPO + "/actions/runs/43612957597"
 ASSETS.mkdir(parents=True, exist_ok=True)
 
@@ -106,7 +108,19 @@ def link(label, url):
 
 def evidence(*paths):
     return p(
-        "Evidence: " + " · ".join(link(Path(path).name, BASE + path) for path in paths),
+        "Evidence: "
+        + " · ".join(
+            link(
+                Path(path).name,
+                (
+                    GUIDES_BASE
+                    if path in {"docs/roadmap.md", "docs/operating-guide.md"}
+                    else BASE
+                )
+                + path,
+            )
+            for path in paths
+        ),
         "small",
     )
 
@@ -1412,9 +1426,9 @@ page(
             ],
             [0.24, 0.39, 0.37],
         ),
-        p("Work dates and evidence scope", "h2"),
+        p("Document control and verification scope", "h2"),
         p(
-            "Repository created <b>6 November 2026, 10:12:08 PM IST</b>; first commit <b>830ce48</b> at <b>10:31:43 PM IST</b>. Round 2 baseline reuse was confirmed as allowed by the team leader. Round 3 hardening and verification are dated 14 November in the repository. Earlier work is not relabelled as newly created event-window work."
+            "Application and test references identify the exact evidence supporting this report. Proposed roadmap milestones remain separate from completed capabilities. Assigned workstreams are documented; actual individual delivery requires team confirmation."
         ),
         tbl(
             ["Snapshot", "Public record"],
@@ -1435,8 +1449,8 @@ page(
                 ],
                 ["Latest CI at report build", link("Run 43612957597 · success", CI)],
                 [
-                    "Actual history",
-                    link("Public commit timeline", REPO + "/commits/main"),
+                    "Source repository",
+                    link("Public source and documentation", REPO),
                 ],
             ],
             [0.29, 0.71],
@@ -1446,7 +1460,7 @@ page(
             "Confirm individual contributions and organiser-required registration details. Publish the final PDF with judge access, test submitted links in a private window and submit once for the whole team. This report does not claim the form has been submitted or personal confirmation boxes ticked.",
         ),
         p(
-            "No unfamiliar-user outcomes, real-company operations, fabricated dates or operational-success claims are substituted for missing evidence. The team’s submitted three improvements are confirmed in the conversation and mapped on pages 5–8.",
+            "Participant delivery and user observations require actual supplied records. ShopEase case-study identities do not establish personal team contributions. The three submitted improvements are mapped on pages 5–8.",
             "small",
         ),
     ],
@@ -1532,7 +1546,7 @@ page(
                     "What remains incomplete?",
                     link("Feature status", BASE + "docs/feature-status.md")
                     + " · "
-                    + link("Practical roadmap", BASE + "docs/roadmap.md")
+                    + link("Detailed roadmap", GUIDES_BASE + "docs/roadmap.md")
                     + " · "
                     + link("Usability task pack", BASE + "docs/usability-task-pack.md"),
                 ],
@@ -1569,14 +1583,14 @@ page(
                 ],
                 [
                     "Documentation / roadmap · 15",
-                    "Pages 9–10, 15, 17–19: architecture/data, setup, staged exit gates, team attribution and references.",
+                    "Pages 9–10, 15, 17–23: architecture/data, setup, detailed milestones, operations, team attribution and references.",
                 ],
             ],
             [0.34, 0.66],
         ),
         p("Submission package", "h2"),
         p(
-            "Working product link, public source repository, this final report, completed feature inventory (page 16), architecture (page 9), exact improvements (pages 5–8), testing (pages 11–12), and future development (page 17). Participant attribution and accessible PDF-link confirmation remain team-owned. The organiser does not require a video or social-media post."
+            "Working product link, public source repository, this report, completed features (page 16), architecture (page 9), exact improvements (pages 5–8), testing (pages 11–12), detailed roadmap (pages 17–20) and operations (page 21). Participant attribution and final sharing confirmation remain team-owned. No video or social-media post is required."
         ),
         p(
             "Figures are original vector diagrams or dated screenshots. Crops improve readability without altering records. Links use the frozen evidence commit. This report does not award or promise a score.",
@@ -1588,6 +1602,9 @@ page(
         ),
     ],
 )
+
+
+enhance(PAGES, p, tbl, box, evidence)
 
 
 def render():
@@ -1661,7 +1678,12 @@ def render():
     (OUT / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     target = Path("C:/documents")
     if target.exists():
-        shutil.copy2(PDF, target / PDF.name)
+        try:
+            shutil.copy2(PDF, target / PDF.name)
+        except PermissionError:
+            shutil.copy2(
+                PDF, target / "INHERIA_Round3_Final_Product_Report_Revised.pdf"
+            )
     print(
         json.dumps(
             {"pdf": str(PDF), "pages": len(PAGES), "bytes": PDF.stat().st_size},

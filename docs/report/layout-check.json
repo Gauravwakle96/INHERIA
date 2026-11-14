@@ -643,8 +643,45 @@
   },
   {
     "page": 17,
-    "title": "A roadmap with gates, not vague promises.",
-    "bottom": 146.29,
+    "title": "Product roadmap and delivery strategy",
+    "bottom": 211.49,
+    "items": [
+      {
+        "top": 715.89,
+        "bottom": 666.39,
+        "height": 49.5
+      },
+      {
+        "top": 661.39,
+        "bottom": 379.39,
+        "height": 282.0
+      },
+      {
+        "top": 374.39,
+        "bottom": 357.89,
+        "height": 16.5
+      },
+      {
+        "top": 352.89,
+        "bottom": 312.09,
+        "height": 40.8
+      },
+      {
+        "top": 307.09,
+        "bottom": 232.69,
+        "height": 74.4
+      },
+      {
+        "top": 227.69,
+        "bottom": 216.49,
+        "height": 11.2
+      }
+    ]
+  },
+  {
+    "page": 18,
+    "title": "M1 \u00b7 Independent reconstruction quality",
+    "bottom": 101.49,
     "items": [
       {
         "top": 687.89,
@@ -653,75 +690,211 @@
       },
       {
         "top": 633.39,
-        "bottom": 327.79,
-        "height": 305.6
+        "bottom": 419.99,
+        "height": 213.4
       },
       {
-        "top": 322.79,
-        "bottom": 306.29,
+        "top": 414.99,
+        "bottom": 398.49,
         "height": 16.5
       },
       {
-        "top": 301.29,
-        "bottom": 246.89,
-        "height": 54.4
+        "top": 393.49,
+        "bottom": 229.49,
+        "height": 164.0
       },
       {
-        "top": 241.89,
-        "bottom": 167.49,
+        "top": 224.49,
+        "bottom": 150.09,
         "height": 74.4
       },
       {
-        "top": 162.49,
-        "bottom": 151.29,
+        "top": 145.09,
+        "bottom": 122.69,
+        "height": 22.4
+      },
+      {
+        "top": 117.69,
+        "bottom": 106.49,
         "height": 11.2
       }
     ]
   },
   {
-    "page": 18,
-    "title": "Participants, provenance and submission record.",
-    "bottom": 155.39,
+    "page": 19,
+    "title": "M2 \u00b7 Identity and accessible onboarding",
+    "bottom": 163.69,
     "items": [
       {
         "top": 687.89,
-        "bottom": 660.69,
-        "height": 27.2
+        "bottom": 638.39,
+        "height": 49.5
       },
       {
-        "top": 655.69,
-        "bottom": 468.09,
-        "height": 187.6
+        "top": 633.39,
+        "bottom": 419.99,
+        "height": 213.4
       },
       {
-        "top": 463.09,
-        "bottom": 446.59,
+        "top": 414.99,
+        "bottom": 398.49,
         "height": 16.5
       },
       {
-        "top": 441.59,
-        "bottom": 400.79,
-        "height": 40.8
-      },
-      {
-        "top": 395.79,
-        "bottom": 267.19,
-        "height": 128.6
-      },
-      {
-        "top": 262.19,
-        "bottom": 187.79,
+        "top": 393.49,
+        "bottom": 319.09,
         "height": 74.4
       },
       {
-        "top": 182.79,
-        "bottom": 160.39,
+        "top": 314.09,
+        "bottom": 239.69,
+        "height": 74.4
+      },
+      {
+        "top": 234.69,
+        "bottom": 212.29,
+        "height": 22.4
+      },
+      {
+        "top": 207.29,
+        "bottom": 184.89,
+        "height": 22.4
+      },
+      {
+        "top": 179.89,
+        "bottom": 168.69,
+        "height": 11.2
+      }
+    ]
+  },
+  {
+    "page": 20,
+    "title": "M3 \u00b7 Durable jobs and recovery",
+    "bottom": 184.19,
+    "items": [
+      {
+        "top": 715.89,
+        "bottom": 682.89,
+        "height": 33.0
+      },
+      {
+        "top": 677.89,
+        "bottom": 502.09,
+        "height": 175.8
+      },
+      {
+        "top": 497.09,
+        "bottom": 480.59,
+        "height": 16.5
+      },
+      {
+        "top": 475.59,
+        "bottom": 323.39,
+        "height": 152.2
+      },
+      {
+        "top": 318.39,
+        "bottom": 243.99,
+        "height": 74.4
+      },
+      {
+        "top": 238.99,
+        "bottom": 205.39,
+        "height": 33.6
+      },
+      {
+        "top": 200.39,
+        "bottom": 189.19,
+        "height": 11.2
+      }
+    ]
+  },
+  {
+    "page": 21,
+    "title": "Operating guide and release maintenance",
+    "bottom": 148.69,
+    "items": [
+      {
+        "top": 687.89,
+        "bottom": 638.39,
+        "height": 49.5
+      },
+      {
+        "top": 633.39,
+        "bottom": 382.39,
+        "height": 251.0
+      },
+      {
+        "top": 377.39,
+        "bottom": 360.89,
+        "height": 16.5
+      },
+      {
+        "top": 355.89,
+        "bottom": 287.89,
+        "height": 68.0
+      },
+      {
+        "top": 282.89,
+        "bottom": 208.49,
+        "height": 74.4
+      },
+      {
+        "top": 203.49,
+        "bottom": 169.89,
+        "height": 33.6
+      },
+      {
+        "top": 164.89,
+        "bottom": 153.69,
+        "height": 11.2
+      }
+    ]
+  },
+  {
+    "page": 22,
+    "title": "Team and submission responsibilities",
+    "bottom": 183.39,
+    "items": [
+      {
+        "top": 715.89,
+        "bottom": 688.69,
+        "height": 27.2
+      },
+      {
+        "top": 683.69,
+        "bottom": 496.09,
+        "height": 187.6
+      },
+      {
+        "top": 491.09,
+        "bottom": 474.59,
+        "height": 16.5
+      },
+      {
+        "top": 469.59,
+        "bottom": 428.79,
+        "height": 40.8
+      },
+      {
+        "top": 423.79,
+        "bottom": 295.19,
+        "height": 128.6
+      },
+      {
+        "top": 290.19,
+        "bottom": 215.79,
+        "height": 74.4
+      },
+      {
+        "top": 210.79,
+        "bottom": 188.39,
         "height": 22.4
       }
     ]
   },
   {
-    "page": 19,
+    "page": 23,
     "title": "Evidence index and documentation map.",
     "bottom": 49.69,
     "items": [

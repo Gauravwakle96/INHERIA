@@ -1,6 +1,6 @@
 # Visual and artefact review
 
-The 19-page report was rendered at 1.6× A4 resolution and reviewed as a complete
+The revised 23-page report was rendered at 1.6× A4 resolution and reviewed as a complete
 contact sheet. Full-size review covered the cover/QR, central workflow and current
 readiness, architecture, original evidence, practical transfer, evaluation chart,
 continuation plan, setup, roadmap and evidence/rubric index.
@@ -14,8 +14,13 @@ Corrections during review:
   accessible-record counts.
 - Used a cover QR/screenshot composition and linked the report from the README.
 
-Final automated checks pass for 19 pages, 19 bookmarks, 78 clickable links,
-67 frozen-evidence file links, safe-page text bounds, readable text extraction
+The revision removes the work-dates narrative and adds detailed roadmap pages
+for independent evaluation, identity/usability, durable processing/recovery and
+operating/release procedures. The detailed guides remain linked separately from
+the frozen executed-test evidence.
+
+Final automated checks pass for 23 pages, 23 bookmarks, 86 clickable links,
+66 frozen-evidence file links, current guide existence, safe-page text bounds, readable text extraction
 and credential-pattern screening. No replacement/null glyphs remain. Crops do
 not alter source records. Check details and hash are in pdf-quality-check.json.
 
