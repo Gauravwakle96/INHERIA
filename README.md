@@ -4,7 +4,7 @@
 
 INHERIA helps a technical team transfer project knowledge and responsibilities when someone leaves or changes roles. It brings authorised documents and repository activity into one workspace, reconstructs source-linked knowledge, highlights uncertainty, supports human review and gives the incoming person a practical continuation plan.
 
-**[Open the live product](https://inheria.onrender.com)** · **[Judge scenario guide](https://inheria.onrender.com/demo)** · **[API documentation](API_CONTRACT.md)** · **[Verification evidence](docs/verification.md)**
+**[Open the live product](https://inheria.onrender.com)** · **[Judge scenario guide](https://inheria.onrender.com/demo)** · **[Round 3 visual report (PDF)](docs/INHERIA_Round3_Final_Product_Report.pdf)** · **[API documentation](API_CONTRACT.md)** · **[Verification evidence](docs/verification.md)**
 
 The working journey is **Connect → Reconstruct → Verify → Review → Handover → Accept & Validate → Continue**. The implementation is a deployed web product with persisted accounts, project data, permissions, review history and responsibility transfer. The completed scope and remaining limits are described below.
 

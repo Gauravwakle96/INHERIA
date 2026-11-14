@@ -5,8 +5,13 @@ engineering acceptance record, not an awarded score or a prediction of 98/100.
 The team leader confirmed on 14 November that extending the Round 2 baseline is
 allowed. Actual baseline and finalisation dates remain in Git history.
 
-The final PDF is deliberately deferred at the leader's request. No form was
-submitted and no personal confirmation box was ticked.
+The leader subsequently authorised the final visual PDF. The
+[19-page report](INHERIA_Round3_Final_Product_Report.pdf) now covers screenshots,
+workflow/architecture, exact-three delivery, recorded testing, setup, privacy and
+roadmap. Its [artefact checks](report/pdf-quality-check.json) validate text,
+layout and frozen evidence links. No form was submitted and no personal
+confirmation box was ticked. Actual individual contributions and final sharing
+confirmation remain team-owned.
 
 | Rubric | Working evidence | Remaining risk or required evidence |
 | --- | --- | --- |
@@ -14,7 +19,7 @@ submitted and no personal confirmation box was ticked.
 | Three improvements — 20 | Exact submitted onboarding/access, investigation/source change and practical validation/recovery. The acceptance runner passed 7 onboarding, 10 distinct source changes, 5 interruption positions and 12 role flows: 34/34. | Internal labelled evaluation does not establish enterprise accuracy. Observation authenticity requires qualified review; the software does not certify employee competence. |
 | Reliability — 20 | Latest full backend suite: 239 passed, no failures/skips and 17 actual local PostgreSQL cases. Previous coverage measurement: 89%. Real authenticated GitHub import and unchanged resync passed. Failed/missing/stale/restricted evidence, concurrency, interruption, duplicates and provider errors have recorded tests. | Free hosting quotas and shared-IP limits remain finite. The latest transfer snapshot leaves about 0.51 GB; it is not a judge-capacity guarantee. |
 | Usability and fit — 20 | Role-specific next step, sources/citations, completed example and fresh workflow, manual access/readiness refresh, blocked premature closure and links to resolve missing work. Representative mobile/tablet/desktop, keyboard and automated accessibility checks. | No independently observed unfamiliar-user outcomes have been supplied. Automated browser tests are not a human usability study or complete screen-reader audit. |
-| Documentation and roadmap — 15 | README screenshots, setup/environment/API/schema/architecture, exact-three delivery, evaluation misses, privacy/security/accessibility, limitations and ordered roadmap. | Final PDF/public link and accurate legal participant/contribution details are still required for the submission package. |
+| Documentation and roadmap — 15 | README screenshots, setup/environment/API/schema/architecture, exact-three delivery, evaluation misses, privacy/security/accessibility, limitations, ordered roadmap and a 19-page visual PDF with linked evidence. | Actual participant contributions and organiser-required details need team confirmation. Verify the submitted public PDF/Drive link in a private window. |
 
 ## Judge journey
 
@@ -69,7 +74,7 @@ assumptions or automated tests.
 
 Product, public repository and clear demo access are present. Keep the existing
 test/evaluation records and distinguish original misses from tuned regression
-results. Add the final PDF/link when requested and verify sharing in a private
+results. Use the generated final PDF and verify sharing in a private
 window. Add confirmed participant names and actual contributions before the
 leader submits once. A credible package cannot replace those required items with
 an asserted score.
