@@ -34,6 +34,13 @@ Register an account and create a project after deployment. No shared demonstrati
 
 During live QA, GitHub rejected anonymous synchronisation from Render's shared outbound IP because its rate limit was exhausted. INHERIA reported the failure and did not mark the integration connected successfully. Retry after GitHub's reset or configure your own least-privilege GitHub token in the repository connection form. Render/Neon login credentials are not reused as GitHub source credentials. Authenticated live source synchronisation was not verified in this deployment.
 
+Later verification on 14 November established an authenticated live import of
+the team's own public repository: 40 sources, followed by an incremental resync
+with zero new imports. The temporary connection/token was revoked afterward.
+This supersedes the earlier unverified authenticated path, while anonymous
+shared-IP rate limits and bounded-history limits remain. See
+[live sync evidence](github-live-sync-verification.json).
+
 ## Free-tier limitations
 
 ## Organisation chat configuration
@@ -47,6 +54,12 @@ Render Free currently sleeps after 15 idle minutes and may take about a minute t
 ### Database transfer budget
 
 The 14 November 2026 control-plane snapshot reported 4,084,147,107 transferred bytes (approximately 4.08 GB of 5 GB) and 15,136 compute seconds (4.20 CU-hours of 100). The period ends at `2026-12-01T00:00:00Z`. These project API totals are indicative; Neon's dashboard billing meters remain authoritative. The warning concerned network transfer rather than compute. Optimisations cannot erase already used quota or guarantee unlimited judge traffic.
+
+A later snapshot before the judge-input checks reported 4,486,615,813 bytes
+(about 89.7% of 5 GB), leaving about 0.51 GB, and 16,031 compute seconds. This is
+not a judge-capacity guarantee; traffic and delayed billing updates can change
+remaining allowance. Keep live verification bounded and retain the runnable
+installation path in the README.
 
 - Completed/idle pages do not continuously poll claims, overview, gaps, connections or handover summaries. Running sync/investigation work uses a small active-status endpoint every five foreground seconds. Completion/failure refreshes dependent data once. Stale queries also refresh when the user returns to the window, navigates back or reloads; updates from another account are not continuously pushed to an idle tab.
 - Exact evidence quote membership is checked inside PostgreSQL (`strpos`; SQLite uses `instr`). The application receives citation quotes, locations and validation results rather than every full source chunk on each claim/status request. Opening a source still retrieves its full authorised content.

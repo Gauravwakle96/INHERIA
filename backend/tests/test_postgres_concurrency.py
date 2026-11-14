@@ -14,7 +14,7 @@ from threading import Barrier
 from uuid import uuid4
 
 import pytest
-from fastapi import HTTPException, Response
+from fastapi import BackgroundTasks, HTTPException, Response
 from sqlalchemy import create_engine, func, select, text
 from sqlalchemy.engine import make_url
 from sqlalchemy.orm import sessionmaker
@@ -287,6 +287,31 @@ def test_pg_duplicate_acceptance_is_one_record_and_one_audit(case):
     assert [r["status"] for r in results] == [200, 200]
     assert results[0]["result"] == results[1]["result"]
     assert audit_count(case, "responsibility.accepted") == 1
+
+
+def test_pg_duplicate_sync_enqueues_one_job_and_reports_pending(case):
+    with case["factory"]() as db:
+        connection = m.Connection(
+            org_id=db.get(m.User, case["admin"]).org_id,
+            project_id=case["project"],
+            name="Public QA repository",
+            provider="github",
+            repository="owned/test",
+            status="available",
+        )
+        db.add(connection)
+        db.commit()
+        connection_id = connection.id
+
+    def enqueue():
+        return call(case, "admin", sources.sync_connection, case["project"], connection_id, BackgroundTasks())
+
+    results = simultaneous(case, enqueue, enqueue)
+    assert sorted(result["status"] for result in results) == [200, 409]
+    with case["factory"]() as db:
+        jobs = list(db.scalars(select(m.Job).where(m.Job.connection_id == connection_id)))
+        assert len(jobs) == 1 and jobs[0].status == "queued"
+    assert audit_count(case, "integration.sync_requested") == 1
 
 
 def test_pg_duplicate_assignment_preserves_single_transfer(case):

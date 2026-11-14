@@ -243,8 +243,12 @@ def parse_candidates(text: str, users: list[m.User]) -> list[dict]:
             if paragraph.count("?") or re.search(r"(?im)^#.*(?:questions|example|outline)", paragraph):
                 continue  # Interview prompts and templates are not procedure evidence.
             if re.search(
-                r"\b(no (?:source|evidence|documentation)|insufficient evidence|not documented|ownership is unknown)\b",
+                r"\b(no (?:source|evidence|documentation)|insufficient evidence|ownership is unknown)\b",
                 lower,
+            ):
+                continue
+            if "not documented" in lower and not re.search(
+                r"\b(?:decided|decision|chose|chosen|selected|adopted)\b", lower
             ):
                 continue
             if unconfirmed_context(paragraph) or (unasserted(paragraph) and not duties):
@@ -269,7 +273,9 @@ def parse_candidates(text: str, users: list[m.User]) -> list[dict]:
                 and not re.search(r"\b(?:no longer|not confirmed|might|may|could)\b", lower)
             ):
                 kind = "procedure"
-            elif re.search(r"\b(decided|decision|chose|chosen|selected|rejected alternative)\b", lower):
+            elif re.search(
+                r"\b(decided|decision|chose|chosen|selected|opted for|adopted|rejected alternative)\b", lower
+            ):
                 kind = "decision"
             elif re.search(r"\b(unresolved|open incident|known issue|todo|unfinished)\b", lower):
                 kind = "incident" if "incident" in lower else "task"

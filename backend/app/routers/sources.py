@@ -334,6 +334,10 @@ def connect_github(project_id: str, payload: GitHubConnectionRequest, db: Db, us
 def sync_connection(
     project_id: str, connection_id: str, background_tasks: BackgroundTasks, db: Db, user: Actor
 ) -> dict[str, Any]:
+    # Serialize duplicate enqueue requests with other project source changes.
+    # A pending read followed by an unlocked insert can otherwise queue twice.
+    db.scalar(select(Project).where(Project.id == project_id).with_for_update())
+    db.expire_all()
     project_access(db, user, project_id, write=True)
     require_role(user, SOURCE_ADMIN_ROLES)
     connection = _connection(db, user, project_id, connection_id)

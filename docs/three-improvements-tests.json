@@ -1,7 +1,7 @@
 {
-  "recorded_at": "2026-11-14T14:20:11.028557+00:00",
+  "recorded_at": "2026-11-14T15:32:07.274540+00:00",
   "working_tree_dirty": true,
-  "commit_under_test": "f80554e2821dc47e3b97382894889a1d360c0d0b",
+  "commit_under_test": "34969707caaacb2f696aca5dcf661142630203e1",
   "scope": "Confirmed submitted improvements: onboarding, investigation/change intelligence, practical transfer. Existing fixture/API tests; no chatbot/provider benchmark or live production data.",
   "groups": {
     "onboarding": [

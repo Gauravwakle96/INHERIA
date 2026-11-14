@@ -1,0 +1,54 @@
+{
+  "recorded_at": "2026-11-14T15:29:59.627188+00:00",
+  "site": "https://inheria.onrender.com",
+  "repository": "Gauravwakle96/INHERIA",
+  "scope": "Two authenticated real GitHub syncs of the user-authorised own public repository in an isolated expiring judge workspace. Existing accounts/provider settings untouched; temporary connection/token revoked after checks.",
+  "runs": [
+    {
+      "status": "completed",
+      "elapsed_seconds": 11.04,
+      "stats": {
+        "imported": 40,
+        "duplicates": 0,
+        "quarantined": 0,
+        "requests": 12,
+        "partial": false,
+        "warnings": [],
+        "source_removals": {
+          "sources_unavailable": 0,
+          "claims_invalidated": 0
+        }
+      },
+      "error": ""
+    },
+    {
+      "status": "completed",
+      "elapsed_seconds": 12.7,
+      "stats": {
+        "imported": 0,
+        "duplicates": 1,
+        "quarantined": 0,
+        "requests": 12,
+        "partial": false,
+        "warnings": [],
+        "source_removals": {
+          "sources_unavailable": 0,
+          "claims_invalidated": 0
+        }
+      },
+      "error": ""
+    }
+  ],
+  "authentication": "existing GitHub credential",
+  "connection_status": "connected",
+  "success": true,
+  "temporary_connection_revoked": true,
+  "limitations": [
+    "Own public repository only, not arbitrary private-repository permissions.",
+    "Bounded recent history and selected files; partial status is not complete repository history.",
+    "No intentional live GitHub outage; failure/retry contract cases are tested locally.",
+    "Not an independent human usability test."
+  ],
+  "inventory_check": "The API intentionally omits connection_id from source summaries. The initial checker filtered that absent field and reported zero; this was a checker error, not an import failure. Import evidence is the job stats: 40 initial imports and zero new imports on resync. No source-body read was needed.",
+  "application_commit": "2db3b3613b76a984efad9cda01b914e7eb58f18b"
+}

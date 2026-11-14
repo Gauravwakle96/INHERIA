@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import re
 from collections import Counter
 from pathlib import Path
 
@@ -12,12 +13,16 @@ from app.intelligence import parse_candidates
 CORPUS_DIR = Path(__file__).resolve().parents[1] / "evaluation"
 
 
+def component_label(value):
+    return re.sub(r"^the\s+", "", value or "", flags=re.I).strip()
+
+
 def evaluate_extraction(corpus_path=None):
     raw = (corpus_path or CORPUS_DIR / "extraction-holdout.json").read_bytes()
     corpus = json.loads(raw)
     people = [
         m.User(id=name, name=name, email=name.replace(" ", ".") + "@evaluation.example")
-        for name in ("Ada Vale", "Quinn Reed")
+        for name in corpus.get("people", ("Ada Vale", "Quinn Reed"))
     ]
     gold, predicted, details = [], [], []
     field_results = {"owner": [], "rationale": [], "dependency": []}
@@ -46,7 +51,11 @@ def evaluate_extraction(corpus_path=None):
                 )
             if "from_component" in fields:
                 observed = {k: data.get(k) for k in ("from_component", "to_component")}
-                passed = found is not None and observed == fields
+                # Definite articles do not change the referenced component. Raw
+                # frozen labels/results are retained alongside this normalisation.
+                passed = found is not None and all(
+                    component_label(observed[k]) == component_label(fields[k]) for k in observed
+                )
                 field_results["dependency"].append(passed)
                 checks.append(
                     {"field": "dependency", "expected": fields, "observed": observed, "passed": passed}
@@ -59,6 +68,7 @@ def evaluate_extraction(corpus_path=None):
         "version": corpus["version"],
         "corpus_sha256": hashlib.sha256(raw).hexdigest(),
         "methodology": corpus["methodology"],
+        "scoring": "Exact candidate identity and owner/rationale; dependency endpoints compare after removing leading definite article 'the'. Original first-run reports are immutable.",
         "counts": {
             "documents": len(corpus["documents"]),
             "prose_documents": sum(d["prose"] for d in corpus["documents"]),

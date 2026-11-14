@@ -7,11 +7,39 @@ import httpx
 import pytest
 from cryptography.fernet import Fernet
 
-from app.connectors import ConnectorError, GitHubConnector, decrypt_token, encrypt_token, validate_repository
+from app.connectors import (
+    ConnectorError,
+    GitHubConnector,
+    decrypt_token,
+    encrypt_token,
+    serialize_connection,
+    validate_repository,
+)
 
 
 def response(request, payload, status=200, headers=None):
     return httpx.Response(status, json=payload, headers=headers or {}, request=request)
+
+
+def test_connection_status_exposes_only_scope_and_safe_saved_warnings():
+    from app import models as m
+
+    connection = m.Connection(
+        id="qa",
+        name="owned/repo",
+        provider="github",
+        repository="owned/repo",
+        status="partial",
+        encrypted_token="encrypted-value-only",
+        config={
+            "last_warnings": ["Request budget reached; this is a partial snapshot."],
+            "etags": {"private-internal": "etag"},
+        },
+    )
+    data = serialize_connection(connection)
+    assert data["has_token"] and data["warnings"]
+    assert "not complete repository history" in data["scope"]
+    assert "encrypted-value-only" not in str(data) and "private-internal" not in str(data)
 
 
 def test_repository_selection_never_accepts_arbitrary_hosts_or_paths():

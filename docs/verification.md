@@ -2,6 +2,39 @@
 
 Historical and current verification results are separated below. Results apply to the implemented MVP in this workspace; they do not certify an enterprise deployment.
 
+## Judge-input, GitHub and duplicate-sync checks — 14 November 2026
+
+Latest full backend suite: **239 passed**, no failures/skips, including **17 real
+PostgreSQL cases**. This run did not collect coverage; the previous measured
+baseline remains 89%. A final uncertainty guard passed 22 targeted boundary tests.
+Exact-three acceptance passed **34/34**. The complete fresh-to-closed local UI
+journey passed in about 203 seconds. Build/typecheck/lint, Python/Node dependency
+audits and staged secret review passed in the recorded scope.
+
+The 72-case challenge's original misses are preserved. General fixes recognise
+more explicit duties and rationale, trim dependency instruction clauses and
+reject training examples. A separate 60-document first run meets submitted
+targets with two disclosed misses. See [input hardening](judge-input-hardening.md).
+
+Real authenticated live GitHub import brought 40 sources into an isolated judge
+workspace; incremental resync added zero new sources. The temporary connection
+and token were revoked. Duplicate enqueue now serialises on the project row;
+the PostgreSQL overlap test confirms one job and one audit record.
+
+The browser run found mobile overflow from an absolutely positioned hidden
+table-header label; fixing its scroll-container positioning passed the connector
+scope/warnings test at 390/768/1440 pixels with bounded axe checks. Repeated local
+QA also filled the unchanged 40-visit capacity, producing an explicit capacity
+error. Only visits in the task-owned local QA database were expired; production
+limits/data were unchanged. The corrected paced/capacity-clean browser rerun
+passed **9/9** for readiness, warnings, source access and job completion/failure.
+
+Human-user observations are still awaited; the [task pack](usability-task-pack.md)
+is preparation, not claimed testing. Free-hosting capacity is finite (latest
+pre-check snapshot roughly 0.51 GB transfer remaining). PDF remains deferred.
+Commands/results, file hashes and initial failures are in
+[upgrade verification](judge-upgrade-verification.json).
+
 ## Judge experience and closure recovery — 14 November 2026
 
 The Handover page now shows measured acceptance, independent assessment, current

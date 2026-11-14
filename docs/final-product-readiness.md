@@ -12,7 +12,7 @@ submitted and no personal confirmation box was ticked.
 | --- | --- | --- |
 | Completeness — 25 | Authorised ingestion, source-linked candidates, human correction/review, versioned handover, acceptance, separate supervisor review, prerequisites and continuation. Both completed and fresh judge workspaces are available. | Supported English extraction is bounded; GitHub is REST/PAT rather than OAuth/webhooks. External cloud operations are intentionally outside the selected workflow. |
 | Three improvements — 20 | Exact submitted onboarding/access, investigation/source change and practical validation/recovery. The acceptance runner passed 7 onboarding, 10 distinct source changes, 5 interruption positions and 12 role flows: 34/34. | Internal labelled evaluation does not establish enterprise accuracy. Observation authenticity requires qualified review; the software does not certify employee competence. |
-| Reliability — 20 | Latest full backend suite: 232 passed, no failures/skips, 89% line coverage and 16 actual local PostgreSQL cases. Failed/missing/stale/restricted evidence, concurrency, interruption, duplicates and provider errors have recorded tests. | Free hosting quotas and shared-IP limits remain finite. New UI work exposes closure blockers and cooldown/retry; it does not remove provider or hosting limits. |
+| Reliability — 20 | Latest full backend suite: 239 passed, no failures/skips and 17 actual local PostgreSQL cases. Previous coverage measurement: 89%. Real authenticated GitHub import and unchanged resync passed. Failed/missing/stale/restricted evidence, concurrency, interruption, duplicates and provider errors have recorded tests. | Free hosting quotas and shared-IP limits remain finite. The latest transfer snapshot leaves about 0.51 GB; it is not a judge-capacity guarantee. |
 | Usability and fit — 20 | Role-specific next step, sources/citations, completed example and fresh workflow, manual access/readiness refresh, blocked premature closure and links to resolve missing work. Representative mobile/tablet/desktop, keyboard and automated accessibility checks. | No independently observed unfamiliar-user outcomes have been supplied. Automated browser tests are not a human usability study or complete screen-reader audit. |
 | Documentation and roadmap — 15 | README screenshots, setup/environment/API/schema/architecture, exact-three delivery, evaluation misses, privacy/security/accessibility, limitations and ordered roadmap. | Final PDF/public link and accurate legal participant/contribution details are still required for the submission package. |
 
@@ -53,6 +53,8 @@ submitted and no personal confirmation box was ticked.
   that a staging restore succeeded.
 
 ## User feedback still to record
+
+Use the [unaided task pack](usability-task-pack.md) to record actual sessions.
 
 If unfamiliar-user sessions took place, record each session's date, task, prior
 familiarity, completion without help, time, confusion, assistance and resulting

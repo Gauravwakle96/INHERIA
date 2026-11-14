@@ -25,3 +25,11 @@ investigation/source changes and practical transfer/recovery. Reproduce their
 seven onboarding cases, ten distinct source-change/revocation inputs, five
 interruption positions and twelve role flows; it never invokes a paid model or
 uses a production database. Chat evaluation is additional historical work.
+
+`judge-input-challenge.json` is a separately frozen 72-case challenge; its original
+misses and tuned regression remain distinct. `postfix-internal-holdout.json`
+contains 60 different cases and new people, frozen after fixes with no tuning on
+that corpus. The evaluator reads optional `people` from the corpus and records
+definite-article normalisation for dependency labels. These are implementation-
+informed internal labels, not independent ground truth. See
+`docs/judge-input-hardening.md` for exact first-run denominators and remaining misses.

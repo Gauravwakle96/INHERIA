@@ -2,6 +2,10 @@
 
 All JSON dates are ISO strings; IDs are UUID strings. Lists are plain arrays. Mutations return the updated entity. Errors: `{detail: string, request_id?: string}`. Cookie auth, `X-CSRF-Token` on authenticated mutations. Vite proxies `/api` to `http://127.0.0.1:8010`.
 
+Connection responses also contain `warnings:string[]` and `scope:string` for the
+bounded import. Tokens and internal ETag caches are omitted. Simultaneous sync
+requests serialise: one creates a job; another returns 409 while it is pending.
+
 ## Endpoints
 
 `GET /api/health` → `{status, version, demo_mode, ai_mode}`.

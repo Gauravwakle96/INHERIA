@@ -4,7 +4,7 @@ export interface Project { id: string; name: string; description: string; status
 export interface Source { replaceable?: boolean; id: string; name: string; kind: string; status: string; url?: string | null; version: number; source_time?: string | null; updated_at: string; synthetic: boolean; restricted: boolean; metadata: Record<string, unknown>; chunk_count: number }
 export interface Citation { id: string; source_id: string; source_name: string; source_kind: string; source_url?: string | null; source_time?: string | null; source_version: number; chunk_id: string; locator: string; quote: string; synthetic: boolean }
 export interface Claim { authority_conflict?: boolean; id: string; kind: string; title: string; summary: string; status: string; confidence: string; confidence_reason: string; data: Record<string, unknown>; evidence: Citation[]; updated_at: string }
-export interface Connection { id: string; name: string; provider: string; repository?: string | null; status: string; last_sync_at?: string | null; has_token: boolean }
+export interface Connection { id: string; name: string; provider: string; repository?: string | null; status: string; last_sync_at?: string | null; has_token: boolean; warnings?: string[]; scope?: string }
 export interface Job { id: string; kind: string; status: string; error?: string | null; stats: Record<string, unknown>; created_at: string; finished_at?: string | null }
 export interface Gap { id: string; title: string; kind: string; severity: string; status: string; details: string; question: string; source_ids: string[]; claim_id?: string | null }
 export interface Finding { title: string; kind: string; severity: string; details: string; question: string; source_ids: string[]; claim_id?: string | null }

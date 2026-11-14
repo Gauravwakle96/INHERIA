@@ -165,6 +165,7 @@ The dedicated three-improvement acceptance run passed **34/34 journeys**. Read t
 | **Permissions and stale evidence** | Membership/source changes recheck current authority; lost evidence prevents readiness and hides restricted derived content. UI approval rejects stale handover versions. |
 | **Real PostgreSQL concurrency verification** | Fifteen cases check simultaneous writes and lock waits. An invitation revocation race was reproduced and fixed by serialising on the project row and reloading ORM state. |
 | **Fresh prose extraction hardening** | Added explicit assigned/passive owners, reverse passive dependencies and more reason phrases; unconfirmed/historical statements remain uncertain and missing rationale stays missing. Original first-run failures are preserved. |
+| **Judge-input and connector hardening** | Explicit managed/overseen duties, scoped component names, more causal wording, training-example rejection, visible partial-sync warnings, one queued job for concurrent Sync and mobile source-table containment. |
 | **CI and public proof** | CI now supplies ephemeral PostgreSQL 17. Full-suite, extraction and live judge evidence are published with scope, hashes and limitations. |
 | **Documentation and current screenshots** | This README now explains the complete journey, AI key setup, delivered commitments, reproducible checks and next development stages. |
 
@@ -315,7 +316,7 @@ The application does not read Codex's credentials or configuration. Organisation
 
 ## Testing and reliability evidence
 
-Latest full backend verification: **232 tests passed**, including **16 real PostgreSQL cases**, with **89% line coverage**. [CI run 43606135040](https://github.com/Gauravwakle96/INHERIA/actions/runs/43606135040) passed backend lint/format/tests/dependency audit and frontend lint/typecheck/build/npm audit for the deployed closure/recovery changes. The exact submitted three-improvement runner also passed **34/34** again on 14 November.
+Latest full backend verification: **239 tests passed**, including **17 real PostgreSQL cases**. The previous coverage run measured **89% line coverage**; the latest run is not a new coverage measurement. [CI run 43606135040](https://github.com/Gauravwakle96/INHERIA/actions/runs/43606135040) passed backend lint/format/tests/dependency audit and frontend lint/typecheck/build/npm audit for the earlier closure/recovery changes. The exact submitted three-improvement runner also passed **34/34** again on 14 November. Latest judge-input verification is recorded below and in the [hardening evidence](docs/judge-input-hardening.md).
 
 | Test area | Executed evidence |
 | --- | --- |
@@ -328,6 +329,14 @@ Latest full backend verification: **232 tests passed**, including **16 real Post
 | Final judge recovery checks | Eight focused browser checks passed for premature closure, changed/unavailable evidence, 429 cooldown, exact-three guide, team/source permission refresh and successful/failed background completion. The complete local fresh-to-closed UI journey passed separately in 3.4 minutes. |
 
 **Extraction measurements:** the original 60-document internal first run (34 prose cases) met its submitted thresholds. A subsequent 72-document all-prose first run exposed real misses: precision 94.6%, recall 88.3%, owner fields 84.6%, rationale 75.0% and dependency endpoints 83.3%. After general fixes, its now-known regression cases measure precision 100%, recall 98.3%, owners 92.3%, rationale 100% and dependencies 94.4%. The unchanged original report remains published. These are internally authored labels and tuned regression results, not independently measured enterprise accuracy.
+
+**Further judge-input checks:** a new 72-case first run exposed owner, rationale,
+dependency and training-example failures; its original report remains published.
+After general fixes, a separate frozen 60-document first run met targets:
+precision 100%, recall 96.2%, owners 95%, rationales 91.7% and dependencies 100%.
+Two misses remain. Labels are internal and implementation-informed. The own public
+repository also completed a live authenticated 40-source import and incremental
+resync with zero new imports. See [judge-input and GitHub evidence](docs/judge-input-hardening.md).
 
 No independent five-person usability verification is claimed. Automated checks establish the recorded behaviour; human operational competence and source authenticity still require qualified review.
 
@@ -406,6 +415,8 @@ Cross-company learning, predictive scores, multi-person departure simulations, a
 | [Completion behaviour](docs/completion-hardening.md) | Case-study copying, continuation, readiness categories and source-change recovery. |
 | [Delivery/submission mapping](docs/round3-delivery.md) | Product/rubric mapping, responsible design and actual-history disclosure. |
 | [Final product acceptance](docs/final-product-readiness.md) | Judge journey, exact three improvements, rubric evidence and remaining submission items. |
+| [Judge-input hardening](docs/judge-input-hardening.md) | Preserved first-run misses, separate holdout, real GitHub sync, duplicate-request and mobile fixes. |
+| [Unaided usability tasks](docs/usability-task-pack.md) | Ready-to-use tasks and actual-observation template; no user-study result is assumed. |
 | [Future roadmap](docs/roadmap.md) | Prioritised future stages, user benefit and acceptance criteria. |
 
 Future priorities are **independently evaluated extraction**, **verified team identity and permission lifecycle**, then **durable jobs and operational governance**. Each stage has measurable exit criteria in the roadmap; planned work is not counted as a finished feature.

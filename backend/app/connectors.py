@@ -474,6 +474,7 @@ class GitHubConnector:
 
 
 def serialize_connection(connection: Any) -> dict[str, Any]:
+    config = connection.config or {}
     return {
         "id": connection.id,
         "name": connection.name,
@@ -482,6 +483,8 @@ def serialize_connection(connection: Any) -> dict[str, Any]:
         "status": connection.status,
         "last_sync_at": connection.last_sync_at,
         "has_token": bool(connection.encrypted_token),
+        "warnings": config.get("last_warnings", []),
+        "scope": "Recent commits, pull requests and issues; repository tree and up to five text documents. A bounded snapshot is not complete repository history.",
     }
 
 

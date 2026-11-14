@@ -1,0 +1,127 @@
+{
+  "recorded_at": "2026-11-14T15:51:34.035633+00:00",
+  "base_commit": "e0e5784866d342c7f2fef0145cf7338c811aa89a",
+  "working_tree_dirty": true,
+  "environment": "Owned local PostgreSQL 17.11 QA schemas and built frontend served by isolated SQLite QA API; no external provider calls.",
+  "backend_full": {
+    "passed": 239,
+    "failed": 0,
+    "skipped": 0,
+    "real_postgresql_cases": 17,
+    "duration_seconds": 125.44,
+    "fresh_coverage_collected": false,
+    "previous_coverage_percent": 89
+  },
+  "final_boundary_rerun": {
+    "passed": 22,
+    "reason": "Final claim/assignment uncertainty guard; prior complete suite retained."
+  },
+  "three_submitted_improvements": {
+    "passed": 34,
+    "reference": "three-improvements-tests.json"
+  },
+  "browser": {
+    "passed": 9,
+    "failed": 0,
+    "cases": [
+      {
+        "name": "incomplete handover explains blockers before closure and links to recovery work",
+        "classname": "handover-readiness.spec.ts",
+        "time": "2.708"
+      },
+      {
+        "name": "changed evidence and readiness failures stop closure; refresh recovers the panel",
+        "classname": "handover-readiness.spec.ts",
+        "time": "4.882"
+      },
+      {
+        "name": "request limits show cooldown and do not trigger immediate automatic retries",
+        "classname": "handover-readiness.spec.ts",
+        "time": "3.829"
+      },
+      {
+        "name": "public guide explains the submitted improvements in both themes and mobile layouts",
+        "classname": "handover-readiness.spec.ts",
+        "time": "2.324"
+      },
+      {
+        "name": "manual access refresh updates externally changed membership and source permissions",
+        "classname": "handover-readiness.spec.ts",
+        "time": "1.308"
+      },
+      {
+        "name": "repository scope and partial-sync warnings stay visible without exposing credentials",
+        "classname": "integration-health.spec.ts",
+        "time": "1.906"
+      },
+      {
+        "name": "source permission editor preserves current readers and limits incoming evidence",
+        "classname": "source-permissions.spec.ts",
+        "time": "2.203"
+      },
+      {
+        "name": "idle workspace does not poll; active work refreshes results once and stops",
+        "classname": "transfer-budget.spec.ts",
+        "time": "36.315"
+      },
+      {
+        "name": "failed background work refreshes dependent state and stops polling",
+        "classname": "transfer-budget.spec.ts",
+        "time": "12.793"
+      }
+    ],
+    "full_journey_passed": true,
+    "full_journey_seconds": 202.963,
+    "initial_failures": [
+      "Mobile source table hidden-header label escaped scroll container; positioning fixed.",
+      "Accumulated task-owned local visits exhausted the unchanged 40-visit capacity. Expired only local QA visits and reran."
+    ]
+  },
+  "build_typecheck_lint": "passed",
+  "dependency_audits": {
+    "python": "no known vulnerabilities",
+    "node": "zero vulnerabilities"
+  },
+  "corpora": {
+    "judge_original": "judge-input-first-report.json",
+    "known_regression": "judge-input-regression-report.json",
+    "separate_first_run": "postfix-internal-first-report.json",
+    "independently_human_labelled": false
+  },
+  "live_github": "github-live-sync-verification.json",
+  "neon_snapshot": {
+    "id": "little-cloud-07665647",
+    "data_transfer_bytes": 4486615813,
+    "compute_time_seconds": 16031,
+    "active_time_seconds": 63940,
+    "consumption_period_start": "2026-11-10T18:43:59Z",
+    "consumption_period_end": "2026-12-01T00:00:00Z",
+    "retrieved_from": "Neon project API through official authenticated CLI",
+    "billing_caveat": "Project totals are indicative; dashboard billing meters remain authoritative."
+  },
+  "tested_files_lf_sha256": {
+    "backend/app/prose.py": "b35d7009a29da756e1d7e18ef0dbad62574aa1df9e8cc8c73df09fe85d6ee6e8",
+    "backend/app/intelligence.py": "0f269e53a41fb4fd5b5b680a7d7b2226ad7d6fbd9ed0ecc78f544b348d2d9782",
+    "backend/app/acceptance_evaluation.py": "98bc2c32c23999d351cc43158fd4f777cd0ae289416becebc9d2076a06d0aed4",
+    "backend/app/connectors.py": "639881ac7e162459ed09e69abfd529105ab89d99ca3d8ea281b5f5094c32f786",
+    "backend/app/routers/sources.py": "0c1138426bb74c73947c8b1043a159bf5c5284217165daa6d70ca75b399e05d3",
+    "backend/tests/test_judge_inputs.py": "b52b6625d2c6cab014e593943af2c79b997c83b13117d4aaafe6aa8e03f1e4ab",
+    "backend/tests/test_connectors.py": "e52dcaaced844b54419c3e13ee4ef0d94018eb9b0158da868a21fed89062457b",
+    "backend/tests/test_postgres_concurrency.py": "e742762d925e3549432cc5f42f723b7ee0d3ddc0808f5ab3347c115be27509e8",
+    "frontend/src/pages/Sources.tsx": "606a36518d022506eb3c5557799d64e000ab3002d8d435a2e0fb3952890aae39",
+    "frontend/src/styles.css": "bcae2a11f6bb82705d9f0104ede8349bdd6e31416605226639a91038541281bb",
+    "frontend/src/types.ts": "45a6db7328fa0add58e10850eb13c55fe0bea926646779cb8301287d51466bd0",
+    "frontend/tests/integration-health.spec.ts": "ac4111553f2a2b04171cd1432fd27cb3f719c43ee490006b2f6f7c609b0605ea"
+  },
+  "raw_qa_log_sha256": {
+    "judge-upgrade-browser-capacity-rerun.log": "3b137d8ef675f49064f2703e6f4548fc5970e79e2ddd493c3866c32aea59c4fc",
+    "judge-upgrade-final-full-tests.log": "52903765d4994fcf7c80e8a01e96c763e07baf4f07d57ec5dd31b96f71e1c624",
+    "judge-upgrade-full-journey.log": "1380508e450f083208d6c85793e2f2d44c441787d1af2cb4dc4a180858510dcc"
+  },
+  "limits": [
+    "No independent human user testing is claimed.",
+    "No awarded score, source authenticity or cloud competence certified.",
+    "Free hosting quota and cold-start limitations remain.",
+    "PDF deferred at user request."
+  ]
+}
