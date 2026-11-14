@@ -1,0 +1,52 @@
+{
+  "captured_at": "2026-11-14T00:26:29.260Z",
+  "site": "https://inheria.onrender.com",
+  "scope": "Current live author-operated isolated ShopEase judge case study; no private account credentials or provider keys.",
+  "captures": [
+    {
+      "file": "docs/screenshots/01-judge-entry.png",
+      "route": "/"
+    },
+    {
+      "file": "docs/screenshots/02-completed-handover.png",
+      "route": "/handover"
+    },
+    {
+      "file": "docs/screenshots/03-overview.png",
+      "route": "/"
+    },
+    {
+      "file": "docs/screenshots/04-sources.png",
+      "route": "/sources"
+    },
+    {
+      "file": "docs/screenshots/05-source-evidence.png",
+      "route": "/sources"
+    },
+    {
+      "file": "docs/screenshots/06-knowledge-graph.png",
+      "route": "/graph"
+    },
+    {
+      "file": "docs/screenshots/07-supervisor-validation.png",
+      "route": "/validation"
+    },
+    {
+      "file": "docs/screenshots/08-successor-continuation.png",
+      "route": "/continue"
+    },
+    {
+      "file": "docs/screenshots/09-continuation-day.png",
+      "route": "/continue"
+    },
+    {
+      "file": "docs/screenshots/10-continuation-mobile.png",
+      "route": "/continue"
+    },
+    {
+      "file": "docs/screenshots/11-ai-settings.png",
+      "route": "/successor"
+    }
+  ],
+  "success": true
+}

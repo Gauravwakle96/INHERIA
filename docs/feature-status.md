@@ -50,3 +50,11 @@ See [measured delivery and limits](four-workstream-acceptance.md).
 
 
 Final experience update: completed account case-study mode, guided current continuation steps, typed evidence checks, critical-gap follow-up gates, cited dependency paths and actual isolated-process restart testing are documented in [completion hardening](completion-hardening.md). Original challenge extraction results remain preserved separately from corrected regression results. No independent human usability or cloud execution claim is added.
+
+Latest reliability verification: **228 backend tests passed, 90% line coverage**,
+including **15 real PostgreSQL concurrent transaction cases**. The invitation
+accept/revoke stale-state race was reproduced and corrected. The new 72-document
+all-prose challenge's original misses and corrected known-case regression results
+remain separate. Live upload → investigation → citation review → handover,
+completed/fresh judge entry and restricted evidence/visitor isolation passed.
+See [verification](verification.md) and [future roadmap](roadmap.md).

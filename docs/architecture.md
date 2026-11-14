@@ -24,11 +24,24 @@ Twenty-five persisted tables cover organisations, users, project memberships, se
 
 ## Judge and onboarding boundaries
 
-Public demo start creates a separate tenant, three random-password personas, 13 authored documents and a planned transition. A hashed expiring visitor capability scopes switching to that visitor's identities. Real accounts cannot be impersonated. Shared development persona login remains disabled in production. Expired visits are refused immediately and deleted on the next demo start; this is not a scheduled retention service. The default cap is forty concurrent visits; admission is not a distributed reservation.
+Public demo start creates a separate tenant and three random-password personas.
+Fresh mode begins with 13 authored documents and a planned transition. Completed
+mode copies the sanitised 51-source case study with recorded ownership and review
+history; private credentials, provider settings and conversations are excluded.
+A hashed expiring visitor capability scopes switching to that visitor's identities.
+Real accounts cannot be impersonated. Shared development persona login remains
+disabled in production. Expired visits are refused immediately and deleted on the
+next demo start; this is not a scheduled retention service. The default cap is forty
+concurrent visits; admission is not a distributed reservation.
 
 Invitations use hashed random tokens, expiry and transactional single-use consumption. New recipients choose passwords; existing identities authenticate and retain their role. Links are shown once for private sharing. No email delivery, email verification, password reset or SSO is claimed. Independent access reviewers use existing source ACLs; they grant no cloud access and do not mirror upstream permissions.
 
 Administrators may revoke project membership with a confirmation and reason. Pending invitations/access requests and explicit reader grants are revoked in the same transaction; other projects and historical contributions remain. If the removed member was a source's last reader, that source is revoked rather than converting its empty ACL into access for all. PostgreSQL project locks serialize membership removal with invitation acceptance. Handover knowledge-access readiness checks current membership and verified readable claims; it is separate from responsibility acceptance and operational competence.
+
+Invitation revocation also takes the project-row lock and expires cached ORM state
+before checking current permissions/status. A retained pending invitation must not
+overwrite another transaction's accepted state. Fifteen real PostgreSQL race cases
+verify bounded overlapping writes; see [database verification](postgres-and-extraction-hardening.md).
 
 ## Investigation and recovery
 
