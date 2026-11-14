@@ -1,0 +1,978 @@
+{
+  "version": "judge-input-challenge-2026-11-14-v1",
+  "methodology": "72 distinct internally authored prose cases frozen before first execution at application commit 2db3b36. Includes explicit duties, shared and unknown ownership, definite-article and passive dependencies, causal and missing rationales, denials, historical and unsupported activity. Labels were authored by the implementing agent with knowledge of prior patterns; this is not independent human or enterprise ground truth. Preserve the first report; any fixes make this corpus regression data.",
+  "documents": [
+    {
+      "id": "judge-owner-01",
+      "prose": true,
+      "category": "owner",
+      "text": "Ada Vale oversees release approvals. The register records a weekly review.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale oversees release approvals. The register records a weekly review.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-owner-02",
+      "prose": true,
+      "category": "owner",
+      "text": "Quinn Reed manages the container registry. Access requests go through the security team.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Quinn Reed manages the container registry. Access requests go through the security team.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-owner-03",
+      "prose": true,
+      "category": "owner",
+      "text": "Ada Vale is accountable for backup retention reviews. The database team approves restore changes.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale is accountable for backup retention reviews. The database team approves restore changes.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-owner-04",
+      "prose": true,
+      "category": "owner",
+      "text": "The certificate renewal queue is managed by Quinn Reed. Expiry notices are reviewed weekly.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The certificate renewal queue is managed by Quinn Reed. Expiry notices are reviewed weekly.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-owner-05",
+      "prose": true,
+      "category": "owner",
+      "text": "Responsibility for staging deployment coordination belongs to Ada Vale. Change approval remains separate.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Responsibility for staging deployment coordination belongs to Ada Vale. Change approval remains separate.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-owner-06",
+      "prose": true,
+      "category": "owner",
+      "text": "The current owner of incident rota maintenance is Quinn Reed. The rota is reviewed each Monday.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The current owner of incident rota maintenance is Quinn Reed. The rota is reviewed each Monday.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-owner-07",
+      "prose": true,
+      "category": "owner",
+      "text": "Ada Vale owns the recovery documentation. Quinn Reed reviews proposed updates.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale owns the recovery documentation. Quinn Reed reviews proposed updates.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-owner-08",
+      "prose": true,
+      "category": "owner",
+      "text": "Quinn Reed maintains the infrastructure inventory. Ada Vale approves the inventory review.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Quinn Reed maintains the infrastructure inventory. Ada Vale approves the inventory review.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-owner-09",
+      "prose": true,
+      "category": "owner",
+      "text": "Ada Vale and Quinn Reed jointly own the alert escalation schedule. The split needs human review.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale and Quinn Reed jointly own the alert escalation schedule. The split needs human review.",
+          "fields": {
+            "owner": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-owner-10",
+      "prose": true,
+      "category": "owner",
+      "text": "Ada Vale and Quinn Reed share responsibility for backup review. Individual scope is not recorded.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale and Quinn Reed share responsibility for backup review. Individual scope is not recorded.",
+          "fields": {
+            "owner": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-owner-11",
+      "prose": true,
+      "category": "owner",
+      "text": "Log-retention checks are assigned to Ada Vale. A compliance reviewer approves exceptions.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Log-retention checks are assigned to Ada Vale. A compliance reviewer approves exceptions.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-owner-12",
+      "prose": true,
+      "category": "owner",
+      "text": "Quinn Reed looks after staging runner capacity. Capacity changes require approval.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Quinn Reed looks after staging runner capacity. Capacity changes require approval.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-owner-13",
+      "prose": true,
+      "category": "owner",
+      "text": "For release weeks, Ada Vale handles deployment coordination. The release owner records final approval.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "For release weeks, Ada Vale handles deployment coordination. The release owner records final approval.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-owner-14",
+      "prose": true,
+      "category": "owner",
+      "text": "The image signing service is maintained by Quinn Reed. Security policies are reviewed separately.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The image signing service is maintained by Quinn Reed. Security policies are reviewed separately.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-owner-15",
+      "prose": true,
+      "category": "owner",
+      "text": "Ada Vale provides ownership for recovery planning. No production restore is recorded here.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale provides ownership for recovery planning. No production restore is recorded here.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-owner-16",
+      "prose": true,
+      "category": "owner",
+      "text": "Quinn Reed is responsible for dashboard maintenance. The on-call team reviews alert routing.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Quinn Reed is responsible for dashboard maintenance. The on-call team reviews alert routing.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-owner-17",
+      "prose": true,
+      "category": "owner",
+      "text": "The backup review coordinator is Ada Vale. This duty is recorded in the current register.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The backup review coordinator is Ada Vale. This duty is recorded in the current register.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-owner-18",
+      "prose": true,
+      "category": "owner",
+      "text": "Quinn Reed owns incident follow-up tracking. Another reviewer confirms closure evidence.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Quinn Reed owns incident follow-up tracking. Another reviewer confirms closure evidence.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-owner-19",
+      "prose": true,
+      "category": "owner",
+      "text": "An external vendor maintains the archive gateway. The responsible individual is not named.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "An external vendor maintains the archive gateway. The responsible individual is not named.",
+          "fields": {
+            "owner": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-owner-20",
+      "prose": true,
+      "category": "owner",
+      "text": "The platform group handles certificate requests. No individual owner is specified.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The platform group handles certificate requests. No individual owner is specified.",
+          "fields": {
+            "owner": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-21",
+      "prose": true,
+      "category": "dependency",
+      "text": "The checkout API depends on the identity gateway for authenticated sessions.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The checkout API depends on the identity gateway for authenticated sessions.",
+          "fields": {
+            "from_component": "checkout API",
+            "to_component": "identity gateway"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-22",
+      "prose": true,
+      "category": "dependency",
+      "text": "The release pipeline requires the image registry before creating an artifact.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The release pipeline requires the image registry before creating an artifact.",
+          "fields": {
+            "from_component": "release pipeline",
+            "to_component": "image registry"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-23",
+      "prose": true,
+      "category": "dependency",
+      "text": "The recovery coordinator uses the backup catalogue to locate recovery points.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The recovery coordinator uses the backup catalogue to locate recovery points.",
+          "fields": {
+            "from_component": "recovery coordinator",
+            "to_component": "backup catalogue"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-24",
+      "prose": true,
+      "category": "dependency",
+      "text": "The monitoring service depends upon the metrics collector during health checks.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The monitoring service depends upon the metrics collector during health checks.",
+          "fields": {
+            "from_component": "monitoring service",
+            "to_component": "metrics collector"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-25",
+      "prose": true,
+      "category": "dependency",
+      "text": "The payment service is dependent on the reconciliation queue for retry processing.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The payment service is dependent on the reconciliation queue for retry processing.",
+          "fields": {
+            "from_component": "payment service",
+            "to_component": "reconciliation queue"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-26",
+      "prose": true,
+      "category": "dependency",
+      "text": "The artifact registry is required by the deployment runner before a staging release.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The artifact registry is required by the deployment runner before a staging release.",
+          "fields": {
+            "from_component": "deployment runner",
+            "to_component": "artifact registry"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-27",
+      "prose": true,
+      "category": "dependency",
+      "text": "The event queue is used by the order worker for asynchronous processing.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The event queue is used by the order worker for asynchronous processing.",
+          "fields": {
+            "from_component": "order worker",
+            "to_component": "event queue"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-28",
+      "prose": true,
+      "category": "dependency",
+      "text": "The recovery workflow relies on the key service to open authorised backup material.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The recovery workflow relies on the key service to open authorised backup material.",
+          "fields": {
+            "from_component": "recovery workflow",
+            "to_component": "key service"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-29",
+      "prose": true,
+      "category": "dependency",
+      "text": "The customer portal calls the product API for catalogue information.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The customer portal calls the product API for catalogue information.",
+          "fields": {
+            "from_component": "customer portal",
+            "to_component": "product API"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-30",
+      "prose": true,
+      "category": "dependency",
+      "text": "The order processor connects to the billing database for committed order records.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The order processor connects to the billing database for committed order records.",
+          "fields": {
+            "from_component": "order processor",
+            "to_component": "billing database"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-31",
+      "prose": true,
+      "category": "dependency",
+      "text": "The API gateway depends on Redis during session checks.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The API gateway depends on Redis during session checks.",
+          "fields": {
+            "from_component": "API gateway",
+            "to_component": "Redis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-32",
+      "prose": true,
+      "category": "dependency",
+      "text": "The reconciliation worker requires PostgreSQL before it can record a result.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The reconciliation worker requires PostgreSQL before it can record a result.",
+          "fields": {
+            "from_component": "reconciliation worker",
+            "to_component": "PostgreSQL"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-33",
+      "prose": true,
+      "category": "dependency",
+      "text": "The alert router uses CloudWatch when it locates incident logs.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The alert router uses CloudWatch when it locates incident logs.",
+          "fields": {
+            "from_component": "alert router",
+            "to_component": "CloudWatch"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-34",
+      "prose": true,
+      "category": "dependency",
+      "text": "The reporting API depends on the warehouse service, which stores reporting records.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The reporting API depends on the warehouse service, which stores reporting records.",
+          "fields": {
+            "from_component": "reporting API",
+            "to_component": "warehouse service"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-35",
+      "prose": true,
+      "category": "dependency",
+      "text": "The frontend depends on the checkout API; both are documented in the service map.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The frontend depends on the checkout API; both are documented in the service map.",
+          "fields": {
+            "from_component": "frontend",
+            "to_component": "checkout API"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-36",
+      "prose": true,
+      "category": "dependency",
+      "text": "The backup workflow requires the storage bucket after selecting a recovery point.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The backup workflow requires the storage bucket after selecting a recovery point.",
+          "fields": {
+            "from_component": "backup workflow",
+            "to_component": "storage bucket"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-37",
+      "prose": true,
+      "category": "dependency",
+      "text": "The release worker depends on the signing service. Approval is recorded separately.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The release worker depends on the signing service. Approval is recorded separately.",
+          "fields": {
+            "from_component": "release worker",
+            "to_component": "signing service"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-38",
+      "prose": true,
+      "category": "dependency",
+      "text": "The staging service uses the configuration store with approved environment settings.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The staging service uses the configuration store with approved environment settings.",
+          "fields": {
+            "from_component": "staging service",
+            "to_component": "configuration store"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-39",
+      "prose": true,
+      "category": "dependency",
+      "text": "The status dashboard relies upon the monitoring API for current health results.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The status dashboard relies upon the monitoring API for current health results.",
+          "fields": {
+            "from_component": "status dashboard",
+            "to_component": "monitoring API"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-dependency-40",
+      "prose": true,
+      "category": "dependency",
+      "text": "The metrics collector is required by the alert evaluator for threshold checks.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The metrics collector is required by the alert evaluator for threshold checks.",
+          "fields": {
+            "from_component": "alert evaluator",
+            "to_component": "metrics collector"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-decision-41",
+      "prose": true,
+      "category": "decision",
+      "text": "The team opted for immutable release tags because deployment inputs must be reproducible.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team opted for immutable release tags because deployment inputs must be reproducible.",
+          "fields": {
+            "rationale": "deployment inputs must be reproducible"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-decision-42",
+      "prose": true,
+      "category": "decision",
+      "text": "A separate recovery environment was selected so that customer databases remain isolated.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "A separate recovery environment was selected so that customer databases remain isolated.",
+          "fields": {
+            "rationale": "customer databases remain isolated"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-decision-43",
+      "prose": true,
+      "category": "decision",
+      "text": "The team adopted signed artifacts to prevent unreviewed binaries reaching staging.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team adopted signed artifacts to prevent unreviewed binaries reaching staging.",
+          "fields": {
+            "rationale": "prevent unreviewed binaries reaching staging"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-decision-44",
+      "prose": true,
+      "category": "decision",
+      "text": "The architecture group chose queued reconciliation since payment events can arrive late.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The architecture group chose queued reconciliation since payment events can arrive late.",
+          "fields": {
+            "rationale": "payment events can arrive late"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-decision-45",
+      "prose": true,
+      "category": "decision",
+      "text": "The team decided to retain audit logs due to client review obligations.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team decided to retain audit logs due to client review obligations.",
+          "fields": {
+            "rationale": "client review obligations"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-decision-46",
+      "prose": true,
+      "category": "decision",
+      "text": "The team selected encrypted backup storage in order to restrict raw backup disclosure.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected encrypted backup storage in order to restrict raw backup disclosure.",
+          "fields": {
+            "rationale": "restrict raw backup disclosure"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-decision-47",
+      "prose": true,
+      "category": "decision",
+      "text": "The release team chose manual promotion. The reason was separation of release approval from build completion.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The release team chose manual promotion. The reason was separation of release approval from build completion.",
+          "fields": {
+            "rationale": "separation of release approval from build completion"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-decision-48",
+      "prose": true,
+      "category": "decision",
+      "text": "The team chose service-specific alerts. Excessive shared-alert noise drove the decision.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team chose service-specific alerts. Excessive shared-alert noise drove the decision.",
+          "fields": {
+            "rationale": "Excessive shared-alert noise"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-decision-49",
+      "prose": true,
+      "category": "decision",
+      "text": "The team selected staged database migrations as rollback safety requires compatibility checks.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected staged database migrations as rollback safety requires compatibility checks.",
+          "fields": {
+            "rationale": "rollback safety requires compatibility checks"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-decision-50",
+      "prose": true,
+      "category": "decision",
+      "text": "The team decided to use a managed queue. This choice was motivated by predictable retry handling.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team decided to use a managed queue. This choice was motivated by predictable retry handling.",
+          "fields": {
+            "rationale": "predictable retry handling"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-decision-51",
+      "prose": true,
+      "category": "decision",
+      "text": "The team selected separate access roles. The rationale was least-privilege knowledge sharing.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected separate access roles. The rationale was least-privilege knowledge sharing.",
+          "fields": {
+            "rationale": "least-privilege knowledge sharing"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-decision-52",
+      "prose": true,
+      "category": "decision",
+      "text": "The team chose reviewed configuration changes because drift had caused a prior incident.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team chose reviewed configuration changes because drift had caused a prior incident.",
+          "fields": {
+            "rationale": "drift had caused a prior incident"
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-decision-53",
+      "prose": true,
+      "category": "decision",
+      "text": "The team selected a new registry. Its rationale is unavailable in the authorised notes.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected a new registry. Its rationale is unavailable in the authorised notes.",
+          "fields": {
+            "rationale": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-decision-54",
+      "prose": true,
+      "category": "decision",
+      "text": "The team chose longer retention. The reason was not documented.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team chose longer retention. The reason was not documented.",
+          "fields": {
+            "rationale": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-decision-55",
+      "prose": true,
+      "category": "decision",
+      "text": "The team selected a recovery approach. No explanation of the decision is recorded.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected a recovery approach. No explanation of the decision is recorded.",
+          "fields": {
+            "rationale": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-decision-56",
+      "prose": true,
+      "category": "decision",
+      "text": "The team adopted a single release train. No rationale is supplied in these notes.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team adopted a single release train. No rationale is supplied in these notes.",
+          "fields": {
+            "rationale": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "judge-negative-57",
+      "prose": true,
+      "category": "negative",
+      "text": "Ada Vale no longer owns certificate renewal. The historical register must not assign current ownership.",
+      "expected": []
+    },
+    {
+      "id": "judge-negative-58",
+      "prose": true,
+      "category": "negative",
+      "text": "Quinn Reed might manage the deployment schedule. No current confirmation is available.",
+      "expected": []
+    },
+    {
+      "id": "judge-negative-59",
+      "prose": true,
+      "category": "negative",
+      "text": "Ada Vale does not maintain the backup scheduler. Another team is investigating ownership.",
+      "expected": []
+    },
+    {
+      "id": "judge-negative-60",
+      "prose": true,
+      "category": "negative",
+      "text": "Quinn Reed was the former owner of the image registry. The replacement owner is not confirmed.",
+      "expected": []
+    },
+    {
+      "id": "judge-negative-61",
+      "prose": true,
+      "category": "negative",
+      "text": "The team proposed choosing automatic database rollback. The proposal is not approved.",
+      "expected": []
+    },
+    {
+      "id": "judge-negative-62",
+      "prose": true,
+      "category": "negative",
+      "text": "Could Ada Vale own the monitoring service? This is an interview question.",
+      "expected": []
+    },
+    {
+      "id": "judge-negative-63",
+      "prose": true,
+      "category": "negative",
+      "text": "The worker does not depend on the retired queue. The dependency was removed last month.",
+      "expected": []
+    },
+    {
+      "id": "judge-negative-64",
+      "prose": true,
+      "category": "negative",
+      "text": "The release pipeline may use the new registry. The integration is only hypothetical.",
+      "expected": []
+    },
+    {
+      "id": "judge-negative-65",
+      "prose": true,
+      "category": "negative",
+      "text": "Ada Vale reviewed three deployment pull requests. Contributor activity alone does not establish ownership.",
+      "expected": []
+    },
+    {
+      "id": "judge-negative-66",
+      "prose": true,
+      "category": "negative",
+      "text": "The old diagram lists a queue. No current dependency is asserted by the diagram caption.",
+      "expected": []
+    },
+    {
+      "id": "judge-negative-67",
+      "prose": true,
+      "category": "negative",
+      "text": "Quinn Reed manages the backup queue. This statement is a rumour from an unverified message.",
+      "expected": []
+    },
+    {
+      "id": "judge-negative-68",
+      "prose": true,
+      "category": "negative",
+      "text": "Ada Vale oversees releases. This claim has not been confirmed by an authorised reviewer.",
+      "expected": []
+    },
+    {
+      "id": "judge-negative-69",
+      "prose": true,
+      "category": "negative",
+      "text": "The team decided to use a retired service. This decision is superseded.",
+      "expected": []
+    },
+    {
+      "id": "judge-negative-70",
+      "prose": true,
+      "category": "negative",
+      "text": "The developer uses a laptop for meetings. No project responsibility or service dependency is stated.",
+      "expected": []
+    },
+    {
+      "id": "judge-negative-71",
+      "prose": true,
+      "category": "negative",
+      "text": "The customer calls support for a refund. This records a customer action, not a system dependency.",
+      "expected": []
+    },
+    {
+      "id": "judge-negative-72",
+      "prose": true,
+      "category": "negative",
+      "text": "The phrase \"Ada Vale owns deployments\" appears in a training example, not a current assignment.",
+      "expected": []
+    }
+  ]
+}
