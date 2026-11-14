@@ -29,6 +29,19 @@ Historical and current verification results are separated below. Results apply t
   cases, with one existing FastAPI TestClient deprecation warning. Configured Ruff
   lint/format and locked-environment Python dependency audit passed. Frontend
   files are unchanged from the preceding verified build.
+- Application commit `2d48c43` deployed successfully to Render. Live new prose
+  produced four pending, exact-cited candidates, excluded an unconfirmed owner,
+  preserved missing rationale, recovered the passive dependency direction and
+  included all four reviewed claims in the generated handover. Completed judge
+  entry, refresh, 51 sources/81 claims/92 graph nodes, restricted-source denial,
+  successor continuation, visitor isolation and fresh reconstruction passed.
+  Sign-in checks at 390/768/1440 pixels in both themes found no horizontal
+  overflow or automated axe A/AA findings in that bounded scope. Health/readiness
+  returned 200; the existing owner's closed handover remained closed. See
+  [live check results](postgres-extraction-live-verification.json).
+- GitHub [CI run 43531873055](https://github.com/Gauravwakle96/INHERIA/actions/runs/43531873055)
+  passed both jobs for `2d48c43`: backend Ruff, complete pytest with the real
+  PostgreSQL 17 service and pip-audit; frontend lint, typecheck, build and npm audit.
 
 See [method, reproduction and limits](postgres-and-extraction-hardening.md) and
 [transaction case results](postgres-concurrency-verification.json). Automated

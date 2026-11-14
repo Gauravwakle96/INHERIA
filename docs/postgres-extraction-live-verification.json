@@ -1,0 +1,95 @@
+{
+  "verified_at": "2026-11-14T00:09:20.507639+00:00",
+  "application_commit": "2d48c435a2de431ac879d92c178cdaa7a03bd8fe",
+  "live_site": "https://inheria.onrender.com",
+  "deployment": {
+    "status": "live",
+    "migration": "b19e47a2c805",
+    "preserved_owner_handover_status": "closed",
+    "health": 200,
+    "ready": 200,
+    "repository_public": true
+  },
+  "fresh_prose_journey": {
+    "site": "https://inheria.onrender.com",
+    "verified_at": "2026-11-14T00:07:48.695867+00:00",
+    "scope": "New isolated expiring judge visitor. Authored new prose, pending extraction, exact quotations, human-role review and generated handover. No cloud commands, model call, real-user testing or private account access.",
+    "upload_ready": true,
+    "investigation_completed": true,
+    "pending_candidates": 4,
+    "exact_quotes": true,
+    "unconfirmed_owner_excluded": true,
+    "missing_rationale_preserved": true,
+    "passive_dependency_direction_correct": true,
+    "reviewed_candidates": 4,
+    "reviewed_claims_in_handover": true,
+    "success": true
+  },
+  "judge_entry_and_permissions": {
+    "site": "https://inheria.onrender.com",
+    "verified_at": "2026-11-14T00:07:48.983Z",
+    "layouts": [
+      {
+        "theme": "dark",
+        "width": 390,
+        "overflow": false,
+        "axe_violations": []
+      },
+      {
+        "theme": "dark",
+        "width": 768,
+        "overflow": false,
+        "axe_violations": []
+      },
+      {
+        "theme": "dark",
+        "width": 1440,
+        "overflow": false,
+        "axe_violations": []
+      },
+      {
+        "theme": "light",
+        "width": 390,
+        "overflow": false,
+        "axe_violations": []
+      },
+      {
+        "theme": "light",
+        "width": 768,
+        "overflow": false,
+        "axe_violations": []
+      },
+      {
+        "theme": "light",
+        "width": 1440,
+        "overflow": false,
+        "axe_violations": []
+      }
+    ],
+    "direct_entry": true,
+    "starting_role": "Rudransh",
+    "refresh_persistence": true,
+    "coordinator_sources": 51,
+    "knowledge_records": 81,
+    "graph_nodes": 92,
+    "incoming_sources": 50,
+    "restricted_evidence_denied": true,
+    "successor_continuation": true,
+    "visitor_isolation": true,
+    "fresh_reconstruction": true,
+    "runtime_errors": [],
+    "success": true,
+    "scope": "Visitor-isolated author-operated ShopEase case study; historic approvals do not represent visitor actions or independent operational assessment."
+  },
+  "scope": "Automated author-operated QA. Only new isolated expiring judge workspaces mutated. Existing owner handover/schema read-only verification. No provider settings or private conversations accessed; not five-person usability research or cloud execution.",
+  "ci": {
+    "run_id": 43531873055,
+    "commit": "2d48c435a2de431ac879d92c178cdaa7a03bd8fe",
+    "conclusion": "success",
+    "backend": "success",
+    "frontend": "success",
+    "url": "https://github.com/Gauravwakle96/INHERIA/actions/runs/43531873055",
+    "backend_includes": "Real PostgreSQL 17 service, Ruff, full pytest and pip-audit",
+    "frontend_includes": "Lint, typecheck, production build and npm audit"
+  }
+}

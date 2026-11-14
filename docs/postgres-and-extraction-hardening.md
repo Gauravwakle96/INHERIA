@@ -97,3 +97,10 @@ All existing frozen reports and authored account history remain unchanged.
 Practical tests still require separate incoming acceptance and human review;
 these extraction checks certify neither operational readiness nor source truth.
 Independent user outcomes are not supplied by the automated tests.
+
+[Live verification](postgres-extraction-live-verification.json) confirms the new
+prose upload → investigate → pending exact evidence → review → generated handover
+journey on application commit `2d48c43`. It also verifies completed/fresh judge
+entry, refresh, restricted-source denial and visitor isolation. Existing owner
+data was inspected read-only, and provider settings were untouched. These are
+automated author-operated checks, not independent five-person usability results.
