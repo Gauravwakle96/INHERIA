@@ -1,0 +1,179 @@
+{
+  "recorded_at": "2026-11-14T14:45:49.486467+00:00",
+  "site": "https://inheria.onrender.com",
+  "application_commit": "4fecf31e03d9b8d71e859a09e5d19c0a6e33faaf",
+  "render": {
+    "deployment_id": "dep-dbs75ve8bjmc73e72aag",
+    "observed_status": "live",
+    "plan": "Free"
+  },
+  "ci": {
+    "url": "https://github.com/Gauravwakle96/INHERIA/actions/runs/43606135040",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "frontend",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run lint",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run typecheck",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run build",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm audit",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "backend",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Initialize containers",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run astral-sh/setup-uv@v6",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv sync --frozen",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv run ruff check app tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv run ruff format --check app tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv run pytest -q",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv run pip-audit --local",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run astral-sh/setup-uv@v6",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Stop containers",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  },
+  "health_status": 200,
+  "repository_public": true,
+  "live_browser_checks": {
+    "public_guide": "Exact three improvements visible, with steps to exercise onboarding, source impact and transfer recovery.",
+    "completed_entry": {
+      "actor": "Rudransh",
+      "accepted": [
+        8,
+        8
+      ],
+      "supervisor_reviewed": [
+        11,
+        11
+      ],
+      "current_accessible_handover_items": [
+        72,
+        72
+      ],
+      "ready": true
+    },
+    "team": {
+      "participants": [
+        "Gaurav",
+        "Rudransh",
+        "Savinay"
+      ],
+      "refresh_access_control_visible": true
+    },
+    "fresh_entry": {
+      "handover_ready": false,
+      "blockers_visible": [
+        "Required recovery prerequisite incomplete",
+        "Verified handover not generated",
+        "Manager approval required",
+        "No verified departing responsibilities included",
+        "Practical validation tasks not created"
+      ],
+      "recovery_links": [
+        "/validation?transition=<visitor-owned-id>",
+        "/team",
+        "/sources",
+        "#required-readiness-checks"
+      ]
+    },
+    "displayed_error_alerts": [],
+    "horizontal_overflow": false,
+    "loaded_asset": "/assets/index-C4sQ4WHk.js"
+  },
+  "limits": [
+    "Author-operated isolated public case-study visits; no independent human usability or production competence claim.",
+    "No private account credentials, paid provider calls, existing-account data changes or deliberate live failure injection.",
+    "Detailed error, permission, responsive and accessibility checks are in the separate local verification record.",
+    "New README screenshot remains a labelled local QA capture; browser connector denied saving a replacement to the repository path.",
+    "Free hosting quotas remain finite. PDF remains deferred. No submission form was completed."
+  ]
+}

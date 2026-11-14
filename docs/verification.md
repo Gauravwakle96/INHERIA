@@ -29,6 +29,15 @@ updates the source inventory and membership list.
 Commands, result counts and tested file hashes are recorded in
 [judge experience verification](judge-experience-verification.json).
 
+Render confirmed application commit `4fecf31e03d9b8d71e859a09e5d19c0a6e33faaf`
+live on the existing Free service. [CI run 43606135040](https://github.com/Gauravwakle96/INHERIA/actions/runs/43606135040)
+passed both jobs. Live browser checks confirmed the exact-three public guide,
+completed handover readiness (8/8 responsibilities, 11/11 supervisor tasks,
+72/72 current handover records), Team refresh and fresh-entry blockers with
+recovery links. No visible request error or desktop overflow was observed. See
+[live verification](judge-closure-live-verification.json); targeted failure and
+accessibility tests remain the separately recorded local checks.
+
 An initial accelerated full journey reached closure but hit the unchanged
 shared-IP request limit during subsequent rapid navigation and timed out. Query
 retries now avoid terminal/permission/rate errors and 429 responses expose the

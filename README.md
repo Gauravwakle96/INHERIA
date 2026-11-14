@@ -315,7 +315,7 @@ The application does not read Codex's credentials or configuration. Organisation
 
 ## Testing and reliability evidence
 
-Latest full backend verification: **232 tests passed**, including **16 real PostgreSQL cases**, with **89% line coverage**. [CI run 43538720301](https://github.com/Gauravwakle96/INHERIA/actions/runs/43538720301) passed backend lint/format/tests/dependency audit and frontend lint/typecheck/build/npm audit. The exact submitted three-improvement runner also passed **34/34** again on 14 November.
+Latest full backend verification: **232 tests passed**, including **16 real PostgreSQL cases**, with **89% line coverage**. [CI run 43606135040](https://github.com/Gauravwakle96/INHERIA/actions/runs/43606135040) passed backend lint/format/tests/dependency audit and frontend lint/typecheck/build/npm audit for the deployed closure/recovery changes. The exact submitted three-improvement runner also passed **34/34** again on 14 November.
 
 | Test area | Executed evidence |
 | --- | --- |
