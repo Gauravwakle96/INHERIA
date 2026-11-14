@@ -538,6 +538,8 @@ def send_message(db, user, record, payload):
         action_ids = inferred_actions(message, options)
     # Recheck after the external call: access, source or approval may have changed.
     db.expire_all()
+    db.info.pop("inheria_evidence_context", None)
+    db.info.pop("inheria_claim_rows", None)
     project_access(db, user, record.project_id)
     if not user.active:
         raise HTTPException(403, "This account is no longer authorised.")

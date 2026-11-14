@@ -90,6 +90,11 @@
       "checked": 70,
       "images": 11,
       "issues": 0
+    },
+    "final_boundary_regressions": {
+      "passed": 43,
+      "failed": 0,
+      "scope": "Chat evidence/provider boundaries, PostgreSQL races and transfer validation after additional lock/provider recheck cache invalidation."
     }
   },
   "target_acceptance": {

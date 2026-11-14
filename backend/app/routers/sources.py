@@ -181,6 +181,8 @@ def replace_source(project_id: str, source_id: str, db: Db, user: Actor, file: A
 
     db.scalar(select(Project).where(Project.id == project_id).with_for_update())
     db.expire_all()
+    db.info.pop("inheria_evidence_context", None)
+    db.info.pop("inheria_claim_rows", None)
     project_access(db, user, project_id, write=True)
     source = _source(db, user, project_id, source_id)
     if (
@@ -230,6 +232,8 @@ def replace_source(project_id: str, source_id: str, db: Db, user: Actor, file: A
 def revoke_source(project_id: str, source_id: str, db: Db, user: Actor) -> dict[str, Any]:
     db.scalar(select(Project).where(Project.id == project_id).with_for_update())
     db.expire_all()
+    db.info.pop("inheria_evidence_context", None)
+    db.info.pop("inheria_claim_rows", None)
     project_access(db, user, project_id, write=True)
     require_role(user, SOURCE_ADMIN_ROLES)
     source = _source(db, user, project_id, source_id)
@@ -244,6 +248,8 @@ def revoke_source(project_id: str, source_id: str, db: Db, user: Actor) -> dict[
 def delete_source(project_id: str, source_id: str, db: Db, user: Actor) -> dict[str, bool]:
     db.scalar(select(Project).where(Project.id == project_id).with_for_update())
     db.expire_all()
+    db.info.pop("inheria_evidence_context", None)
+    db.info.pop("inheria_claim_rows", None)
     project_access(db, user, project_id, write=True)
     require_role(user, SOURCE_ADMIN_ROLES)
     source = _source(db, user, project_id, source_id)

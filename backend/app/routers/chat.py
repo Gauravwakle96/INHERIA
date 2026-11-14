@@ -101,6 +101,8 @@ def test_ai(project_id: str, db: Db, user: User):
     except ProviderError as exc:
         raise HTTPException(502, str(exc)) from None
     db.expire_all()
+    db.info.pop("inheria_evidence_context", None)
+    db.info.pop("inheria_claim_rows", None)
     project_access(db, user, project_id, write=True)
     require_role(user, {"admin"})
     audit(db, user, project_id, "ai.connection_tested", "organisation", user.org_id, {"success": True})
