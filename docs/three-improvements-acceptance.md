@@ -165,7 +165,7 @@ twelve role journeys: **34/34 passed**, with test file hashes. The runner is
 `uv run python evaluation/run_submission_acceptance.py` from `backend`; it uses
 existing isolated fixtures/mocked GitHub and makes no paid model call.
 
-The last full product regression passed 198 backend tests with 90% line coverage;
+The earlier full product regression passed 198 backend tests with 90% line coverage;
 judge/onboarding/source browser acceptance passed 14 tests, with subsequent
 focused source reruns and two live access tests. See [verification](verification.md)
 for dates, exact counts and any later increments. This document is an acceptance
@@ -173,3 +173,14 @@ map, not an awarded score, independent audit or event eligibility certification.
 
 
 Final experience update: completed account case-study mode, guided current continuation steps, typed evidence checks, critical-gap follow-up gates, cited dependency paths and actual isolated-process restart testing are documented in [completion hardening](completion-hardening.md). Original challenge extraction results remain preserved separately from corrected regression results. No independent human usability or cloud execution claim is added.
+
+Additional reliability verification uses real PostgreSQL 17.11 concurrent sessions
+for 15 bounded ownership, approval, source/access and invitation cases. A stale
+invitation revocation failure was reproduced and corrected using the same project
+lock and a fresh ORM-state check. A new 72-document all-prose first run exposed
+owner/rationale/dependency misses; its original results remain published. General
+pattern fixes pass the now-known regression thresholds (owners 24/26, rationales
+16/16, dependency endpoints 17/18, candidate precision 59/59). This is internal,
+tuned regression evidence, not independent held-out accuracy. The upload →
+investigate → exact-citation review → generated-handover API journey also passes
+with newly supplied prose. See [scope and reports](postgres-and-extraction-hardening.md).

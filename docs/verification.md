@@ -2,6 +2,39 @@
 
 Historical and current verification results are separated below. Results apply to the implemented MVP in this workspace; they do not certify an enterprise deployment.
 
+## Real PostgreSQL and additional prose challenge — 14 November 2026 IST
+
+- **15/15 real PostgreSQL 17.11 transaction cases passed** using separate concurrent
+  SQLAlchemy sessions in an owned loopback QA database. The harness verifies actual
+  lock waits. Tests cover duplicate acceptance/assignment/closure, claim/handover
+  approval, supervisor review, prerequisite updates, changed/revoked evidence,
+  recipient access loss and invitation acceptance/revocation. Alembic reached
+  `b19e47a2c805` in that separate QA database. No live-account data was changed.
+- A retained stale invitation object reproduced a revocation race: an accepted
+  invitation could be overwritten as revoked. The route now acquires the project
+  lock and reloads current ORM state before permission and status checks. The
+  regression test passes. CI now supplies an ephemeral PostgreSQL 17 service;
+  these cases explicitly skip when a local test URL is absent.
+- A **new 72-document all-prose internal challenge** first measured candidate
+  precision 94.6%, recall 88.3%, owners 84.6%, rationales 75.0% and dependencies
+  83.3%. [Original results](fresh-extraction-first-report.json) remain unchanged.
+  General pattern fixes and conservative uncertainty handling now give known-case
+  regression precision 100%, recall 98.3%, owners 92.3%, rationales 100% and
+  dependencies 94.4%. Pronoun-only attribution, an uncertain shared lead and one
+  exact endpoint-label match remain unresolved. This is implementation-authored,
+  post-fix regression evidence, not independent held-out accuracy.
+- All five extraction acceptance tests passed, including newly uploaded prose →
+  investigation → exact source citations → authorised review → generated handover.
+- Final code suite: **228 passed, 90% line coverage**, including all 15 PostgreSQL
+  cases, with one existing FastAPI TestClient deprecation warning. Configured Ruff
+  lint/format and locked-environment Python dependency audit passed. Frontend
+  files are unchanged from the preceding verified build.
+
+See [method, reproduction and limits](postgres-and-extraction-hardening.md) and
+[transaction case results](postgres-concurrency-verification.json). Automated
+tests do not establish that five unfamiliar people independently used or verified
+the product; no individual usability outcomes have been supplied for this run.
+
 ## Completed judge workspace and final reliability checks — 14 November 2026 IST
 
 The sign-in page now offers completed and fresh visitor workspaces. The sanitised
@@ -10,7 +43,7 @@ responsibilities and eleven reviewed walkthroughs. It copies authored project
 history, not account credentials, AI configuration or private conversations. The
 owner account is unchanged. See [implementation and limits](completion-hardening.md).
 
-- Final-tree backend suite: **210 passed, 90% line coverage**, with one existing
+- Earlier-tree backend suite: **210 passed, 90% line coverage**, with one existing
   TestClient deprecation warning. New coverage includes typed readiness checks,
   critical-gap follow-up gates, stale-version approval, duplicate acceptance,
   dependency paths/cycles/permissions, completed-tenant isolation and actual

@@ -113,6 +113,16 @@ uv run python -m app.evaluation
 uvx pip-audit --path .venv/Lib/site-packages
 ```
 
+Actual concurrent transaction checks are opt-in: set
+`INHERIA_TEST_POSTGRES_URL` to a disposable **loopback PostgreSQL** database whose
+name ends in `_qa`, then run `uv run pytest -q tests/test_postgres_concurrency.py`
+from `backend`. The tests use independent concurrent sessions and remove only
+their generated schema. Without that variable they explicitly skip. GitHub CI
+provides an ephemeral PostgreSQL 17 service. See
+[PostgreSQL and fresh-extraction evidence](docs/postgres-and-extraction-hardening.md)
+for the invitation-race fix, reproduction steps, original extraction misses and
+post-fix regression results.
+
 From `frontend`:
 
 ```powershell

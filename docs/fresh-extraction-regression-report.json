@@ -1,0 +1,2627 @@
+{
+  "version": "fresh-extraction-challenge-2026-11-14-v1",
+  "corpus_sha256": "8f3943546579c6e5887235496f94433236dae9128374fb4c5acd2d513bfdab1f",
+  "methodology": "72 new internally authored prose documents and labels frozen before the first run at baseline 561746a. Covers DevOps duties, shared/unresolved ownership, passive/multiword dependencies, rationale variants and uncertain/historical/negated input. Labels are by the implementing coding agent and are not independent human ground truth. Preserve this first result; fixes turn these cases into regression data. Exact document candidate identity and field matches are scored.",
+  "counts": {
+    "documents": 72,
+    "prose_documents": 72
+  },
+  "candidate": {
+    "true_positives": 59,
+    "false_positives": 0,
+    "false_negatives": 1,
+    "precision": {
+      "numerator": 59,
+      "denominator": 59,
+      "rate": 1.0
+    },
+    "recall": {
+      "numerator": 59,
+      "denominator": 60,
+      "rate": 0.983333
+    }
+  },
+  "fields": {
+    "owner": {
+      "numerator": 24,
+      "denominator": 26,
+      "rate": 0.923077
+    },
+    "rationale": {
+      "numerator": 16,
+      "denominator": 16,
+      "rate": 1.0
+    },
+    "dependency": {
+      "numerator": 17,
+      "denominator": 18,
+      "rate": 0.944444
+    }
+  },
+  "exact_quotes": {
+    "numerator": 59,
+    "denominator": 59,
+    "rate": 1.0
+  },
+  "targets_met": true,
+  "false_positives": [],
+  "false_negatives": [
+    [
+      "fresh-uncertain-joint-secrets",
+      "responsibility",
+      "Ada Vale and Quinn Reed jointly own secret access reviews. A single accountable lead has not been confirmed."
+    ]
+  ],
+  "details": [
+    {
+      "id": "fresh-owner-incident-rotation",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale maintains the incident response rotation. Approved coverage runs every Monday.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale maintains the incident response rotation. Approved coverage runs every Monday.",
+          "summary": "Ada Vale maintains the incident response rotation. Approved coverage runs every Monday.",
+          "quote": "Ada Vale maintains the incident response rotation. Approved coverage runs every Monday.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": "Ada Vale",
+            "backup_id": null,
+            "component": "the incident response rotation",
+            "critical": false,
+            "field_evidence": {
+              "owner_id": "Ada Vale maintains the incident response rotation",
+              "component": "the incident response rotation"
+            }
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Ada Vale",
+          "observed": "Ada Vale",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-owner-runner-capacity",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Quinn Reed owns runner capacity management. Approval is recorded in the responsibility register.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "Quinn Reed owns runner capacity management. Approval is recorded in the responsibility register.",
+          "summary": "Quinn Reed owns runner capacity management. Approval is recorded in the responsibility register.",
+          "quote": "Quinn Reed owns runner capacity management. Approval is recorded in the responsibility register.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": "Quinn Reed",
+            "backup_id": null,
+            "component": "runner capacity management",
+            "critical": false,
+            "field_evidence": {
+              "owner_id": "Quinn Reed owns runner capacity management",
+              "component": "runner capacity management"
+            }
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Quinn Reed",
+          "observed": "Quinn Reed",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-owner-certificate-notices",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Certificate renewal notices are handled by Ada Vale. The security specialist approves changes.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "Certificate renewal notices are handled by Ada Vale. The security specialist approves changes.",
+          "summary": "Certificate renewal notices are handled by Ada Vale. The security specialist approves changes.",
+          "quote": "Certificate renewal notices are handled by Ada Vale. The security specialist approves changes.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": "Ada Vale",
+            "backup_id": null,
+            "component": "Certificate renewal notices",
+            "critical": false,
+            "field_evidence": {
+              "owner_id": "Certificate renewal notices are handled by Ada Vale",
+              "component": "Certificate renewal notices"
+            }
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Ada Vale",
+          "observed": "Ada Vale",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-owner-retention-title",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The backup retention coordinator is Quinn Reed. The current register records the recurring task.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "The backup retention coordinator is Quinn Reed. The current register records the recurring task.",
+          "summary": "The backup retention coordinator is Quinn Reed. The current register records the recurring task.",
+          "quote": "The backup retention coordinator is Quinn Reed. The current register records the recurring task.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": "Quinn Reed",
+            "backup_id": null,
+            "component": "The backup retention",
+            "critical": false,
+            "field_evidence": {
+              "owner_id": "The backup retention coordinator is Quinn Reed",
+              "component": "The backup retention"
+            }
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Quinn Reed",
+          "observed": "Quinn Reed",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-owner-budget-report",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "For each billing cycle, Ada Vale handles infrastructure budget reporting. The finance team reviews findings.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "For each billing cycle, Ada Vale handles infrastructure budget reporting. The finance team reviews findings.",
+          "summary": "For each billing cycle, Ada Vale handles infrastructure budget reporting. The finance team reviews findings.",
+          "quote": "For each billing cycle, Ada Vale handles infrastructure budget reporting. The finance team reviews findings.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": "Ada Vale",
+            "backup_id": null,
+            "component": "infrastructure budget reporting",
+            "critical": false,
+            "field_evidence": {
+              "owner_id": "Ada Vale handles infrastructure budget reporting",
+              "component": "infrastructure budget reporting"
+            }
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Ada Vale",
+          "observed": "Ada Vale",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-owner-db-refresh",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Staging database refreshes are maintained by Quinn Reed. Production credentials are excluded.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "Staging database refreshes are maintained by Quinn Reed. Production credentials are excluded.",
+          "summary": "Staging database refreshes are maintained by Quinn Reed. Production credentials are excluded.",
+          "quote": "Staging database refreshes are maintained by Quinn Reed. Production credentials are excluded.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": "Quinn Reed",
+            "backup_id": null,
+            "component": "Staging database refreshes",
+            "critical": false,
+            "field_evidence": {
+              "owner_id": "Staging database refreshes are maintained by Quinn Reed",
+              "component": "Staging database refreshes"
+            }
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Quinn Reed",
+          "observed": "Quinn Reed",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-owner-patch-direct",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale is responsible for staging host patch coordination. Scheduled changes require review.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale is responsible for staging host patch coordination. Scheduled changes require review.",
+          "summary": "Ada Vale is responsible for staging host patch coordination. Scheduled changes require review.",
+          "quote": "Ada Vale is responsible for staging host patch coordination. Scheduled changes require review.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": "Ada Vale",
+            "backup_id": null,
+            "component": "staging host patch coordination",
+            "critical": false,
+            "field_evidence": {
+              "owner_id": "Ada Vale is responsible for staging host patch coordination",
+              "component": "staging host patch coordination"
+            }
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Ada Vale",
+          "observed": "Ada Vale",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-owner-registry-gc",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Quinn Reed looks after image registry garbage collection. Only expired images are candidates.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "Quinn Reed looks after image registry garbage collection. Only expired images are candidates.",
+          "summary": "Quinn Reed looks after image registry garbage collection. Only expired images are candidates.",
+          "quote": "Quinn Reed looks after image registry garbage collection. Only expired images are candidates.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": "Quinn Reed",
+            "backup_id": null,
+            "component": "image registry garbage collection",
+            "critical": false,
+            "field_evidence": {
+              "owner_id": "Quinn Reed looks after image registry garbage collection",
+              "component": "image registry garbage collection"
+            }
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Quinn Reed",
+          "observed": "Quinn Reed",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-owner-queue-dashboards",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Queue saturation dashboards are owned by Ada Vale. Alerts link to the support runbook.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "Queue saturation dashboards are owned by Ada Vale. Alerts link to the support runbook.",
+          "summary": "Queue saturation dashboards are owned by Ada Vale. Alerts link to the support runbook.",
+          "quote": "Queue saturation dashboards are owned by Ada Vale. Alerts link to the support runbook.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": "Ada Vale",
+            "backup_id": null,
+            "component": "Queue saturation dashboards",
+            "critical": false,
+            "field_evidence": {
+              "owner_id": "Queue saturation dashboards are owned by Ada Vale",
+              "component": "Queue saturation dashboards"
+            }
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Ada Vale",
+          "observed": "Ada Vale",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-owner-secrets-review",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The secret access review owner is Quinn Reed. The register contains access policies, never secret values.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "The secret access review owner is Quinn Reed. The register contains access policies, never secret values.",
+          "summary": "The secret access review owner is Quinn Reed. The register contains access policies, never secret values.",
+          "quote": "The secret access review owner is Quinn Reed. The register contains access policies, never secret values.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": "Quinn Reed",
+            "backup_id": null,
+            "component": "The secret access review",
+            "critical": false,
+            "field_evidence": {
+              "owner_id": "The secret access review owner is Quinn Reed",
+              "component": "The secret access review"
+            }
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Quinn Reed",
+          "observed": "Quinn Reed",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-owner-certificates-after-review",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The infrastructure team confirmed that Ada Vale owns certificate renewal coordination for staging services.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "The infrastructure team confirmed that Ada Vale owns certificate renewal coordination for staging services.",
+          "summary": "The infrastructure team confirmed that Ada Vale owns certificate renewal coordination for staging services.",
+          "quote": "The infrastructure team confirmed that Ada Vale owns certificate renewal coordination for staging services.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": "Ada Vale",
+            "backup_id": null,
+            "component": "certificate renewal coordination for staging services",
+            "critical": false,
+            "field_evidence": {
+              "owner_id": "Ada Vale owns certificate renewal coordination for staging services",
+              "component": "certificate renewal coordination for staging services"
+            }
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Ada Vale",
+          "observed": "Ada Vale",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-owner-slo-review",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Quinn Reed maintains the monthly SLO review. Ada Vale attends as an observer.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "Quinn Reed maintains the monthly SLO review. Ada Vale attends as an observer.",
+          "summary": "Quinn Reed maintains the monthly SLO review. Ada Vale attends as an observer.",
+          "quote": "Quinn Reed maintains the monthly SLO review. Ada Vale attends as an observer.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": "Quinn Reed",
+            "backup_id": null,
+            "component": "the monthly SLO review",
+            "critical": false,
+            "field_evidence": {
+              "owner_id": "Quinn Reed maintains the monthly SLO review",
+              "component": "the monthly SLO review"
+            }
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Quinn Reed",
+          "observed": "Quinn Reed",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-owner-passive-after-comma",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "After the release freeze, runner health checks are handled by Quinn Reed. The platform lead records approval.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "After the release freeze, runner health checks are handled by Quinn Reed. The platform lead records approval.",
+          "summary": "After the release freeze, runner health checks are handled by Quinn Reed. The platform lead records approval.",
+          "quote": "After the release freeze, runner health checks are handled by Quinn Reed. The platform lead records approval.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": "Quinn Reed",
+            "backup_id": null,
+            "component": "After the release freeze, runner health checks",
+            "critical": false,
+            "field_evidence": {
+              "owner_id": "After the release freeze, runner health checks are handled by Quinn Reed",
+              "component": "After the release freeze, runner health checks"
+            }
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Quinn Reed",
+          "observed": "Quinn Reed",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-owner-titles-with-comma",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The incident coordinator is Ada Vale, according to the accepted handover register.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "The incident coordinator is Ada Vale, according to the accepted handover register.",
+          "summary": "The incident coordinator is Ada Vale, according to the accepted handover register.",
+          "quote": "The incident coordinator is Ada Vale, according to the accepted handover register.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": "Ada Vale",
+            "backup_id": null,
+            "component": "The incident",
+            "critical": false,
+            "field_evidence": {
+              "owner_id": "The incident coordinator is Ada Vale",
+              "component": "The incident"
+            }
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Ada Vale",
+          "observed": "Ada Vale",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-owner-duty-provided",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale provides ownership for deployment approvals. The team formally assigned this recurring task.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale provides ownership for deployment approvals. The team formally assigned this recurring task.",
+          "summary": "Ada Vale provides ownership for deployment approvals. The team formally assigned this recurring task.",
+          "quote": "Ada Vale provides ownership for deployment approvals. The team formally assigned this recurring task.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": "Ada Vale",
+            "backup_id": null,
+            "component": "deployment approvals",
+            "critical": false,
+            "field_evidence": {
+              "owner_id": "Ada Vale provides ownership for deployment approvals",
+              "component": "deployment approvals"
+            }
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Ada Vale",
+          "observed": "Ada Vale",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-owner-pronoun-duty",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale joined the platform team in April. She maintains the release approval checklist each week.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale joined the platform team in April. She maintains the release approval checklist each week.",
+          "summary": "Ada Vale joined the platform team in April. She maintains the release approval checklist each week.",
+          "quote": "Ada Vale joined the platform team in April. She maintains the release approval checklist each week.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {}
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Ada Vale",
+          "observed": null,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "id": "fresh-owner-assigned-to",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Daily backup monitoring is assigned to Quinn Reed. This allocation was approved by the platform lead.",
+          "fields": {
+            "owner": "Quinn Reed"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "Daily backup monitoring is assigned to Quinn Reed. This allocation was approved by the platform lead.",
+          "summary": "Daily backup monitoring is assigned to Quinn Reed. This allocation was approved by the platform lead.",
+          "quote": "Daily backup monitoring is assigned to Quinn Reed. This allocation was approved by the platform lead.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": "Quinn Reed",
+            "backup_id": null,
+            "component": "Daily backup monitoring",
+            "critical": false,
+            "field_evidence": {
+              "owner_id": "Daily backup monitoring is assigned to Quinn Reed",
+              "component": "Daily backup monitoring"
+            }
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Quinn Reed",
+          "observed": "Quinn Reed",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-owner-isnt-negated",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale owns recovery documentation. She is not responsible for database production administration.",
+          "fields": {
+            "owner": "Ada Vale"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale owns recovery documentation. She is not responsible for database production administration.",
+          "summary": "Ada Vale owns recovery documentation. She is not responsible for database production administration.",
+          "quote": "Ada Vale owns recovery documentation. She is not responsible for database production administration.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": "Ada Vale",
+            "backup_id": null,
+            "component": "recovery documentation",
+            "critical": false,
+            "field_evidence": {
+              "owner_id": "Ada Vale owns recovery documentation",
+              "component": "recovery documentation"
+            }
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": "Ada Vale",
+          "observed": "Ada Vale",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-uncertain-joint-secrets",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale and Quinn Reed jointly own secret access reviews. A single accountable lead has not been confirmed.",
+          "fields": {
+            "owner": null
+          }
+        }
+      ],
+      "observed": [],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": null,
+          "observed": null,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "id": "fresh-uncertain-joint-runner",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale and Quinn Reed share responsibility for runner maintenance. The exact task split needs review.",
+          "fields": {
+            "owner": null
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale and Quinn Reed share responsibility for runner maintenance. The exact task split needs review.",
+          "summary": "Ada Vale and Quinn Reed share responsibility for runner maintenance. The exact task split needs review.",
+          "quote": "Ada Vale and Quinn Reed share responsibility for runner maintenance. The exact task split needs review.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {},
+            "candidate_owner_ids": [
+              "Ada Vale",
+              "Quinn Reed"
+            ],
+            "ownership_uncertainty": "Multiple people are stated; responsibility split requires human confirmation."
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": null,
+          "observed": null,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-uncertain-joint-alerts",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The joint owners of alert triage are Ada Vale and Quinn Reed. Ownership is shared without a single designated lead.",
+          "fields": {
+            "owner": null
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "The joint owners of alert triage are Ada Vale and Quinn Reed. Ownership is shared without a single designated lead.",
+          "summary": "The joint owners of alert triage are Ada Vale and Quinn Reed. Ownership is shared without a single designated lead.",
+          "quote": "The joint owners of alert triage are Ada Vale and Quinn Reed. Ownership is shared without a single designated lead.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {},
+            "candidate_owner_ids": [
+              "Ada Vale",
+              "Quinn Reed"
+            ],
+            "ownership_uncertainty": "Multiple people are stated; responsibility split requires human confirmation."
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": null,
+          "observed": null,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-uncertain-independent-duty",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale maintains release checklists. Quinn Reed maintains database backup reports.",
+          "fields": {
+            "owner": null
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale maintains release checklists. Quinn Reed maintains database backup reports.",
+          "summary": "Ada Vale maintains release checklists. Quinn Reed maintains database backup reports.",
+          "quote": "Ada Vale maintains release checklists. Quinn Reed maintains database backup reports.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {},
+            "candidate_owner_ids": [
+              "Ada Vale",
+              "Quinn Reed"
+            ],
+            "ownership_uncertainty": "Multiple people are stated; responsibility split requires human confirmation."
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": null,
+          "observed": null,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-uncertain-independent-order",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Quinn Reed handles image retention. Ada Vale handles incident follow-ups.",
+          "fields": {
+            "owner": null
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "Quinn Reed handles image retention. Ada Vale handles incident follow-ups.",
+          "summary": "Quinn Reed handles image retention. Ada Vale handles incident follow-ups.",
+          "quote": "Quinn Reed handles image retention. Ada Vale handles incident follow-ups.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {},
+            "candidate_owner_ids": [
+              "Ada Vale",
+              "Quinn Reed"
+            ],
+            "ownership_uncertainty": "Multiple people are stated; responsibility split requires human confirmation."
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": null,
+          "observed": null,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-uncertain-joint-selected",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale and Quinn Reed jointly own staging environment reviews. Both acknowledge the role.",
+          "fields": {
+            "owner": null
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "Ada Vale and Quinn Reed jointly own staging environment reviews. Both acknowledge the role.",
+          "summary": "Ada Vale and Quinn Reed jointly own staging environment reviews. Both acknowledge the role.",
+          "quote": "Ada Vale and Quinn Reed jointly own staging environment reviews. Both acknowledge the role.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {},
+            "candidate_owner_ids": [
+              "Ada Vale",
+              "Quinn Reed"
+            ],
+            "ownership_uncertainty": "Multiple people are stated; responsibility split requires human confirmation."
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": null,
+          "observed": null,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-uncertain-unnamed-owner",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The platform reliability group owns backup review. No individual has been assigned.",
+          "fields": {
+            "owner": null
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "The platform reliability group owns backup review. No individual has been assigned.",
+          "summary": "The platform reliability group owns backup review. No individual has been assigned.",
+          "quote": "The platform reliability group owns backup review. No individual has been assigned.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {}
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": null,
+          "observed": null,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-uncertain-role-unresolved",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The on-call engineer is responsible for customer incident triage. The rota is not connected.",
+          "fields": {
+            "owner": null
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "responsibility",
+          "title": "The on-call engineer is responsible for customer incident triage. The rota is not connected.",
+          "summary": "The on-call engineer is responsible for customer incident triage. The rota is not connected.",
+          "quote": "The on-call engineer is responsible for customer incident triage. The rota is not connected.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {}
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "owner",
+          "expected": null,
+          "observed": null,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-dependency-simple",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "billing-worker depends on event-queue for delivery retries.",
+          "fields": {
+            "from_component": "billing-worker",
+            "to_component": "event-queue"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "billing-worker depends on event-queue for delivery retries.",
+          "summary": "billing-worker depends on event-queue for delivery retries.",
+          "quote": "billing-worker depends on event-queue for delivery retries.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "dependency": "billing-worker depends on event-queue"
+            },
+            "from_component": "billing-worker",
+            "to_component": "event-queue"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "billing-worker",
+            "to_component": "event-queue"
+          },
+          "observed": {
+            "from_component": "billing-worker",
+            "to_component": "event-queue"
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-dependency-passive",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "order-api is dependent on inventory-cache for stock checks.",
+          "fields": {
+            "from_component": "order-api",
+            "to_component": "inventory-cache"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "order-api is dependent on inventory-cache for stock checks.",
+          "summary": "order-api is dependent on inventory-cache for stock checks.",
+          "quote": "order-api is dependent on inventory-cache for stock checks.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "dependency": "order-api is dependent on inventory-cache"
+            },
+            "from_component": "order-api",
+            "to_component": "inventory-cache"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "order-api",
+            "to_component": "inventory-cache"
+          },
+          "observed": {
+            "from_component": "order-api",
+            "to_component": "inventory-cache"
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-dependency-multiword",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "Release audit collector requires deployment event stream for incident review.",
+          "fields": {
+            "from_component": "Release audit collector",
+            "to_component": "deployment event stream"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "Release audit collector requires deployment event stream for incident review.",
+          "summary": "Release audit collector requires deployment event stream for incident review.",
+          "quote": "Release audit collector requires deployment event stream for incident review.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "dependency": "Release audit collector requires deployment event stream"
+            },
+            "from_component": "Release audit collector",
+            "to_component": "deployment event stream"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "Release audit collector",
+            "to_component": "deployment event stream"
+          },
+          "observed": {
+            "from_component": "Release audit collector",
+            "to_component": "deployment event stream"
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-dependency-intro",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "During checkout, payment-worker depends on payment-provider for transaction confirmation.",
+          "fields": {
+            "from_component": "payment-worker",
+            "to_component": "payment-provider"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "During checkout, payment-worker depends on payment-provider for transaction confirmation.",
+          "summary": "During checkout, payment-worker depends on payment-provider for transaction confirmation.",
+          "quote": "During checkout, payment-worker depends on payment-provider for transaction confirmation.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "dependency": ", payment-worker depends on payment-provider"
+            },
+            "from_component": "payment-worker",
+            "to_component": "payment-provider"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "payment-worker",
+            "to_component": "payment-provider"
+          },
+          "observed": {
+            "from_component": "payment-worker",
+            "to_component": "payment-provider"
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-dependency-sentence",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The service map is current. notification-worker depends on message-queue for delivery.",
+          "fields": {
+            "from_component": "notification-worker",
+            "to_component": "message-queue"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "The service map is current. notification-worker depends on message-queue for delivery.",
+          "summary": "The service map is current. notification-worker depends on message-queue for delivery.",
+          "quote": "The service map is current. notification-worker depends on message-queue for delivery.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "dependency": ". notification-worker depends on message-queue"
+            },
+            "from_component": "notification-worker",
+            "to_component": "message-queue"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "notification-worker",
+            "to_component": "message-queue"
+          },
+          "observed": {
+            "from_component": "notification-worker",
+            "to_component": "message-queue"
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-dependency-reverse",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The image registry is required by the release pipeline before a staging build.",
+          "fields": {
+            "from_component": "release pipeline",
+            "to_component": "image registry"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "The image registry is required by the release pipeline before a staging build.",
+          "summary": "The image registry is required by the release pipeline before a staging build.",
+          "quote": "The image registry is required by the release pipeline before a staging build.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "dependency": "The image registry is required by the release pipeline"
+            },
+            "from_component": "release pipeline",
+            "to_component": "image registry"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "release pipeline",
+            "to_component": "image registry"
+          },
+          "observed": {
+            "from_component": "release pipeline",
+            "to_component": "image registry"
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-dependency-uses",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The checkout API uses the order database for accepted order storage.",
+          "fields": {
+            "from_component": "checkout API",
+            "to_component": "order database"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "The checkout API uses the order database for accepted order storage.",
+          "summary": "The checkout API uses the order database for accepted order storage.",
+          "quote": "The checkout API uses the order database for accepted order storage.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "dependency": "The checkout API uses the order database"
+            },
+            "from_component": "checkout API",
+            "to_component": "order database"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "checkout API",
+            "to_component": "order database"
+          },
+          "observed": {
+            "from_component": "checkout API",
+            "to_component": "order database"
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-dependency-dependency-note",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "Log shipping requires telemetry gateway because remote collectors cannot reach private hosts.",
+          "fields": {
+            "from_component": "Log shipping",
+            "to_component": "telemetry gateway"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "Log shipping requires telemetry gateway because remote collectors cannot reach private hosts.",
+          "summary": "Log shipping requires telemetry gateway because remote collectors cannot reach private hosts.",
+          "quote": "Log shipping requires telemetry gateway because remote collectors cannot reach private hosts.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "dependency": "Log shipping requires telemetry gateway"
+            },
+            "from_component": "Log shipping",
+            "to_component": "telemetry gateway"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "Log shipping",
+            "to_component": "telemetry gateway"
+          },
+          "observed": {
+            "from_component": "Log shipping",
+            "to_component": "telemetry gateway"
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-dependency-network",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The staging gateway depends on internal DNS to resolve service endpoints.",
+          "fields": {
+            "from_component": "The staging gateway",
+            "to_component": "internal DNS"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "The staging gateway depends on internal DNS to resolve service endpoints.",
+          "summary": "The staging gateway depends on internal DNS to resolve service endpoints.",
+          "quote": "The staging gateway depends on internal DNS to resolve service endpoints.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "dependency": "The staging gateway depends on internal DNS"
+            },
+            "from_component": "The staging gateway",
+            "to_component": "internal DNS"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "The staging gateway",
+            "to_component": "internal DNS"
+          },
+          "observed": {
+            "from_component": "The staging gateway",
+            "to_component": "internal DNS"
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-dependency-after-noun",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The image scanner depends on vulnerability feed with periodic refresh.",
+          "fields": {
+            "from_component": "The image scanner",
+            "to_component": "vulnerability feed"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "The image scanner depends on vulnerability feed with periodic refresh.",
+          "summary": "The image scanner depends on vulnerability feed with periodic refresh.",
+          "quote": "The image scanner depends on vulnerability feed with periodic refresh.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "dependency": "The image scanner depends on vulnerability feed"
+            },
+            "from_component": "The image scanner",
+            "to_component": "vulnerability feed"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "The image scanner",
+            "to_component": "vulnerability feed"
+          },
+          "observed": {
+            "from_component": "The image scanner",
+            "to_component": "vulnerability feed"
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-dependency-sentence-preface",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "Review approved relationships only. backup-verifier requires object-store for restore inputs.",
+          "fields": {
+            "from_component": "backup-verifier",
+            "to_component": "object-store"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "Review approved relationships only. backup-verifier requires object-store for restore inputs.",
+          "summary": "Review approved relationships only. backup-verifier requires object-store for restore inputs.",
+          "quote": "Review approved relationships only. backup-verifier requires object-store for restore inputs.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "dependency": ". backup-verifier requires object-store"
+            },
+            "from_component": "backup-verifier",
+            "to_component": "object-store"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "backup-verifier",
+            "to_component": "object-store"
+          },
+          "observed": {
+            "from_component": "backup-verifier",
+            "to_component": "object-store"
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-dependency-compound-target",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The release pipeline depends on object-store and image-registry.",
+          "fields": {
+            "from_component": "The release pipeline",
+            "to_component": "object-store"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "The release pipeline depends on object-store and image-registry.",
+          "summary": "The release pipeline depends on object-store and image-registry.",
+          "quote": "The release pipeline depends on object-store and image-registry.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "dependency": "The release pipeline depends on object-store"
+            },
+            "from_component": "The release pipeline",
+            "to_component": "object-store"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "The release pipeline",
+            "to_component": "object-store"
+          },
+          "observed": {
+            "from_component": "The release pipeline",
+            "to_component": "object-store"
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-dependency-depends-upon",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "Customer analytics depends upon the reporting database for monthly summaries.",
+          "fields": {
+            "from_component": "Customer analytics",
+            "to_component": "reporting database"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "Customer analytics depends upon the reporting database for monthly summaries.",
+          "summary": "Customer analytics depends upon the reporting database for monthly summaries.",
+          "quote": "Customer analytics depends upon the reporting database for monthly summaries.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "dependency": "Customer analytics depends upon the reporting database"
+            },
+            "from_component": "Customer analytics",
+            "to_component": "the reporting database"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "Customer analytics",
+            "to_component": "reporting database"
+          },
+          "observed": {
+            "from_component": "Customer analytics",
+            "to_component": "the reporting database"
+          },
+          "passed": false
+        }
+      ]
+    },
+    {
+      "id": "fresh-dependency-requires-version",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "health-check-agent requires schema-catalog-v2 for validation.",
+          "fields": {
+            "from_component": "health-check-agent",
+            "to_component": "schema-catalog-v2"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "health-check-agent requires schema-catalog-v2 for validation.",
+          "summary": "health-check-agent requires schema-catalog-v2 for validation.",
+          "quote": "health-check-agent requires schema-catalog-v2 for validation.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "dependency": "health-check-agent requires schema-catalog-v2"
+            },
+            "from_component": "health-check-agent",
+            "to_component": "schema-catalog-v2"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "health-check-agent",
+            "to_component": "schema-catalog-v2"
+          },
+          "observed": {
+            "from_component": "health-check-agent",
+            "to_component": "schema-catalog-v2"
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-dependency-dash-component",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "staging-api-v2 depends on postgres-read-replica for reports.",
+          "fields": {
+            "from_component": "staging-api-v2",
+            "to_component": "postgres-read-replica"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "staging-api-v2 depends on postgres-read-replica for reports.",
+          "summary": "staging-api-v2 depends on postgres-read-replica for reports.",
+          "quote": "staging-api-v2 depends on postgres-read-replica for reports.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "dependency": "staging-api-v2 depends on postgres-read-replica"
+            },
+            "from_component": "staging-api-v2",
+            "to_component": "postgres-read-replica"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "staging-api-v2",
+            "to_component": "postgres-read-replica"
+          },
+          "observed": {
+            "from_component": "staging-api-v2",
+            "to_component": "postgres-read-replica"
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-dependency-capitalised",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "Runner capacity manager requires Cloud quota service for approved scale checks.",
+          "fields": {
+            "from_component": "Runner capacity manager",
+            "to_component": "Cloud quota service"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "Runner capacity manager requires Cloud quota service for approved scale checks.",
+          "summary": "Runner capacity manager requires Cloud quota service for approved scale checks.",
+          "quote": "Runner capacity manager requires Cloud quota service for approved scale checks.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "dependency": "Runner capacity manager requires Cloud quota service"
+            },
+            "from_component": "Runner capacity manager",
+            "to_component": "Cloud quota service"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "Runner capacity manager",
+            "to_component": "Cloud quota service"
+          },
+          "observed": {
+            "from_component": "Runner capacity manager",
+            "to_component": "Cloud quota service"
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-dependency-conditional-current",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "order-worker requires customer-directory. If that service is unavailable, requests remain queued.",
+          "fields": {
+            "from_component": "order-worker",
+            "to_component": "customer-directory"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "order-worker requires customer-directory. If that service is unavailable, requests remain queued.",
+          "summary": "order-worker requires customer-directory. If that service is unavailable, requests remain queued.",
+          "quote": "order-worker requires customer-directory. If that service is unavailable, requests remain queued.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "dependency": "order-worker requires customer-directory"
+            },
+            "from_component": "order-worker",
+            "to_component": "customer-directory"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "order-worker",
+            "to_component": "customer-directory"
+          },
+          "observed": {
+            "from_component": "order-worker",
+            "to_component": "customer-directory"
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-dependency-passive-short",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "Telemetry collector is dependent on alert gateway.",
+          "fields": {
+            "from_component": "Telemetry collector",
+            "to_component": "alert gateway"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "dependency",
+          "title": "Telemetry collector is dependent on alert gateway.",
+          "summary": "Telemetry collector is dependent on alert gateway.",
+          "quote": "Telemetry collector is dependent on alert gateway.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "dependency": "Telemetry collector is dependent on alert gateway"
+            },
+            "from_component": "Telemetry collector",
+            "to_component": "alert gateway"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "dependency",
+          "expected": {
+            "from_component": "Telemetry collector",
+            "to_component": "alert gateway"
+          },
+          "observed": {
+            "from_component": "Telemetry collector",
+            "to_component": "alert gateway"
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-decision-queue-backoff",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team chose bounded queue retries because unbounded retries exhausted worker capacity.",
+          "fields": {
+            "rationale": "unbounded retries exhausted worker capacity"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "The team chose bounded queue retries because unbounded retries exhausted worker capacity.",
+          "summary": "The team chose bounded queue retries because unbounded retries exhausted worker capacity.",
+          "quote": "The team chose bounded queue retries because unbounded retries exhausted worker capacity.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "rationale": "because unbounded retries exhausted worker capacity",
+              "topic": "chose bounded queue retries"
+            },
+            "rationale": "unbounded retries exhausted worker capacity",
+            "topic": "bounded queue retries"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "rationale",
+          "expected": "unbounded retries exhausted worker capacity",
+          "observed": "unbounded retries exhausted worker capacity",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-decision-release-freeze",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team decided to add a Friday release freeze since fewer reviewers are available after hours.",
+          "fields": {
+            "rationale": "fewer reviewers are available after hours"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "The team decided to add a Friday release freeze since fewer reviewers are available after hours.",
+          "summary": "The team decided to add a Friday release freeze since fewer reviewers are available after hours.",
+          "quote": "The team decided to add a Friday release freeze since fewer reviewers are available after hours.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "rationale": "since fewer reviewers are available after hours",
+              "topic": "decided to add a Friday release freeze"
+            },
+            "rationale": "fewer reviewers are available after hours",
+            "topic": "add a Friday release freeze"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "rationale",
+          "expected": "fewer reviewers are available after hours",
+          "observed": "fewer reviewers are available after hours",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-decision-image-digests",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The platform group selected immutable image digests in order to make release inputs reproducible.",
+          "fields": {
+            "rationale": "make release inputs reproducible"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "The platform group selected immutable image digests in order to make release inputs reproducible.",
+          "summary": "The platform group selected immutable image digests in order to make release inputs reproducible.",
+          "quote": "The platform group selected immutable image digests in order to make release inputs reproducible.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "rationale": "in order to make release inputs reproducible",
+              "topic": "selected immutable image digests"
+            },
+            "rationale": "make release inputs reproducible",
+            "topic": "immutable image digests"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "rationale",
+          "expected": "make release inputs reproducible",
+          "observed": "make release inputs reproducible",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-decision-read-replica",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected a read replica due to report queries affecting transaction latency.",
+          "fields": {
+            "rationale": "report queries affecting transaction latency"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "The team selected a read replica due to report queries affecting transaction latency.",
+          "summary": "The team selected a read replica due to report queries affecting transaction latency.",
+          "quote": "The team selected a read replica due to report queries affecting transaction latency.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "rationale": "due to report queries affecting transaction latency",
+              "topic": "selected a read replica due to report queries affecting transaction latency"
+            },
+            "rationale": "report queries affecting transaction latency",
+            "topic": "a read replica due to report queries affecting transaction latency"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "rationale",
+          "expected": "report queries affecting transaction latency",
+          "observed": "report queries affecting transaction latency",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-decision-stage-first",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "Staging was selected to detect schema incompatibility before customer traffic is exposed.",
+          "fields": {
+            "rationale": "detect schema incompatibility before customer traffic is exposed"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "Staging was selected to detect schema incompatibility before customer traffic is exposed.",
+          "summary": "Staging was selected to detect schema incompatibility before customer traffic is exposed.",
+          "quote": "Staging was selected to detect schema incompatibility before customer traffic is exposed.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "rationale": "selected to detect schema incompatibility before customer traffic is exposed",
+              "topic": "selected to detect schema incompatibility before customer traffic is exposed"
+            },
+            "rationale": "detect schema incompatibility before customer traffic is exposed",
+            "topic": "to detect schema incompatibility before customer traffic is exposed"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "rationale",
+          "expected": "detect schema incompatibility before customer traffic is exposed",
+          "observed": "detect schema incompatibility before customer traffic is exposed",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-decision-retention",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The group chose a thirty-day artifact retention window because incident investigations need prior release inputs.",
+          "fields": {
+            "rationale": "incident investigations need prior release inputs"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "The group chose a thirty-day artifact retention window because incident investigations need prior release inputs.",
+          "summary": "The group chose a thirty-day artifact retention window because incident investigations need prior release inputs.",
+          "quote": "The group chose a thirty-day artifact retention window because incident investigations need prior release inputs.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "rationale": "because incident investigations need prior release inputs",
+              "topic": "chose a thirty-day artifact retention window"
+            },
+            "rationale": "incident investigations need prior release inputs",
+            "topic": "a thirty-day artifact retention window"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "rationale",
+          "expected": "incident investigations need prior release inputs",
+          "observed": "incident investigations need prior release inputs",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-decision-isolated-restore",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "An isolated recovery environment was chosen to keep restore testing away from customer databases.",
+          "fields": {
+            "rationale": "keep restore testing away from customer databases"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "An isolated recovery environment was chosen to keep restore testing away from customer databases.",
+          "summary": "An isolated recovery environment was chosen to keep restore testing away from customer databases.",
+          "quote": "An isolated recovery environment was chosen to keep restore testing away from customer databases.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "rationale": "chosen to keep restore testing away from customer databases"
+            },
+            "rationale": "keep restore testing away from customer databases"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "rationale",
+          "expected": "keep restore testing away from customer databases",
+          "observed": "keep restore testing away from customer databases",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-decision-batch-events",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The architecture decision keeps event batching because downstream rate limits cap request throughput.",
+          "fields": {
+            "rationale": "downstream rate limits cap request throughput"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "The architecture decision keeps event batching because downstream rate limits cap request throughput.",
+          "summary": "The architecture decision keeps event batching because downstream rate limits cap request throughput.",
+          "quote": "The architecture decision keeps event batching because downstream rate limits cap request throughput.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "rationale": "because downstream rate limits cap request throughput"
+            },
+            "rationale": "downstream rate limits cap request throughput"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "rationale",
+          "expected": "downstream rate limits cap request throughput",
+          "observed": "downstream rate limits cap request throughput",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-decision-review-reason",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team decided to use two-person release review. The reason was a previous unreviewed migration outage.",
+          "fields": {
+            "rationale": "a previous unreviewed migration outage"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "The team decided to use two-person release review. The reason was a previous unreviewed migration outage.",
+          "summary": "The team decided to use two-person release review. The reason was a previous unreviewed migration outage.",
+          "quote": "The team decided to use two-person release review. The reason was a previous unreviewed migration outage.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "rationale": "The reason was a previous unreviewed migration outage",
+              "topic": "decided to use two-person release review"
+            },
+            "rationale": "a previous unreviewed migration outage",
+            "topic": "use two-person release review"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "rationale",
+          "expected": "a previous unreviewed migration outage",
+          "observed": "a previous unreviewed migration outage",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-decision-to-avoid",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team chose immutable infrastructure to avoid configuration drift between staging and production.",
+          "fields": {
+            "rationale": "avoid configuration drift between staging and production"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "The team chose immutable infrastructure to avoid configuration drift between staging and production.",
+          "summary": "The team chose immutable infrastructure to avoid configuration drift between staging and production.",
+          "quote": "The team chose immutable infrastructure to avoid configuration drift between staging and production.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "rationale": "chose immutable infrastructure to avoid configuration drift between staging and production",
+              "topic": "chose immutable infrastructure to avoid configuration drift between staging and production"
+            },
+            "rationale": "avoid configuration drift between staging and production",
+            "topic": "immutable infrastructure to avoid configuration drift between staging and production"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "rationale",
+          "expected": "avoid configuration drift between staging and production",
+          "observed": "avoid configuration drift between staging and production",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-decision-rationale-due",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected a private runner pool due to network restrictions on internal dependencies.",
+          "fields": {
+            "rationale": "network restrictions on internal dependencies"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "The team selected a private runner pool due to network restrictions on internal dependencies.",
+          "summary": "The team selected a private runner pool due to network restrictions on internal dependencies.",
+          "quote": "The team selected a private runner pool due to network restrictions on internal dependencies.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "rationale": "due to network restrictions on internal dependencies",
+              "topic": "selected a private runner pool due to network restrictions on internal dependencies"
+            },
+            "rationale": "network restrictions on internal dependencies",
+            "topic": "a private runner pool due to network restrictions on internal dependencies"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "rationale",
+          "expected": "network restrictions on internal dependencies",
+          "observed": "network restrictions on internal dependencies",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-decision-instead",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team chose release manifests because artifacts must be traceable. Manual tags were rejected.",
+          "fields": {
+            "rationale": "artifacts must be traceable"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "The team chose release manifests because artifacts must be traceable. Manual tags were rejected.",
+          "summary": "The team chose release manifests because artifacts must be traceable. Manual tags were rejected.",
+          "quote": "The team chose release manifests because artifacts must be traceable. Manual tags were rejected.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "rationale": "because artifacts must be traceable",
+              "topic": "chose release manifests"
+            },
+            "rationale": "artifacts must be traceable",
+            "topic": "release manifests"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "rationale",
+          "expected": "artifacts must be traceable",
+          "observed": "artifacts must be traceable",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-decision-because-two",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The operations team decided to retain failed job logs because losing them prevented incident reconstruction.",
+          "fields": {
+            "rationale": "losing them prevented incident reconstruction"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "The operations team decided to retain failed job logs because losing them prevented incident reconstruction.",
+          "summary": "The operations team decided to retain failed job logs because losing them prevented incident reconstruction.",
+          "quote": "The operations team decided to retain failed job logs because losing them prevented incident reconstruction.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "rationale": "because losing them prevented incident reconstruction",
+              "topic": "decided to retain failed job logs"
+            },
+            "rationale": "losing them prevented incident reconstruction",
+            "topic": "retain failed job logs"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "rationale",
+          "expected": "losing them prevented incident reconstruction",
+          "observed": "losing them prevented incident reconstruction",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-decision-since-causal",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "We selected staged database changes since rolling updates can run two application versions simultaneously.",
+          "fields": {
+            "rationale": "rolling updates can run two application versions simultaneously"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "We selected staged database changes since rolling updates can run two application versions simultaneously.",
+          "summary": "We selected staged database changes since rolling updates can run two application versions simultaneously.",
+          "quote": "We selected staged database changes since rolling updates can run two application versions simultaneously.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "rationale": "since rolling updates can run two application versions simultaneously",
+              "topic": "selected staged database changes"
+            },
+            "rationale": "rolling updates can run two application versions simultaneously",
+            "topic": "staged database changes"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "rationale",
+          "expected": "rolling updates can run two application versions simultaneously",
+          "observed": "rolling updates can run two application versions simultaneously",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-decision-cost-first",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "Cost controls drove the decision to review idle infrastructure each month.",
+          "fields": {
+            "rationale": "Cost controls"
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "Cost controls drove the decision to review idle infrastructure each month.",
+          "summary": "Cost controls drove the decision to review idle infrastructure each month.",
+          "quote": "Cost controls drove the decision to review idle infrastructure each month.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "rationale": "Cost controls drove the decision"
+            },
+            "rationale": "Cost controls"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "rationale",
+          "expected": "Cost controls",
+          "observed": "Cost controls",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-decision-without-rationale",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected a managed cache service. The reason was not recorded in the meeting notes.",
+          "fields": {
+            "rationale": ""
+          }
+        }
+      ],
+      "observed": [
+        {
+          "kind": "decision",
+          "title": "The team selected a managed cache service. The reason was not recorded in the meeting notes.",
+          "summary": "The team selected a managed cache service. The reason was not recorded in the meeting notes.",
+          "quote": "The team selected a managed cache service. The reason was not recorded in the meeting notes.",
+          "data": {
+            "extraction": "supported_prose_pattern",
+            "owner_id": null,
+            "backup_id": null,
+            "component": "",
+            "critical": false,
+            "field_evidence": {
+              "topic": "selected a managed cache service"
+            },
+            "rationale_uncertainty": "Source explicitly states that decision rationale is unavailable.",
+            "topic": "a managed cache service"
+          }
+        }
+      ],
+      "fields": [
+        {
+          "field": "rationale",
+          "expected": "",
+          "observed": "",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "fresh-negative-question",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "fresh-negative-historic",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "fresh-negative-proposal",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "fresh-negative-negation",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "fresh-negative-dependency-negation",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "fresh-negative-dependency-uncertain",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "fresh-negative-template",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "fresh-negative-unknown",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "fresh-negative-not-assigned",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "fresh-negative-conditional-proposal",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "fresh-negative-descriptive",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    },
+    {
+      "id": "fresh-negative-indirect-rumour",
+      "expected": [],
+      "observed": [],
+      "fields": []
+    }
+  ],
+  "limitations": [
+    "Internal authored holdout, no independent label audit.",
+    "Exact citation spans do not establish source truth.",
+    "English explicit patterns only; multilingual and unrestricted prose remain unvalidated."
+  ],
+  "report_kind": "post_fix_known_case_regression_not_new_holdout"
+}

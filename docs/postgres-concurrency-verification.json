@@ -1,0 +1,101 @@
+{
+  "recorded_at": "2026-11-14T00:05:39.509518+00:00",
+  "baseline_commit": "561746a5a2bcfb007d20e1f6682ef031ea1e2d1b",
+  "scope": "Real PostgreSQL 17.11 loopback QA database, generated isolated schema. Direct application route handlers with authenticated-role fixtures and independent concurrent SQLAlchemy sessions. API auth/CSRF tests remain in the existing separate suite; no load/stress benchmark or live Neon mutation.",
+  "server_version": "17.11",
+  "isolation_level": "READ COMMITTED",
+  "migrations_verified": "b19e47a2c805 head, installed in separate owned local QA public schema",
+  "test_sha256": "18c4ddb31f4ac6bfab5f1dcae97fea8fdc91b02e8d91078fac6da576aebf4787",
+  "total": 15,
+  "passed": 15,
+  "cases": [
+    {
+      "test": "test_pg_duplicate_acceptance_is_one_record_and_one_audit",
+      "status": "passed"
+    },
+    {
+      "test": "test_pg_duplicate_assignment_preserves_single_transfer",
+      "status": "passed"
+    },
+    {
+      "test": "test_pg_duplicate_close_creates_ownership_once",
+      "status": "passed"
+    },
+    {
+      "test": "test_pg_duplicate_claim_approval_has_one_winner",
+      "status": "passed"
+    },
+    {
+      "test": "test_pg_concurrent_prerequisite_edits_do_not_lose_json_updates",
+      "status": "passed"
+    },
+    {
+      "test": "test_pg_source_revocation_while_acceptance_waits_is_denied",
+      "status": "passed"
+    },
+    {
+      "test": "test_pg_source_change_while_closure_waits_blocks_ownership",
+      "status": "passed"
+    },
+    {
+      "test": "test_pg_recipient_acl_loss_while_closure_waits_blocks_ownership",
+      "status": "passed"
+    },
+    {
+      "test": "test_pg_membership_revocation_cannot_be_undone_by_waiting_acl_edit",
+      "status": "passed"
+    },
+    {
+      "test": "test_pg_simultaneous_handover_approvals_have_one_winner",
+      "status": "passed"
+    },
+    {
+      "test": "test_pg_simultaneous_exercise_generation_preserves_unique_tasks",
+      "status": "passed"
+    },
+    {
+      "test": "test_pg_simultaneous_supervisor_review_preserves_one_assessment",
+      "status": "passed"
+    },
+    {
+      "test": "test_pg_single_use_invitation_accepts_only_one_concurrent_recipient",
+      "status": "passed"
+    },
+    {
+      "test": "test_pg_invitation_accept_and_revoke_cannot_both_succeed",
+      "status": "passed"
+    },
+    {
+      "test": "test_pg_revocation_rechecks_invitation_consumed_by_overlapping_transaction",
+      "status": "passed"
+    }
+  ],
+  "observed_pre_fix_failure": {
+    "test": "test_pg_revocation_rechecks_invitation_consumed_by_overlapping_transaction",
+    "reason": "A retained pending ORM invitation was revoked after another overlapping transaction had accepted it. The revoke route lacked serialization and fresh-state reload.",
+    "failures": 1
+  },
+  "fix": "Invitation revoke now acquires the same project-row lock as acceptance, expires ORM state, clears request-scoped evidence cache and rechecks status/authorization.",
+  "limits": [
+    "15 bounded race scenarios; not arbitrary concurrent schedules or a scalability guarantee.",
+    "Local PostgreSQL version differs from managed production settings; real production races were not injected.",
+    "Tests generate and remove only uniquely named QA schemas; owner accounts and provider settings remain unchanged."
+  ],
+  "final_tree_sha256": {
+    "backend/app/prose.py": "3be27705310e71badb492a81ec07196c9342e055741c4ed4c9bc6b277c3c6bae",
+    "backend/app/intelligence.py": "192a8f4e7c289e7fed2b6f11194c8d49c964e5e44a495a6a8137870d942885a0",
+    "backend/app/routers/onboarding.py": "43aff67740fcfc148099062730aac8958b32fa3c600ca8592dd6edc6e79763eb",
+    "backend/tests/test_postgres_concurrency.py": "18c4ddb31f4ac6bfab5f1dcae97fea8fdc91b02e8d91078fac6da576aebf4787",
+    "backend/tests/test_acceptance_evaluation.py": "70e672c3a1922c8e5612f5fc5500214037b3ba680de1783b973789c0704cf90c",
+    "backend/evaluation/fresh-extraction-challenge.json": "8f3943546579c6e5887235496f94433236dae9128374fb4c5acd2d513bfdab1f"
+  },
+  "full_suite": {
+    "passed": 228,
+    "failed": 0,
+    "skipped": 0,
+    "postgres_cases": 15,
+    "line_coverage_percent_rounded": 90,
+    "warning": "Existing FastAPI TestClient/httpx deprecation warning",
+    "junit_sha256": "5a9a4b50bbb4fbba057b5ee9fa7e2979f92559150754c61c2f6ac3972ef5c39b"
+  }
+}

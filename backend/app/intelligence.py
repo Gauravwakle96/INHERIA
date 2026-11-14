@@ -223,6 +223,9 @@ def parse_candidates(text: str, users: list[m.User]) -> list[dict]:
             if len(paragraph) < 25:
                 continue
             lower = paragraph.lower()
+            from app.prose import dependency_span, named_duties, unasserted, unconfirmed_context
+
+            duties = named_duties(paragraph, users)
             if paragraph.count("?") or re.search(r"(?im)^#.*(?:questions|example|outline)", paragraph):
                 continue  # Interview prompts and templates are not procedure evidence.
             if re.search(
@@ -230,20 +233,18 @@ def parse_candidates(text: str, users: list[m.User]) -> list[dict]:
                 lower,
             ):
                 continue
-            if re.search(
-                r"\b(?:no longer|does not|did not|not responsible|formerly|former team|superseded|proposed|hypothetical)\b",
-                lower,
-            ):
+            if unconfirmed_context(paragraph) or (unasserted(paragraph) and not duties):
                 continue  # Historical duties and proposals need explicit human capture.
             kind = None
-            from app.prose import dependency_span, named_duties
 
             if (
-                named_duties(paragraph, users)
-                or re.search(r"\b(?:is responsible for|owns|maintains|handles|looks after)\b", lower)
-            ) and not re.search(
-                r"\b(?:might|may|could|unknown|no longer)\b|\bnot (?:responsible|owned|maintained|handled)\b",
-                lower,
+                duties or re.search(r"\b(?:is responsible for|owns|maintains|handles|looks after)\b", lower)
+            ) and (
+                duties
+                or not re.search(
+                    r"\b(?:might|may|could|unknown|no longer)\b|\bnot (?:responsible|owned|maintained|handled)\b",
+                    lower,
+                )
             ):
                 kind = "responsibility"
             elif dependency_span(paragraph) and not re.search(r"\b(?:might|may|could|not|unknown)\b", lower):
@@ -254,7 +255,7 @@ def parse_candidates(text: str, users: list[m.User]) -> list[dict]:
                 and not re.search(r"\b(?:no longer|not confirmed|might|may|could)\b", lower)
             ):
                 kind = "procedure"
-            elif re.search(r"\b(decided|decision|chose|selected|rejected alternative)\b", lower):
+            elif re.search(r"\b(decided|decision|chose|chosen|selected|rejected alternative)\b", lower):
                 kind = "decision"
             elif re.search(r"\b(unresolved|open incident|known issue|todo|unfinished)\b", lower):
                 kind = "incident" if "incident" in lower else "task"

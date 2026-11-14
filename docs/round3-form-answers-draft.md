@@ -94,7 +94,11 @@ docs/verification.md. The dedicated acceptance run passed 34 existing isolated
 journeys: seven onboarding/access, ten genuinely distinct source-change/revocation,
 five interruption positions and twelve practical-transfer role flows. Tests use
 owned SQLite fixtures and mocked GitHub; no model call or production mutation.
-The last full backend run passed 210 tests with 90% coverage. Frontend lint,
+The latest full backend run passed 228 tests with 90% coverage, including 15 real
+PostgreSQL concurrent transaction cases in isolated loopback QA schemas. An
+invitation revocation race was reproduced and corrected; duplicate actions,
+source changes and recipient access loss are checked against real database locks.
+Frontend lint,
 typecheck/build, dependency audits and judge/onboarding/source browser checks
 passed in their recorded scope. Automated accessibility is bounded, not an
 independent user study or full screen-reader audit.
@@ -104,6 +108,15 @@ A separate 60-document internal holdout (34 prose) passed candidate precision/re
 the submitted thresholds on the bounded set. Its frozen initial run is preserved;
 labels are internal and implementation-informed, not independent enterprise
 accuracy evidence. Original development fixtures remain separate.
+
+A new 72-document all-prose challenge first measured precision 94.6%, recall
+88.3%, owners 84.6%, rationales 75.0% and dependencies 83.3%. The first-run report
+is unchanged. General fixes now pass these known-case regressions at precision
+100%, recall 98.3%, owners 92.3%, rationales 100% and dependencies 94.4%.
+These corrected results are tuned internal regression performance, not fresh
+independent accuracy. Newly uploaded prose also passes the API investigation,
+exact-citation review and generated-handover journey. See
+docs/postgres-and-extraction-hardening.md for methodology and remaining misses.
 
 ## Improvement 1 — Secure Team Onboarding & Access Readiness
 

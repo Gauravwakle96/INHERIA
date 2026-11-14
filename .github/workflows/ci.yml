@@ -5,6 +5,22 @@ on:
 jobs:
   backend:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: inheria_qa
+          POSTGRES_DB: inheria_ci_qa
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U inheria_qa -d inheria_ci_qa"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      INHERIA_TEST_POSTGRES_URL: postgresql+psycopg://inheria_qa@127.0.0.1:5432/inheria_ci_qa
     defaults:
       run:
         working-directory: backend
