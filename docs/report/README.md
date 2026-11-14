@@ -1,6 +1,6 @@
 # INHERIA product documentation
 
-The [13-page PDF](../INHERIA_Round3_Final_Product_Report.pdf) is a concise product
+The locally generated 13-page PDF is a concise product
 reference: workflow and users, architecture, data/API contracts, security,
 evidence lifecycle, installation, operations, recorded quality and limitations.
 The roadmap specifies milestone order, user benefit, effort, dependencies and
@@ -41,8 +41,9 @@ and therefore its hash. These are document checks, not new application tests.
 
 ## Publication and scope
 
-The PDF is public through this repository. If the submission requires Drive,
-upload the final file and select “Anyone with the link” as Viewer. Verify the
+The generated PDF is excluded from the current repository; its source and rebuild
+instructions remain available. If the submission requires Drive, upload the local
+final file and select “Anyone with the link” as Viewer. Verify the
 submitted links in a private window. Form submission, participant contributions
 and personal confirmations remain with the team leader.
 

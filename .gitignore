@@ -22,3 +22,4 @@ local-data/
 *.tsbuildinfo
 .DS_Store
 .local/
+/docs/INHERIA_Round3_Final_Product_Report.pdf

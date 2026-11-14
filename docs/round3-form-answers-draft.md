@@ -12,8 +12,8 @@ Repository: https://github.com/Gauravwakle96/INHERIA
 Judge login instructions: Select Open judge workspace on the sign-in page. No
 email/password or API key is required. The visitor enters as Rudransh and can
 switch to Gaurav/Savinay within a separate expiring case-study workspace. The default completed mode includes 51 sources, eight accepted responsibilities and eleven reviewed walkthroughs. Try a fresh handover starts the same users with a new unapproved journey.
-Final report: https://github.com/Gauravwakle96/INHERIA/blob/main/docs/INHERIA_Round3_Final_Product_Report.pdf
-If the form requires a Drive URL, upload this PDF and verify public Viewer sharing.
+Final report: add the separately published PDF link before submission; the PDF is not in the current repository.
+If the form requires a Drive URL, upload the local PDF and verify public Viewer sharing.
 
 ## Complete list of working features
 
