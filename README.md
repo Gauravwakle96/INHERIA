@@ -316,7 +316,7 @@ The application does not read Codex's credentials or configuration. Organisation
 
 ## Testing and reliability evidence
 
-Latest full backend verification: **239 tests passed**, including **17 real PostgreSQL cases**. The previous coverage run measured **89% line coverage**; the latest run is not a new coverage measurement. [CI run 43606135040](https://github.com/Gauravwakle96/INHERIA/actions/runs/43606135040) passed backend lint/format/tests/dependency audit and frontend lint/typecheck/build/npm audit for the earlier closure/recovery changes. The exact submitted three-improvement runner also passed **34/34** again on 14 November. Latest judge-input verification is recorded below and in the [hardening evidence](docs/judge-input-hardening.md).
+Latest full backend verification: **239 tests passed**, including **17 real PostgreSQL cases**. The previous coverage run measured **89% line coverage**; the latest run is not a new coverage measurement. [CI run 43612540914](https://github.com/Gauravwakle96/INHERIA/actions/runs/43612540914) passed backend lint/format/tests/dependency audit and frontend lint/typecheck/build/npm audit for the deployed judge-input changes. The exact submitted three-improvement runner also passed **34/34** again on 14 November. Latest judge-input verification is recorded below and in the [hardening evidence](docs/judge-input-hardening.md).
 
 | Test area | Executed evidence |
 | --- | --- |

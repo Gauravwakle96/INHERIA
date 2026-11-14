@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-11-14T15:56:09.543955+00:00",
+  "commit": "55b11e1a8fc2486b738b920cd4c639481890c5be",
+  "site": "https://inheria.onrender.com",
+  "scope": "New author-operated isolated judge visit; supplied permissioned QA prose, human-role review and generated handover. No private accounts, paid model or cloud commands.",
+  "extraction": {
+    "pending_candidates": 4,
+    "exact_quotes": true,
+    "owner_verb": true,
+    "dependency_direction_and_scope": true,
+    "rationale": true,
+    "missing_rationale_preserved": true,
+    "training_and_unconfirmed_excluded": true
+  },
+  "success": true,
+  "reviewed_claims_in_handover": true,
+  "incomplete_transfer_stays_blocked": true,
+  "ci": {
+    "conclusion": "success",
+    "url": "https://github.com/Gauravwakle96/INHERIA/actions/runs/43612540914"
+  },
+  "limits": [
+    "One bounded author-operated live check, not load/capacity proof.",
+    "Internal source statements require human confirmation; exact quotes do not certify company truth.",
+    "No independent human usability results supplied; task pack is preparation only.",
+    "Free hosting quotas and PDF deferral remain."
+  ],
+  "render": {
+    "deployment": "dep-dbs87l49v7es73bk38p0",
+    "status": "live",
+    "plan": "Free"
+  },
+  "browser": {
+    "loaded_asset": "/assets/index-ByJM8O1D.js",
+    "visible_error_alerts": [],
+    "desktop_overflow": false,
+    "refreshed_judge_route": "/handover"
+  },
+  "clean_install": {
+    "verified_at": "2026-11-14T15:55:21.476288+00:00",
+    "commit": "55b11e1a8fc2486b738b920cd4c639481890c5be",
+    "setup": "Fresh git archive with no .local credentials; new uv environment and npm ci from locked dependencies. .env.example copied only inside isolated install.",
+    "backend_sync": "passed",
+    "alembic_upgrade": "passed",
+    "frontend_npm_ci_build": "passed",
+    "api_start": "passed",
+    "judge_entry": "fresh workspace with 13 sources",
+    "deep_link": "200",
+    "secrets_reused": false
+  }
+}

@@ -35,6 +35,17 @@ pre-check snapshot roughly 0.51 GB transfer remaining). PDF remains deferred.
 Commands/results, file hashes and initial failures are in
 [upgrade verification](judge-upgrade-verification.json).
 
+Render confirmed application commit `55b11e1a8fc2486b738b920cd4c639481890c5be`
+live and [CI run 43612540914](https://github.com/Gauravwakle96/INHERIA/actions/runs/43612540914)
+passed. A fresh live upload yielded four pending exact-cited candidates, correctly
+handled a passive dependency and rationale, retained missing rationale and
+excluded training/unconfirmed ownership. Authorised review included the claims
+in a generated handover while the incomplete transfer stayed blocked. The
+refreshed browser loaded the new asset without visible errors or desktop overflow.
+A fresh checkout separately passed locked Python/Node install, Alembic upgrade,
+API startup, 13-source judge entry and SPA deep link. See
+[target and clean-install verification](judge-upgrade-target-verification.json).
+
 ## Judge experience and closure recovery — 14 November 2026
 
 The Handover page now shows measured acceptance, independent assessment, current
