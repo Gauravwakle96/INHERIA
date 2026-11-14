@@ -1,0 +1,866 @@
+{
+  "version": "postfix-internal-holdout-2026-11-14-v1",
+  "people": [
+    "Mira Shah",
+    "Owen Cole"
+  ],
+  "methodology": "60 new internally authored prose cases with different people, systems and text, frozen after general judge-input fixes and before first execution. Author knows implementation patterns, so labels are not independent human/enterprise ground truth. No tuning on this corpus; original results are preserved. Cases target supported explicit duties, dependencies, rationale and uncertainty.",
+  "documents": [
+    {
+      "id": "postfix-owner-01",
+      "prose": true,
+      "category": "owner",
+      "text": "Mira Shah oversees access-review reminders. Security personnel approve permission changes.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Mira Shah oversees access-review reminders. Security personnel approve permission changes.",
+          "fields": {
+            "owner": "Mira Shah"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-owner-02",
+      "prose": true,
+      "category": "owner",
+      "text": "Owen Cole manages cloud invoice anomaly review. Finance retains final approval.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Owen Cole manages cloud invoice anomaly review. Finance retains final approval.",
+          "fields": {
+            "owner": "Owen Cole"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-owner-03",
+      "prose": true,
+      "category": "owner",
+      "text": "Mira Shah is accountable for rotation coverage checks. Emergency changes follow the incident process.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Mira Shah is accountable for rotation coverage checks. Emergency changes follow the incident process.",
+          "fields": {
+            "owner": "Mira Shah"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-owner-04",
+      "prose": true,
+      "category": "owner",
+      "text": "The release calendar is managed by Owen Cole. Client-approved windows remain a separate prerequisite.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The release calendar is managed by Owen Cole. Client-approved windows remain a separate prerequisite.",
+          "fields": {
+            "owner": "Owen Cole"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-owner-05",
+      "prose": true,
+      "category": "owner",
+      "text": "Responsibility for signed-image policy review belongs to Mira Shah. Exceptions need specialist review.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Responsibility for signed-image policy review belongs to Mira Shah. Exceptions need specialist review.",
+          "fields": {
+            "owner": "Mira Shah"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-owner-06",
+      "prose": true,
+      "category": "owner",
+      "text": "The current owner of disaster-recovery note maintenance is Owen Cole. These notes do not certify a recovery test.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The current owner of disaster-recovery note maintenance is Owen Cole. These notes do not certify a recovery test.",
+          "fields": {
+            "owner": "Owen Cole"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-owner-07",
+      "prose": true,
+      "category": "owner",
+      "text": "Mira Shah owns recovery exercise scheduling. Owen Cole reviews proposed scenarios.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Mira Shah owns recovery exercise scheduling. Owen Cole reviews proposed scenarios.",
+          "fields": {
+            "owner": "Mira Shah"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-owner-08",
+      "prose": true,
+      "category": "owner",
+      "text": "Owen Cole maintains the service contact directory. Mira Shah verifies new entries.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Owen Cole maintains the service contact directory. Mira Shah verifies new entries.",
+          "fields": {
+            "owner": "Owen Cole"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-owner-09",
+      "prose": true,
+      "category": "owner",
+      "text": "Mira Shah and Owen Cole jointly own deployment alert triage. A human must clarify individual scopes.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Mira Shah and Owen Cole jointly own deployment alert triage. A human must clarify individual scopes.",
+          "fields": {
+            "owner": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-owner-10",
+      "prose": true,
+      "category": "owner",
+      "text": "Mira Shah and Owen Cole share responsibility for incident lessons. Neither is identified as sole accountable lead.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Mira Shah and Owen Cole share responsibility for incident lessons. Neither is identified as sole accountable lead.",
+          "fields": {
+            "owner": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-owner-11",
+      "prose": true,
+      "category": "owner",
+      "text": "Artifact expiry checks are assigned to Mira Shah. Historical artifact deletion requires approval.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Artifact expiry checks are assigned to Mira Shah. Historical artifact deletion requires approval.",
+          "fields": {
+            "owner": "Mira Shah"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-owner-12",
+      "prose": true,
+      "category": "owner",
+      "text": "Owen Cole looks after infrastructure change tracking. A lead reviews each proposed change.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Owen Cole looks after infrastructure change tracking. A lead reviews each proposed change.",
+          "fields": {
+            "owner": "Owen Cole"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-owner-13",
+      "prose": true,
+      "category": "owner",
+      "text": "During support weeks, Mira Shah handles release-note coordination. The manager reviews release communications.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "During support weeks, Mira Shah handles release-note coordination. The manager reviews release communications.",
+          "fields": {
+            "owner": "Mira Shah"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-owner-14",
+      "prose": true,
+      "category": "owner",
+      "text": "The failover-readiness inventory is maintained by Owen Cole. External permission checks are performed elsewhere.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The failover-readiness inventory is maintained by Owen Cole. External permission checks are performed elsewhere.",
+          "fields": {
+            "owner": "Owen Cole"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-owner-15",
+      "prose": true,
+      "category": "owner",
+      "text": "Mira Shah provides ownership for test-environment quota review. Production usage is outside this assignment.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Mira Shah provides ownership for test-environment quota review. Production usage is outside this assignment.",
+          "fields": {
+            "owner": "Mira Shah"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-owner-16",
+      "prose": true,
+      "category": "owner",
+      "text": "Owen Cole is responsible for log ingestion monitoring. Specialist teams own their alert policies.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Owen Cole is responsible for log ingestion monitoring. Specialist teams own their alert policies.",
+          "fields": {
+            "owner": "Owen Cole"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-owner-17",
+      "prose": true,
+      "category": "owner",
+      "text": "The architecture review coordinator is Mira Shah. Decisions require a qualified reviewer.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The architecture review coordinator is Mira Shah. Decisions require a qualified reviewer.",
+          "fields": {
+            "owner": "Mira Shah"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-owner-18",
+      "prose": true,
+      "category": "owner",
+      "text": "Owen Cole owns vendor escalation tracking. A client representative reviews proposed follow-ups.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "Owen Cole owns vendor escalation tracking. A client representative reviews proposed follow-ups.",
+          "fields": {
+            "owner": "Owen Cole"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-owner-19",
+      "prose": true,
+      "category": "owner",
+      "text": "The reliability group maintains the recovery register. Individual allocation is unspecified.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The reliability group maintains the recovery register. Individual allocation is unspecified.",
+          "fields": {
+            "owner": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-owner-20",
+      "prose": true,
+      "category": "owner",
+      "text": "The assigned engineer handles artifact verification. The authorised evidence does not name that engineer.",
+      "expected": [
+        {
+          "kind": "responsibility",
+          "title": "The assigned engineer handles artifact verification. The authorised evidence does not name that engineer.",
+          "fields": {
+            "owner": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-21",
+      "prose": true,
+      "category": "dependency",
+      "text": "The invoice gateway depends on the settlement database for durable invoice entries.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The invoice gateway depends on the settlement database for durable invoice entries.",
+          "fields": {
+            "from_component": "invoice gateway",
+            "to_component": "settlement database"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-22",
+      "prose": true,
+      "category": "dependency",
+      "text": "The packaging pipeline requires the signing registry before promoting a tested build.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The packaging pipeline requires the signing registry before promoting a tested build.",
+          "fields": {
+            "from_component": "packaging pipeline",
+            "to_component": "signing registry"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-23",
+      "prose": true,
+      "category": "dependency",
+      "text": "The account worker uses the identity cache during token checks.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The account worker uses the identity cache during token checks.",
+          "fields": {
+            "from_component": "account worker",
+            "to_component": "identity cache"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-24",
+      "prose": true,
+      "category": "dependency",
+      "text": "The alert evaluator depends upon the telemetry collector while assessing service health.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The alert evaluator depends upon the telemetry collector while assessing service health.",
+          "fields": {
+            "from_component": "alert evaluator",
+            "to_component": "telemetry collector"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-25",
+      "prose": true,
+      "category": "dependency",
+      "text": "The fulfilment service is dependent on the order ledger after a payment settles.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The fulfilment service is dependent on the order ledger after a payment settles.",
+          "fields": {
+            "from_component": "fulfilment service",
+            "to_component": "order ledger"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-26",
+      "prose": true,
+      "category": "dependency",
+      "text": "The schema registry is required by the event consumer for compatible message processing.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The schema registry is required by the event consumer for compatible message processing.",
+          "fields": {
+            "from_component": "event consumer",
+            "to_component": "schema registry"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-27",
+      "prose": true,
+      "category": "dependency",
+      "text": "The recovery manifest is used by the restore planner when choosing an approved recovery point.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The recovery manifest is used by the restore planner when choosing an approved recovery point.",
+          "fields": {
+            "from_component": "restore planner",
+            "to_component": "recovery manifest"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-28",
+      "prose": true,
+      "category": "dependency",
+      "text": "The availability dashboard relies on the metrics API for incident status.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The availability dashboard relies on the metrics API for incident status.",
+          "fields": {
+            "from_component": "availability dashboard",
+            "to_component": "metrics API"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-29",
+      "prose": true,
+      "category": "dependency",
+      "text": "The account portal calls the profile API to retrieve authorised profile details.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The account portal calls the profile API to retrieve authorised profile details.",
+          "fields": {
+            "from_component": "account portal",
+            "to_component": "profile API"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-30",
+      "prose": true,
+      "category": "dependency",
+      "text": "The billing worker connects to the invoice database after validation.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The billing worker connects to the invoice database after validation.",
+          "fields": {
+            "from_component": "billing worker",
+            "to_component": "invoice database"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-31",
+      "prose": true,
+      "category": "dependency",
+      "text": "The deployment notifier relies upon the message broker for approved notifications.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The deployment notifier relies upon the message broker for approved notifications.",
+          "fields": {
+            "from_component": "deployment notifier",
+            "to_component": "message broker"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-32",
+      "prose": true,
+      "category": "dependency",
+      "text": "The audit collector is required by the compliance dashboard before evidence review.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The audit collector is required by the compliance dashboard before evidence review.",
+          "fields": {
+            "from_component": "compliance dashboard",
+            "to_component": "audit collector"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-33",
+      "prose": true,
+      "category": "dependency",
+      "text": "The login gateway requires Redis during token validation.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The login gateway requires Redis during token validation.",
+          "fields": {
+            "from_component": "login gateway",
+            "to_component": "Redis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-34",
+      "prose": true,
+      "category": "dependency",
+      "text": "The recovery catalog depends on PostgreSQL for retained recovery metadata.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The recovery catalog depends on PostgreSQL for retained recovery metadata.",
+          "fields": {
+            "from_component": "recovery catalog",
+            "to_component": "PostgreSQL"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-35",
+      "prose": true,
+      "category": "dependency",
+      "text": "The release monitor uses Prometheus while evaluating health changes.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The release monitor uses Prometheus while evaluating health changes.",
+          "fields": {
+            "from_component": "release monitor",
+            "to_component": "Prometheus"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-36",
+      "prose": true,
+      "category": "dependency",
+      "text": "The log forwarder depends on the ingestion gateway, which receives operational events.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The log forwarder depends on the ingestion gateway, which receives operational events.",
+          "fields": {
+            "from_component": "log forwarder",
+            "to_component": "ingestion gateway"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-37",
+      "prose": true,
+      "category": "dependency",
+      "text": "The checkout frontend requires the cart API; the connection is shown in the service map.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The checkout frontend requires the cart API; the connection is shown in the service map.",
+          "fields": {
+            "from_component": "checkout frontend",
+            "to_component": "cart API"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-38",
+      "prose": true,
+      "category": "dependency",
+      "text": "The artifact review job relies on the signature service. A reviewer approves promotion separately.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The artifact review job relies on the signature service. A reviewer approves promotion separately.",
+          "fields": {
+            "from_component": "artifact review job",
+            "to_component": "signature service"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-39",
+      "prose": true,
+      "category": "dependency",
+      "text": "The alert gateway uses the routing registry with approved service contacts.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The alert gateway uses the routing registry with approved service contacts.",
+          "fields": {
+            "from_component": "alert gateway",
+            "to_component": "routing registry"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-dependency-40",
+      "prose": true,
+      "category": "dependency",
+      "text": "The restore evaluator depends upon the integrity checker because a manifest alone cannot prove completeness.",
+      "expected": [
+        {
+          "kind": "dependency",
+          "title": "The restore evaluator depends upon the integrity checker because a manifest alone cannot prove completeness.",
+          "fields": {
+            "from_component": "restore evaluator",
+            "to_component": "integrity checker"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-decision-41",
+      "prose": true,
+      "category": "decision",
+      "text": "The team opted for signed release manifests because reviewers need an immutable artifact record.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team opted for signed release manifests because reviewers need an immutable artifact record.",
+          "fields": {
+            "rationale": "reviewers need an immutable artifact record"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-decision-42",
+      "prose": true,
+      "category": "decision",
+      "text": "The recovery workspace was selected so that test restores cannot overwrite live records.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The recovery workspace was selected so that test restores cannot overwrite live records.",
+          "fields": {
+            "rationale": "test restores cannot overwrite live records"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-decision-43",
+      "prose": true,
+      "category": "decision",
+      "text": "The team adopted isolated alert tests to validate routing before the employee leaves.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team adopted isolated alert tests to validate routing before the employee leaves.",
+          "fields": {
+            "rationale": "validate routing before the employee leaves"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-decision-44",
+      "prose": true,
+      "category": "decision",
+      "text": "The team chose asynchronous billing updates since settlement notifications may arrive after order creation.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team chose asynchronous billing updates since settlement notifications may arrive after order creation.",
+          "fields": {
+            "rationale": "settlement notifications may arrive after order creation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-decision-45",
+      "prose": true,
+      "category": "decision",
+      "text": "The team decided to retain incident context due to repeated investigation effort.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team decided to retain incident context due to repeated investigation effort.",
+          "fields": {
+            "rationale": "repeated investigation effort"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-decision-46",
+      "prose": true,
+      "category": "decision",
+      "text": "The team selected individual knowledge grants in order to preserve source restrictions.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected individual knowledge grants in order to preserve source restrictions.",
+          "fields": {
+            "rationale": "preserve source restrictions"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-decision-47",
+      "prose": true,
+      "category": "decision",
+      "text": "The team chose reviewed release promotion. The reason was separation of approval from build success.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team chose reviewed release promotion. The reason was separation of approval from build success.",
+          "fields": {
+            "rationale": "separation of approval from build success"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-decision-48",
+      "prose": true,
+      "category": "decision",
+      "text": "The team chose environment-specific dashboards. Repeated alert confusion drove the decision.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team chose environment-specific dashboards. Repeated alert confusion drove the decision.",
+          "fields": {
+            "rationale": "Repeated alert confusion"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-decision-49",
+      "prose": true,
+      "category": "decision",
+      "text": "The team selected expiring invitations as permanent shared links complicate access revocation.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected expiring invitations as permanent shared links complicate access revocation.",
+          "fields": {
+            "rationale": "permanent shared links complicate access revocation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-decision-50",
+      "prose": true,
+      "category": "decision",
+      "text": "The team decided to use deployment checklists. This choice was motivated by missed post-release verification.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team decided to use deployment checklists. This choice was motivated by missed post-release verification.",
+          "fields": {
+            "rationale": "missed post-release verification"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-decision-51",
+      "prose": true,
+      "category": "decision",
+      "text": "The team selected versioned operational notes. The rationale was traceable corrections after source changes.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected versioned operational notes. The rationale was traceable corrections after source changes.",
+          "fields": {
+            "rationale": "traceable corrections after source changes"
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-decision-52",
+      "prose": true,
+      "category": "decision",
+      "text": "The team selected a maintenance window. The rationale was not recorded.",
+      "expected": [
+        {
+          "kind": "decision",
+          "title": "The team selected a maintenance window. The rationale was not recorded.",
+          "fields": {
+            "rationale": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "postfix-negative-53",
+      "prose": true,
+      "category": "negative",
+      "text": "Mira Shah no longer maintains vendor escalations. The successor is not named here.",
+      "expected": []
+    },
+    {
+      "id": "postfix-negative-54",
+      "prose": true,
+      "category": "negative",
+      "text": "Owen Cole could manage log expiry checks. This is only a suggestion.",
+      "expected": []
+    },
+    {
+      "id": "postfix-negative-55",
+      "prose": true,
+      "category": "negative",
+      "text": "Mira Shah manages alert policy. This claim has not been confirmed.",
+      "expected": []
+    },
+    {
+      "id": "postfix-negative-56",
+      "prose": true,
+      "category": "negative",
+      "text": "Owen Cole handles release approvals. This statement is no longer current.",
+      "expected": []
+    },
+    {
+      "id": "postfix-negative-57",
+      "prose": true,
+      "category": "negative",
+      "text": "The retired dashboard does not depend on the telemetry queue. That connection was removed.",
+      "expected": []
+    },
+    {
+      "id": "postfix-negative-58",
+      "prose": true,
+      "category": "negative",
+      "text": "The team proposed automatic recovery. The proposal is hypothetical and unapproved.",
+      "expected": []
+    },
+    {
+      "id": "postfix-negative-59",
+      "prose": true,
+      "category": "negative",
+      "text": "Mira Shah authored several infrastructure changes. Activity alone is not verified responsibility.",
+      "expected": []
+    },
+    {
+      "id": "postfix-negative-60",
+      "prose": true,
+      "category": "negative",
+      "text": "The employee uses a phone for an incident meeting. No software service dependency is asserted.",
+      "expected": []
+    }
+  ]
+}
