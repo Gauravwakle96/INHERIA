@@ -98,13 +98,42 @@
     }
   },
   "target_acceptance": {
-    "status": "pending_application_deploy",
-    "health_setting": "verified Free service /api/health"
+    "status": "verified",
+    "application_commit": "7b963d9bac82a873a6b33c80b509c8de7a8df968",
+    "render_deploy_id": "dep-dbrr8vuq1p3s73e4grl0",
+    "health_setting": "verified Free service /api/health",
+    "live_checks": {
+      "site": "https://inheria.onrender.com",
+      "checked_at": "2026-11-14T01:09:58.927Z",
+      "scope": "One isolated fresh judge workflow; no owner credentials or provider calls",
+      "stage": "investigation",
+      "schema_status": 200,
+      "activity_endpoint_available": true,
+      "initial_idle_activity": [],
+      "idle_project_requests": 0,
+      "extracted_claims": 17,
+      "claims_with_citations": 17,
+      "refresh_preserved": true,
+      "access_boundary": 404,
+      "health_status": 200,
+      "ok": true
+    },
+    "initial_verification_helper_error": "Relative URL without a baseURL caused TypeError before judge entry; helper corrected and live checks passed.",
+    "ci": {
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Gauravwakle96/INHERIA/actions/runs/43538720301"
+    }
   },
   "limitations": [
     "Existing usage cannot be erased; the warning can remain until monthly renewal.",
     "Optimisations reduce transfer for measured workflows, not guaranteed unlimited traffic.",
     "Cross-account updates refresh on stale focus/navigation/reload rather than an idle continuous feed.",
     "No paid upgrade, resource duplication, data deletion or secret/provider changes."
-  ]
+  ],
+  "application_files_sha256": {
+    "backend/app/intelligence.py": "df66161996c0bbe901abe392a6b2e92da834267897ccc5f9b37bef46b62f25ad",
+    "backend/app/routers/workspace.py": "4e25b15be7d754b4f9cd58b29ef5b84b7e2692ae16d1edc023a81281b4faa84b",
+    "frontend/src/workspace.tsx": "0061170dec4de3ed7966034e0c42aa7364a981a317ea6919e0790e139dc73b35"
+  }
 }

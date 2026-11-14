@@ -10,6 +10,10 @@ On an isolated local PostgreSQL 17.11 copy of the completed ShopEase case study,
 
 Browser checks verified zero project requests during a 12-second idle observation, active-job completion refresh, failure refresh followed by stopped polling, and completed/fresh handover state across refresh and role switching. Active/failure timing was controlled with labelled browser status fixtures; the fresh reconstruction and completed role-view checks used the real local backend. Backend tests cover SQLite/PostgreSQL quote matching, literal `%`/`_` characters, evidence version changes, role/project isolation and a liveness check that never queries the database. See [recorded results](free-hosting-verification.json).
 
+The local full suite passed **232 tests, zero failures/skips, 89% line coverage**, including 16 real PostgreSQL cases. Six browser checks passed after correcting an old source-permissions test to use the fresh scenario. Final source/provider recheck cache invalidation passed another 43 boundary cases. Build, typecheck, lint, Python dependency audit, production npm audit and documentation links passed.
+
+Render confirmed application commit `7b963d9bac82a873a6b33c80b509c8de7a8df968` live. One isolated live fresh-judge check returned 17 claims with citations, completed the real investigation, preserved progress after refresh, denied another project with 404, returned health 200 and made zero project requests during 12 idle seconds. No owner credentials, provider request or existing-account mutation was used. The project API still reported the original accumulated usage; billing telemetry can lag and used quota was not reset.
+
 ## Real PostgreSQL and additional prose challenge — 14 November 2026 IST
 
 - **15/15 real PostgreSQL 17.11 transaction cases passed** using separate concurrent
