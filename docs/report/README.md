@@ -1,19 +1,19 @@
-# Round 3 visual product report
+# INHERIA product documentation
 
-The [23-page PDF](../INHERIA_Round3_Final_Product_Report.pdf) describes the final
-working source-to-continuation product, the exact three confirmed commitments,
-test/evaluation evidence, privacy/security/accessibility, setup and an ordered
-roadmap with detailed milestones, dependencies, effort estimates, risks and release
-gates. An operating guide covers common failures and safe recovery. It uses
-existing authorised product screenshots and original vector
-diagrams, with clickable frozen evidence links, page bookmarks and a live-product
-QR code.
+The [13-page PDF](../INHERIA_Round3_Final_Product_Report.pdf) is a concise product
+reference: workflow and users, architecture, data/API contracts, security,
+evidence lifecycle, installation, operations, recorded quality and limitations.
+The roadmap specifies milestone order, user benefit, effort, dependencies and
+measurable release gates. Future scope covers staging-CI evidence, controlled
+evidence exports, multi-successor coordination and versioned templates.
 
+Original vector diagrams explain the workflow, architecture and evidence
+lifecycle. Clickable contents, bookmarks and source references support navigation.
+No ShopEase case study, scenario screenshots or work-dates narrative is included.
 Application evidence is pinned to `55b11e1`; documentation evidence to `9ed1d05`.
-PDF build/inspection is separate from the application's already recorded tests.
-No private account data, credential files or provider keys are read by the builder.
+Roadmap and operating-guide links use their current repository versions.
 
-## Rebuild in a separate tool environment
+## Rebuild separately from application dependencies
 
 From the repository root, using Python and uv:
 
@@ -24,28 +24,31 @@ uv pip install --python .local/pdf-build-env/Scripts/python.exe -r docs/report/r
 .local/pdf-build-env/Scripts/python.exe docs/report/verify_round3_report.py
 ```
 
-On Linux/macOS use `.local/pdf-build-env/bin/python` for the Python executable.
-The optional copy to `C:/documents` occurs only if that directory exists. If the
-previous PDF is open and locked, the copy uses a `_Revised.pdf` filename. PDF
-rendered review images are written under ignored `.local/round3-pdf-review`.
-The generator and verification script are the editable source. The output manifest
-records the actual PDF SHA-256 and evidence commits. Regeneration can change the
-PDF's build timestamp/ID and therefore its hash.
+On Linux/macOS use `.local/pdf-build-env/bin/python`. The builder uses
+`product_sections.py` and the layout/diagram helpers in `build_round3_report.py`.
+It reads no private accounts, credential files or provider keys.
 
-## Remaining team-owned submission details
+If `C:/documents` exists, a copy is saved as
+`INHERIA_Product_Documentation_Final.pdf`. A locked older Round 3 filename uses a
+`_Revised.pdf` fallback. Rendered inspection pages are stored under ignored
+`.local/round3-pdf-review`.
 
-- Actual individual contributions require confirmation. The report transcribes
-  the existing Round 1 roster/assigned roles and does not claim those assignments
-  prove personal delivery. Do not infer participant contributions from the
-  ShopEase case-study identities.
-- No unfamiliar-user observations were supplied. The report does not invent a
-  five-person study; the repository includes a task pack for real sessions.
-- Publish/share the final PDF for judges and verify submitted links in a private
-  window. A public GitHub PDF is available after push; if the form requires Drive,
-  upload it and select “Anyone with the link” as Viewer.
-- The form is not submitted and personal confirmations are not ticked by this work.
+The manifest records the PDF SHA-256 and evidence revisions. Verification checks
+page count, bookmarks, navigation, frozen-source/current-guide references, text
+bounds, glyphs and credential patterns. Visual inspection is recorded separately
+in [visual-review.md](visual-review.md). Rebuilding can change the PDF timestamp/ID
+and therefore its hash. These are document checks, not new application tests.
 
-ReportLab's bundled Bitstream Vera fonts are used under their bundled font
-licence. PyMuPDF used for rendering is AGPL/commercial licensed; review licence
-obligations for distribution/deployment. Tooling is isolated from application
-dependency locks.
+## Publication and scope
+
+The PDF is public through this repository. If the submission requires Drive,
+upload the final file and select “Anyone with the link” as Viewer. Verify the
+submitted links in a private window. Form submission, participant contributions
+and personal confirmations remain with the team leader.
+
+Recorded tests retain their original limitations. No unfamiliar-user study or
+independent enterprise accuracy is invented. Future targets remain planned.
+
+ReportLab's bundled Bitstream Vera fonts retain their font licence. PyMuPDF used
+for inspection is AGPL/commercial licensed; review applicable obligations.
+Report tooling remains isolated from application dependency locks.

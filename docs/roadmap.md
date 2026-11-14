@@ -189,6 +189,26 @@ confirms incoming users can identify current owners, procedures and next steps.
 Unsupported connectors remain unimplemented. Production command execution needs
 a separate approval/safety design and stays outside near-term scope.
 
+## Future depth after the core milestone gates
+
+Prioritise these extensions after M1–M3, with scope/effort estimated after source
+access and schema impact are known. They are not delivered features or fixed-date
+commitments.
+
+| Order / audience | Planned capability | Dependency and acceptance |
+| --- | --- | --- |
+| 1: successor and supervisor | Read-only staging CI evidence: begin with authorised GitHub Actions run IDs, commits, environment, timestamps and results linked to validation submissions | Least-privilege access, safe logs, forged-reference/missing-artefact/revocation tests; CI success alone never certifies competence |
+| 2: project manager and security reviewer | Permission-filtered evidence package: approved handover version, acceptance, supervisor assessment, open follow-ups and citation/version manifest | Redaction/export permissions, integrity checks and audited download; historical approval is distinct from current readiness; downloaded copies cannot be remotely revoked |
+| 3: team splitting one person's duties | Linked multi-successor transfers: separate deployment, monitoring and recovery owners with individual acceptance and assessment | Extend schema/readiness after single-successor stability; test partial completion, reassignment, revocation and concurrent writes |
+| 4: DevOps/backend/IT reviewer | Versioned organisation templates for evidence requirements, questions, escalation and validation criteria | Admin policy, schema/version/migration tests and one consented DevOps pilot; job title/template never establishes a verified duty |
+
+Read-only staging evidence comes first because it deepens practical verification.
+Evidence packages support accountability next. Multi-successor and template work
+follow observed pilot demand. Each extension must demonstrate real authentication,
+permission lifecycle, source-linked output, missing-data/failure behaviour and
+role-specific E2E tests before it is labelled available. Retain manual human review;
+no production execution is implied.
+
 ## Release governance and documentation
 
 Each milestone ships a review packet: user-visible scope; current/partial/not-built

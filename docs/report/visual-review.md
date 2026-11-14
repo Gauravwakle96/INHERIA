@@ -1,29 +1,27 @@
-# Visual and artefact review
+# Product documentation visual and artefact review
 
-The revised 23-page report was rendered at 1.6× A4 resolution and reviewed as a complete
-contact sheet. Full-size review covered the cover/QR, central workflow and current
-readiness, architecture, original evidence, practical transfer, evaluation chart,
-continuation plan, setup, roadmap and evidence/rubric index.
+The final 13-page product document was rendered at 1.6× A4 resolution and
+inspected as a complete contact sheet. Full-size inspection covered architecture,
+installation/configuration, roadmap and future scope. Navy/teal styling, readable
+tables, consistent headings, footer and original vector diagrams were retained.
 
-Corrections during review:
+The revision replaces the longer submission/case-study narrative with product
+documentation, operations, roadmap and future scope. ShopEase content and
+scenario screenshots are absent. The document keeps factual test references and
+limitations; it does not change Git history or claim newly executed app tests.
 
-- Replaced unsupported font arrow glyphs with legible separators in text.
-- Corrected the two-row workflow connector to lead from step 3 to step 4.
-- Reduced overflowing content rather than clipping text.
-- Added a readable readiness crop with separate acceptance, assessment and
-  accessible-record counts.
-- Used a cover QR/screenshot composition and linked the report from the README.
+Layout corrections retained from earlier review:
 
-The revision removes the work-dates narrative and adds detailed roadmap pages
-for independent evaluation, identity/usability, durable processing/recovery and
-operating/release procedures. The detailed guides remain linked separately from
-the frozen executed-test evidence.
+- Workflow and source-lifecycle connectors lead from step 3 to step 4.
+- Vector node labels fit within their boxes.
+- Unsupported arrows in paragraph text use legible separators.
+- Content stays within page bounds; no clipping or unreadable shrink-to-fit.
 
-Final automated checks pass for 23 pages, 23 bookmarks, 86 clickable links,
-66 frozen-evidence file links, current guide existence, safe-page text bounds, readable text extraction
-and credential-pattern screening. No replacement/null glyphs remain. Crops do
-not alter source records. Check details and hash are in pdf-quality-check.json.
+Automated checks passed: 13 pages, 13 bookmarks, 51 clickable links, 34 frozen
+evidence-file links and eight internal navigation targets. Current guide links
+exist, text stays within safe margins and no replacement/null glyphs or credential
+patterns were found. Exact checks and PDF hash are in
+[pdf-quality-check.json](pdf-quality-check.json).
 
-This verifies the report artefact, not a new application test or independent
-usability study. Actual individual contributions still need team confirmation;
-the participant table identifies documented assigned roles accurately.
+This is a document artefact review, not an independent usability study or an
+awarded documentation score.

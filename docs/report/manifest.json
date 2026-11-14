@@ -1,10 +1,10 @@
 {
-  "pages": 23,
+  "pages": 13,
   "filename": "INHERIA_Round3_Final_Product_Report.pdf",
-  "sha256": "365d8424794c4a887116f381cf9e7284caad7e24d1b1c69a8eccd5b4f63a2cbf",
+  "sha256": "2283de02c384762acadca4103c1e42984a7b4bfe63b05381d250e12c30a04a58",
   "application_commit": "55b11e1a8fc2486b738b920cd4c639481890c5be",
   "evidence_commit": "9ed1d05dae8cd1d67b108fb24311246714f8b4f3",
-  "sources": "Public repository documentation/evaluation and existing authorised screenshot records.",
-  "participant_status": "Round 1 roster and assigned roles; actual contributions await team confirmation.",
+  "sources": "Public repository documentation and recorded evaluation; original vector diagrams.",
+  "scope": "Concise product documentation, development roadmap and future scope; no scenario narrative.",
   "unfamiliar_user_study": "Not claimed; observations not supplied."
 }

@@ -26,6 +26,7 @@ metrics = []
 texts = []
 local_links = []
 guide_links = []
+internal_links = []
 for i, page in enumerate(doc):
     pix = page.get_pixmap(matrix=fitz.Matrix(1.6, 1.6))
     im = Image.frombytes("RGB", (pix.width, pix.height), pix.samples)
@@ -52,6 +53,21 @@ for i, page in enumerate(doc):
                     outside.append(span["text"])
     links = page.get_links()
     for entry in links:
+        target = None
+        if entry.get("kind") == fitz.LINK_GOTO:
+            target = entry.get("page", -1)
+        elif entry.get("kind") == fitz.LINK_NAMED:
+            named_page = str(entry.get("page", ""))
+            if named_page.isdecimal():
+                target = int(named_page) - 1
+        if target is not None:
+            internal_links.append(
+                {
+                    "from_page": i + 1,
+                    "target_page": target + 1,
+                    "valid": 0 <= target < len(doc),
+                }
+            )
         url = entry.get("uri", "")
         guide_match = re.match(
             r"https://github.com/Gauravwakle96/INHERIA/blob/main/(.*)", url
@@ -102,8 +118,9 @@ secret = bool(
         combined,
     )
 )
-assert len(doc) == 23
-assert len(doc.get_toc()) == 23
+assert len(doc) == 13
+assert len(doc.get_toc()) == 13
+assert "shopease" not in combined.lower()
 assert "Work dates and evidence scope" not in combined
 assert "Repository created" not in combined
 assert not secret
@@ -113,20 +130,18 @@ assert all(
 ), metrics
 assert all(l["exists_at_evidence_commit"] for l in local_links), local_links
 assert all(l["exists_locally"] for l in guide_links), guide_links
+assert all(l["valid"] for l in internal_links), internal_links
+assert len(internal_links) >= 8
 for value in [
-    "Secure Team Onboarding",
-    "Practical Transfer Validation",
     "239",
     "19/20",
     "11/12",
-    "Gaurav Wakle",
-    "Pranad Bhale",
-    "Savinay Pathak",
-    "Rudransh Jaiswal",
     "INHERIA_DATABASE_URL",
     "agnes-2.5-flash",
-    "M1 · Independent reconstruction quality",
-    "Operating guide and release maintenance",
+    "Product workflow and user responsibilities",
+    "Development roadmap and delivery order",
+    "Future scope with practical differentiation",
+    "Installation and configuration",
 ]:
     assert value in " ".join(combined.split()), value
 report = {
@@ -139,12 +154,13 @@ report = {
     "frozen_evidence_links_checked": len(local_links),
     "missing_frozen_evidence_links": [],
     "current_guide_links_checked": len(guide_links),
+    "internal_navigation_links_checked": len(internal_links),
     "text_layout_links": "passed",
     "visual_review": "See visual-review.md; generated pages inspected separately.",
     "scope": "PDF artefact checks; not a fresh application test, awarded score or verified individual contribution.",
 }
 (REPORT / "pdf-quality-check.json").write_text(
-    json.dumps(report, indent=2), encoding="utf-8"
+    json.dumps(report, indent=2), encoding="utf-8", newline="\n"
 )
 print(
     json.dumps(

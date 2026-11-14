@@ -1,175 +1,106 @@
 {
-  "pages": 23,
-  "bytes": 636466,
-  "sha256": "365d8424794c4a887116f381cf9e7284caad7e24d1b1c69a8eccd5b4f63a2cbf",
+  "pages": 13,
+  "bytes": 119849,
+  "sha256": "2283de02c384762acadca4103c1e42984a7b4bfe63b05381d250e12c30a04a58",
   "page_checks": [
     {
       "page": 1,
-      "characters": 1131,
-      "links": 2,
+      "characters": 1737,
+      "links": 10,
       "bad_glyphs": 0,
       "outside_safe_page": []
     },
     {
       "page": 2,
-      "characters": 1575,
-      "links": 4,
+      "characters": 2092,
+      "links": 2,
       "bad_glyphs": 0,
       "outside_safe_page": []
     },
     {
       "page": 3,
-      "characters": 2099,
-      "links": 2,
+      "characters": 1907,
+      "links": 3,
       "bad_glyphs": 0,
       "outside_safe_page": []
     },
     {
       "page": 4,
-      "characters": 1775,
-      "links": 2,
+      "characters": 2352,
+      "links": 3,
       "bad_glyphs": 0,
       "outside_safe_page": []
     },
     {
       "page": 5,
-      "characters": 2146,
+      "characters": 2242,
       "links": 3,
       "bad_glyphs": 0,
       "outside_safe_page": []
     },
     {
       "page": 6,
-      "characters": 2086,
-      "links": 3,
+      "characters": 2120,
+      "links": 2,
       "bad_glyphs": 0,
       "outside_safe_page": []
     },
     {
       "page": 7,
-      "characters": 2148,
+      "characters": 1870,
       "links": 3,
       "bad_glyphs": 0,
       "outside_safe_page": []
     },
     {
       "page": 8,
-      "characters": 1694,
-      "links": 2,
+      "characters": 2265,
+      "links": 3,
       "bad_glyphs": 0,
       "outside_safe_page": []
     },
     {
       "page": 9,
-      "characters": 1951,
-      "links": 4,
-      "bad_glyphs": 0,
-      "outside_safe_page": []
-    },
-    {
-      "page": 10,
-      "characters": 1615,
-      "links": 3,
-      "bad_glyphs": 0,
-      "outside_safe_page": []
-    },
-    {
-      "page": 11,
-      "characters": 2065,
-      "links": 5,
-      "bad_glyphs": 0,
-      "outside_safe_page": []
-    },
-    {
-      "page": 12,
-      "characters": 1954,
-      "links": 3,
-      "bad_glyphs": 0,
-      "outside_safe_page": []
-    },
-    {
-      "page": 13,
-      "characters": 1678,
-      "links": 3,
-      "bad_glyphs": 0,
-      "outside_safe_page": []
-    },
-    {
-      "page": 14,
       "characters": 2308,
       "links": 3,
       "bad_glyphs": 0,
       "outside_safe_page": []
     },
     {
-      "page": 15,
-      "characters": 2165,
-      "links": 4,
+      "page": 10,
+      "characters": 2324,
+      "links": 1,
       "bad_glyphs": 0,
       "outside_safe_page": []
     },
     {
-      "page": 16,
-      "characters": 2608,
-      "links": 3,
-      "bad_glyphs": 0,
-      "outside_safe_page": []
-    },
-    {
-      "page": 17,
-      "characters": 2411,
+      "page": 11,
+      "characters": 2423,
       "links": 2,
       "bad_glyphs": 0,
       "outside_safe_page": []
     },
     {
-      "page": 18,
-      "characters": 2286,
+      "page": 12,
+      "characters": 2193,
       "links": 2,
       "bad_glyphs": 0,
       "outside_safe_page": []
     },
     {
-      "page": 19,
-      "characters": 2132,
-      "links": 2,
-      "bad_glyphs": 0,
-      "outside_safe_page": []
-    },
-    {
-      "page": 20,
-      "characters": 2029,
-      "links": 2,
-      "bad_glyphs": 0,
-      "outside_safe_page": []
-    },
-    {
-      "page": 21,
-      "characters": 2247,
-      "links": 3,
-      "bad_glyphs": 0,
-      "outside_safe_page": []
-    },
-    {
-      "page": 22,
-      "characters": 2225,
-      "links": 4,
-      "bad_glyphs": 0,
-      "outside_safe_page": []
-    },
-    {
-      "page": 23,
-      "characters": 2384,
-      "links": 22,
+      "page": 13,
+      "characters": 2173,
+      "links": 14,
       "bad_glyphs": 0,
       "outside_safe_page": []
     }
   ],
   "secret_pattern_detected": false,
-  "outline_entries": 23,
-  "frozen_evidence_links_checked": 66,
+  "outline_entries": 13,
+  "frozen_evidence_links_checked": 34,
   "missing_frozen_evidence_links": [],
-  "current_guide_links_checked": 9,
+  "current_guide_links_checked": 7,
+  "internal_navigation_links_checked": 8,
   "text_layout_links": "passed",
   "visual_review": "See visual-review.md; generated pages inspected separately.",
   "scope": "PDF artefact checks; not a fresh application test, awarded score or verified individual contribution."
