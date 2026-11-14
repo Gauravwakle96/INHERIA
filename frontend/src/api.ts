@@ -4,7 +4,8 @@ export function setCsrfToken(value: string) { csrfToken = value; }
 export class ApiError extends Error {
   status: number;
   requestId?: string;
-  constructor(message: string, status: number, requestId?: string) { super(message); this.status = status; this.requestId = requestId; }
+  retryAt?: number;
+  constructor(message: string, status: number, requestId?: string, retryAfter?: number) { super(message); this.status = status; this.requestId = requestId; this.retryAt = retryAfter ? Date.now() + retryAfter * 1000 : undefined; }
 }
 
 export async function api<T>(path: string, options: RequestInit = {}): Promise<T> {
@@ -27,7 +28,9 @@ export async function api<T>(path: string, options: RequestInit = {}): Promise<T
   if (!response.ok) {
     const data = body as { detail?: unknown; request_id?: string };
     const detail = typeof data.detail === 'string' ? data.detail : response.status === 422 ? 'Check the form fields and try again.' : `Request failed (${response.status}).`;
-    throw new ApiError(detail, response.status, data.request_id);
+    const retryHeader = response.headers.get('Retry-After');
+    const retrySeconds = retryHeader ? Number(retryHeader) : 0;
+    throw new ApiError(detail, response.status, data.request_id, response.status === 429 ? Number.isFinite(retrySeconds) && retrySeconds > 0 ? Math.min(retrySeconds, 300) : 60 : undefined);
   }
   return body as T;
 }

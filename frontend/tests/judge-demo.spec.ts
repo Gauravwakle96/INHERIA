@@ -93,7 +93,7 @@ for (const theme of ['dark', 'light'] as const) {
 }
 
 test('judge can reconstruct, inspect evidence, approve, transfer and validate through the UI', async ({ page }) => {
-  test.setTimeout(360_000);
+  test.setTimeout(480_000);
   await page.waitForTimeout(60_000); // Respect the real shared-IP request window across the full suite.
   const errors: string[] = [];
   page.on('pageerror', e => errors.push(e.message));
@@ -186,8 +186,10 @@ test('judge can reconstruct, inspect evidence, approve, transfer and validate th
   expect(summary.completed_handovers).toBe(1);
   expect(summary.completion.current).toBe(true);
   const completed = page.getByRole('region', { name: 'Completed knowledge handover' });
-  await page.waitForTimeout(30_000); // Keep the expanded journey within the unchanged shared-IP limiter.
-  for (const path of ['/', '/sources', '/memory', '/decisions', '/investigation', '/graph', '/risk', '/team', '/handover', '/validation', '/successor', '/governance']) {
+  await page.waitForTimeout(61_000); // Honour the unchanged API budget after the accelerated review/closure loop.
+  const routes = ['/', '/sources', '/memory', '/decisions', '/investigation', '/graph', '/risk', '/team', '/handover', '/validation', '/successor', '/governance'];
+  for (const [index, path] of routes.entries()) {
+    if (index === 6) await page.waitForTimeout(61_000); // A real user takes time inspecting these evidence-heavy pages.
     await page.locator(`.nav-link[href="${path}"]`).click();
     await expect(completed).toContainText('Knowledge handover completed');
     await expect(completed).toContainText('3/3');

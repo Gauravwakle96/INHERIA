@@ -94,8 +94,8 @@ docs/verification.md. The dedicated acceptance run passed 34 existing isolated
 journeys: seven onboarding/access, ten genuinely distinct source-change/revocation,
 five interruption positions and twelve practical-transfer role flows. Tests use
 owned SQLite fixtures and mocked GitHub; no model call or production mutation.
-The latest full backend run passed 228 tests with 90% coverage, including 15 real
-PostgreSQL concurrent transaction cases in isolated loopback QA schemas. An
+The latest full backend run passed 232 tests with 89% coverage, including 16 real
+PostgreSQL cases in isolated loopback QA schemas. An
 invitation revocation race was reproduced and corrected; duplicate actions,
 source changes and recipient access loss are checked against real database locks.
 Frontend lint,
@@ -150,11 +150,13 @@ A separate local toy-service exercise was actually run: a failed release was det
 
 ## Final regression checks
 
-210 backend tests passed with 90% line coverage; 14 judge/onboarding/source and
-nine chat browser tests passed. Three affected source-change/revocation UI checks
-passed again after the final backend change. Lint/typecheck/build, Python/Node
-dependency audits and credential-pattern review passed in the documented scope.
-See verification.md for bounded accessibility and test/setup limitations.
+The latest full backend suite passed 232 tests with 89% line coverage. Exact-three
+acceptance passed 34/34 again on 14 November. Earlier judge/onboarding/source and
+chat browser tests are dated separately in verification.md. New closure readiness,
+changed/failed evidence, cooldown/retry and onboarding UI checks passed. Build,
+lint/typecheck, dependency audits and credential-pattern review passed in the
+documented scope. Automated accessibility is bounded; no external user study is
+claimed.
 
 ## What does not work yet
 

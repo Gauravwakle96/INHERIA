@@ -4,11 +4,25 @@ import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Plus } from 'lucide-react';
 import { post, projectPath } from '../api';
-import type { Claim, Finding, Transition } from '../types';
-import { Badge, Button, CitationList, Dialog, Notice, Panel } from '../ui';
+import type { Claim, Finding, Readiness, Transition } from '../types';
+import { Badge, Button, CitationList, Dialog, ErrorState, Loading, Notice, Panel } from '../ui';
 import { canReview, useAction, useProjectQuery, useWorkspace } from '../workspace';
 
 interface Prerequisite { category?: string; owner_id?: string; due_date?: string; id: string; title: string; required: boolean; status: string; note?: string; evidence_ids?: string[] }
+
+export function HandoverReadiness({ transition, report, error, pending, refreshing, refresh }: { transition: Transition; report?: Readiness; error: Error | null; pending: boolean; refreshing: boolean; refresh: () => void }) {
+  return <section aria-label="Handover closure readiness"><Panel className="readiness-panel">
+    <div className="readiness-heading"><div><div className="eyebrow">Current evidence and responsibility checks</div><h2>{transition.status === 'closed' ? 'Current readiness after transfer' : 'Before you close this handover'}</h2></div>{!error && <Button variant="secondary" busy={refreshing} onClick={refresh}>Refresh readiness</Button>}</div>
+    {pending ? <Loading label="Checking acceptance, supervisor review and current evidence…" /> : error ? <ErrorState error={error} retry={refresh} /> : report && <>
+      <p><Badge value={report.ready ? 'ready' : 'blocked'} /> {report.ready ? transition.status === 'closed' ? 'The recorded transfer still meets its current checks.' : 'All required checks pass. An authorised coordinator can close the transition.' : 'Closure is blocked. Resolve the checks below; the backend checks again when you close.'}</p>
+      <div className="readiness-measures"><div><strong>{report.accepted}<span> / {report.total}</span></strong><p>Responsibilities accepted</p></div><div><strong>{report.validated}<span> / {report.exercise_total}</span></strong><p>Supervisor-reviewed tasks</p></div><div><strong>{report.evidence_coverage.numerator}<span> / {report.evidence_coverage.denominator}</span></strong><p>Current accessible handover records</p></div></div>
+      {report.blockers.length > 0 && <div className="readiness-blockers"><strong>What needs attention</strong><ul>{report.blockers.map((blocker, i) => <li key={i}>{blocker}</li>)}</ul></div>}
+      <nav className="page-actions" aria-label="Resolve handover checks"><Link className="text-link" to={`/validation?transition=${transition.id}`}>Acceptance & supervisor review <ArrowRight size={15} /></Link><Link className="text-link" to="/team">Knowledge access <ArrowRight size={15} /></Link><Link className="text-link" to="/sources">Source versions & evidence <ArrowRight size={15} /></Link><a className="text-link" href="#required-readiness-checks">Required readiness checks <ArrowRight size={15} /></a></nav>
+      {transition.status === 'closed' && !report.ready && <Notice tone="warning">Historical closure is preserved. Create a follow-up transition to review changed evidence or access; do not treat the old completion as current readiness.</Notice>}
+      <p className="muted">{report.limitations.join(' ')}</p>
+    </>}
+  </Panel></section>;
+}
 
 export function HandoverDetails({ transition }: { transition: Transition }) {
   const { openEvidence, user } = useWorkspace();

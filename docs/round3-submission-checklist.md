@@ -11,7 +11,7 @@ Form: https://forms.gle/FxhT5Z1NupvGTGSw6
 - Product: https://inheria.onrender.com
 - Guide and interactive demo: https://inheria.onrender.com/demo
 - Repository: https://github.com/Gauravwakle96/INHERIA
-- Final PDF Drive link: pending final document and a verified public Viewer link.
+- Final PDF Drive link: deferred at the leader's request; create and verify its public Viewer link later.
 
 The sign-in page offers **Open judge workspace**, creating a separate expiring
 ShopEase case study and signing the visitor in as Rudransh. The topbar switches
@@ -56,9 +56,11 @@ Baseline at the announced opening is commit
 The existing source/review/transfer features, earlier Round 3-named documents,
 private ShopEase walkthrough and Bynara integration must remain identified as
 pre-window work. New finalisation changes have their actual commit dates.
-Do not backdate work, rewrite history or claim earlier changes were built inside
-the window. Eligibility depends on the organiser's actual rules; this checklist
-does not certify it.
+On 14 November, the team leader confirmed that the existing Round 2 baseline is
+allowed. This resolves the baseline question for this delivery. Preserve the
+actual commit dates and distinguish the existing baseline from Round 3 changes;
+do not backdate work or rewrite history. Keep the organiser's clarification with
+the team's submission records.
 
 Team name from saved documents: JAEGERS. Confirm the exact prior form/payment
 spelling, event name, leader's legal name/email and all participant names.

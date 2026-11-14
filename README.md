@@ -78,6 +78,18 @@ Changed or revoked evidence can remove current readiness. Active handovers suppo
 
 *Completion is recorded across the workspace, with ownership, version history and participant contributions.*
 
+Before closure, the Handover page shows current acceptance, supervisor review,
+evidence coverage and unresolved checks with links to the relevant work. Missing
+or failed readiness disables **Close transition**; the backend checks again.
+**Refresh readiness** and **Team → Refresh access** let users inspect teammate
+updates. Temporary request limits show a cooldown and preserve saved work.
+
+![Current closure checks and links to resolve blocked work](docs/screenshots/12-closure-readiness.png)
+
+*Built local QA case study: accepted responsibilities, supervisor assessments and
+current evidence are shown separately. This screenshot is not a production
+execution record.*
+
 ![Savinay's source-linked continuation plan](docs/screenshots/08-successor-continuation.png)
 
 *The incoming person can find assigned responsibilities and approved procedures, then inspect their citations.*
@@ -303,7 +315,7 @@ The application does not read Codex's credentials or configuration. Organisation
 
 ## Testing and reliability evidence
 
-Latest full backend verification: **228 tests passed**, including **15 real PostgreSQL transaction cases**, with **90% line coverage**. [CI run 43531873055](https://github.com/Gauravwakle96/INHERIA/actions/runs/43531873055) passed backend lint/format/tests/dependency audit and frontend lint/typecheck/build/npm audit.
+Latest full backend verification: **232 tests passed**, including **16 real PostgreSQL cases**, with **89% line coverage**. [CI run 43538720301](https://github.com/Gauravwakle96/INHERIA/actions/runs/43538720301) passed backend lint/format/tests/dependency audit and frontend lint/typecheck/build/npm audit. The exact submitted three-improvement runner also passed **34/34** again on 14 November.
 
 | Test area | Executed evidence |
 | --- | --- |
@@ -313,6 +325,7 @@ Latest full backend verification: **228 tests passed**, including **15 real Post
 | Failure/recovery | Invalid inputs/files, quarantine, conflicting/missing/stale evidence, connector errors/retries, rejected/reopened tasks, interruption/checkpoint resume and process restart. |
 | Live product | New prose upload → four pending exact-cited candidates → review → generated handover; completed/fresh judge entry, refresh, 51 sources/81 claims/92 graph nodes and successor continuation. |
 | Browser/accessibility | Representative 390/768/1440px checks, day/night themes, keyboard/reduced-motion checks and zero automated axe A/AA findings in the recorded bounded runs. |
+| Final judge recovery checks | Eight focused browser checks passed for premature closure, changed/unavailable evidence, 429 cooldown, exact-three guide, team/source permission refresh and successful/failed background completion. The complete local fresh-to-closed UI journey passed separately in 3.4 minutes. |
 
 **Extraction measurements:** the original 60-document internal first run (34 prose cases) met its submitted thresholds. A subsequent 72-document all-prose first run exposed real misses: precision 94.6%, recall 88.3%, owner fields 84.6%, rationale 75.0% and dependency endpoints 83.3%. After general fixes, its now-known regression cases measure precision 100%, recall 98.3%, owners 92.3%, rationale 100% and dependencies 94.4%. The unchanged original report remains published. These are internally authored labels and tuned regression results, not independently measured enterprise accuracy.
 
@@ -328,10 +341,10 @@ uv run pytest -q tests/test_acceptance_evaluation.py
 uv run pip-audit --local
 ```
 
-Without `INHERIA_TEST_POSTGRES_URL`, the fifteen PostgreSQL tests **skip explicitly**. To run them, set it privately in your shell to an owned loopback PostgreSQL database whose name ends in `_qa`, then run:
+Without `INHERIA_TEST_POSTGRES_URL`, the PostgreSQL tests **skip explicitly**. To run them, set it privately in your shell to an owned loopback PostgreSQL database whose name ends in `_qa`, then run:
 
 ```powershell
-uv run pytest -q tests/test_postgres_concurrency.py
+uv run pytest -q tests/test_postgres_concurrency.py tests/test_transfer_budget.py
 ```
 
 The fixture creates and removes only a unique QA schema. It rejects remote hosts and database names outside the test convention. GitHub CI supplies an ephemeral PostgreSQL 17 service. See [reproduction and original race failure](docs/postgres-and-extraction-hardening.md).
@@ -392,6 +405,7 @@ Cross-company learning, predictive scores, multi-person departure simulations, a
 | [Chat configuration](docs/chat-integration-plan.md) | Provider settings, key isolation, citations/actions and fallback boundaries. |
 | [Completion behaviour](docs/completion-hardening.md) | Case-study copying, continuation, readiness categories and source-change recovery. |
 | [Delivery/submission mapping](docs/round3-delivery.md) | Product/rubric mapping, responsible design and actual-history disclosure. |
+| [Final product acceptance](docs/final-product-readiness.md) | Judge journey, exact three improvements, rubric evidence and remaining submission items. |
 | [Future roadmap](docs/roadmap.md) | Prioritised future stages, user benefit and acceptance criteria. |
 
 Future priorities are **independently evaluated extraction**, **verified team identity and permission lifecycle**, then **durable jobs and operational governance**. Each stage has measurable exit criteria in the roadmap; planned work is not counted as a finished feature.

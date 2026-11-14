@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, Copy, Plus, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Copy, Plus, RefreshCw, ShieldCheck } from 'lucide-react';
 import { post, projectPath } from '../api';
 import type { Session, Source, User } from '../types';
 import { Badge, Button, Dialog, Empty, ErrorState, Notice, Panel } from '../ui';
@@ -26,6 +27,7 @@ export function JoinPage({ onLogin }: { onLogin: (session: Session) => void }) {
 
 export function OnboardingPanel({ team }: { team: User[] }) {
   const { project, user } = useWorkspace();
+  const client = useQueryClient();
   const [inviting, setInviting] = useState(false);
   const [joinLink, setJoinLink] = useState('');
   const [reviewing, setReviewing] = useState<Access | null>(null);
@@ -36,6 +38,8 @@ export function OnboardingPanel({ team }: { team: User[] }) {
   const requests = useProjectQuery<Access[]>('/access-requests');
   const sources = useProjectQuery<Source[]>('/sources');
   const readiness = useProjectQuery<AccessReadiness[]>('/access-readiness');
+  const refreshing = requests.isFetching || readiness.isFetching || invitations.isFetching || sources.isFetching;
+  function refreshAccess() { void requests.refetch(); void readiness.refetch(); void sources.refetch(); void client.refetchQueries({ queryKey: ['project', project.id, 'team'], exact: true }); if (user.role === 'admin') void invitations.refetch(); }
   const removeMember = useAction<{ id: string; note: string }>(body => post(projectPath(project.id, `/members/${body.id}/revoke`), { note: body.note }), 'Project access revoked. Historical contributions are preserved.');
   const invite = useAction<Record<string, string>>(body => post<Invite>(projectPath(project.id, '/invitations'), body), 'Invitation created. Share the one-time link through an authorised channel.');
   const revoke = useAction<string>(id => post(projectPath(project.id, `/invitations/${id}/revoke`)), 'Invitation revoked. The old link can no longer be used.');
@@ -45,7 +49,7 @@ export function OnboardingPanel({ team }: { team: User[] }) {
   function submitRequest(e: FormEvent<HTMLFormElement>) { e.preventDefault(); request.mutate({ purpose: String(new FormData(e.currentTarget).get('purpose')) }, { onSuccess: () => setRequesting(false) }); }
   function submitReview(e: FormEvent<HTMLFormElement>) { e.preventDefault(); if (!reviewing) return; const f = new FormData(e.currentTarget); review.mutate({ id: reviewing.id, action: String(f.get('action')), source_id: String(f.get('source_id') || '') || undefined, note: String(f.get('note')) }, { onSuccess: () => setReviewing(null) }); }
   function submitRemoval(e: FormEvent<HTMLFormElement>) { e.preventDefault(); if (!removing) return; removeMember.mutate({ id: removing.id, note: String(new FormData(e.currentTarget).get('note')) }, { onSuccess: () => setRemoving(null) }); }
-  return <><Panel title="Team onboarding & access readiness" description="Invite people securely and resolve missing knowledge access separately from ownership acceptance." action={<div className="page-actions">{user.role === 'admin' && <Button variant="secondary" onClick={() => setInviting(true)}><Plus size={16} />Invite member</Button>}<Button variant="secondary" onClick={() => setRequesting(true)}>Request knowledge access</Button></div>}>
+  return <><Panel title="Team onboarding & access readiness" description="Invite people securely and resolve missing knowledge access separately from ownership acceptance." action={<div className="page-actions"><Button variant="secondary" busy={refreshing} onClick={refreshAccess}><RefreshCw size={15} />Refresh access</Button>{user.role === 'admin' && <Button variant="secondary" onClick={() => setInviting(true)}><Plus size={16} />Invite member</Button>}<Button variant="secondary" onClick={() => setRequesting(true)}>Request knowledge access</Button></div>}>
     <div className="padded"><Notice>INHERIA access controls project knowledge. AWS, GitHub and other operational permissions must be approved in their own systems.</Notice>{user.role === 'admin' && <><h3>Invitations</h3>{invitations.error ? <ErrorState error={invitations.error} /> : !invitations.data?.length ? <p className="muted">No invitations yet. New members set their own password.</p> : invitations.data.map(item => <div className="transfer-row" key={item.id}><div><strong>{item.name}</strong><small>{item.email} · {item.role} · expires {new Date(item.expires_at + 'Z').toLocaleString()}</small></div><Badge value={item.status} />{item.status === 'pending' && <Button variant="ghost" busy={revoke.isPending} onClick={() => revoke.mutate(item.id)}>Revoke</Button>}</div>)}</>}
     <h3>Handover knowledge access</h3>{readiness.error ? <ErrorState error={readiness.error} /> : !readiness.data?.length ? <p className="muted">Create a handover to check its required knowledge access.</p> : readiness.data.map(item => <div className="transfer-row" key={item.transition_id}><div><strong>{item.title}</strong><small>{item.successor_name} · {item.accessible_items}/{item.required_items} knowledge items accessible</small><p>{item.next_step}</p>{item.missing_titles.length > 0 && <p>Needs access: {item.missing_titles.join(', ')}</p>}</div><Badge value={item.ready ? 'ready' : 'blocked'} />{item.missing_items > 0 && <Button variant="secondary" onClick={() => setRequesting(true)}>Request access</Button>}</div>)}
     {user.role === 'admin' && <><h3>Project membership</h3>{team.filter(person => person.id !== user.id).map(person => <div className="transfer-row" key={person.id}><div><strong>{person.name}</strong><small>{person.title}</small></div><Button variant="ghost" onClick={() => setRemoving(person)}>Revoke project access</Button></div>)}</>}

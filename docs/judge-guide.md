@@ -35,6 +35,10 @@ The ShopEase sources are authored examples, not actual Wipro/client records. Com
    criterion. Request revision for inadequate evidence, or record your assessment.
    Review the mandatory recovery-gap/follow-up check with appropriate citations.
    Closure is blocked until acceptance, practical review and required checks pass.
+   On Handover, **Before you close this handover** shows the measured acceptance,
+   supervisor review, current evidence and blockers. Its links lead to practical
+   review, Team knowledge access, source versions and required checks. Refresh
+   readiness after another teammate's update; the backend validates again on close.
 
 An actual restore test remains separate work unless a real authorised supervisor
 provides its evidence. The demo validates understanding and recorded follow-up,
@@ -58,6 +62,10 @@ not AWS permissions or production recovery competence.
 - **Team onboarding:** Rudransh creates an expiring invitation and shares its
   one-time link privately. New recipients choose a password; existing accounts
   authenticate without changing their role/password. No email is sent.
+- **Temporary request limits:** an explicit cooldown appears; automatic query
+  retries do not immediately repeat a denied request. Wait until Try again becomes
+  available, then inspect saved work before repeating a mutation. Hosting limits
+  remain finite and the application does not bypass them.
 
 ## Demonstration evidence
 

@@ -2,6 +2,45 @@
 
 Historical and current verification results are separated below. Results apply to the implemented MVP in this workspace; they do not certify an enterprise deployment.
 
+## Judge experience and closure recovery — 14 November 2026
+
+The Handover page now shows measured acceptance, independent assessment, current
+evidence coverage and blockers before closure. Missing, changed or unavailable
+readiness disables Close; direct links lead to access, sources, practical review
+and required checks. Team has a manual access refresh. The public guide explains
+how to exercise the exact three submitted improvements.
+
+Six focused browser tests passed: completed-role continuation/refresh, fresh
+reconstruction, pre-closure blockers and links, changed/failed readiness with
+retry, request-limit cooldown without immediate query retries, and invitation/
+membership revocation. The full real local UI journey passed from fresh sources
+through reconstruction, evidence inspection, approval, assignment, successor
+acceptance, independent assessment, prerequisite review and closure; completion
+was then inspected across project pages and themes. Build, typecheck/lint and full
+Node dependency audit passed. Exact-three backend acceptance passed 34/34 again.
+
+The final focused browser run passed 8/8: closure blockers, changed/unavailable
+readiness, request-limit cooldown, public exact-three guide in both themes at
+390/768/1440 pixels, external membership/source refresh, source permission
+preservation and successful/failed job completion refresh. Readiness errors expose one recovery control so a second
+refresh button cannot bypass the displayed cooldown. Team access refresh also
+updates the source inventory and membership list.
+
+Commands, result counts and tested file hashes are recorded in
+[judge experience verification](judge-experience-verification.json).
+
+An initial accelerated full journey reached closure but hit the unchanged
+shared-IP request limit during subsequent rapid navigation and timed out. Query
+retries now avoid terminal/permission/rate errors and 429 responses expose the
+provider cooldown. The test honours the 60-second server budget between heavy
+review/navigation loops; the complete rerun passed in 3.4 minutes. This does not
+establish unlimited throughput. Targeted readiness/error timing uses explicit
+browser fixtures; the full workflow uses the local backend.
+
+The leader confirmed that the Round 2 baseline is allowed. PDF generation remains
+deferred at their request. No unfamiliar-user outcome or participant contribution
+has been invented. See [final product acceptance](final-product-readiness.md).
+
 ## Free-hosting transfer optimisation — 14 November 2026
 
 The Neon project API reported 4.08 GB public network transfer against a 5 GB free allowance, while compute was about 4.2 CU-hours of 100. Existing account data, keys, provider choices and database resources were preserved. The actual Render service health setting was changed from `/api/ready` to `/api/health`; the service remains Free.

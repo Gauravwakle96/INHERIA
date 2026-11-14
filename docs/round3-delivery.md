@@ -27,11 +27,11 @@ not an unfulfilled target of these three commitments.
 ## Announced event window
 
 The 14 November announcement sets the window at 13 November 23:59 through
-16 November 23:59. Much of the existing implementation above predates that
-opening; dated Git history is preserved. Existing documents named Round 3 do
-not establish that the code was built during the announced window. New
-finalisation work is recorded at its actual date. This document does not certify
-eligibility or relabel earlier work as event-window delivery.
+16 November 23:59. The team leader confirmed on 14 November that extending the
+existing Round 2 baseline is allowed. Git history preserves the actual baseline
+and Round 3 finalisation dates; earlier work is not relabelled as newly built.
+The team's submission should retain this distinction and the organiser's
+clarification.
 
 ## Rubric acceptance map
 

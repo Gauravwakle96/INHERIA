@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ButtonHTMLAttributes, type ReactNode } from 'react';
 import { AlertCircle, ArrowRight, CheckCheck, ChevronRight, FileText, LoaderCircle, ShieldCheck, X } from 'lucide-react';
 import { ApiError } from './api';
 import type { Citation } from './types';
@@ -17,7 +17,20 @@ export function PageHeader({ eyebrow = 'Knowledge continuity', title, descriptio
 }
 export function Empty({ title, description, action }: { title: string; description: string; action?: ReactNode }) { return <div className="empty"><div className="empty-icon"><FileText size={25} /></div><h3>{title}</h3><p>{description}</p>{action}</div>; }
 export function Loading({ label = 'Loading authorised project knowledge…' }: { label?: string }) { return <div className="loading" role="status"><LoaderCircle className="spin" size={20} /><span>{label}</span><div className="skeleton-lines"><i /><i /><i /></div></div>; }
-export function ErrorState({ error, retry }: { error: Error; retry?: () => void }) { const forbidden = error instanceof ApiError && error.status === 403; return <div className="notice notice-error" role="alert"><AlertCircle size={19} /><div><strong>{forbidden ? 'Permission required' : 'Unable to complete this request'}</strong><p>{error.message}</p>{error instanceof ApiError && error.requestId && <small>Request {error.requestId}</small>}{retry && <Button variant="secondary" onClick={retry}>Try again</Button>}</div></div>; }
+export function ErrorState({ error, retry }: { error: Error; retry?: () => void }) {
+  const retryAt = error instanceof ApiError ? error.retryAt : undefined;
+  const [now, setNow] = useState(Date.now);
+  useEffect(() => {
+    setNow(Date.now());
+    if (!retryAt) return;
+    const timer = window.setInterval(() => { const current = Date.now(); setNow(current); if (current >= retryAt) window.clearInterval(timer); }, 1000);
+    return () => window.clearInterval(timer);
+  }, [retryAt]);
+  const seconds = retryAt ? Math.max(0, Math.ceil((retryAt - now) / 1000)) : 0;
+  const forbidden = error instanceof ApiError && error.status === 403;
+  const limited = error instanceof ApiError && error.status === 429;
+  return <div className="notice notice-error" role="alert"><AlertCircle size={19} /><div><strong>{forbidden ? 'Permission required' : limited ? 'Request limit reached' : 'Unable to complete this request'}</strong><p>{error.message}</p>{error instanceof ApiError && error.requestId && <small>Request {error.requestId}</small>}{seconds > 0 && <p>Retry available in {seconds} seconds. Submitted work may already be saved; inspect its status before repeating an action.</p>}{retry && <Button variant="secondary" disabled={seconds > 0} onClick={retry}>Try again</Button>}</div></div>;
+}
 export function Notice({ children, tone = 'info' }: { children: ReactNode; tone?: 'info' | 'warning' | 'success' }) { return <div className={`notice notice-${tone}`}><ShieldCheck size={18} /><div>{children}</div></div>; }
 export function EvidenceButton({ citations, onClick }: { citations: Citation[]; onClick: () => void }) { return <button className="evidence-button" onClick={onClick}><ShieldCheck size={14} />{citations.length ? `${citations.length} evidence ${citations.length === 1 ? 'source' : 'references'}` : 'Insufficient evidence'}<ChevronRight size={14} /></button>; }
 export function CitationList({ citations, openSource }: { citations: Citation[]; openSource?: (sourceId: string) => void }) {

@@ -1,0 +1,103 @@
+{
+  "recorded_at": "2026-11-14T14:40:37.299265+00:00",
+  "base_commit": "f80554e2821dc47e3b97382894889a1d360c0d0b",
+  "working_tree_dirty": true,
+  "scope": "Built local isolated QA API; no real account mutation, external model request or live outage injection.",
+  "focused_browser": {
+    "command": "INHERIA_FRONTEND_URL=http://127.0.0.1:8021 npx playwright test tests/handover-readiness.spec.ts tests/transfer-budget.spec.ts tests/source-permissions.spec.ts --reporter=list,junit",
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      {
+        "name": "incomplete handover explains blockers before closure and links to recovery work",
+        "classname": "handover-readiness.spec.ts",
+        "time": "1.004"
+      },
+      {
+        "name": "changed evidence and readiness failures stop closure; refresh recovers the panel",
+        "classname": "handover-readiness.spec.ts",
+        "time": "5.441"
+      },
+      {
+        "name": "request limits show cooldown and do not trigger immediate automatic retries",
+        "classname": "handover-readiness.spec.ts",
+        "time": "3.955"
+      },
+      {
+        "name": "public guide explains the submitted improvements in both themes and mobile layouts",
+        "classname": "handover-readiness.spec.ts",
+        "time": "2.342"
+      },
+      {
+        "name": "manual access refresh updates externally changed membership and source permissions",
+        "classname": "handover-readiness.spec.ts",
+        "time": "1.114"
+      },
+      {
+        "name": "source permission editor preserves current readers and limits incoming evidence",
+        "classname": "source-permissions.spec.ts",
+        "time": "2.37"
+      },
+      {
+        "name": "idle workspace does not poll; active work refreshes results once and stops",
+        "classname": "transfer-budget.spec.ts",
+        "time": "36.269"
+      },
+      {
+        "name": "failed background work refreshes dependent state and stops polling",
+        "classname": "transfer-budget.spec.ts",
+        "time": "12.717"
+      }
+    ],
+    "raw_log_sha256": "e2e61a6f0c1fbf0fb6943701f311c356a303ee55dcddf5fd824b3313625a0305"
+  },
+  "separate_full_journey": {
+    "test": "frontend/tests/judge-demo.spec.ts",
+    "result": "Passed fresh source reconstruction through closure and cross-page inspection in 3.4 minutes.",
+    "initial_failure": "Accelerated post-closure navigation reached the shared-IP rate limit and timed out. Client cooldown handling and paced harness were corrected; server limit was preserved."
+  },
+  "other_actual_checks": {
+    "production_build_and_typecheck": "passed",
+    "eslint": "passed",
+    "npm_audit": {
+      "vulnerabilities": 0
+    },
+    "documentation": {
+      "checked_local_links": 72,
+      "image_references": 12,
+      "issues": 0
+    },
+    "exact_three_backend_acceptance": {
+      "passed": 34,
+      "reference": "three-improvements-tests.json"
+    },
+    "latest_full_backend_baseline": {
+      "passed": 232,
+      "failed": 0,
+      "skipped": 0,
+      "line_coverage_percent": 89,
+      "real_postgres_cases": 16,
+      "reference": "verification.md"
+    }
+  },
+  "tested_file_sha256": {
+    "frontend/src/api.ts": "64be43e5690aae78c0a7821da2f5a12c6093be3380b182d8d3ab5598d94df0bb",
+    "frontend/src/main.tsx": "426bad150e73ef0515894cdc92f9e6bb3dfe9485f4f0738aa00eb6b782f71450",
+    "frontend/src/ui.tsx": "fdbc6cb4124f3e184a9e864485dc360faf40565b42b8e29e9e5bf71d3dbe979d",
+    "frontend/src/pages/Continuity.tsx": "e39e6c4838c9343a4abc17734aee06499f6626fa4307403cfb2b853fb521d09b",
+    "frontend/src/pages/Demo.tsx": "6dfc8001e92897f0bcd86d7936fa2532ec5dd6d1608765dbfc133d29db4a416d",
+    "frontend/src/pages/HandoverDetails.tsx": "5ef1e0e730dcbf497399a78fc2ebf4f764e6af899f3984069984d24e9f58c0e6",
+    "frontend/src/pages/Onboarding.tsx": "cfcf27a48f732355334a3776a841a22e2017b90ad2aaadc5e61875ecba5a0724",
+    "frontend/tests/handover-readiness.spec.ts": "c63b6deedc9d1d4e323d045c201c2a6d9a410d1886aad4b1549b9a34a3828f18",
+    "frontend/tests/judge-demo.spec.ts": "cf013901b6a9bf2c94d045940639af26001ac4ddc3927df17791e7f582d50818",
+    "frontend/tests/source-permissions.spec.ts": "7e2c8e2adab12b99dfeabb90589ddc189c174224af1dc2d495c6ff6aec26bb42",
+    "frontend/tests/transfer-budget.spec.ts": "c58b2bb39da8543155ceff94da5d83d805570a0886bdd22423350a7fbd404633"
+  },
+  "limits": [
+    "Targeted changed/unavailable/rate-limit states use browser response fixtures; they are not deliberately injected live outages.",
+    "Bounded automated axe checks do not establish a complete accessibility audit or independent human usability study.",
+    "No awarded score, participant contribution, source authenticity or cloud operational competence is certified.",
+    "PDF generation is deferred at the leader request."
+  ]
+}

@@ -10,6 +10,7 @@ import '@xyflow/react/dist/style.css';
 import './styles.css';
 import { App } from './App';
 import { ThemeProvider } from './ThemeProvider';
+import { ApiError } from './api';
 
-const queryClient = new QueryClient({ defaultOptions: { queries: { retry: 1, staleTime: 30_000, refetchOnWindowFocus: true } } });
+const queryClient = new QueryClient({ defaultOptions: { queries: { retry: (count, error) => count < 1 && !(error instanceof ApiError && [401, 403, 404, 409, 422, 429].includes(error.status)), staleTime: 30_000, refetchOnWindowFocus: true } } });
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><ThemeProvider><QueryClientProvider client={queryClient}><BrowserRouter><App /></BrowserRouter></QueryClientProvider></ThemeProvider></React.StrictMode>);

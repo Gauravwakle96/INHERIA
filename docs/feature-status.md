@@ -51,10 +51,16 @@ See [measured delivery and limits](four-workstream-acceptance.md).
 
 Final experience update: completed account case-study mode, guided current continuation steps, typed evidence checks, critical-gap follow-up gates, cited dependency paths and actual isolated-process restart testing are documented in [completion hardening](completion-hardening.md). Original challenge extraction results remain preserved separately from corrected regression results. No independent human usability or cloud execution claim is added.
 
-Latest reliability verification: **228 backend tests passed, 90% line coverage**,
-including **15 real PostgreSQL concurrent transaction cases**. The invitation
+Latest full reliability verification: **232 backend tests passed, 89% line coverage**,
+including **16 real PostgreSQL cases**. The invitation
 accept/revoke stale-state race was reproduced and corrected. The new 72-document
 all-prose challenge's original misses and corrected known-case regression results
 remain separate. Live upload → investigation → citation review → handover,
 completed/fresh judge entry and restricted evidence/visitor isolation passed.
 See [verification](verification.md) and [future roadmap](roadmap.md).
+
+Handover closure now displays current acceptance, supervisor review, evidence
+coverage and blockers before the action. Missing/failed readiness disables the
+Close button; links lead to access, sources and practical review. Refresh retries
+readiness without reloading the workspace. Backend closure validation remains
+authoritative; the UI never turns a simulated/test response into real approval.
